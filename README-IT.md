@@ -27,7 +27,7 @@ Come System Integrator, imparerai a:
 | **SYS-08** | Best Practice Pre-Release | 2h | Sicurezza, Red Teaming, Isolamento dati, Audit logging |
 | **SYS-09** | Workshop | 1h | Esercitazioni pratiche |
 
-**Durata Totale: 18 ore** (Teoria + Workshop Live)
+**Durata Totale:** 3 giorni x 6 ore (webinar online) + 1 giorno di workshop live
 
 ## 📂 Struttura del Repository
 
