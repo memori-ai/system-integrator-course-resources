@@ -13,7 +13,7 @@ Questa guida spiega come integrare il web component AIsuru nelle tue applicazion
 
 ## 🚀 Prova le Demo
 
-Questo modulo include **due demo applicative funzionanti** che mostrano diversi approcci all'autenticazione.
+Questo modulo include **tre demo applicative funzionanti** che mostrano diversi approcci all'autenticazione.
 
 ### Avviare le Demo
 
@@ -47,6 +47,15 @@ Autenticazione backend usando l'API `LoginWithJWT` per un'esperienza SSO senza i
 - Il tuo backend autentica gli utenti via `LoginWithJWT`
 - Passa il token al web component tramite `additionalInfo.loginToken`
 - Utente demo: `demo@demo.com` / `demodemo`
+
+### Demo 3: Microsoft SSO (Azure AD / Entra ID)
+
+Integrazione completa Single Sign-On con la piattaforma di identità Microsoft.
+
+- Configura una Azure App Registration con il tuo `clientId`
+- Usa MSAL.js per l'autenticazione Microsoft nel browser
+- Concatena autenticazione Microsoft → `LoginWithJWT` AIsuru per un SSO seamless
+- Gli utenti sono pre-autenticati nel web component
 
 📁 **Codice Sorgente Demo**: [demo/](./demo/)
 
