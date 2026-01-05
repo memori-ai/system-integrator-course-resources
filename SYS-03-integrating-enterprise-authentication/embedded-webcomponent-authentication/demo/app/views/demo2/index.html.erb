@@ -335,11 +335,12 @@
               </p>
             </div>
             <div class="col-md-6">
-              <h6><i class="bi bi-gear me-1"></i> Required Configuration:</h6>
-              <ul class="text-muted">
-                <li><strong>Name</strong>: A descriptive name for your app</li>
-                <li><strong>Base URL</strong>: Your application's URL (for CORS)</li>
-                <li><strong>API Key</strong>: Generated automatically - keep it secret!</li>
+              <h6><i class="bi bi-gear me-1"></i> API Call Requirements:</h6>
+              <ul class="text-muted small">
+                <li><strong>Endpoint</strong>: <code>POST /api/v2/LoginWithJWT</code></li>
+                <li><strong>Header</strong>: <code>X-Memori-Trusted-App: YOUR_API_KEY</code></li>
+                <li><strong>Body</strong>: <code>{"tenant": "...", "jwtToken": "..."}</code></li>
+                <li><strong>JWT Signing</strong>: Use HS256 with your API Key</li>
               </ul>
               <div class="alert alert-danger mb-0">
                 <i class="bi bi-exclamation-triangle me-1"></i>

@@ -64,6 +64,39 @@ Backend authentication using `LoginWithJWT` API - seamless SSO experience.
 
 ⚠️ **Security Note:** Never expose your API Key in frontend code! Always call AIsuru APIs from your backend.
 
+## 🔄 How LoginWithJWT Works (Demo 2)
+
+The programmatic authentication flow:
+
+1. **User logs in** to your application with their credentials
+2. **Your backend creates a JWT** signed with the Trusted App API Key (HS256)
+3. **Your backend calls** `POST /api/v2/LoginWithJWT` with:
+   - Header: `X-Memori-Trusted-App: YOUR_API_KEY`
+   - Body: `{ "tenant": "www.aisuru.com", "jwtToken": "..." }`
+4. **AIsuru returns** a `token` that identifies the authenticated user
+5. **Pass the token** to the web component via `additionalInfo='{"loginToken":"..."}'`
+6. **User is automatically logged in** to the AI agent!
+
+```
+┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
+│   Your User     │────▶│   Your Backend  │────▶│  AIsuru API     │
+│   (Browser)     │     │                 │     │                 │
+└─────────────────┘     └─────────────────┘     └─────────────────┘
+        │                       │                       │
+        │ 1. Login              │ 2. Create JWT         │
+        │                       │ 3. Call LoginWithJWT  │
+        │                       │◀──────────────────────│
+        │                       │ 4. Receive token      │
+        │◀──────────────────────│                       │
+        │ 5. Page with          │                       │
+        │    loginToken set     │                       │
+        ▼                       │                       │
+┌─────────────────┐             │                       │
+│ Web Component   │─────────────┼──────────────────────▶│
+│ (authenticated) │             │                       │
+└─────────────────┘             │                       │
+```
+
 ## 🐳 Docker Commands
 
 ```bash

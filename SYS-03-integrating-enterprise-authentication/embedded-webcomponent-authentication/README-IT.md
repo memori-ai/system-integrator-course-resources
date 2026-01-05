@@ -296,7 +296,11 @@ Una Trusted Application è un modo sicuro per il tuo backend di comunicare con l
 
 ### Usare la Chiave API della Trusted App
 
-Firma il tuo JWT con la Chiave API della Trusted App:
+Il flusso di autenticazione richiede due passaggi:
+
+#### Passaggio 1: Creare un JWT firmato
+
+Crea un token JWT firmato con la Chiave API della Trusted App usando l'algoritmo HS256:
 
 ```javascript
 // Codice backend (esempio Node.js)
@@ -304,19 +308,53 @@ const jwt = require('jsonwebtoken');
 
 const trustedAppApiKey = process.env.AISURU_TRUSTED_APP_KEY;
 
-const token = jwt.sign(
+const jwtToken = jwt.sign(
   {
     sub: user.email,
     email: user.email,
     name: user.name,
-    tenant: 'www.aisuru.com'
+    tenant: 'www.aisuru.com',
+    iat: Math.floor(Date.now() / 1000),
+    exp: Math.floor(Date.now() / 1000) + 300  // 5 minuti
   },
   trustedAppApiKey,
-  { algorithm: 'HS256', expiresIn: '5m' }
+  { algorithm: 'HS256' }
 );
-
-// Poi chiama LoginWithJWT con questo token
 ```
+
+#### Passaggio 2: Chiamare l'API LoginWithJWT
+
+Effettua una richiesta POST al backend AIsuru con:
+- **Header:** `X-Memori-Trusted-App` contenente la tua Chiave API
+- **Body:** JSON con i campi `tenant` e `jwtToken`
+
+```http
+POST https://backend.memori.ai/api/v2/LoginWithJWT
+Content-Type: application/json
+X-Memori-Trusted-App: LA_TUA_CHIAVE_API_TRUSTED_APP
+
+{
+  "tenant": "www.aisuru.com",
+  "jwtToken": "eyJhbGciOiJIUzI1NiJ9..."
+}
+```
+
+**Risposta di Successo:**
+
+```json
+{
+  "token": "183c7061-a5f5-4bea-ab2b-e4e6a7bbc3a4",
+  "user": {
+    "userID": "6057f403-777f-413b-b4f5-5b6ed4ef84b6",
+    "userName": "Demo-User",
+    "eMail": "demo@demo.com"
+  },
+  "resultCode": 0,
+  "resultMessage": "Ok"
+}
+```
+
+Il `token` restituito è quello che passi al web component tramite `additionalInfo.loginToken`.
 
 > ⚠️ **Avviso di Sicurezza:** Non esporre mai la Chiave API della Trusted App nel codice frontend! Chiama sempre le API AIsuru dal tuo backend.
 

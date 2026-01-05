@@ -35,7 +35,7 @@ class Demo2Controller < ApplicationController
     email = params[:email]
     password = params[:password]
 
-    user = User.find_by(email: email)
+    user = User.where(email: email).first
 
     if user&.authenticate(password)
       # Store user in session
@@ -95,13 +95,14 @@ class Demo2Controller < ApplicationController
   def load_configuration
     config = session[:demo2_config] || {}
     
-    @memori_id = config[:memori_id]
-    @owner_user_id = config[:owner_user_id]
-    @tenant_id = config[:tenant_id] || DEFAULT_TENANT_ID
-    @engine_url = config[:engine_url] || DEFAULT_ENGINE_URL
-    @api_url = config[:api_url] || DEFAULT_API_URL
-    @base_url = config[:base_url] || DEFAULT_BASE_URL
-    @trusted_app_api_key = config[:trusted_app_api_key]
+    # Rails session converts symbol keys to strings, so we need to handle both
+    @memori_id = config["memori_id"] || config[:memori_id]
+    @owner_user_id = config["owner_user_id"] || config[:owner_user_id]
+    @tenant_id = config["tenant_id"] || config[:tenant_id] || DEFAULT_TENANT_ID
+    @engine_url = config["engine_url"] || config[:engine_url] || DEFAULT_ENGINE_URL
+    @api_url = config["api_url"] || config[:api_url] || DEFAULT_API_URL
+    @base_url = config["base_url"] || config[:base_url] || DEFAULT_BASE_URL
+    @trusted_app_api_key = config["trusted_app_api_key"] || config[:trusted_app_api_key]
   end
 
   def find_current_user
@@ -111,7 +112,8 @@ class Demo2Controller < ApplicationController
 
   def ensure_demo_user_exists
     # Create demo user if it doesn't exist
-    unless User.find_by(email: DEMO_USER_EMAIL)
+    # Use where().first to avoid Mongoid raising exception
+    unless User.where(email: DEMO_USER_EMAIL).first
       User.create!(
         email: DEMO_USER_EMAIL,
         password: DEMO_USER_PASSWORD,

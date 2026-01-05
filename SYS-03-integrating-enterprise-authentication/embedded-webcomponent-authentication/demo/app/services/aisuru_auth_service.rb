@@ -58,18 +58,21 @@ class AisuruAuthService
     request = Net::HTTP::Post.new(uri)
     request["Content-Type"] = "application/json"
     request["Accept"] = "application/json"
+    # Trusted App API key goes in X-Memori-Trusted-App header
+    request["X-Memori-Trusted-App"] = @trusted_app_api_key
     
-    request.body = {
+    # Body uses jwtToken (not jwt)
+    body = {
       tenant: @tenant_id,
-      jwt: jwt_token
-    }.to_json
+      jwtToken: jwt_token
+    }
+    request.body = body.to_json
     
     Rails.logger.info "[AIsuru] Calling LoginWithJWT for tenant: #{@tenant_id}"
     
     response = http.request(request)
     
     Rails.logger.info "[AIsuru] Response status: #{response.code}"
-    Rails.logger.debug "[AIsuru] Response body: #{response.body}"
     
     JSON.parse(response.body)
   rescue StandardError => e
