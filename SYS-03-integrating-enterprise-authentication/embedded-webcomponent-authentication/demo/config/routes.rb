@@ -2,8 +2,18 @@ Rails.application.routes.draw do
   # Health check endpoint
   get "up" => "rails/health#show", as: :rails_health_check
 
-  # Main routes
+  # Main routes - Demo selection
   root "home#index"
-  post "home/configure", to: "home#configure", as: :configure_agent
+  
+  # Demo 1: Web Component with showLogin (self-managed auth)
+  get "demo1", to: "demo1#index", as: :demo1
+  post "demo1/configure", to: "demo1#configure", as: :demo1_configure
+  
+  # Demo 2: Programmatic auth with Trusted App + LoginWithJWT
+  get "demo2", to: "demo2#index", as: :demo2
+  get "demo2/login", to: "demo2#login", as: :demo2_login
+  post "demo2/authenticate", to: "demo2#authenticate", as: :demo2_authenticate
+  post "demo2/configure", to: "demo2#configure", as: :demo2_configure
+  delete "demo2/logout", to: "demo2#logout", as: :demo2_logout
 end
 

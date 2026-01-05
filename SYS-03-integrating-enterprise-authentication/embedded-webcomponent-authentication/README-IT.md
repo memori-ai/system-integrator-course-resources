@@ -11,11 +11,11 @@ Questa guida spiega come integrare il web component AIsuru nelle tue applicazion
 - Usare variabili di contesto e domande iniziali
 - Implementare flussi di autenticazione sicuri
 
-## 🚀 Prova la Demo
+## 🚀 Prova le Demo
 
-Questo modulo include una **demo applicativa funzionante** che ti permette di testare il web component con le credenziali del tuo agente.
+Questo modulo include **due demo applicative funzionanti** che mostrano diversi approcci all'autenticazione.
 
-### Avviare la Demo
+### Avviare le Demo
 
 ```bash
 # Naviga nella cartella demo
@@ -31,13 +31,22 @@ docker compose up
 open http://localhost:3000
 ```
 
-### Cosa Mostra la Demo
+### Demo 1: Login Autonomo (`showLogin="true"`)
 
-1. **Form di Configurazione**: Inserisci il `memoriID` e `ownerUserID` del tuo agente
-2. **Web Component Live**: Vedi il widget chat AIsuru in azione con le tue credenziali
-3. **Login Integrato**: Sperimenta la funzionalità `showLogin="true"` che fornisce l'autenticazione utente
+L'approccio più semplice dove il web component gestisce l'autenticazione autonomamente.
 
-La demo ti guida nell'ottenere le credenziali del tuo agente dalla sezione Dev Docs di AIsuru.
+- Configura il web component con le credenziali dell'agente
+- Gli utenti accedono tramite il pannello di autenticazione integrato
+- Non richiede modifiche al backend
+
+### Demo 2: Autenticazione Programmatica con Trusted App
+
+Autenticazione backend usando l'API `LoginWithJWT` per un'esperienza SSO senza interruzioni.
+
+- Crea e configura una Trusted App nel tuo tenant
+- Il tuo backend autentica gli utenti via `LoginWithJWT`
+- Passa il token al web component tramite `additionalInfo.loginToken`
+- Utente demo: `demo@demo.com` / `demodemo`
 
 📁 **Codice Sorgente Demo**: [demo/](./demo/)
 
@@ -261,6 +270,55 @@ Content-Type: application/json
 Usa il valore `token` restituito nell'attributo `additionalInfo.loginToken`.
 
 📖 **Riferimento API Completo**: [Documentazione API PwlUser](https://docs.aisuru.com/api/backend/pwluser)
+
+---
+
+## 🔐 Applicazioni Fidate (Trusted Applications)
+
+Per usare `LoginWithJWT` per l'autenticazione programmatica, hai bisogno di una **Trusted Application**.
+
+### Cos'è una Trusted App?
+
+Una Trusted Application è un modo sicuro per il tuo backend di comunicare con le API di AIsuru. Ti permette di:
+- Autenticare utenti programmaticamente senza che inseriscano credenziali AIsuru
+- Creare esperienze SSO senza interruzioni
+- Gestire le sessioni utente dal tuo backend
+
+### Creare una Trusted App
+
+1. Accedi al tuo tenant AIsuru come **amministratore**
+2. Vai su **Admin → Applicazioni Fidate** (o "Trusted Apps" in inglese)
+3. Clicca **+ Crea** per aggiungere una nuova Trusted App
+4. Compila:
+   - **Nome**: Un nome descrittivo (es. "La Mia App Production")
+   - **URL Base**: L'URL della tua applicazione (per validazione CORS)
+5. Salva e copia la **Chiave API**
+
+### Usare la Chiave API della Trusted App
+
+Firma il tuo JWT con la Chiave API della Trusted App:
+
+```javascript
+// Codice backend (esempio Node.js)
+const jwt = require('jsonwebtoken');
+
+const trustedAppApiKey = process.env.AISURU_TRUSTED_APP_KEY;
+
+const token = jwt.sign(
+  {
+    sub: user.email,
+    email: user.email,
+    name: user.name,
+    tenant: 'www.aisuru.com'
+  },
+  trustedAppApiKey,
+  { algorithm: 'HS256', expiresIn: '5m' }
+);
+
+// Poi chiama LoginWithJWT con questo token
+```
+
+> ⚠️ **Avviso di Sicurezza:** Non esporre mai la Chiave API della Trusted App nel codice frontend! Chiama sempre le API AIsuru dal tuo backend.
 
 ---
 

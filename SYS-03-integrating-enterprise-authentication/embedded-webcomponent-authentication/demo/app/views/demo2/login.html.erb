@@ -1,0 +1,101 @@
+<% content_for :title, "Demo 2: Login" %>
+
+<div class="container py-5">
+  
+  <%# Back to Demo 2 %>
+  <div class="row mb-4">
+    <div class="col">
+      <%= link_to demo2_path, class: "btn btn-outline-secondary" do %>
+        <i class="bi bi-arrow-left me-1"></i> Back to Demo 2
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+      
+      <%# Login Card %>
+      <div class="card shadow">
+        <div class="card-header bg-primary text-white text-center py-4">
+          <i class="bi bi-person-circle display-4 mb-2"></i>
+          <h4 class="mb-0">Demo Login</h4>
+        </div>
+        <div class="card-body p-4">
+          
+          <%# Demo Credentials Info %>
+          <div class="alert alert-info mb-4">
+            <h6 class="alert-heading">
+              <i class="bi bi-info-circle me-1"></i>
+              Demo Credentials
+            </h6>
+            <hr>
+            <p class="mb-1">
+              <strong>Email:</strong> <code>demo@demo.com</code>
+            </p>
+            <p class="mb-0">
+              <strong>Password:</strong> <code>demodemo</code>
+            </p>
+          </div>
+
+          <%# Login Form %>
+          <%= form_with url: demo2_authenticate_path, method: :post, local: true do |f| %>
+            <div class="mb-3">
+              <label for="email" class="form-label fw-bold">
+                <i class="bi bi-envelope me-1"></i>
+                Email
+              </label>
+              <%= f.email_field :email, 
+                  class: "form-control form-control-lg", 
+                  placeholder: "demo@demo.com",
+                  value: "demo@demo.com",
+                  required: true,
+                  autofocus: true %>
+            </div>
+
+            <div class="mb-4">
+              <label for="password" class="form-label fw-bold">
+                <i class="bi bi-lock me-1"></i>
+                Password
+              </label>
+              <%= f.password_field :password, 
+                  class: "form-control form-control-lg", 
+                  placeholder: "••••••••",
+                  value: "demodemo",
+                  required: true %>
+            </div>
+
+            <div class="d-grid">
+              <%= f.submit "Login", class: "btn btn-primary btn-lg" %>
+            </div>
+          <% end %>
+
+        </div>
+        <div class="card-footer bg-light text-center py-3">
+          <small class="text-muted">
+            <i class="bi bi-shield-check me-1"></i>
+            This is a demo login - in production, use secure authentication (e.g., Devise)
+          </small>
+        </div>
+      </div>
+
+      <%# How it Works %>
+      <div class="card mt-4 border-0 bg-light">
+        <div class="card-body">
+          <h6 class="card-title">
+            <i class="bi bi-gear me-1"></i>
+            What happens when you login?
+          </h6>
+          <ol class="small text-muted mb-0">
+            <li class="mb-1">Your credentials are verified against the local database</li>
+            <li class="mb-1">If valid, the backend calls AIsuru's <code>LoginWithJWT</code> API</li>
+            <li class="mb-1">AIsuru creates/finds your user and returns a token</li>
+            <li class="mb-1">The token is stored and passed to the web component</li>
+            <li>You're automatically logged into the AI agent!</li>
+          </ol>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
