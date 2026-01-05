@@ -11,6 +11,38 @@ This guide covers how to embed the AIsuru web component in your applications and
 - Use context variables and initial questions
 - Implement secure authentication flows
 
+## 🚀 Try the Demo
+
+This module includes a **live demo application** that lets you test the web component with your own agent credentials.
+
+### Running the Demo
+
+```bash
+# Navigate to the demo folder
+cd demo
+
+# Install dependencies (first time only)
+docker compose run --rm web bundle install
+
+# Start the application with Docker Compose
+docker compose up
+
+# Open in your browser
+open http://localhost:3000
+```
+
+### What the Demo Shows
+
+1. **Configuration Form**: Enter your agent's `memoriID` and `ownerUserID`
+2. **Live Web Component**: See the AIsuru chat widget in action with your credentials
+3. **Built-in Login**: Experience the `showLogin="true"` functionality that provides user authentication
+
+The demo guides you through obtaining your agent credentials from the AIsuru Dev Docs section.
+
+📁 **Demo Source Code**: [demo/](./demo/)
+
+---
+
 ## 📋 Prerequisites
 
 Before starting, you need:
@@ -36,7 +68,7 @@ Add these two lines to your HTML `<head>` or before your closing `</body>` tag:
 
 ### Step 2: Get Your Agent Credentials
 
-Navigate to your agent in AIsuru, then go to **Dev Docs** → **Accesso alle API** tab.
+Navigate to your agent in AIsuru, then click on **Dev docs** in the left sidebar.
 
 You'll find:
 
@@ -46,12 +78,12 @@ You'll find:
 | **Engine URL** | API endpoint for conversations | `https://engine.memori.ai/memori/v2` |
 | **Backend URL** | API endpoint for backend operations | `https://backend.memori.ai/api/v2` |
 
-Under **Altri riferimenti**:
+Expand the **▼ Other references** section to find:
 
 | Field | Description | Example |
 |-------|-------------|---------|
-| **Memori (Agente) ID secondario** | Alternative agent ID | `b2c3d4e5-f6a7-8901-bcde-f12345678901` |
-| **ID Utente proprietario** | Owner user ID | `c3d4e5f6-a7b8-9012-cdef-123456789012` |
+| **Secondary Memori (Agent) ID** | Agent ID for web component | `b2c3d4e5-f6a7-8901-bcde-f12345678901` |
+| **Owner user ID** | Owner user ID | `c3d4e5f6-a7b8-9012-cdef-123456789012` |
 
 ### Step 3: Configure the Web Component
 

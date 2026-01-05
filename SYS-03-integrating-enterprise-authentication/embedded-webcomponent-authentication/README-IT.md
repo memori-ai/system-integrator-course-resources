@@ -11,6 +11,38 @@ Questa guida spiega come integrare il web component AIsuru nelle tue applicazion
 - Usare variabili di contesto e domande iniziali
 - Implementare flussi di autenticazione sicuri
 
+## 🚀 Prova la Demo
+
+Questo modulo include una **demo applicativa funzionante** che ti permette di testare il web component con le credenziali del tuo agente.
+
+### Avviare la Demo
+
+```bash
+# Naviga nella cartella demo
+cd demo
+
+# Installa le dipendenze (solo la prima volta)
+docker compose run --rm web bundle install
+
+# Avvia l'applicazione con Docker Compose
+docker compose up
+
+# Apri nel browser
+open http://localhost:3000
+```
+
+### Cosa Mostra la Demo
+
+1. **Form di Configurazione**: Inserisci il `memoriID` e `ownerUserID` del tuo agente
+2. **Web Component Live**: Vedi il widget chat AIsuru in azione con le tue credenziali
+3. **Login Integrato**: Sperimenta la funzionalità `showLogin="true"` che fornisce l'autenticazione utente
+
+La demo ti guida nell'ottenere le credenziali del tuo agente dalla sezione Dev Docs di AIsuru.
+
+📁 **Codice Sorgente Demo**: [demo/](./demo/)
+
+---
+
 ## 📋 Prerequisiti
 
 Prima di iniziare, hai bisogno di:
@@ -36,7 +68,7 @@ Aggiungi queste due righe nel tuo HTML `<head>` o prima del tag di chiusura `</b
 
 ### Step 2: Ottenere le Credenziali del Tuo Agente
 
-Naviga al tuo agente in AIsuru, poi vai su **Dev Docs** → tab **Accesso alle API**.
+Naviga al tuo agente in AIsuru, poi clicca su **Dev docs** nel menu laterale sinistro.
 
 Troverai:
 
@@ -46,11 +78,11 @@ Troverai:
 | **Engine URL** | Endpoint API per le conversazioni | `https://engine.memori.ai/memori/v2` |
 | **Backend URL** | Endpoint API per operazioni backend | `https://backend.memori.ai/api/v2` |
 
-Sotto **Altri riferimenti**:
+Espandi la sezione **▼ Altri riferimenti** per trovare:
 
 | Campo | Descrizione | Esempio |
 |-------|-------------|---------|
-| **Memori (Agente) ID secondario** | ID agente alternativo | `b2c3d4e5-f6a7-8901-bcde-f12345678901` |
+| **Memori (Agente) ID secondario** | ID agente per il web component | `b2c3d4e5-f6a7-8901-bcde-f12345678901` |
 | **ID Utente proprietario** | ID dell'utente proprietario | `c3d4e5f6-a7b8-9012-cdef-123456789012` |
 
 ### Step 3: Configurare il Web Component

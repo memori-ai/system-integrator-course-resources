@@ -1,0 +1,402 @@
+<% content_for :title, "Embedded Web Component Authentication Demo" %>
+
+<div class="container py-5">
+  
+  <% unless @show_agent %>
+    <%# STEP 1: Configuration Form %>
+    
+    <%# Hero Section %>
+    <div class="row mb-5">
+      <div class="col-lg-8 mx-auto text-center">
+        <h1 class="display-5 fw-bold mb-3">
+          <i class="bi bi-plug text-primary me-2"></i>
+          Embedded Web Component Demo
+        </h1>
+        <p class="lead text-muted">
+          Configure the AIsuru web component with your agent credentials.
+          The <code>showLogin="true"</code> attribute enables the built-in authentication panel.
+        </p>
+      </div>
+    </div>
+
+    <%# Instructions %>
+    <div class="row mb-5">
+      <div class="col-lg-10 mx-auto">
+        <div class="card border-info">
+          <div class="card-header bg-info text-white">
+            <h5 class="mb-0">
+              <i class="bi bi-info-circle me-2"></i>
+              How to get your Agent IDs
+            </h5>
+          </div>
+          <div class="card-body">
+            <ol class="mb-0">
+              <li class="mb-2">
+                <strong>Create an Agent</strong> on <a href="https://www.aisuru.com" target="_blank">AIsuru</a> 
+                (or use your own tenant if you have a PaaS subscription)
+              </li>
+              <li class="mb-2">
+                <strong>Open your Agent</strong> and click on <strong>"Dev docs"</strong> in the left sidebar
+              </li>
+              <li class="mb-2">
+                Expand the <strong>"▼ Other references"</strong> section (or "Altri riferimenti" in Italian)
+              </li>
+              <li class="mb-2">
+                Copy the following values:
+                <ul class="mt-2">
+                  <li><strong>Secondary Memori (Agent) ID</strong> → This is your <code>memoriID</code></li>
+                  <li><strong>Owner user ID</strong> → This is your <code>ownerUserID</code></li>
+                </ul>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%# Configuration Form %>
+    <div class="row mb-5">
+      <div class="col-lg-8 mx-auto">
+        <div class="card shadow">
+          <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">
+              <i class="bi bi-gear me-2"></i>
+              Configure Your Agent
+            </h5>
+          </div>
+          <div class="card-body p-4">
+            <%= form_with url: configure_agent_path, method: :post, local: true do |f| %>
+              <div class="mb-4">
+                <label for="memori_id" class="form-label fw-bold">
+                  <i class="bi bi-fingerprint me-1"></i>
+                  Memori ID (Agente ID secondario)
+                </label>
+                <%= f.text_field :memori_id, 
+                    class: "form-control form-control-lg", 
+                    placeholder: "e.g., a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                    required: true,
+                    pattern: "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}" %>
+                <div class="form-text">
+                  Found in Dev docs → Other references → "Secondary Memori (Agent) ID"
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <label for="owner_user_id" class="form-label fw-bold">
+                  <i class="bi bi-person-badge me-1"></i>
+                  Owner User ID (ID Utente proprietario)
+                </label>
+                <%= f.text_field :owner_user_id, 
+                    class: "form-control form-control-lg", 
+                    placeholder: "e.g., b2c3d4e5-f6a7-8901-bcde-f12345678901",
+                    required: true,
+                    pattern: "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}" %>
+                <div class="form-text">
+                  Found in Dev docs → Other references → "Owner user ID"
+                </div>
+              </div>
+
+              <hr class="my-4">
+              <h6 class="text-muted mb-3">
+                <i class="bi bi-sliders me-1"></i>
+                Advanced Configuration (pre-filled with defaults)
+              </h6>
+
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="tenant_id" class="form-label">
+                    <i class="bi bi-building me-1"></i>
+                    Tenant ID
+                  </label>
+                  <%= f.text_field :tenant_id, 
+                      class: "form-control", 
+                      value: @tenant_id || "www.aisuru.com",
+                      required: true %>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label for="base_url" class="form-label">
+                    <i class="bi bi-link-45deg me-1"></i>
+                    Base URL
+                  </label>
+                  <%= f.text_field :base_url, 
+                      class: "form-control", 
+                      value: @base_url || "https://www.aisuru.com",
+                      required: true %>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="engine_url" class="form-label">
+                  <i class="bi bi-cpu me-1"></i>
+                  Engine URL
+                </label>
+                <%= f.text_field :engine_url, 
+                    class: "form-control", 
+                    value: @engine_url || "https://engine.memori.ai/memori/v2",
+                    required: true %>
+              </div>
+
+              <div class="mb-4">
+                <label for="api_url" class="form-label">
+                  <i class="bi bi-server me-1"></i>
+                  API URL
+                </label>
+                <%= f.text_field :api_url, 
+                    class: "form-control", 
+                    value: @api_url || "https://backend.memori.ai/api/v2",
+                    required: true %>
+              </div>
+
+              <div class="d-grid">
+                <%= f.submit "Load Agent", class: "btn btn-primary btn-lg" %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%# Info Cards %>
+    <div class="row">
+      <div class="col-md-4 mb-4">
+        <div class="card h-100 card-hover border-0 shadow-sm">
+          <div class="card-body text-center p-4">
+            <i class="bi bi-shield-lock display-4 text-success mb-3"></i>
+            <h5 class="card-title">Built-in Login</h5>
+            <p class="card-text text-muted">
+              With <code>showLogin="true"</code>, users can authenticate directly through the web component.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="card h-100 card-hover border-0 shadow-sm">
+          <div class="card-body text-center p-4">
+            <i class="bi bi-chat-dots display-4 text-primary mb-3"></i>
+            <h5 class="card-title">Conversational AI</h5>
+            <p class="card-text text-muted">
+              Test your AIsuru agent in a fully functional chat interface embedded in your app.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="card h-100 card-hover border-0 shadow-sm">
+          <div class="card-body text-center p-4">
+            <i class="bi bi-code-slash display-4 text-info mb-3"></i>
+            <h5 class="card-title">Easy Integration</h5>
+            <p class="card-text text-muted">
+              Just include the script and configure the web component attributes.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <% else %>
+    <%# STEP 2: Show Web Component %>
+
+    <%# Back Button %>
+    <div class="row mb-4">
+      <div class="col">
+        <%= link_to root_path, class: "btn btn-outline-secondary" do %>
+          <i class="bi bi-arrow-left me-1"></i> Back to Configuration
+        <% end %>
+      </div>
+    </div>
+
+    <%# Agent Info %>
+    <div class="row mb-4">
+      <div class="col-lg-10 mx-auto">
+        <div class="alert alert-success d-flex align-items-center">
+          <i class="bi bi-check-circle-fill me-2 fs-4"></i>
+          <div>
+            <strong>Agent Loaded!</strong> 
+            The web component is configured with your credentials. 
+            Try clicking <strong>"Login"</strong> to test the built-in authentication.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%# Configuration Display %>
+    <div class="row mb-4">
+      <div class="col-lg-10 mx-auto">
+        <div class="card border-secondary">
+          <div class="card-header bg-secondary text-white">
+            <h6 class="mb-0">
+              <i class="bi bi-code me-2"></i>
+              Current Configuration
+            </h6>
+          </div>
+          <div class="card-body">
+            <div class="row mb-2">
+              <div class="col-md-6">
+                <small class="text-muted">Memori ID:</small>
+                <div class="font-monospace small"><%= @memori_id %></div>
+              </div>
+              <div class="col-md-6">
+                <small class="text-muted">Owner User ID:</small>
+                <div class="font-monospace small"><%= @owner_user_id %></div>
+              </div>
+            </div>
+            <div class="row mb-2">
+              <div class="col-md-6">
+                <small class="text-muted">Tenant ID:</small>
+                <div class="font-monospace small"><%= @tenant_id %></div>
+              </div>
+              <div class="col-md-6">
+                <small class="text-muted">Base URL:</small>
+                <div class="font-monospace small"><%= @base_url %></div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <small class="text-muted">Engine URL:</small>
+                <div class="font-monospace small"><%= @engine_url %></div>
+              </div>
+              <div class="col-md-6">
+                <small class="text-muted">API URL:</small>
+                <div class="font-monospace small"><%= @api_url %></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%# Web Component %>
+    <div class="row">
+      <div class="col-lg-10 mx-auto">
+        <div class="card shadow">
+          <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">
+              <i class="bi bi-robot me-2"></i>
+              Your AIsuru Agent
+            </h5>
+          </div>
+          <div class="card-body p-0">
+            <div class="memori-container">
+              <memori-client
+                memoriName="YourAgent"
+                ownerUserName="owner"
+                memoriID="<%= @memori_id %>"
+                ownerUserID="<%= @owner_user_id %>"
+                tenantID="<%= @tenant_id %>"
+                engineURL="<%= @engine_url %>"
+                apiURL="<%= @api_url %>"
+                baseURL="<%= @base_url %>"
+                layout="CHAT"
+                uiLang="EN"
+                spokenLang="EN"
+                showLogin="true"
+              ></memori-client>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%# Code Example %>
+    <div class="row mt-5">
+      <div class="col-lg-10 mx-auto">
+        <div class="card border-dark">
+          <div class="card-header bg-dark text-white">
+            <h6 class="mb-0">
+              <i class="bi bi-file-code me-2"></i>
+              HTML Code Example
+            </h6>
+          </div>
+          <div class="card-body bg-light">
+            <pre class="mb-0"><code>&lt;!-- Include AIsuru Web Component --&gt;
+&lt;script type="module" src="https://cdn.jsdelivr.net/npm/@memori.ai/memori-webcomponent/dist/memori-webcomponent.js"&gt;&lt;/script&gt;
+&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@memori.ai/memori-react/dist/styles.min.css" /&gt;
+
+&lt;!-- Configure your agent --&gt;
+&lt;memori-client
+  memoriName="YourAgent"
+  ownerUserName="owner"
+  memoriID="<%= @memori_id %>"
+  ownerUserID="<%= @owner_user_id %>"
+  tenantID="<%= @tenant_id %>"
+  engineURL="<%= @engine_url %>"
+  apiURL="<%= @api_url %>"
+  baseURL="<%= @base_url %>"
+  layout="CHAT"
+  uiLang="EN"
+  spokenLang="EN"
+  <strong>showLogin="true"</strong>
+&gt;&lt;/memori-client&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%# CSS Example for Containment %>
+    <div class="row mt-4">
+      <div class="col-lg-10 mx-auto">
+        <div class="card border-info">
+          <div class="card-header bg-info text-white">
+            <h6 class="mb-0">
+              <i class="bi bi-filetype-css me-2"></i>
+              CSS to Contain the Web Component
+            </h6>
+          </div>
+          <div class="card-body bg-light">
+            <p class="text-muted mb-3">
+              <i class="bi bi-info-circle me-1"></i>
+              The web component uses <code>position: fixed</code> internally. Use this CSS to contain it within a specific area of your page:
+            </p>
+            <pre class="mb-0"><code>/* Container for AIsuru Web Component */
+.memori-container {
+  position: relative;
+  width: 100%;
+  height: 600px; /* Adjust height as needed */
+  overflow: hidden;
+}
+
+/* Force web component to stay contained */
+.memori-container memori-client {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+/* Override fixed positioning inside the web component */
+.memori-container memori-client .memori-widget,
+.memori-container memori-client .memori {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Contain the fixed toast notifications */
+.memori-container memori-client > div > div[style*="position: fixed"] {
+  position: absolute !important;
+}
+
+/* Ensure background stays contained */
+.memori-container .memori--global-background,
+.memori-container .memori--global-background-image {
+  position: absolute !important;
+}</code></pre>
+          </div>
+          <div class="card-footer bg-light border-top">
+            <small class="text-muted">
+              <i class="bi bi-lightbulb me-1"></i>
+              <strong>Tip:</strong> Wrap your <code>&lt;memori-client&gt;</code> element inside a <code>&lt;div class="memori-container"&gt;</code> to apply these styles.
+            </small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <% end %>
+</div>
+
