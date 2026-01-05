@@ -12,18 +12,26 @@ This module covers enterprise authentication integration patterns for AIsuru, en
 
 | # | Topic | Description |
 |---|-------|-------------|
-| 1 | [Embedded Web Component Authentication](./embedded-webcomponent-authentication/) | Managing authentication in embedded web component scenarios |
-| 2 | [Microsoft Authentication](./microsoft-authentication/) | Azure AD / Entra ID SSO integration |
-| 3 | [Login PWD API](./login-pwd-api/) | Username/Password API with practical examples |
-| 4 | [Login with Redirect](./login-with-redirect/) | Redirect-based authentication flows |
+| 1 | [Manage Login](./manage_login/) | Complete authentication management demo covering all scenarios |
+
+### Demo Application Features
+
+The **Manage Login** demo application includes:
+
+| Demo | Authentication Method | Description |
+|------|----------------------|-------------|
+| **Demo 1** | Self-Managed Login | Web component handles login via `showLogin="true"` |
+| **Demo 2** | Programmatic Auth (LoginWithJWT) | Backend authenticates users via Trusted App API |
+| **Demo 3** | Microsoft Authentication | Azure AD / Entra ID SSO integration *(coming soon)* |
 
 ## 🎓 Learning Objectives
 
 By the end of this module, you will be able to:
 
 - ✅ Implement authentication in embedded AIsuru web components
+- ✅ Use the LoginWithJWT API for programmatic authentication
+- ✅ Configure Trusted Applications for secure backend-to-backend communication
 - ✅ Configure Microsoft Azure AD / Entra ID SSO
-- ✅ Use the LoginPWD API for username/password authentication
 - ✅ Build redirect-based authentication flows
 
 ## 🛠️ Prerequisites
@@ -36,11 +44,11 @@ By the end of this module, you will be able to:
 
 ```
 SYS-03-integrating-enterprise-authentication/
-├── README.md                              # This file
-├── embedded-webcomponent-authentication/  # Embedded auth patterns
-├── microsoft-authentication/              # Azure AD integration
-├── login-pwd-api/                         # LoginPWD API examples
-└── login-with-redirect/                   # Redirect flow implementation
+├── README.md        # This file
+└── manage_login/    # Complete authentication demo app
+    ├── README.md    # English documentation
+    ├── README-IT.md # Italian documentation
+    └── demo/        # Rails application with all auth demos
 ```
 
 ## 🔗 Resources
