@@ -22,7 +22,7 @@ The **Manage Login** demo application includes:
 |------|----------------------|-------------|
 | **Demo 1** | Self-Managed Login | Web component handles login via `showLogin="true"` |
 | **Demo 2** | Programmatic Auth (LoginWithJWT) | Backend authenticates users via Trusted App API |
-| **Demo 3** | Microsoft Authentication | Azure AD / Entra ID SSO integration *(coming soon)* |
+| **Demo 3** | Microsoft Authentication | Azure AD / Entra ID SSO integration |
 
 ## 🎓 Learning Objectives
 
