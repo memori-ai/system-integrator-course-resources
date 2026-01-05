@@ -1,0 +1,494 @@
+<% content_for :title, "Demo 3: Microsoft Authentication" %>
+
+<div class="container py-5">
+  
+  <%# Flash Messages %>
+  <% if flash[:notice] %>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <i class="bi bi-check-circle me-2"></i><%= flash[:notice] %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+  <% end %>
+  <% if flash[:alert] %>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <i class="bi bi-exclamation-triangle me-2"></i><%= flash[:alert] %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+  <% end %>
+
+  <%# Header %>
+  <div class="row mb-4">
+    <div class="col">
+      <%= link_to root_path, class: "btn btn-outline-secondary" do %>
+        <i class="bi bi-arrow-left me-1"></i> Back to Demo Selection
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row mb-4">
+    <div class="col text-center">
+      <h1 class="display-5 fw-bold">
+        <i class="bi bi-microsoft text-primary me-2"></i>
+        Demo 3: Microsoft Authentication
+      </h1>
+      <p class="lead text-muted">
+        Integrate Microsoft Entra ID (Azure AD) SSO with AIsuru web component
+      </p>
+    </div>
+  </div>
+
+  <%# Main Content: Config + User Status %>
+  <div class="row g-4">
+    
+    <%# Left Column: Configuration %>
+    <div class="col-lg-6">
+      
+      <%# Microsoft Configuration Card %>
+      <div class="card shadow-sm mb-4">
+        <div class="card-header bg-primary text-white">
+          <h5 class="mb-0">
+            <i class="bi bi-microsoft me-2"></i>
+            Step 1: Microsoft Azure Configuration
+          </h5>
+        </div>
+        <div class="card-body">
+          <%= form_with url: demo3_configure_path, method: :post, local: true do |f| %>
+            
+            <div class="mb-3">
+              <label for="ms_client_id" class="form-label fw-bold">
+                Application (Client) ID <span class="text-danger">*</span>
+              </label>
+              <%= f.text_field :ms_client_id, 
+                  class: "form-control", 
+                  placeholder: "e.g., daecab2d-2a7c-44c8-8dce-0221e205adfa",
+                  value: @ms_client_id,
+                  required: true %>
+              <div class="form-text">
+                Found in Azure Portal → App registrations → Your App → Overview
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label for="ms_tenant_id" class="form-label fw-bold">Tenant ID</label>
+              <%= f.select :ms_tenant_id, 
+                  options_for_select([
+                    ["organizations (Multi-tenant work/school)", "organizations"],
+                    ["common (Any Microsoft account)", "common"],
+                    ["consumers (Personal accounts only)", "consumers"]
+                  ], @ms_tenant_id),
+                  {},
+                  class: "form-select" %>
+              <div class="form-text">
+                For single-tenant, enter your specific Tenant ID (GUID)
+              </div>
+            </div>
+
+            <hr class="my-4">
+            
+            <h6 class="text-muted mb-3">
+              <i class="bi bi-robot me-1"></i>
+              Step 2: AIsuru Agent Credentials
+            </h6>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="memori_id" class="form-label fw-bold">Memori ID</label>
+                <%= f.text_field :memori_id, 
+                    class: "form-control", 
+                    placeholder: "Secondary Agent ID",
+                    value: @memori_id,
+                    required: true,
+                    pattern: "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}" %>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="owner_user_id" class="form-label fw-bold">Owner User ID</label>
+                <%= f.text_field :owner_user_id, 
+                    class: "form-control", 
+                    placeholder: "Owner User ID",
+                    value: @owner_user_id,
+                    required: true,
+                    pattern: "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}" %>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="trusted_app_api_key" class="form-label fw-bold">
+                Trusted App API Key <span class="text-danger">*</span>
+              </label>
+              <%= f.text_field :trusted_app_api_key, 
+                  class: "form-control", 
+                  placeholder: "Your Trusted App API Key",
+                  value: @trusted_app_api_key,
+                  required: true %>
+              <div class="form-text">
+                Obtain from AIsuru Admin → Trusted Apps
+              </div>
+            </div>
+
+            <hr class="my-4">
+            
+            <h6 class="text-muted mb-3">
+              <i class="bi bi-sliders me-1"></i>
+              Advanced Settings (pre-filled)
+            </h6>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="tenant_id" class="form-label">AIsuru Tenant</label>
+                <%= f.text_field :tenant_id, class: "form-control", value: @tenant_id %>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="base_url" class="form-label">Base URL</label>
+                <%= f.text_field :base_url, class: "form-control", value: @base_url %>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="api_url" class="form-label">API URL</label>
+                <%= f.text_field :api_url, class: "form-control", value: @api_url %>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="engine_url" class="form-label">Engine URL</label>
+                <%= f.text_field :engine_url, class: "form-control", value: @engine_url %>
+              </div>
+            </div>
+
+            <div class="d-grid mt-4">
+              <%= f.submit "Save Configuration", class: "btn btn-primary btn-lg" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <%# Right Column: User Status & Login %>
+    <div class="col-lg-6">
+      
+      <%# User Status Card %>
+      <div class="card shadow-sm mb-4">
+        <div class="card-header bg-info text-white">
+          <h5 class="mb-0">
+            <i class="bi bi-person-circle me-2"></i>
+            Step 3: User Authentication Status
+          </h5>
+        </div>
+        <div class="card-body text-center py-5">
+          <% if @current_user %>
+            <i class="bi bi-person-check display-1 text-success mb-3"></i>
+            <h4>Logged in as: <%= @current_user.email %></h4>
+            <% if @current_user.ms_id.present? %>
+              <p class="text-muted small">
+                <i class="bi bi-microsoft me-1"></i> Microsoft ID: <code><%= @current_user.ms_id[0..20] %>...</code>
+              </p>
+            <% end %>
+            <% if @current_user.aisuru_authenticated? %>
+              <p class="text-success fw-bold">
+                <i class="bi bi-check-circle me-1"></i> AIsuru token obtained!
+              </p>
+              <p class="small text-muted">
+                Token: <code><%= @current_user.aisuru_token[0..20] %>...</code>
+              </p>
+            <% else %>
+              <p class="text-warning fw-bold">
+                <i class="bi bi-exclamation-triangle me-1"></i> No AIsuru token
+              </p>
+              <p class="small text-muted">Configure Trusted App and re-login</p>
+            <% end %>
+            <%= button_to "Logout", demo3_logout_path, method: :delete, class: "btn btn-outline-danger mt-3" %>
+          <% else %>
+            <i class="bi bi-person-x display-1 text-muted mb-3"></i>
+            <h4 class="text-muted">Not Logged In</h4>
+            <p class="text-muted mb-4">
+              Configure Microsoft credentials above, then click the button below.
+            </p>
+            
+            <% if ms_configured? %>
+              <button id="msLoginBtn" class="btn btn-primary btn-lg">
+                <i class="bi bi-microsoft me-2"></i>
+                Login with Microsoft
+              </button>
+            <% else %>
+              <button class="btn btn-secondary btn-lg" disabled>
+                <i class="bi bi-microsoft me-2"></i>
+                Configure Microsoft First
+              </button>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+
+      <%# Status Checklist %>
+      <div class="card shadow-sm">
+        <div class="card-header bg-dark text-white">
+          <h5 class="mb-0">
+            <i class="bi bi-list-check me-2"></i>
+            Configuration Checklist
+          </h5>
+        </div>
+        <div class="card-body">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              Microsoft Client ID configured
+              <% if ms_configured? %>
+                <i class="bi bi-check-circle text-success fs-5"></i>
+              <% else %>
+                <i class="bi bi-x-circle text-danger fs-5"></i>
+              <% end %>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              AIsuru Trusted App configured
+              <% if aisuru_configured? %>
+                <i class="bi bi-check-circle text-success fs-5"></i>
+              <% else %>
+                <i class="bi bi-x-circle text-danger fs-5"></i>
+              <% end %>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              User logged in with Microsoft
+              <% if @current_user %>
+                <i class="bi bi-check-circle text-success fs-5"></i>
+              <% else %>
+                <i class="bi bi-x-circle text-danger fs-5"></i>
+              <% end %>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              AIsuru token obtained
+              <% if @current_user&.aisuru_authenticated? %>
+                <i class="bi bi-check-circle text-success fs-5"></i>
+              <% else %>
+                <i class="bi bi-x-circle text-danger fs-5"></i>
+              <% end %>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%# Web Component Display %>
+  <div class="row mt-5">
+    <div class="col-12">
+      <div class="card shadow">
+        <div class="card-header bg-success text-white">
+          <h5 class="mb-0">
+            <i class="bi bi-robot me-2"></i>
+            Your AIsuru Agent (Pre-authenticated via Microsoft SSO)
+          </h5>
+        </div>
+        <div class="card-body p-0">
+          <% if @current_user&.aisuru_authenticated? %>
+            <div class="memori-container">
+              <memori-client
+                memoriName="YourAgent"
+                ownerUserName="owner"
+                memoriID="<%= @memori_id %>"
+                ownerUserID="<%= @owner_user_id %>"
+                tenantID="<%= @tenant_id %>"
+                engineURL="<%= @engine_url %>"
+                apiURL="<%= @api_url %>"
+                baseURL="<%= @base_url %>"
+                layout="CHAT"
+                uiLang="EN"
+                spokenLang="EN"
+                showLogin="false"
+                additionalInfo='{"loginToken":"<%= @current_user.aisuru_token %>"}'
+              ></memori-client>
+            </div>
+          <% else %>
+            <div class="text-center py-5">
+              <i class="bi bi-lock display-1 text-muted mb-4"></i>
+              <h4 class="text-muted">Complete all steps to see the agent</h4>
+              <p class="text-muted">
+                1. Configure Microsoft Azure credentials<br>
+                2. Configure AIsuru Trusted App<br>
+                3. Login with Microsoft
+              </p>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%# How It Works Section %>
+  <div class="row mt-5">
+    <div class="col-12">
+      <div class="card border-info">
+        <div class="card-header bg-info text-white">
+          <h5 class="mb-0">
+            <i class="bi bi-diagram-3 me-2"></i>
+            How Microsoft SSO + AIsuru Works
+          </h5>
+        </div>
+        <div class="card-body">
+          <div class="row g-4 text-center">
+            <div class="col-md-3">
+              <div class="bg-light rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                <i class="bi bi-microsoft display-5 text-primary"></i>
+              </div>
+              <h6>1. User clicks "Login with Microsoft"</h6>
+              <p class="small text-muted mb-0">MSAL.js opens popup for Microsoft authentication</p>
+            </div>
+            <div class="col-md-3">
+              <div class="bg-light rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                <i class="bi bi-person-badge display-5 text-info"></i>
+              </div>
+              <h6>2. Microsoft returns user data</h6>
+              <p class="small text-muted mb-0">Email, name, and MS user ID from the authenticated account</p>
+            </div>
+            <div class="col-md-3">
+              <div class="bg-light rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                <i class="bi bi-key display-5 text-warning"></i>
+              </div>
+              <h6>3. Backend calls AIsuru LoginWithJWT</h6>
+              <p class="small text-muted mb-0">Using Trusted App, creates/finds user and gets token</p>
+            </div>
+            <div class="col-md-3">
+              <div class="bg-light rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                <i class="bi bi-chat-dots display-5 text-success"></i>
+              </div>
+              <h6>4. Web component with loginToken</h6>
+              <p class="small text-muted mb-0">User is pre-authenticated in the AI agent</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%# Azure App Registration Guide %>
+  <div class="row mt-4">
+    <div class="col-12">
+      <div class="card border-primary">
+        <div class="card-header bg-primary text-white">
+          <h5 class="mb-0">
+            <i class="bi bi-gear me-2"></i>
+            How to Create an Azure App Registration
+          </h5>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <h6><i class="bi bi-1-circle me-2"></i>Go to Azure Portal</h6>
+              <ol class="small text-muted">
+                <li>Navigate to <a href="https://portal.azure.com" target="_blank">portal.azure.com</a></li>
+                <li>Search for "Microsoft Entra ID" (formerly Azure AD)</li>
+                <li>Go to "App registrations"</li>
+                <li>Click "+ New registration"</li>
+              </ol>
+              
+              <h6><i class="bi bi-2-circle me-2"></i>Configure the App</h6>
+              <ol class="small text-muted">
+                <li><strong>Name:</strong> e.g., "AIsuru Demo App"</li>
+                <li><strong>Supported account types:</strong>
+                  <ul>
+                    <li>"Accounts in any organizational directory" for multi-tenant</li>
+                    <li>"Accounts in this organizational directory only" for single-tenant</li>
+                  </ul>
+                </li>
+                <li><strong>Redirect URI:</strong> Select "Single-page application (SPA)" and enter <code><%= request.base_url %></code></li>
+              </ol>
+            </div>
+            <div class="col-md-6">
+              <h6><i class="bi bi-3-circle me-2"></i>Get the Client ID</h6>
+              <ol class="small text-muted">
+                <li>After registration, go to "Overview"</li>
+                <li>Copy the <strong>Application (client) ID</strong></li>
+                <li>Paste it in the configuration form above</li>
+              </ol>
+              
+              <h6><i class="bi bi-4-circle me-2"></i>API Permissions (optional)</h6>
+              <ol class="small text-muted">
+                <li>Go to "API permissions"</li>
+                <li>The default <code>User.Read</code> permission is usually sufficient</li>
+                <li>If needed, add: <code>openid</code>, <code>profile</code>, <code>email</code></li>
+              </ol>
+
+              <div class="alert alert-warning mt-3 mb-0">
+                <i class="bi bi-exclamation-triangle me-1"></i>
+                <strong>Important:</strong> Make sure the Redirect URI in Azure matches your app URL exactly!
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<%# MSAL.js Script for Microsoft Login %>
+<% if ms_configured? && !@current_user %>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const msLoginBtn = document.getElementById('msLoginBtn');
+  if (!msLoginBtn) return;
+
+  // MSAL Configuration - values from server
+  const msalConfig = {
+    auth: {
+      clientId: "<%= @ms_client_id %>",
+      authority: "https://login.microsoftonline.com/<%= @ms_tenant_id %>",
+      redirectUri: window.location.origin
+    },
+    cache: {
+      cacheLocation: "sessionStorage",
+      storeAuthStateInCookie: false
+    }
+  };
+
+  const msalInstance = new msal.PublicClientApplication(msalConfig);
+
+  msLoginBtn.addEventListener('click', async function() {
+    try {
+      msLoginBtn.disabled = true;
+      msLoginBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Authenticating...';
+
+      const loginResponse = await msalInstance.loginPopup({
+        scopes: ["openid", "profile", "email", "User.Read"],
+        prompt: "select_account"
+      });
+
+      console.log("Microsoft login successful", loginResponse);
+
+      // Get user info from the response
+      const account = loginResponse.account;
+      const userData = {
+        email: account.username,
+        name: account.name,
+        ms_id: account.homeAccountId
+      };
+
+      // Send to our backend to authenticate with AIsuru
+      const response = await fetch('<%= demo3_ms_callback_path %>', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': document.querySelector('[name="csrf-token"]')?.content || ''
+        },
+        body: JSON.stringify(userData)
+      });
+
+      const result = await response.json();
+      console.log("Backend response:", result);
+
+      if (result.success) {
+        if (result.warning) {
+          alert(result.warning);
+        }
+        window.location.href = result.redirect_url;
+      } else {
+        alert("Error: " + result.error);
+        msLoginBtn.disabled = false;
+        msLoginBtn.innerHTML = '<i class="bi bi-microsoft me-2"></i>Login with Microsoft';
+      }
+
+    } catch (error) {
+      console.error("Microsoft login error:", error);
+      alert("Microsoft login failed: " + error.message);
+      msLoginBtn.disabled = false;
+      msLoginBtn.innerHTML = '<i class="bi bi-microsoft me-2"></i>Login with Microsoft';
+    }
+  });
+});
+</script>
+<% end %>
+

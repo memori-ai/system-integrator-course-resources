@@ -15,5 +15,11 @@ Rails.application.routes.draw do
   post "demo2/authenticate", to: "demo2#authenticate", as: :demo2_authenticate
   post "demo2/configure", to: "demo2#configure", as: :demo2_configure
   delete "demo2/logout", to: "demo2#logout", as: :demo2_logout
+  
+  # Demo 3: Microsoft Authentication + AIsuru
+  get "demo3", to: "demo3#index", as: :demo3
+  post "demo3/configure", to: "demo3#configure", as: :demo3_configure
+  post "demo3/ms_callback", to: "demo3#ms_callback", as: :demo3_ms_callback
+  delete "demo3/logout", to: "demo3#logout", as: :demo3_logout
 end
 

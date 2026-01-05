@@ -24,7 +24,7 @@
   <div class="row g-4 mb-5">
     
     <%# Demo 1 Card %>
-    <div class="col-lg-6">
+    <div class="col-lg-4">
       <div class="card h-100 shadow-lg border-0 card-hover">
         <div class="card-header bg-success text-white py-3">
           <h4 class="mb-0">
@@ -35,30 +35,29 @@
         <div class="card-body p-4">
           <div class="mb-4">
             <span class="badge bg-success-subtle text-success me-2">Beginner</span>
-            <span class="badge bg-light text-dark">No Backend Required</span>
+            <span class="badge bg-light text-dark">No Backend</span>
           </div>
           
           <h5 class="card-title">Web Component with <code>showLogin="true"</code></h5>
           <p class="card-text text-muted">
             The simplest approach: let the web component handle authentication autonomously.
-            Users can login directly through the built-in login panel.
           </p>
           
           <hr>
           
           <h6 class="text-muted mb-3">What you'll learn:</h6>
-          <ul class="list-unstyled">
+          <ul class="list-unstyled small">
             <li class="mb-2">
               <i class="bi bi-check-circle text-success me-2"></i>
-              Configure web component with agent credentials
+              Configure agent credentials
             </li>
             <li class="mb-2">
               <i class="bi bi-check-circle text-success me-2"></i>
-              Use <code>showLogin="true"</code> for built-in auth
+              Use <code>showLogin="true"</code>
             </li>
             <li class="mb-2">
               <i class="bi bi-check-circle text-success me-2"></i>
-              CSS techniques for embedding the component
+              CSS embedding techniques
             </li>
           </ul>
           
@@ -67,8 +66,7 @@
           <h6 class="text-muted mb-3">Use case:</h6>
           <p class="small text-muted mb-0">
             <i class="bi bi-lightbulb text-warning me-1"></i>
-            Perfect for websites where you want to add an AI assistant quickly 
-            without modifying your backend. Users manage their own AIsuru accounts.
+            Quick integration, users manage own AIsuru accounts.
           </p>
         </div>
         <div class="card-footer bg-white border-0 p-4">
@@ -81,7 +79,7 @@
     </div>
     
     <%# Demo 2 Card %>
-    <div class="col-lg-6">
+    <div class="col-lg-4">
       <div class="card h-100 shadow-lg border-0 card-hover">
         <div class="card-header bg-primary text-white py-3">
           <h4 class="mb-0">
@@ -92,30 +90,29 @@
         <div class="card-body p-4">
           <div class="mb-4">
             <span class="badge bg-primary-subtle text-primary me-2">Advanced</span>
-            <span class="badge bg-warning-subtle text-warning">Trusted App Required</span>
+            <span class="badge bg-warning-subtle text-warning">Trusted App</span>
           </div>
           
-          <h5 class="card-title">Backend Authentication with <code>LoginWithJWT</code></h5>
+          <h5 class="card-title">Backend Auth with <code>LoginWithJWT</code></h5>
           <p class="card-text text-muted">
-            Integrate AIsuru with your existing user system. Your backend authenticates 
-            users and passes tokens to the web component.
+            Integrate AIsuru with your existing user system via backend authentication.
           </p>
           
           <hr>
           
           <h6 class="text-muted mb-3">What you'll learn:</h6>
-          <ul class="list-unstyled">
+          <ul class="list-unstyled small">
             <li class="mb-2">
               <i class="bi bi-check-circle text-primary me-2"></i>
-              Create and configure a Trusted App
+              Create Trusted App
             </li>
             <li class="mb-2">
               <i class="bi bi-check-circle text-primary me-2"></i>
-              Use <code>LoginWithJWT</code> API for backend auth
+              Use <code>LoginWithJWT</code> API
             </li>
             <li class="mb-2">
               <i class="bi bi-check-circle text-primary me-2"></i>
-              Pass <code>loginToken</code> to web component
+              Pass <code>loginToken</code>
             </li>
           </ul>
           
@@ -124,8 +121,7 @@
           <h6 class="text-muted mb-3">Use case:</h6>
           <p class="small text-muted mb-0">
             <i class="bi bi-lightbulb text-warning me-1"></i>
-            Ideal for enterprise applications with existing user databases. 
-            Seamless SSO experience - users are automatically logged into the AI agent.
+            Enterprise apps with existing user databases.
           </p>
         </div>
         <div class="card-footer bg-white border-0 p-4">
@@ -136,11 +132,66 @@
         </div>
       </div>
     </div>
+    
+    <%# Demo 3 Card %>
+    <div class="col-lg-4">
+      <div class="card h-100 shadow-lg border-0 card-hover">
+        <div class="card-header text-white py-3" style="background: linear-gradient(135deg, #00a4ef 0%, #0078d4 100%);">
+          <h4 class="mb-0">
+            <i class="bi bi-3-circle me-2"></i>
+            Demo 3: Microsoft SSO
+          </h4>
+        </div>
+        <div class="card-body p-4">
+          <div class="mb-4">
+            <span class="badge bg-info-subtle text-info me-2">Enterprise</span>
+            <span class="badge bg-warning-subtle text-warning">Azure AD</span>
+          </div>
+          
+          <h5 class="card-title">Microsoft Entra ID + AIsuru</h5>
+          <p class="card-text text-muted">
+            Complete SSO integration with Microsoft Azure AD / Entra ID.
+          </p>
+          
+          <hr>
+          
+          <h6 class="text-muted mb-3">What you'll learn:</h6>
+          <ul class="list-unstyled small">
+            <li class="mb-2">
+              <i class="bi bi-check-circle text-info me-2"></i>
+              Azure App Registration
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-check-circle text-info me-2"></i>
+              MSAL.js integration
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-check-circle text-info me-2"></i>
+              MS → AIsuru token flow
+            </li>
+          </ul>
+          
+          <hr>
+          
+          <h6 class="text-muted mb-3">Use case:</h6>
+          <p class="small text-muted mb-0">
+            <i class="bi bi-lightbulb text-warning me-1"></i>
+            Corporate environments using Microsoft 365.
+          </p>
+        </div>
+        <div class="card-footer bg-white border-0 p-4">
+          <%= link_to demo3_path, class: "btn btn-lg w-100 text-white", style: "background: linear-gradient(135deg, #00a4ef 0%, #0078d4 100%);" do %>
+            <i class="bi bi-play-circle me-2"></i>
+            Start Demo 3
+          <% end %>
+        </div>
+      </div>
+    </div>
   </div>
 
   <%# Comparison Table %>
   <div class="row">
-    <div class="col-lg-10 mx-auto">
+    <div class="col-lg-12 mx-auto">
       <div class="card border-0 shadow">
         <div class="card-header bg-dark text-white">
           <h5 class="mb-0">
@@ -149,47 +200,62 @@
           </h5>
         </div>
         <div class="card-body p-0">
-          <table class="table table-striped mb-0">
-            <thead class="table-light">
-              <tr>
-                <th>Feature</th>
-                <th class="text-center">Demo 1: showLogin</th>
-                <th class="text-center">Demo 2: Trusted App</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Backend changes required</td>
-                <td class="text-center"><i class="bi bi-x-circle text-danger"></i> No</td>
-                <td class="text-center"><i class="bi bi-check-circle text-success"></i> Yes</td>
-              </tr>
-              <tr>
-                <td>SSO with existing users</td>
-                <td class="text-center"><i class="bi bi-x-circle text-danger"></i> No</td>
-                <td class="text-center"><i class="bi bi-check-circle text-success"></i> Yes</td>
-              </tr>
-              <tr>
-                <td>User manages own AIsuru account</td>
-                <td class="text-center"><i class="bi bi-check-circle text-success"></i> Yes</td>
-                <td class="text-center"><i class="bi bi-x-circle text-danger"></i> No</td>
-              </tr>
-              <tr>
-                <td>Requires Tenant Admin access</td>
-                <td class="text-center"><i class="bi bi-x-circle text-danger"></i> No</td>
-                <td class="text-center"><i class="bi bi-check-circle text-success"></i> Yes</td>
-              </tr>
-              <tr>
-                <td>Complexity</td>
-                <td class="text-center"><span class="badge bg-success">Low</span></td>
-                <td class="text-center"><span class="badge bg-warning text-dark">Medium</span></td>
-              </tr>
-              <tr>
-                <td>Best for</td>
-                <td class="text-center">Public websites, quick integration</td>
-                <td class="text-center">Enterprise apps, existing user systems</td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="table-responsive">
+            <table class="table table-striped mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th>Feature</th>
+                  <th class="text-center">Demo 1: showLogin</th>
+                  <th class="text-center">Demo 2: Trusted App</th>
+                  <th class="text-center">Demo 3: Microsoft SSO</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Backend changes required</td>
+                  <td class="text-center"><i class="bi bi-x-circle text-danger"></i> No</td>
+                  <td class="text-center"><i class="bi bi-check-circle text-success"></i> Yes</td>
+                  <td class="text-center"><i class="bi bi-check-circle text-success"></i> Yes</td>
+                </tr>
+                <tr>
+                  <td>SSO with existing users</td>
+                  <td class="text-center"><i class="bi bi-x-circle text-danger"></i> No</td>
+                  <td class="text-center"><i class="bi bi-check-circle text-success"></i> Yes</td>
+                  <td class="text-center"><i class="bi bi-check-circle text-success"></i> Yes</td>
+                </tr>
+                <tr>
+                  <td>User manages own AIsuru account</td>
+                  <td class="text-center"><i class="bi bi-check-circle text-success"></i> Yes</td>
+                  <td class="text-center"><i class="bi bi-x-circle text-danger"></i> No</td>
+                  <td class="text-center"><i class="bi bi-x-circle text-danger"></i> No</td>
+                </tr>
+                <tr>
+                  <td>External IdP required</td>
+                  <td class="text-center"><i class="bi bi-x-circle text-danger"></i> No</td>
+                  <td class="text-center"><i class="bi bi-x-circle text-danger"></i> No</td>
+                  <td class="text-center"><i class="bi bi-check-circle text-success"></i> Azure AD</td>
+                </tr>
+                <tr>
+                  <td>Requires Tenant Admin access</td>
+                  <td class="text-center"><i class="bi bi-x-circle text-danger"></i> No</td>
+                  <td class="text-center"><i class="bi bi-check-circle text-success"></i> Yes</td>
+                  <td class="text-center"><i class="bi bi-check-circle text-success"></i> Yes</td>
+                </tr>
+                <tr>
+                  <td>Complexity</td>
+                  <td class="text-center"><span class="badge bg-success">Low</span></td>
+                  <td class="text-center"><span class="badge bg-warning text-dark">Medium</span></td>
+                  <td class="text-center"><span class="badge bg-danger">High</span></td>
+                </tr>
+                <tr>
+                  <td>Best for</td>
+                  <td class="text-center">Public websites</td>
+                  <td class="text-center">Custom user systems</td>
+                  <td class="text-center">Microsoft 365 orgs</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
