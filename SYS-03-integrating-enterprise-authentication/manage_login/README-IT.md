@@ -15,6 +15,8 @@ Questa guida spiega come integrare il web component AIsuru nelle tue applicazion
 
 Questo modulo include **quattro demo applicative funzionanti** che mostrano diversi approcci all'autenticazione.
 
+![Pagina di Selezione Demo](./img/home.png)
+
 ### Avviare le Demo
 
 ```bash

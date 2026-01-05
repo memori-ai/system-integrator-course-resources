@@ -15,6 +15,8 @@ This guide covers how to embed the AIsuru web component in your applications and
 
 This module includes **four live demo applications** that showcase different authentication approaches.
 
+![Demo Selection Page](./img/home.png)
+
 ### Running the Demos
 
 ```bash
