@@ -13,7 +13,7 @@ This guide covers how to embed the AIsuru web component in your applications and
 
 ## 🚀 Try the Demos
 
-This module includes **three live demo applications** that showcase different authentication approaches.
+This module includes **four live demo applications** that showcase different authentication approaches.
 
 ### Running the Demos
 
@@ -56,6 +56,15 @@ Complete Single Sign-On integration with Microsoft identity platform.
 - Use MSAL.js for Microsoft authentication in the browser
 - Chain Microsoft auth → AIsuru `LoginWithJWT` for seamless SSO
 - Users are pre-authenticated in the web component
+
+### Demo 4: Login with Redirect
+
+Authenticate users in your app, then redirect them to the AIsuru platform.
+
+- Enterprise login flow with your own credentials
+- Use `LoginWithJWT` to obtain an AIsuru token
+- Redirect to `https://{tenant}/{lang}/magiclink/{token}`
+- Users land on the full AIsuru interface, pre-authenticated
 
 📁 **Demo Source Code**: [demo/](./demo/)
 

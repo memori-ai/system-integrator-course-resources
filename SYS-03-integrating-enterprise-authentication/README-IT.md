@@ -23,6 +23,7 @@ La demo **Manage Login** include:
 | **Demo 1** | Login Autonomo | Il web component gestisce il login via `showLogin="true"` |
 | **Demo 2** | Auth Programmatica (LoginWithJWT) | Il backend autentica gli utenti via Trusted App API |
 | **Demo 3** | Autenticazione Microsoft | Integrazione SSO Azure AD / Entra ID |
+| **Demo 4** | Login con Redirect | Autentica gli utenti, poi redirect alla piattaforma AIsuru |
 
 ## 🎓 Obiettivi di Apprendimento
 

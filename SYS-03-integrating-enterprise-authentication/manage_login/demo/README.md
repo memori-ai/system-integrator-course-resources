@@ -1,6 +1,6 @@
 # Manage Login - Authentication Demo
 
-This demo application showcases three approaches to integrate AIsuru authentication in embedded web components.
+This demo application showcases four approaches to integrate AIsuru authentication.
 
 ## 🚀 Quick Start
 
@@ -54,6 +54,21 @@ Complete Single Sign-On integration with Microsoft identity platform.
 - Pre-authenticate users in the web component
 
 **Best for:** Corporate environments using Microsoft 365, Azure AD-integrated applications.
+
+### Demo 4: Login with Redirect
+
+Authenticate users in your app, then redirect them to the AIsuru platform.
+
+**What you'll learn:**
+- Enterprise login flow with your credentials
+- Magic link URL format: `https://{tenant}/{lang}/magiclink/{token}`
+- Redirect users to AIsuru instead of embedding web component
+
+**Best for:** Enterprise portals, intranet sites, when you want users on the full AIsuru platform.
+
+**Demo credentials:**
+- Email: `demo@demo.com`
+- Password: `demodemo`
 
 ## 🔧 How to Get Your Agent IDs
 
@@ -193,6 +208,26 @@ docker compose run --rm web bundle
 docker compose run --rm web rails console
 ```
 
+## 🔗 Magic Link URL (Demo 4)
+
+After obtaining the `token` from `LoginWithJWT`, you can redirect users to AIsuru using the magic link URL format:
+
+```
+https://{TENANT_BASE_URL}/{LANGUAGE}/magiclink/{TOKEN}
+```
+
+**Examples:**
+```
+https://www.aisuru.com/en/magiclink/183c7061-a5f5-4bea-ab2b-e4e6a7bbc3a4
+https://www.aisuru.com/it/magiclink/183c7061-a5f5-4bea-ab2b-e4e6a7bbc3a4
+https://your-tenant.aisuru.com/en/magiclink/YOUR_TOKEN
+```
+
+**Parameters:**
+- `{TENANT_BASE_URL}` - Your AIsuru tenant URL (e.g., `www.aisuru.com`)
+- `{LANGUAGE}` - UI language code (`en`, `it`, etc.)
+- `{TOKEN}` - The `token` value from `LoginWithJWT` response
+
 ## 📁 Project Structure
 
 ```
@@ -201,9 +236,10 @@ app/
 │   ├── home_controller.rb      # Demo selection page
 │   ├── demo1_controller.rb     # Demo 1: showLogin
 │   ├── demo2_controller.rb     # Demo 2: Trusted App auth
-│   └── demo3_controller.rb     # Demo 3: Microsoft SSO
+│   ├── demo3_controller.rb     # Demo 3: Microsoft SSO
+│   └── demo4_controller.rb     # Demo 4: Redirect to AIsuru
 ├── models/
-│   └── user.rb                 # User model (Demo 2 & 3)
+│   └── user.rb                 # User model (Demo 2, 3, 4)
 ├── services/
 │   └── aisuru_auth_service.rb  # AIsuru API integration
 └── views/
@@ -214,8 +250,11 @@ app/
     ├── demo2/
     │   ├── index.html.erb      # Demo 2 main page
     │   └── login.html.erb      # Demo 2 login page
-    └── demo3/
-        └── index.html.erb      # Demo 3 MS SSO page
+    ├── demo3/
+    │   └── index.html.erb      # Demo 3 MS SSO page
+    └── demo4/
+        ├── index.html.erb      # Demo 4 main page
+        └── login.html.erb      # Demo 4 login page
 ```
 
 ## 🔗 Resources

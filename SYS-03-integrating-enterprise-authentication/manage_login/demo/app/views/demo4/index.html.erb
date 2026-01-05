@@ -1,0 +1,336 @@
+<% content_for :title, "Demo 4: Login with Redirect to AIsuru" %>
+
+<div class="container py-5">
+  
+  <%# Flash Messages %>
+  <% if flash[:notice] %>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <i class="bi bi-check-circle me-2"></i><%= flash[:notice] %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+  <% end %>
+  <% if flash[:alert] %>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <i class="bi bi-exclamation-triangle me-2"></i><%= flash[:alert] %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+  <% end %>
+
+  <%# Header %>
+  <div class="row mb-4">
+    <div class="col">
+      <%= link_to root_path, class: "btn btn-outline-secondary" do %>
+        <i class="bi bi-arrow-left me-1"></i> Back to Demo Selection
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row mb-4">
+    <div class="col text-center">
+      <h1 class="display-5 fw-bold">
+        <i class="bi bi-box-arrow-up-right text-purple me-2" style="color: #8b5cf6;"></i>
+        Demo 4: Login with Redirect
+      </h1>
+      <p class="lead text-muted">
+        Authenticate users in your app, then redirect them to the AIsuru tenant platform
+      </p>
+    </div>
+  </div>
+
+  <%# Main Content %>
+  <div class="row g-4">
+    
+    <%# Left Column: Configuration %>
+    <div class="col-lg-6">
+      <div class="card shadow-sm">
+        <div class="card-header text-white" style="background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);">
+          <h5 class="mb-0">
+            <i class="bi bi-gear me-2"></i>
+            Step 1: Configure AIsuru Integration
+          </h5>
+        </div>
+        <div class="card-body">
+          <%= form_with url: demo4_configure_path, method: :post, local: true do |f| %>
+            
+            <div class="mb-3">
+              <label for="trusted_app_api_key" class="form-label fw-bold">
+                Trusted App API Key <span class="text-danger">*</span>
+              </label>
+              <%= f.text_field :trusted_app_api_key, 
+                  class: "form-control", 
+                  placeholder: "Your Trusted App API Key",
+                  value: @trusted_app_api_key,
+                  required: true %>
+              <div class="form-text">
+                Obtain from AIsuru Admin → Trusted Apps
+              </div>
+            </div>
+
+            <hr class="my-4">
+            
+            <h6 class="text-muted mb-3">
+              <i class="bi bi-sliders me-1"></i>
+              Tenant & Redirect Settings
+            </h6>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="tenant_id" class="form-label">Tenant ID</label>
+                <%= f.text_field :tenant_id, class: "form-control", value: @tenant_id %>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="base_url" class="form-label">Tenant Base URL</label>
+                <%= f.text_field :base_url, class: "form-control", value: @base_url %>
+                <div class="form-text">Used for redirect URL</div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="api_url" class="form-label">API URL</label>
+                <%= f.text_field :api_url, class: "form-control", value: @api_url %>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="ui_lang" class="form-label">UI Language</label>
+                <%= f.select :ui_lang, 
+                    options_for_select([
+                      ["English (en)", "en"],
+                      ["Italiano (it)", "it"]
+                    ], @ui_lang),
+                    {},
+                    class: "form-select" %>
+                <div class="form-text">Language for AIsuru interface</div>
+              </div>
+            </div>
+
+            <div class="d-grid mt-4">
+              <%= f.submit "Save Configuration", class: "btn btn-lg text-white", style: "background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <%# Right Column: User Status & Redirect %>
+    <div class="col-lg-6">
+      
+      <%# User Status Card %>
+      <div class="card shadow-sm mb-4">
+        <div class="card-header bg-info text-white">
+          <h5 class="mb-0">
+            <i class="bi bi-person-circle me-2"></i>
+            Step 2: User Authentication
+          </h5>
+        </div>
+        <div class="card-body text-center py-4">
+          <% if @current_user %>
+            <i class="bi bi-person-check display-3 text-success mb-3"></i>
+            <h4>Logged in as: <%= @current_user.email %></h4>
+            <% if @current_user.aisuru_authenticated? %>
+              <p class="text-success fw-bold mb-2">
+                <i class="bi bi-check-circle me-1"></i> AIsuru token obtained!
+              </p>
+              <p class="small text-muted mb-3">
+                Token: <code><%= @current_user.aisuru_token[0..20] %>...</code>
+              </p>
+            <% else %>
+              <p class="text-warning fw-bold">
+                <i class="bi bi-exclamation-triangle me-1"></i> No AIsuru token
+              </p>
+              <p class="small text-muted">Configure Trusted App and re-login</p>
+            <% end %>
+            <%= button_to "Logout", demo4_logout_path, method: :delete, class: "btn btn-outline-danger" %>
+          <% else %>
+            <i class="bi bi-person-x display-3 text-muted mb-3"></i>
+            <h4 class="text-muted">Not Logged In</h4>
+            <p class="text-muted mb-3">
+              Login with your enterprise credentials to get an AIsuru token.
+            </p>
+            <div class="alert alert-info text-start mb-3">
+              <strong>Demo credentials:</strong><br>
+              Email: <code>demo@demo.com</code><br>
+              Password: <code>demodemo</code>
+            </div>
+            <%= link_to "Go to Login", demo4_login_path, class: "btn btn-primary btn-lg" %>
+          <% end %>
+        </div>
+      </div>
+
+      <%# Redirect Card %>
+      <div class="card shadow-sm">
+        <div class="card-header bg-success text-white">
+          <h5 class="mb-0">
+            <i class="bi bi-box-arrow-up-right me-2"></i>
+            Step 3: Redirect to AIsuru
+          </h5>
+        </div>
+        <div class="card-body text-center py-4">
+          <% if @current_user&.aisuru_authenticated? %>
+            <i class="bi bi-rocket-takeoff display-3 text-success mb-3"></i>
+            <h5 class="mb-3">Ready to redirect!</h5>
+            <p class="text-muted mb-4">
+              Click the button below to open AIsuru with your authenticated session.
+            </p>
+            
+            <div class="alert alert-secondary text-start mb-4">
+              <strong>Redirect URL:</strong><br>
+              <code class="small"><%= @base_url %>/<%= @ui_lang %>/magiclink/<%= @current_user.aisuru_token[0..10] %>...</code>
+            </div>
+            
+            <%= link_to demo4_redirect_path, class: "btn btn-success btn-lg", target: "_blank" do %>
+              <i class="bi bi-box-arrow-up-right me-2"></i>
+              Open AIsuru Platform
+            <% end %>
+            
+            <p class="small text-muted mt-3">
+              <i class="bi bi-info-circle me-1"></i>
+              Opens in a new tab. User is pre-authenticated via magic link.
+            </p>
+          <% else %>
+            <i class="bi bi-lock display-3 text-muted mb-3"></i>
+            <h5 class="text-muted mb-3">Complete previous steps first</h5>
+            <ul class="list-unstyled text-muted text-start">
+              <li class="mb-2">
+                <% if aisuru_configured? %>
+                  <i class="bi bi-check-circle text-success me-2"></i>
+                <% else %>
+                  <i class="bi bi-x-circle text-danger me-2"></i>
+                <% end %>
+                Configure Trusted App
+              </li>
+              <li class="mb-2">
+                <% if @current_user %>
+                  <i class="bi bi-check-circle text-success me-2"></i>
+                <% else %>
+                  <i class="bi bi-x-circle text-danger me-2"></i>
+                <% end %>
+                Login with credentials
+              </li>
+              <li>
+                <% if @current_user&.aisuru_authenticated? %>
+                  <i class="bi bi-check-circle text-success me-2"></i>
+                <% else %>
+                  <i class="bi bi-x-circle text-danger me-2"></i>
+                <% end %>
+                Obtain AIsuru token
+              </li>
+            </ul>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%# How It Works Section %>
+  <div class="row mt-5">
+    <div class="col-12">
+      <div class="card border-info">
+        <div class="card-header bg-info text-white">
+          <h5 class="mb-0">
+            <i class="bi bi-diagram-3 me-2"></i>
+            How Login with Redirect Works
+          </h5>
+        </div>
+        <div class="card-body">
+          <div class="row g-4 text-center">
+            <div class="col-md-3">
+              <div class="bg-light rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                <i class="bi bi-person-badge display-5 text-primary"></i>
+              </div>
+              <h6>1. User logs in to your app</h6>
+              <p class="small text-muted mb-0">Enterprise credentials (email/password, SSO, etc.)</p>
+            </div>
+            <div class="col-md-3">
+              <div class="bg-light rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                <i class="bi bi-key display-5 text-warning"></i>
+              </div>
+              <h6>2. Backend calls LoginWithJWT</h6>
+              <p class="small text-muted mb-0">Your server authenticates user with AIsuru via Trusted App</p>
+            </div>
+            <div class="col-md-3">
+              <div class="bg-light rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                <i class="bi bi-link-45deg display-5 text-success"></i>
+              </div>
+              <h6>3. Build magic link URL</h6>
+              <p class="small text-muted mb-0"><code>https://{tenant}/{lang}/magiclink/{token}</code></p>
+            </div>
+            <div class="col-md-3">
+              <div class="bg-light rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                <i class="bi bi-box-arrow-up-right display-5" style="color: #8b5cf6;"></i>
+              </div>
+              <h6>4. Redirect user to AIsuru</h6>
+              <p class="small text-muted mb-0">User lands on AIsuru, already authenticated</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%# Use Cases %>
+  <div class="row mt-4">
+    <div class="col-12">
+      <div class="card border-warning">
+        <div class="card-header bg-warning text-dark">
+          <h5 class="mb-0">
+            <i class="bi bi-lightbulb me-2"></i>
+            When to Use This Approach
+          </h5>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <h6><i class="bi bi-check-circle text-success me-2"></i>Best for:</h6>
+              <ul class="text-muted">
+                <li>Enterprise portals linking to AIsuru platform</li>
+                <li>Intranet sites with SSO to multiple services</li>
+                <li>When you want users to use the full AIsuru interface</li>
+                <li>Training/onboarding flows that end on AIsuru</li>
+              </ul>
+            </div>
+            <div class="col-md-6">
+              <h6><i class="bi bi-x-circle text-danger me-2"></i>Not ideal for:</h6>
+              <ul class="text-muted">
+                <li>Embedded AI experiences (use Demo 2 instead)</li>
+                <li>When you need the AI within your app UI</li>
+                <li>Mobile apps where redirects feel disruptive</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%# Code Example %>
+  <div class="row mt-4">
+    <div class="col-12">
+      <div class="card border-dark">
+        <div class="card-header bg-dark text-white">
+          <h5 class="mb-0">
+            <i class="bi bi-code-slash me-2"></i>
+            Magic Link URL Format
+          </h5>
+        </div>
+        <div class="card-body bg-light">
+          <p>After obtaining the <code>token</code> from <code>LoginWithJWT</code>, build the redirect URL:</p>
+          <pre class="bg-dark text-white p-3 rounded"><code># URL Pattern
+https://{TENANT_BASE_URL}/{LANGUAGE}/magiclink/{TOKEN}
+
+# Examples
+https://www.aisuru.com/en/magiclink/183c7061-a5f5-4bea-ab2b-e4e6a7bbc3a4
+https://www.aisuru.com/it/magiclink/183c7061-a5f5-4bea-ab2b-e4e6a7bbc3a4
+https://your-tenant.aisuru.com/en/magiclink/YOUR_TOKEN</code></pre>
+          
+          <p class="mt-3 mb-0">
+            <strong>Parameters:</strong>
+          </p>
+          <ul class="mb-0">
+            <li><code>{TENANT_BASE_URL}</code> - Your AIsuru tenant URL (e.g., <code>www.aisuru.com</code>)</li>
+            <li><code>{LANGUAGE}</code> - UI language code (<code>en</code>, <code>it</code>, etc.)</li>
+            <li><code>{TOKEN}</code> - The <code>token</code> value from <code>LoginWithJWT</code> response</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+

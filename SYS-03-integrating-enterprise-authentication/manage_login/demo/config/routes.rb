@@ -21,5 +21,13 @@ Rails.application.routes.draw do
   post "demo3/configure", to: "demo3#configure", as: :demo3_configure
   post "demo3/ms_callback", to: "demo3#ms_callback", as: :demo3_ms_callback
   delete "demo3/logout", to: "demo3#logout", as: :demo3_logout
+  
+  # Demo 4: Login with Redirect to AIsuru Tenant
+  get "demo4", to: "demo4#index", as: :demo4
+  get "demo4/login", to: "demo4#login", as: :demo4_login
+  post "demo4/authenticate", to: "demo4#authenticate", as: :demo4_authenticate
+  post "demo4/configure", to: "demo4#configure", as: :demo4_configure
+  delete "demo4/logout", to: "demo4#logout", as: :demo4_logout
+  get "demo4/redirect", to: "demo4#redirect_to_aisuru", as: :demo4_redirect
 end
 

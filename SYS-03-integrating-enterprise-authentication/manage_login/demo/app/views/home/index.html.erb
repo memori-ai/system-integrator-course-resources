@@ -20,11 +20,11 @@
     </div>
   </div>
 
-  <%# Demo Cards %>
-  <div class="row g-4 mb-5">
+  <%# Demo Cards - Row 1 %>
+  <div class="row g-4 mb-4">
     
     <%# Demo 1 Card %>
-    <div class="col-lg-4">
+    <div class="col-lg-6">
       <div class="card h-100 shadow-lg border-0 card-hover">
         <div class="card-header bg-success text-white py-3">
           <h4 class="mb-0">
@@ -79,7 +79,7 @@
     </div>
     
     <%# Demo 2 Card %>
-    <div class="col-lg-4">
+    <div class="col-lg-6">
       <div class="card h-100 shadow-lg border-0 card-hover">
         <div class="card-header bg-primary text-white py-3">
           <h4 class="mb-0">
@@ -133,8 +133,13 @@
       </div>
     </div>
     
+  </div>
+
+  <%# Demo Cards - Row 2 %>
+  <div class="row g-4 mb-5">
+    
     <%# Demo 3 Card %>
-    <div class="col-lg-4">
+    <div class="col-lg-6">
       <div class="card h-100 shadow-lg border-0 card-hover">
         <div class="card-header text-white py-3" style="background: linear-gradient(135deg, #00a4ef 0%, #0078d4 100%);">
           <h4 class="mb-0">
@@ -187,6 +192,61 @@
         </div>
       </div>
     </div>
+    
+    <%# Demo 4 Card %>
+    <div class="col-lg-6">
+      <div class="card h-100 shadow-lg border-0 card-hover">
+        <div class="card-header text-white py-3" style="background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);">
+          <h4 class="mb-0">
+            <i class="bi bi-4-circle me-2"></i>
+            Demo 4: Login with Redirect
+          </h4>
+        </div>
+        <div class="card-body p-4">
+          <div class="mb-4">
+            <span class="badge bg-purple-subtle text-purple me-2" style="background-color: #ede9fe !important; color: #7c3aed !important;">Enterprise</span>
+            <span class="badge bg-warning-subtle text-warning">Magic Link</span>
+          </div>
+          
+          <h5 class="card-title">Redirect to AIsuru Tenant</h5>
+          <p class="card-text text-muted">
+            Authenticate users in your app, then redirect them to the AIsuru platform.
+          </p>
+          
+          <hr>
+          
+          <h6 class="text-muted mb-3">What you'll learn:</h6>
+          <ul class="list-unstyled small">
+            <li class="mb-2">
+              <i class="bi bi-check-circle me-2" style="color: #8b5cf6;"></i>
+              Enterprise login flow
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-check-circle me-2" style="color: #8b5cf6;"></i>
+              Magic link URL format
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-check-circle me-2" style="color: #8b5cf6;"></i>
+              Redirect to tenant platform
+            </li>
+          </ul>
+          
+          <hr>
+          
+          <h6 class="text-muted mb-3">Use case:</h6>
+          <p class="small text-muted mb-0">
+            <i class="bi bi-lightbulb text-warning me-1"></i>
+            Enterprise portals linking to AIsuru.
+          </p>
+        </div>
+        <div class="card-footer bg-white border-0 p-4">
+          <%= link_to demo4_path, class: "btn btn-lg w-100 text-white", style: "background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);" do %>
+            <i class="bi bi-play-circle me-2"></i>
+            Start Demo 4
+          <% end %>
+        </div>
+      </div>
+    </div>
   </div>
 
   <%# Comparison Table %>
@@ -208,6 +268,7 @@
                   <th class="text-center">Demo 1: showLogin</th>
                   <th class="text-center">Demo 2: Trusted App</th>
                   <th class="text-center">Demo 3: Microsoft SSO</th>
+                  <th class="text-center">Demo 4: Redirect</th>
                 </tr>
               </thead>
               <tbody>
@@ -216,28 +277,40 @@
                   <td class="text-center"><i class="bi bi-x-circle text-danger"></i> No</td>
                   <td class="text-center"><i class="bi bi-check-circle text-success"></i> Yes</td>
                   <td class="text-center"><i class="bi bi-check-circle text-success"></i> Yes</td>
+                  <td class="text-center"><i class="bi bi-check-circle text-success"></i> Yes</td>
                 </tr>
                 <tr>
                   <td>SSO with existing users</td>
                   <td class="text-center"><i class="bi bi-x-circle text-danger"></i> No</td>
                   <td class="text-center"><i class="bi bi-check-circle text-success"></i> Yes</td>
                   <td class="text-center"><i class="bi bi-check-circle text-success"></i> Yes</td>
+                  <td class="text-center"><i class="bi bi-check-circle text-success"></i> Yes</td>
                 </tr>
                 <tr>
-                  <td>User manages own AIsuru account</td>
+                  <td>Embedded web component</td>
+                  <td class="text-center"><i class="bi bi-check-circle text-success"></i> Yes</td>
+                  <td class="text-center"><i class="bi bi-check-circle text-success"></i> Yes</td>
                   <td class="text-center"><i class="bi bi-check-circle text-success"></i> Yes</td>
                   <td class="text-center"><i class="bi bi-x-circle text-danger"></i> No</td>
+                </tr>
+                <tr>
+                  <td>Redirects to AIsuru platform</td>
                   <td class="text-center"><i class="bi bi-x-circle text-danger"></i> No</td>
+                  <td class="text-center"><i class="bi bi-x-circle text-danger"></i> No</td>
+                  <td class="text-center"><i class="bi bi-x-circle text-danger"></i> No</td>
+                  <td class="text-center"><i class="bi bi-check-circle text-success"></i> Yes</td>
                 </tr>
                 <tr>
                   <td>External IdP required</td>
                   <td class="text-center"><i class="bi bi-x-circle text-danger"></i> No</td>
                   <td class="text-center"><i class="bi bi-x-circle text-danger"></i> No</td>
                   <td class="text-center"><i class="bi bi-check-circle text-success"></i> Azure AD</td>
+                  <td class="text-center"><i class="bi bi-x-circle text-danger"></i> No</td>
                 </tr>
                 <tr>
                   <td>Requires Tenant Admin access</td>
                   <td class="text-center"><i class="bi bi-x-circle text-danger"></i> No</td>
+                  <td class="text-center"><i class="bi bi-check-circle text-success"></i> Yes</td>
                   <td class="text-center"><i class="bi bi-check-circle text-success"></i> Yes</td>
                   <td class="text-center"><i class="bi bi-check-circle text-success"></i> Yes</td>
                 </tr>
@@ -246,12 +319,14 @@
                   <td class="text-center"><span class="badge bg-success">Low</span></td>
                   <td class="text-center"><span class="badge bg-warning text-dark">Medium</span></td>
                   <td class="text-center"><span class="badge bg-danger">High</span></td>
+                  <td class="text-center"><span class="badge bg-warning text-dark">Medium</span></td>
                 </tr>
                 <tr>
                   <td>Best for</td>
                   <td class="text-center">Public websites</td>
                   <td class="text-center">Custom user systems</td>
                   <td class="text-center">Microsoft 365 orgs</td>
+                  <td class="text-center">Enterprise portals</td>
                 </tr>
               </tbody>
             </table>
