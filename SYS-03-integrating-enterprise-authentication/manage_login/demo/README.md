@@ -5,6 +5,8 @@ This demo application showcases four approaches to integrate AIsuru authenticati
 ## 🚀 Quick Start
 
 ```bash
+docker compose build
+
 # Install dependencies (first time only)
 docker compose run --rm web bundle install
 

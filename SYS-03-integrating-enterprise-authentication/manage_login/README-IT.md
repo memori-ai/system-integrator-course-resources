@@ -23,6 +23,8 @@ Questo modulo include **quattro demo applicative funzionanti** che mostrano dive
 # Naviga nella cartella demo
 cd demo
 
+docker compose build
+
 # Installa le dipendenze (solo la prima volta)
 docker compose run --rm web bundle install
 
