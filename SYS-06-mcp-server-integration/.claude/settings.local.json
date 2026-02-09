@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls:*)",
+      "Bash(docker-compose build:*)",
+      "Bash(docker-compose up:*)",
+      "Bash(docker-compose ps:*)",
+      "Bash(docker-compose logs:*)",
+      "Bash(curl:*)",
+      "Bash(timeout 3 head:*)",
+      "Bash(docker-compose restart:*)",
+      "Bash(node test-mcp-client.js:*)",
+      "Bash(npm init:*)",
+      "Bash(npm install:*)",
+      "Bash(node -c:*)"
+    ]
+  }
+}
