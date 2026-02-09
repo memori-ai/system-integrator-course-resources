@@ -1,0 +1,458 @@
+<% content_for :title, "MCP Server Integration - Demo Selection" %>
+
+<div class="container py-5">
+
+  <%# Hero Section %>
+  <div class="row mb-5">
+    <div class="col-lg-10 mx-auto text-center">
+      <h1 class="display-4 fw-bold mb-3">
+        <i class="bi bi-hdd-network text-primary me-2"></i>
+        MCP Server Integration with AIsuru
+      </h1>
+      <p class="lead text-muted mb-4">
+        Learn how to integrate Model Context Protocol (MCP) servers to extend your AI agents with powerful system-level capabilities.
+        Connect agents to filesystems, databases, APIs, and more through standardized server protocols.
+      </p>
+      <div class="badge bg-info text-white fs-6 px-3 py-2">
+        <i class="bi bi-book me-1"></i>
+        SYS-06 Module - System Integrator Course
+      </div>
+    </div>
+  </div>
+
+  <%# Demo Cards - Row 1 %>
+  <div class="row g-4 mb-4">
+
+    <%# Demo 1 Card %>
+    <div class="col-lg-6">
+      <div class="card h-100 shadow-lg border-0 card-hover">
+        <div class="card-header bg-success text-white py-3">
+          <h4 class="mb-0">
+            <i class="bi bi-1-circle me-2"></i>
+            Demo 1: Introduction to MCP
+          </h4>
+        </div>
+        <div class="card-body p-4">
+          <div class="mb-4">
+            <span class="badge bg-success-subtle text-success me-2">Beginner</span>
+            <span class="badge bg-light text-dark">Concepts</span>
+          </div>
+
+          <h5 class="card-title">Understanding MCP Architecture</h5>
+          <p class="card-text text-muted">
+            Introduction to Model Context Protocol: what it is, how it works, and why it's essential for advanced agent integrations.
+          </p>
+
+          <hr>
+
+          <h6 class="text-muted mb-3">What you'll learn:</h6>
+          <ul class="list-unstyled small">
+            <li class="mb-2">
+              <i class="bi bi-check-circle text-success me-2"></i>
+              MCP protocol fundamentals
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-check-circle text-success me-2"></i>
+              Server-client architecture
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-check-circle text-success me-2"></i>
+              Available MCP server types
+            </li>
+          </ul>
+
+          <hr>
+
+          <h6 class="text-muted mb-3">Use case:</h6>
+          <p class="small text-muted mb-0">
+            <i class="bi bi-lightbulb text-warning me-1"></i>
+            Foundation for all MCP integrations.
+          </p>
+        </div>
+        <div class="card-footer bg-white border-0 p-4">
+          <%= link_to demo1_path, class: "btn btn-success btn-lg w-100" do %>
+            <i class="bi bi-play-circle me-2"></i>
+            Start Demo 1
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <%# Demo 2 Card %>
+    <div class="col-lg-6">
+      <div class="card h-100 shadow-lg border-0 card-hover">
+        <div class="card-header bg-primary text-white py-3">
+          <h4 class="mb-0">
+            <i class="bi bi-2-circle me-2"></i>
+            Demo 2: Setting Up MCP Servers
+          </h4>
+        </div>
+        <div class="card-body p-4">
+          <div class="mb-4">
+            <span class="badge bg-primary-subtle text-primary me-2">Beginner</span>
+            <span class="badge bg-warning-subtle text-warning">Setup</span>
+          </div>
+
+          <h5 class="card-title">Installing and Configuring MCP Servers</h5>
+          <p class="card-text text-muted">
+            Learn how to install, configure, and connect MCP servers to your AIsuru agents.
+          </p>
+
+          <hr>
+
+          <h6 class="text-muted mb-3">What you'll learn:</h6>
+          <ul class="list-unstyled small">
+            <li class="mb-2">
+              <i class="bi bi-check-circle text-primary me-2"></i>
+              Install MCP server packages
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-check-circle text-primary me-2"></i>
+              Configure server settings
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-check-circle text-primary me-2"></i>
+              Connect servers to agents
+            </li>
+          </ul>
+
+          <hr>
+
+          <h6 class="text-muted mb-3">Use case:</h6>
+          <p class="small text-muted mb-0">
+            <i class="bi bi-lightbulb text-warning me-1"></i>
+            Initial setup for any MCP integration.
+          </p>
+        </div>
+        <div class="card-footer bg-white border-0 p-4">
+          <%= link_to demo2_path, class: "btn btn-primary btn-lg w-100" do %>
+            <i class="bi bi-play-circle me-2"></i>
+            Start Demo 2
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <%# Demo Cards - Row 2 %>
+  <div class="row g-4 mb-4">
+
+    <%# Demo 3 Card - FILESYSTEM MCP SERVER %>
+    <div class="col-lg-6">
+      <div class="card h-100 shadow-lg border-0 card-hover">
+        <div class="card-header text-white py-3" style="background: linear-gradient(135deg, #00a4ef 0%, #0078d4 100%);">
+          <h4 class="mb-0">
+            <i class="bi bi-3-circle me-2"></i>
+            Demo 3: Filesystem MCP Server
+          </h4>
+        </div>
+        <div class="card-body p-4">
+          <div class="mb-4">
+            <span class="badge bg-info-subtle text-info me-2">Intermediate</span>
+            <span class="badge bg-warning-subtle text-warning">Filesystem</span>
+          </div>
+
+          <h5 class="card-title">File Operations with MCP</h5>
+          <p class="card-text text-muted">
+            Enable your agent to read, write, and modify files on the filesystem through the Filesystem MCP server.
+          </p>
+
+          <hr>
+
+          <h6 class="text-muted mb-3">What you'll learn:</h6>
+          <ul class="list-unstyled small">
+            <li class="mb-2">
+              <i class="bi bi-check-circle text-info me-2"></i>
+              Configure filesystem access
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-check-circle text-info me-2"></i>
+              Read and write files
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-check-circle text-info me-2"></i>
+              Manage directories and permissions
+            </li>
+          </ul>
+
+          <hr>
+
+          <h6 class="text-muted mb-3">Use case:</h6>
+          <p class="small text-muted mb-0">
+            <i class="bi bi-lightbulb text-warning me-1"></i>
+            Agents that manage documents and code files.
+          </p>
+        </div>
+        <div class="card-footer bg-white border-0 p-4">
+          <%= link_to demo3_path, class: "btn btn-lg w-100 text-white", style: "background: linear-gradient(135deg, #00a4ef 0%, #0078d4 100%);" do %>
+            <i class="bi bi-play-circle me-2"></i>
+            Start Demo 3
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <%# Demo 4 Card %>
+    <div class="col-lg-6">
+      <div class="card h-100 shadow-lg border-0 card-hover">
+        <div class="card-header text-white py-3" style="background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);">
+          <h4 class="mb-0">
+            <i class="bi bi-4-circle me-2"></i>
+            Demo 4: Database MCP Server
+          </h4>
+        </div>
+        <div class="card-body p-4">
+          <div class="mb-4">
+            <span class="badge bg-purple-subtle text-purple me-2" style="background-color: #ede9fe !important; color: #7c3aed !important;">Intermediate</span>
+            <span class="badge bg-warning-subtle text-warning">Database</span>
+          </div>
+
+          <h5 class="card-title">Database Queries via MCP</h5>
+          <p class="card-text text-muted">
+            Connect your agent to databases through MCP for executing queries and retrieving data.
+          </p>
+
+          <hr>
+
+          <h6 class="text-muted mb-3">What you'll learn:</h6>
+          <ul class="list-unstyled small">
+            <li class="mb-2">
+              <i class="bi bi-check-circle me-2" style="color: #8b5cf6;"></i>
+              Configure database connections
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-check-circle me-2" style="color: #8b5cf6;"></i>
+              Execute SQL queries safely
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-check-circle me-2" style="color: #8b5cf6;"></i>
+              Handle query results
+            </li>
+          </ul>
+
+          <hr>
+
+          <h6 class="text-muted mb-3">Use case:</h6>
+          <p class="small text-muted mb-0">
+            <i class="bi bi-lightbulb text-warning me-1"></i>
+            Data-driven agents accessing business intelligence.
+          </p>
+        </div>
+        <div class="card-footer bg-white border-0 p-4">
+          <%= link_to demo4_path, class: "btn btn-lg w-100 text-white", style: "background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);" do %>
+            <i class="bi bi-play-circle me-2"></i>
+            Start Demo 4
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%# Demo Cards - Row 3 %>
+  <div class="row g-4 mb-5">
+
+    <%# Demo 5 Card %>
+    <div class="col-lg-6">
+      <div class="card h-100 shadow-lg border-0 card-hover">
+        <div class="card-header text-white py-3" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
+          <h4 class="mb-0">
+            <i class="bi bi-5-circle me-2"></i>
+            Demo 5: Git MCP Server
+          </h4>
+        </div>
+        <div class="card-body p-4">
+          <div class="mb-4">
+            <span class="badge bg-warning-subtle text-warning me-2">Advanced</span>
+            <span class="badge bg-light text-dark">Git Operations</span>
+          </div>
+
+          <h5 class="card-title">Version Control Integration</h5>
+          <p class="card-text text-muted">
+            Enable agents to interact with Git repositories: commit, branch, merge, and manage version control.
+          </p>
+
+          <hr>
+
+          <h6 class="text-muted mb-3">What you'll learn:</h6>
+          <ul class="list-unstyled small">
+            <li class="mb-2">
+              <i class="bi bi-check-circle me-2" style="color: #f59e0b;"></i>
+              Git operations via MCP
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-check-circle me-2" style="color: #f59e0b;"></i>
+              Automated commits and branches
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-check-circle me-2" style="color: #f59e0b;"></i>
+              Repository management
+            </li>
+          </ul>
+
+          <hr>
+
+          <h6 class="text-muted mb-3">Use case:</h6>
+          <p class="small text-muted mb-0">
+            <i class="bi bi-lightbulb text-warning me-1"></i>
+            Development assistants and code automation.
+          </p>
+        </div>
+        <div class="card-footer bg-white border-0 p-4">
+          <%= link_to demo5_path, class: "btn btn-lg w-100 text-white", style: "background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);" do %>
+            <i class="bi bi-play-circle me-2"></i>
+            Start Demo 5
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <%# Demo 6 Card %>
+    <div class="col-lg-6">
+      <div class="card h-100 shadow-lg border-0 card-hover">
+        <div class="card-header text-white py-3" style="background: linear-gradient(135deg, #ec4899 0%, #be185d 100%);">
+          <h4 class="mb-0">
+            <i class="bi bi-6-circle me-2"></i>
+            Demo 6: Custom MCP Servers
+          </h4>
+        </div>
+        <div class="card-body p-4">
+          <div class="mb-4">
+            <span class="badge me-2" style="background-color: #fce7f3 !important; color: #be185d !important;">Advanced</span>
+            <span class="badge bg-light text-dark">Custom Development</span>
+          </div>
+
+          <h5 class="card-title">Building Your Own MCP Server</h5>
+          <p class="card-text text-muted">
+            Learn how to create custom MCP servers for specialized integrations and business-specific requirements.
+          </p>
+
+          <hr>
+
+          <h6 class="text-muted mb-3">What you'll learn:</h6>
+          <ul class="list-unstyled small">
+            <li class="mb-2">
+              <i class="bi bi-check-circle me-2" style="color: #ec4899;"></i>
+              MCP server architecture
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-check-circle me-2" style="color: #ec4899;"></i>
+              Implement custom protocols
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-check-circle me-2" style="color: #ec4899;"></i>
+              Deploy and maintain servers
+            </li>
+          </ul>
+
+          <hr>
+
+          <h6 class="text-muted mb-3">Use case:</h6>
+          <p class="small text-muted mb-0">
+            <i class="bi bi-lightbulb text-warning me-1"></i>
+            Enterprise-specific system integrations.
+          </p>
+        </div>
+        <div class="card-footer bg-white border-0 p-4">
+          <%= link_to demo6_path, class: "btn btn-lg w-100 text-white", style: "background: linear-gradient(135deg, #ec4899 0%, #be185d 100%);" do %>
+            <i class="bi bi-play-circle me-2"></i>
+            Start Demo 6
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <%# Comparison Table %>
+  <div class="row">
+    <div class="col-lg-12 mx-auto">
+      <div class="card border-0 shadow">
+        <div class="card-header bg-dark text-white">
+          <h5 class="mb-0">
+            <i class="bi bi-table me-2"></i>
+            Comparison: MCP Server Types & Capabilities
+          </h5>
+        </div>
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table table-striped mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th>Feature</th>
+                  <th class="text-center">Demo 3: Filesystem</th>
+                  <th class="text-center">Demo 4: Database</th>
+                  <th class="text-center">Demo 5: Git</th>
+                  <th class="text-center">Demo 6: Custom</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>File operations</td>
+                  <td class="text-center"><i class="bi bi-check-circle text-success"></i> Yes</td>
+                  <td class="text-center"><i class="bi bi-x-circle text-danger"></i> No</td>
+                  <td class="text-center"><i class="bi bi-check-circle text-success"></i> Yes</td>
+                  <td class="text-center"><i class="bi bi-dash-circle text-muted"></i> Varies</td>
+                </tr>
+                <tr>
+                  <td>Data queries</td>
+                  <td class="text-center"><i class="bi bi-x-circle text-danger"></i> No</td>
+                  <td class="text-center"><i class="bi bi-check-circle text-success"></i> Yes</td>
+                  <td class="text-center"><i class="bi bi-x-circle text-danger"></i> No</td>
+                  <td class="text-center"><i class="bi bi-dash-circle text-muted"></i> Varies</td>
+                </tr>
+                <tr>
+                  <td>Version control</td>
+                  <td class="text-center"><i class="bi bi-x-circle text-danger"></i> No</td>
+                  <td class="text-center"><i class="bi bi-x-circle text-danger"></i> No</td>
+                  <td class="text-center"><i class="bi bi-check-circle text-success"></i> Yes</td>
+                  <td class="text-center"><i class="bi bi-dash-circle text-muted"></i> Varies</td>
+                </tr>
+                <tr>
+                  <td>Setup complexity</td>
+                  <td class="text-center">Low</td>
+                  <td class="text-center">Medium</td>
+                  <td class="text-center">Medium</td>
+                  <td class="text-center">High</td>
+                </tr>
+                <tr>
+                  <td>Security considerations</td>
+                  <td class="text-center">High</td>
+                  <td class="text-center">Critical</td>
+                  <td class="text-center">High</td>
+                  <td class="text-center">Varies</td>
+                </tr>
+                <tr>
+                  <td>Best for</td>
+                  <td class="text-center">Document management</td>
+                  <td class="text-center">Data access</td>
+                  <td class="text-center">Code management</td>
+                  <td class="text-center">Specialized needs</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%# Resources %>
+  <div class="row mt-5">
+    <div class="col-lg-10 mx-auto">
+      <div class="alert alert-info d-flex align-items-start">
+        <i class="bi bi-info-circle-fill fs-4 me-3"></i>
+        <div>
+          <h6 class="alert-heading mb-2">📚 Additional Resources</h6>
+          <ul class="mb-0 small">
+            <li><a href="https://modelcontextprotocol.io/" target="_blank">Model Context Protocol Documentation</a></li>
+            <li><a href="https://docs.aisuru.com/mcp-integration" target="_blank">AIsuru MCP Integration Guide</a></li>
+            <li><a href="https://github.com/anthropics/mcp-servers" target="_blank">Official MCP Servers Repository</a></li>
+            <li><a href="https://www.npmjs.com/package/@memori.ai/memori-webcomponent" target="_blank">Web Component NPM Package</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

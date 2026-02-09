@@ -1,0 +1,100 @@
+<% content_for :title, "" %>
+
+<div class="container py-5">
+
+  <%# Back to Home %>
+  <div class="row mb-4">
+    <div class="col">
+      <%= link_to root_path, class: "btn btn-outline-secondary" do %>
+        <i class="bi bi-arrow-left me-1"></i>
+      <% end %>
+    </div>
+  </div>
+
+  <%# Hero Section %>
+  <div class="row mb-5">
+    <div class="col-lg-8 mx-auto text-center">
+      <span class="badge mb-3" style="background: linear-gradient(135deg, #00a4ef 0%, #0078d4 100%);"></span>
+      <h1 class="display-5 fw-bold mb-3">
+        <i class="bi bi-3-circle me-2" style="color: #00a4ef;"></i>
+      </h1>
+      <p class="lead text-muted">
+      </p>
+    </div>
+  </div>
+
+  <%# Instructions Card %>
+  <div class="row mb-5">
+    <div class="col-lg-10 mx-auto">
+      <div class="card border-info">
+        <div class="card-header text-white" style="background: linear-gradient(135deg, #00a4ef 0%, #0078d4 100%);">
+          <h5 class="mb-0">
+            <i class="bi bi-info-circle me-2"></i>
+          </h5>
+        </div>
+        <div class="card-body">
+          <ol class="mb-0">
+            <li class="mb-2">
+            </li>
+            <li class="mb-2">
+            </li>
+            <li class="mb-2">
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%# Main Content Card %>
+  <div class="row mb-5">
+    <div class="col-lg-10 mx-auto">
+      <div class="card shadow">
+        <div class="card-header text-white" style="background: linear-gradient(135deg, #00a4ef 0%, #0078d4 100%);">
+          <h5 class="mb-0">
+            <i class="bi bi-gear me-2"></i>
+          </h5>
+        </div>
+        <div class="card-body p-4">
+          <p class="text-muted">
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%# Info Cards %>
+  <div class="row">
+    <div class="col-md-4 mb-4">
+      <div class="card h-100 card-hover border-0 shadow-sm">
+        <div class="card-body text-center p-4">
+          <i class="bi bi-shield-lock display-4 mb-3" style="color: #00a4ef;"></i>
+          <h5 class="card-title"></h5>
+          <p class="card-text text-muted">
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-4">
+      <div class="card h-100 card-hover border-0 shadow-sm">
+        <div class="card-body text-center p-4">
+          <i class="bi bi-chat-dots display-4 mb-3" style="color: #0078d4;"></i>
+          <h5 class="card-title"></h5>
+          <p class="card-text text-muted">
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-4">
+      <div class="card h-100 card-hover border-0 shadow-sm">
+        <div class="card-body text-center p-4">
+          <i class="bi bi-code-slash display-4 text-info mb-3"></i>
+          <h5 class="card-title"></h5>
+          <p class="card-text text-muted">
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

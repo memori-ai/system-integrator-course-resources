@@ -1,0 +1,41 @@
+# syntax = docker/dockerfile:1
+
+# Make sure RUBY_VERSION matches the Ruby version in .ruby-version and Gemfile
+ARG RUBY_VERSION=3.3.6
+FROM ruby:$RUBY_VERSION-slim as base
+
+# Rails app lives here
+WORKDIR /rails
+
+ENV RAILS_SERVE_STATIC_FILES="true" \
+    RAILS_LOG_TO_STDOUT="true" \
+    BUNDLE_PATH="/usr/local/bundle"
+
+ENV NODE_ARCH x64
+ENV NODE_VERSION 20.11.1
+
+# Install packages needed to build gems
+RUN apt-get update -qq && \
+    apt-get install --no-install-recommends -y build-essential git pkg-config wget
+
+RUN gem install bundler -v=2.5.4
+
+ENV PATH=/opt/node-v${NODE_VERSION}-linux-${NODE_ARCH}/bin:$PATH
+
+WORKDIR /opt
+RUN wget https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-${NODE_ARCH}.tar.gz && \
+  tar xzvf node-v${NODE_VERSION}-linux-${NODE_ARCH}.tar.gz -C /opt/  && \
+  rm -rf node-v${NODE_VERSION}-linux-${NODE_ARCH}.tar.gz
+
+RUN echo "export PATH=/opt/node-v${NODE_VERSION}-linux-${NODE_ARCH}/bin:$PATH" >> /etc/profile
+
+ARG YARN_VERSION=latest
+RUN corepack enable && yarn set version $YARN_VERSION
+
+WORKDIR /rails
+
+ENTRYPOINT ["/rails/bin/docker-entrypoint"]
+
+# Start the server by default, this can be overwritten at runtime
+EXPOSE 3000
+CMD [ "./bin/rails", "server", "-b", "0.0.0.0" ]

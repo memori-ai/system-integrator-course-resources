@@ -1,0 +1,19 @@
+<li class="explorer-node">
+  <% if explorer_node[:type] == "dir" %>
+    <div class="node-row" onclick="toggleDir(this)">
+      <span class="chevron open"><i class="bi bi-caret-right-fill"></i></span>
+      <span class="node-icon"><i class="bi bi-folder2-open" style="color:#e8b83e;"></i></span>
+      <span><%= explorer_node[:name] %></span>
+    </div>
+    <ul class="explorer-tree node-children">
+      <%= render partial: "demo3/explorer_node", collection: explorer_node[:children], cached: false %>
+    </ul>
+  <% else %>
+    <div class="node-row" onclick="previewFile(this, '<%= explorer_node[:name].gsub("'", "\\'") %>', <%= explorer_node[:content].to_json %>)">
+      <span class="chevron"></span>
+      <span class="node-icon"><i class="bi bi-file-earmark-code" style="color:#7ec8e3;"></i></span>
+      <span><%= explorer_node[:name] %></span>
+      <span class="text-secondary ms-2" style="font-size:0.72rem;">(<%= explorer_node[:content].bytesize %> B)</span>
+    </div>
+  <% end %>
+</li>

@@ -1,0 +1,13 @@
+{
+  "name": "mcp-mysql-server",
+  "version": "1.0.0",
+  "description": "MCP MySQL Server for Demo 1",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "mysql2": "^3.11.0"
+  }
+}

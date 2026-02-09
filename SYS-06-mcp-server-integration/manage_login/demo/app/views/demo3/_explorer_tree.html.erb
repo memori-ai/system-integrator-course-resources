@@ -1,0 +1,7 @@
+<% if @workspace_files.empty? %>
+  <span class="text-secondary small">( cartella vuota )</span>
+<% else %>
+  <ul class="explorer-tree">
+    <%= render partial: "demo3/explorer_node", collection: @workspace_files, cached: false %>
+  </ul>
+<% end %>
