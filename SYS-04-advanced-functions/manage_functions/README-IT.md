@@ -200,6 +200,220 @@ Usa queste credenziali per configurare il web component nelle applicazioni demo:
 
 ---
 
+## 🎛️ Configurazione Avanzata delle Funzioni
+
+### Struttura JSON delle Funzioni
+
+Quando crei funzioni avanzate, AIsuru le memorizza in questo formato:
+
+```json
+{
+  "name": "FUNZIONE_RECUPERA_DATI_METEO",
+  "description": "Recupera informazioni meteo per coordinate specifiche",
+  "webhook": "https://api.open-meteo.com/v1/forecast",
+  "method": "GET",
+  "queryParams": "latitude={lat}&longitude={lon}&hourly=temperature_2m,precipitation",
+  "headers": {},
+  "bodyTemplate": null,
+  "timeout": 30000
+}
+```
+
+### Parametri HTTP Supportati
+
+#### Query Parameters (GET)
+
+Aggiungi parametri nella query string:
+
+```
+?param1={var1}&param2={var2}&param3=valore_fisso
+```
+
+**Esempio:**
+```
+?city={city_name}&units=metric&appid=your_api_key
+```
+
+#### Request Body (POST/PUT)
+
+Per richieste POST/PUT, usa il template body in formato JSON:
+
+```json
+{
+  "query": "{user_query}",
+  "filters": {
+    "category": "{category}",
+    "limit": 10
+  }
+}
+```
+
+#### Headers Personalizzati
+
+Configura headers per autenticazione e content-type:
+
+```
+Authorization: Bearer {api_token}
+Content-Type: application/json
+X-Custom-Header: valore
+```
+
+**Note di sicurezza:**
+- Non includere mai chiavi API nel prompt dell'agente
+- Usa la sezione Headers nelle impostazioni della funzione
+- Per produzione, usa variabili d'ambiente o vault
+
+### Variabili Template
+
+Le variabili template seguono il formato `{nome_variabile}`:
+
+| Variabile | Descrizione | Esempio di valore |
+|-----------|-------------|-------------------|
+| `{query}` | Query utente completa | "Cerca hotel a Roma" |
+| `{city}` | Nome città estratto | "Roma" |
+| `{date}` | Data estratta | "2024-03-15" |
+| `{user_id}` | ID utente (se autenticato) | "user_12345" |
+
+**L'agente popola automaticamente queste variabili** basandosi su:
+1. Input dell'utente
+2. Contesto della conversazione
+3. Istruzioni nel prompt sistema
+
+---
+
+## 📡 Schema delle Funzioni REST
+
+### Anatomia di una Chiamata Funzione
+
+```
+1. Input Utente
+   ↓
+2. Agente analizza e estrae parametri
+   ↓
+3. Popola template con variabili
+   ↓
+4. Invia richiesta HTTP all'endpoint
+   ↓
+5. Riceve risposta API
+   ↓
+6. Processa e presenta dati all'utente
+```
+
+### Formato Richiesta
+
+**GET Request:**
+```http
+GET /v1/forecast?latitude=41.9&longitude=12.5&hourly=temperature_2m HTTP/1.1
+Host: api.open-meteo.com
+User-Agent: AIsuru-Agent/1.0
+```
+
+**POST Request:**
+```http
+POST /v1/search HTTP/1.1
+Host: api.example.com
+Content-Type: application/json
+Authorization: Bearer abc123
+
+{
+  "query": "hotel Roma",
+  "filters": {
+    "stars": 4,
+    "price_max": 150
+  }
+}
+```
+
+### Formato Risposta
+
+AIsuru supporta risposte JSON standard:
+
+**Successo (200-299):**
+```json
+{
+  "status": "success",
+  "data": {
+    "temperature": 22.5,
+    "humidity": 65,
+    "forecast": [...]
+  }
+}
+```
+
+**Errore (400-599):**
+```json
+{
+  "status": "error",
+  "message": "Parametro mancante: latitude",
+  "code": "MISSING_PARAMETER"
+}
+```
+
+L'agente riceve **l'intera risposta** e può:
+- Estrarre dati rilevanti
+- Gestire errori
+- Formattare output per l'utente
+
+---
+
+## ⚙️ Gestione Errori e Timeout
+
+### Timeout Configuration
+
+Configura timeout personalizzati nelle impostazioni funzione:
+
+| Timeout | Uso Consigliato |
+|---------|-----------------|
+| 5-10s | API veloci (geocoding, cache) |
+| 10-30s | API standard (meteo, notizie) |
+| 30-60s | API lente (elaborazione dati, ML) |
+
+**Default:** 30 secondi
+
+### Gestire Errori nell'Agente
+
+Istruisci l'agente nel prompt su come gestire fallimenti:
+
+```
+Quando chiami FUNZIONE_RECUPERA_DATI_METEO:
+
+SE la funzione restituisce un errore:
+- Informati l'utente gentilmente
+- Suggerisci alternative (es. "Prova con una città vicina")
+- Non mostrare dettagli tecnici all'utente
+
+SE timeout:
+- Dì: "Il servizio meteo sta impiegando più tempo del solito, riprova tra poco"
+
+SE 404/Non trovato:
+- Dì: "Non ho trovato informazioni meteo per quella posizione"
+- Chiedi di verificare l'ortografia o provare con una città vicina
+```
+
+### Codici di Stato HTTP Comuni
+
+| Codice | Significato | Azione Agente |
+|--------|-------------|---------------|
+| 200-299 | Successo | Processa e presenta dati |
+| 400 | Bad Request | Controlla parametri richiesta |
+| 401 | Unauthorized | Verifica autenticazione |
+| 404 | Not Found | Risorsa non esiste |
+| 429 | Too Many Requests | Rate limit, riprova dopo |
+| 500-599 | Server Error | Servizio temporaneamente non disponibile |
+
+### Retry Logic
+
+Per API critiche, istruisci l'agente a ritentare:
+
+```
+Se la chiamata alla funzione fallisce con 500 o timeout:
+1. Attendi 2 secondi
+2. Riprova una volta
+3. Se fallisce ancora, informa l'utente del problema temporaneo
+```
+
+---
+
 ## 🐛 Debuggare le Chiamate alle Funzioni
 
 ### Usare la Vista Debug

@@ -198,6 +198,220 @@ Use these credentials to configure the web component in the demo applications:
 
 ---
 
+## 🎛️ Advanced Function Configuration
+
+### JSON Function Structure
+
+When creating advanced functions, AIsuru stores them in this format:
+
+```json
+{
+  "name": "GET_WEATHER_DATA_FUNCTION",
+  "description": "Retrieves weather information for specific coordinates",
+  "webhook": "https://api.open-meteo.com/v1/forecast",
+  "method": "GET",
+  "queryParams": "latitude={lat}&longitude={lon}&hourly=temperature_2m,precipitation",
+  "headers": {},
+  "bodyTemplate": null,
+  "timeout": 30000
+}
+```
+
+### Supported HTTP Parameters
+
+#### Query Parameters (GET)
+
+Add parameters in the query string:
+
+```
+?param1={var1}&param2={var2}&param3=fixed_value
+```
+
+**Example:**
+```
+?city={city_name}&units=metric&appid=your_api_key
+```
+
+#### Request Body (POST/PUT)
+
+For POST/PUT requests, use the body template in JSON format:
+
+```json
+{
+  "query": "{user_query}",
+  "filters": {
+    "category": "{category}",
+    "limit": 10
+  }
+}
+```
+
+#### Custom Headers
+
+Configure headers for authentication and content-type:
+
+```
+Authorization: Bearer {api_token}
+Content-Type: application/json
+X-Custom-Header: value
+```
+
+**Security notes:**
+- Never include API keys in the agent prompt
+- Use the Headers section in function settings
+- For production, use environment variables or vaults
+
+### Template Variables
+
+Template variables follow the `{variable_name}` format:
+
+| Variable | Description | Example value |
+|----------|-------------|---------------|
+| `{query}` | Complete user query | "Search hotels in Rome" |
+| `{city}` | Extracted city name | "Rome" |
+| `{date}` | Extracted date | "2024-03-15" |
+| `{user_id}` | User ID (if authenticated) | "user_12345" |
+
+**The agent automatically populates these variables** based on:
+1. User input
+2. Conversation context
+3. System prompt instructions
+
+---
+
+## 📡 REST Function Schema
+
+### Anatomy of a Function Call
+
+```
+1. User Input
+   ↓
+2. Agent analyzes and extracts parameters
+   ↓
+3. Populates template with variables
+   ↓
+4. Sends HTTP request to endpoint
+   ↓
+5. Receives API response
+   ↓
+6. Processes and presents data to user
+```
+
+### Request Format
+
+**GET Request:**
+```http
+GET /v1/forecast?latitude=41.9&longitude=12.5&hourly=temperature_2m HTTP/1.1
+Host: api.open-meteo.com
+User-Agent: AIsuru-Agent/1.0
+```
+
+**POST Request:**
+```http
+POST /v1/search HTTP/1.1
+Host: api.example.com
+Content-Type: application/json
+Authorization: Bearer abc123
+
+{
+  "query": "hotels Rome",
+  "filters": {
+    "stars": 4,
+    "price_max": 150
+  }
+}
+```
+
+### Response Format
+
+AIsuru supports standard JSON responses:
+
+**Success (200-299):**
+```json
+{
+  "status": "success",
+  "data": {
+    "temperature": 22.5,
+    "humidity": 65,
+    "forecast": [...]
+  }
+}
+```
+
+**Error (400-599):**
+```json
+{
+  "status": "error",
+  "message": "Missing parameter: latitude",
+  "code": "MISSING_PARAMETER"
+}
+```
+
+The agent receives **the entire response** and can:
+- Extract relevant data
+- Handle errors
+- Format output for the user
+
+---
+
+## ⚙️ Error Handling and Timeouts
+
+### Timeout Configuration
+
+Configure custom timeouts in function settings:
+
+| Timeout | Recommended Use |
+|---------|-----------------|
+| 5-10s | Fast APIs (geocoding, cache) |
+| 10-30s | Standard APIs (weather, news) |
+| 30-60s | Slow APIs (data processing, ML) |
+
+**Default:** 30 seconds
+
+### Handling Errors in the Agent
+
+Instruct the agent in the prompt on how to handle failures:
+
+```
+When calling GET_WEATHER_DATA_FUNCTION:
+
+IF the function returns an error:
+- Inform the user politely
+- Suggest alternatives (e.g., "Try a nearby city")
+- Don't show technical details to the user
+
+IF timeout:
+- Say: "The weather service is taking longer than usual, please try again shortly"
+
+IF 404/Not Found:
+- Say: "I couldn't find weather information for that location"
+- Ask to verify spelling or try a nearby city
+```
+
+### Common HTTP Status Codes
+
+| Code | Meaning | Agent Action |
+|------|---------|--------------|
+| 200-299 | Success | Process and present data |
+| 400 | Bad Request | Check request parameters |
+| 401 | Unauthorized | Verify authentication |
+| 404 | Not Found | Resource doesn't exist |
+| 429 | Too Many Requests | Rate limit, retry later |
+| 500-599 | Server Error | Service temporarily unavailable |
+
+### Retry Logic
+
+For critical APIs, instruct the agent to retry:
+
+```
+If the function call fails with 500 or timeout:
+1. Wait 2 seconds
+2. Retry once
+3. If it fails again, inform user of temporary issue
+```
+
+---
+
 ## 🐛 Debugging Function Calls
 
 ### Using the Debug View
