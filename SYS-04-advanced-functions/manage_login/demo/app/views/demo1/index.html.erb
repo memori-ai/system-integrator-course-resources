@@ -1,0 +1,464 @@
+<% content_for :title, "Demo 1: Connecting Agents to REST Services" %>
+
+<div class="container py-5">
+
+  <%# Back to Home %>
+  <div class="row mb-4">
+    <div class="col">
+      <%= link_to root_path, class: "btn btn-outline-secondary" do %>
+        <i class="bi bi-arrow-left me-1"></i> Back to Demo Selection
+      <% end %>
+    </div>
+  </div>
+
+  <%# Hero Section %>
+  <div class="row mb-5">
+    <div class="col-lg-8 mx-auto text-center">
+      <span class="badge bg-success mb-3">Demo 1</span>
+      <h1 class="display-5 fw-bold mb-3">
+        <i class="bi bi-globe text-success me-2"></i>
+        Connecting Agents to REST Services
+      </h1>
+      <p class="lead text-muted">
+        Learn how to connect your AIsuru agent to external REST APIs using advanced functions.
+        In this example, we'll integrate a weather API to retrieve real-time data.
+      </p>
+    </div>
+  </div>
+
+  <%# Instructions Card %>
+  <div class="row mb-5">
+    <div class="col-lg-10 mx-auto">
+      <div class="card border-info">
+        <div class="card-header bg-info text-white">
+          <h5 class="mb-0">
+            <i class="bi bi-info-circle me-2"></i>
+            Step-by-Step Guide
+          </h5>
+        </div>
+        <div class="card-body">
+          <h6 class="fw-bold mb-3">Part 1: Create the Agent</h6>
+          <ol class="mb-4">
+            <li class="mb-2">
+              <strong>Create a new Agent</strong> on the AIsuru Platform (or use an existing one)
+            </li>
+          </ol>
+
+          <h6 class="fw-bold mb-3 mt-4">Part 2: Create the Advanced Function</h6>
+          <ol start="2" class="mb-4">
+            <li class="mb-2">
+              <strong>Navigate to Advanced Functions</strong> from the left sidebar menu
+            </li>
+            <li class="mb-2">
+              <strong>Click "Create New Function"</strong> and configure:
+              <ul class="mt-2">
+                <li><strong>Nome:</strong> <code>FUNZIONE_RECUPERA_DATI_METEO</code></li>
+                <li><strong>Descrizione:</strong> "Funzione usata per recuperare le informazioni meteo relative ad una specifica città"</li>
+              </ul>
+            </li>
+            <li class="mb-2">
+              <strong>Configure the webhook:</strong>
+              <ul class="mt-2">
+                <li><strong>Webhook:</strong> <code>https://api.open-meteo.com/v1/forecast</code></li>
+                <li><strong>Metodo HTTP:</strong> GET</li>
+                <li><strong>Template query string:</strong>
+                  <div class="mt-2 mb-2">
+                    <code class="d-block bg-light p-2 rounded">latitude={lat}&longitude={lon}&hourly=temperature_2m,precipitation_probability,precipitation&forecast_days=3</code>
+                  </div>
+                  <small class="text-muted">
+                    <i class="bi bi-info-circle me-1"></i>
+                    The variables <code>{lat}</code> and <code>{lon}</code> will be populated by the agent based on the city requested by the user
+                  </small>
+                </li>
+              </ul>
+            </li>
+            <li class="mb-2">
+              <strong>Save the function</strong>
+            </li>
+          </ol>
+
+          <h6 class="fw-bold mb-3 mt-4">Part 3: Link Function to Agent</h6>
+          <ol start="6" class="mb-4">
+            <li class="mb-2">
+              <strong>Go to Agent Settings → Advanced Functions</strong>
+            </li>
+            <li class="mb-2">
+              <strong>Add the <code>FUNZIONE_RECUPERA_DATI_METEO</code> function</strong> to your agent
+            </li>
+            <li class="mb-2">
+              <strong>Save the agent configuration</strong>
+            </li>
+          </ol>
+
+          <h6 class="fw-bold mb-3 mt-4">Part 4: Configure the Agent Prompt</h6>
+          <ol start="9" class="mb-4">
+            <li class="mb-2">
+              <strong>Go to Agent Settings → Prompt</strong>
+            </li>
+            <li class="mb-2">
+              <strong>Add instructions to the agent prompt:</strong> Now that the function is linked, teach the agent how to use it:
+              <div class="alert alert-secondary mt-2 small">
+                <strong>Example prompt:</strong><br>
+                "You are a weather assistant. When users ask about weather in a city, you must:<br>
+                1. Extract the city name from the user's request<br>
+                2. Determine the latitude and longitude coordinates for that city<br>
+                3. Use the FUNZIONE_RECUPERA_DATI_METEO function with the <code>lat</code> and <code>lon</code> parameters<br>
+                4. Present the weather information in a clear and friendly way"
+              </div>
+              <small class="text-muted">
+                <i class="bi bi-lightbulb me-1"></i>
+                <strong>Important:</strong> The agent must be instructed via prompt to extract latitude and longitude from the city name and insert them into the function's variables (<code>lat</code> and <code>lon</code>).
+              </small>
+            </li>
+            <li class="mb-2">
+              <strong>Save the prompt configuration</strong>
+            </li>
+          </ol>
+
+          <h6 class="fw-bold mb-3 mt-4">Part 5: Get Your Agent IDs</h6>
+          <ol start="12" class="mb-0">
+            <li class="mb-2">
+              <strong>Open your Agent</strong> and click on <strong>"Dev docs"</strong> in the left sidebar
+            </li>
+            <li class="mb-2">
+              Expand the <strong>"▼ Other references"</strong> section
+            </li>
+            <li class="mb-2">
+              Copy the following values:
+              <ul class="mt-2">
+                <li><strong>Secondary Memori (Agent) ID</strong> → This is your <code>memoriID</code></li>
+                <li><strong>Owner user ID</strong> → This is your <code>ownerUserID</code></li>
+              </ul>
+            </li>
+            <li class="mb-2">
+              <strong>Paste them in the form below</strong> to test your agent with the weather function
+            </li>
+          </ol>
+
+          <hr class="my-4">
+
+          <h6 class="fw-bold mb-3">Part 6: Test and Verify the Function</h6>
+          <ol start="16" class="mb-0">
+            <li class="mb-2">
+              <strong>Start a conversation</strong> with your agent in the web component below
+            </li>
+            <li class="mb-2">
+              <strong>Ask about weather</strong> in a specific city (e.g., "What's the weather in Rome?")
+            </li>
+            <li class="mb-2">
+              <strong>Go to "Conversazioni"</strong> (Conversations) in your AIsuru dashboard
+            </li>
+            <li class="mb-2">
+              <strong>Click on the red bug icon</strong> <i class="bi bi-bug-fill text-danger"></i> next to the agent's response
+            </li>
+            <li class="mb-2">
+              <strong>Verify the webhook response:</strong> Check that the API call was successful and returned weather data
+              <div class="alert alert-info mt-2 small">
+                <i class="bi bi-info-circle me-1"></i>
+                <strong>Tip:</strong> The debug view shows the complete JSON response from the Open-Meteo API, including temperature, precipitation, and other weather data.
+              </div>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%# Configuration Form %>
+  <div class="row mb-5">
+    <div class="col-lg-10 mx-auto">
+      <div class="card shadow">
+        <div class="card-header bg-success text-white">
+          <h5 class="mb-0">
+            <i class="bi bi-gear me-2"></i>
+            Configure Your Weather Agent
+          </h5>
+        </div>
+        <div class="card-body p-4">
+          <%= form_with url: demo1_configure_path, method: :post, local: true do |f| %>
+            <div class="mb-4">
+              <label for="memori_id" class="form-label fw-bold">
+                <i class="bi bi-fingerprint me-1"></i>
+                Memori ID (Secondary Agent ID)
+              </label>
+              <%= f.text_field :memori_id,
+                  class: "form-control form-control-lg",
+                  placeholder: "e.g., a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                  required: true,
+                  pattern: "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}" %>
+              <div class="form-text">
+                Found in Dev docs → Other references → "Secondary Memori (Agent) ID"
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label for="owner_user_id" class="form-label fw-bold">
+                <i class="bi bi-person-badge me-1"></i>
+                Owner User ID
+              </label>
+              <%= f.text_field :owner_user_id,
+                  class: "form-control form-control-lg",
+                  placeholder: "e.g., b2c3d4e5-f6a7-8901-bcde-f12345678901",
+                  required: true,
+                  pattern: "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}" %>
+              <div class="form-text">
+                Found in Dev docs → Other references → "Owner user ID"
+              </div>
+            </div>
+
+            <hr class="my-4">
+            <h6 class="text-muted mb-3">
+              <i class="bi bi-sliders me-1"></i>
+              Advanced Configuration (pre-filled with defaults)
+            </h6>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="tenant_id" class="form-label">
+                  <i class="bi bi-building me-1"></i>
+                  Tenant ID
+                </label>
+                <%= f.text_field :tenant_id,
+                    class: "form-control",
+                    value: @tenant_id || "www.aisuru.com",
+                    required: true %>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="base_url" class="form-label">
+                  <i class="bi bi-link-45deg me-1"></i>
+                  Base URL
+                </label>
+                <%= f.text_field :base_url,
+                    class: "form-control",
+                    value: @base_url || "https://www.aisuru.com",
+                    required: true %>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="engine_url" class="form-label">
+                <i class="bi bi-cpu me-1"></i>
+                Engine URL
+              </label>
+              <%= f.text_field :engine_url,
+                  class: "form-control",
+                  value: @engine_url || "https://engine.memori.ai/memori/v2",
+                  required: true %>
+            </div>
+
+            <div class="mb-4">
+              <label for="api_url" class="form-label">
+                <i class="bi bi-server me-1"></i>
+                API URL
+              </label>
+              <%= f.text_field :api_url,
+                  class: "form-control",
+                  value: @api_url || "https://backend.memori.ai/api/v2",
+                  required: true %>
+            </div>
+
+            <div class="d-grid">
+              <%= f.submit "Load Weather Agent", class: "btn btn-success btn-lg" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <% if @show_agent %>
+    <%# Agent Success Alert %>
+    <div class="row mb-4">
+      <div class="col-lg-10 mx-auto">
+        <div class="alert alert-success d-flex align-items-center">
+          <i class="bi bi-check-circle-fill me-2 fs-4"></i>
+          <div>
+            <strong>Weather Agent Loaded!</strong>
+            Try asking questions like: "What's the weather in London?" or "Tell me the weather in Tokyo"
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%# Web Component %>
+    <div class="row mb-5">
+      <div class="col-lg-10 mx-auto">
+        <div class="card shadow">
+          <div class="card-header bg-success text-white">
+            <h5 class="mb-0">
+              <i class="bi bi-robot me-2"></i>
+              Your Weather Agent
+            </h5>
+          </div>
+          <div class="card-body p-0">
+            <div class="memori-container">
+              <memori-client
+                memoriName="WeatherAgent"
+                ownerUserName="owner"
+                memoriID="<%= @memori_id %>"
+                ownerUserID="<%= @owner_user_id %>"
+                tenantID="<%= @tenant_id %>"
+                engineURL="<%= @engine_url %>"
+                apiURL="<%= @api_url %>"
+                baseURL="<%= @base_url %>"
+                layout="CHAT"
+                uiLang="EN"
+                spokenLang="EN"
+                showLogin="true"
+              ></memori-client>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%# Code Example %>
+    <div class="row mb-4">
+      <div class="col-lg-10 mx-auto">
+        <div class="card border-dark">
+          <div class="card-header bg-dark text-white">
+            <h6 class="mb-0">
+              <i class="bi bi-file-code me-2"></i>
+              HTML Code Example
+            </h6>
+          </div>
+          <div class="card-body bg-light">
+            <pre class="mb-0"><code>&lt;!-- Include AIsuru Web Component --&gt;
+&lt;script type="module" src="https://cdn.jsdelivr.net/npm/@memori.ai/memori-webcomponent/dist/memori-webcomponent.js"&gt;&lt;/script&gt;
+&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@memori.ai/memori-react/dist/styles.min.css" /&gt;
+
+&lt;!-- Configure your weather agent --&gt;
+&lt;memori-client
+  memoriName="WeatherAgent"
+  ownerUserName="owner"
+  memoriID="<%= @memori_id %>"
+  ownerUserID="<%= @owner_user_id %>"
+  tenantID="<%= @tenant_id %>"
+  engineURL="<%= @engine_url %>"
+  apiURL="<%= @api_url %>"
+  baseURL="<%= @base_url %>"
+  layout="CHAT"
+  uiLang="EN"
+  spokenLang="EN"
+  showLogin="true"
+&gt;&lt;/memori-client&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <%# Info Cards %>
+  <div class="row">
+    <div class="col-md-4 mb-4">
+      <div class="card h-100 card-hover border-0 shadow-sm">
+        <div class="card-body text-center p-4">
+          <i class="bi bi-cloud-sun display-4 text-success mb-3"></i>
+          <h5 class="card-title">Real-Time Data</h5>
+          <p class="card-text text-muted">
+            The weather function retrieves real-time data from external APIs, providing up-to-date information.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-4">
+      <div class="card h-100 card-hover border-0 shadow-sm">
+        <div class="card-body text-center p-4">
+          <i class="bi bi-plug display-4 text-primary mb-3"></i>
+          <h5 class="card-title">Easy Integration</h5>
+          <p class="card-text text-muted">
+            Configure the function once in AIsuru, then your agent can use it automatically in conversations.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-4">
+      <div class="card h-100 card-hover border-0 shadow-sm">
+        <div class="card-body text-center p-4">
+          <i class="bi bi-arrow-repeat display-4 text-info mb-3"></i>
+          <h5 class="card-title">Reusable Functions</h5>
+          <p class="card-text text-muted">
+            Once created, the same function can be used across multiple agents in your tenant.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%# Debug Section %>
+  <div class="row mt-4">
+    <div class="col-lg-10 mx-auto">
+      <div class="card border-danger">
+        <div class="card-header bg-danger text-white">
+          <h6 class="mb-0">
+            <i class="bi bi-bug-fill me-2"></i>
+            How to Debug and Verify Function Calls
+          </h6>
+        </div>
+        <div class="card-body">
+          <p class="mb-3">
+            After testing your weather agent, you can verify that the advanced function was called correctly:
+          </p>
+          <ol class="mb-3">
+            <li class="mb-2">
+              Navigate to <strong>"Conversazioni"</strong> (Conversations) in your AIsuru dashboard
+            </li>
+            <li class="mb-2">
+              Find the conversation where you asked about weather
+            </li>
+            <li class="mb-2">
+              Look for the <strong>red bug icon</strong> <i class="bi bi-bug-fill text-danger"></i> next to the agent's response
+            </li>
+            <li class="mb-2">
+              Click on it to see the complete webhook response from the Open-Meteo API
+            </li>
+          </ol>
+          <div class="alert alert-light border mb-0">
+            <h6 class="alert-heading"><i class="bi bi-code-square me-1"></i> What You'll See in Debug Mode:</h6>
+            <ul class="mb-0 small">
+              <li><strong>Request parameters:</strong> The latitude and longitude sent to the API</li>
+              <li><strong>HTTP status:</strong> Whether the call was successful (200 OK)</li>
+              <li><strong>Response data:</strong> Temperature, precipitation probability, and forecast data</li>
+              <li><strong>Errors (if any):</strong> Details about what went wrong</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%# Additional Tips %>
+  <div class="row mt-4">
+    <div class="col-lg-10 mx-auto">
+      <div class="card border-warning">
+        <div class="card-header bg-warning text-dark">
+          <h6 class="mb-0">
+            <i class="bi bi-lightbulb me-2"></i>
+            Tips & Best Practices
+          </h6>
+        </div>
+        <div class="card-body">
+          <ul class="mb-0">
+            <li class="mb-2">
+              <strong>Coordinate lookup:</strong> The agent needs to convert city names to coordinates. Make sure your agent has clear instructions on how to handle this (you can use another function or have the agent use its knowledge).
+            </li>
+            <li class="mb-2">
+              <strong>Test with various cities:</strong> Try different cities to ensure the function works globally (e.g., "Rome", "New York", "Tokyo").
+            </li>
+            <li class="mb-2">
+              <strong>Handle errors gracefully:</strong> Configure appropriate error messages when the API is unavailable or coordinates are invalid.
+            </li>
+            <li class="mb-2">
+              <strong>Check the debug view:</strong> Always verify function calls using the red bug icon to ensure data is being retrieved correctly.
+            </li>
+            <li class="mb-2">
+              <strong>API parameters:</strong> The Open-Meteo API supports many parameters - you can customize the query string to get different weather data (humidity, wind speed, etc.).
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

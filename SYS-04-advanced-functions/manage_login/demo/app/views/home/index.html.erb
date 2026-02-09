@@ -1,0 +1,418 @@
+<% content_for :title, "Advanced Functions - Demo Selection" %>
+
+<div class="container py-5">
+
+  <%# Hero Section %>
+  <div class="row mb-5">
+    <div class="col-lg-10 mx-auto text-center">
+      <h1 class="display-4 fw-bold mb-3">
+        <i class="bi bi-gear-wide-connected text-primary me-2"></i>
+        Advanced Functions with AIsuru
+      </h1>
+      <p class="lead text-muted mb-4">
+        Learn how to create and integrate advanced functions in your AIsuru agents.
+        Extend your agent capabilities with custom functions and external API integrations.
+      </p>
+      <div class="badge bg-info text-white fs-6 px-3 py-2">
+        <i class="bi bi-book me-1"></i>
+        SYS-04 Module - System Integrator Course
+      </div>
+    </div>
+  </div>
+
+  <%# Demo Cards - Row 1 %>
+  <div class="row g-4 mb-4">
+
+    <%# Demo 1 Card %>
+    <div class="col-lg-6">
+      <div class="card h-100 shadow-lg border-0 card-hover">
+        <div class="card-header bg-success text-white py-3">
+          <h4 class="mb-0">
+            <i class="bi bi-1-circle me-2"></i>
+            Demo 1: Weather Function
+          </h4>
+        </div>
+        <div class="card-body p-4">
+          <div class="mb-4">
+            <span class="badge bg-success-subtle text-success me-2">Beginner</span>
+            <span class="badge bg-light text-dark">API Integration</span>
+          </div>
+
+          <h5 class="card-title">Create an Agent with Weather Data Function</h5>
+          <p class="card-text text-muted">
+            Learn how to create an advanced function that retrieves weather data and integrate it into your agent.
+          </p>
+
+          <hr>
+
+          <h6 class="text-muted mb-3">What you'll learn:</h6>
+          <ul class="list-unstyled small">
+            <li class="mb-2">
+              <i class="bi bi-check-circle text-success me-2"></i>
+              Create an advanced function in AIsuru
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-check-circle text-success me-2"></i>
+              Configure weather API integration
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-check-circle text-success me-2"></i>
+              Embed the agent in a web component
+            </li>
+          </ul>
+
+          <hr>
+
+          <h6 class="text-muted mb-3">Use case:</h6>
+          <p class="small text-muted mb-0">
+            <i class="bi bi-lightbulb text-warning me-1"></i>
+            Agents that need to fetch real-time external data.
+          </p>
+        </div>
+        <div class="card-footer bg-white border-0 p-4">
+          <%= link_to demo1_path, class: "btn btn-success btn-lg w-100" do %>
+            <i class="bi bi-play-circle me-2"></i>
+            Start Demo 1
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <%# Demo 2 Card %>
+    <div class="col-lg-6">
+      <div class="card h-100 shadow-lg border-0 card-hover">
+        <div class="card-header bg-primary text-white py-3">
+          <h4 class="mb-0">
+            <i class="bi bi-2-circle me-2"></i>
+            Demo 2: Using Swagger Files
+          </h4>
+        </div>
+        <div class="card-body p-4">
+          <div class="mb-4">
+            <span class="badge bg-primary-subtle text-primary me-2">Intermediate</span>
+            <span class="badge bg-warning-subtle text-warning">OpenAPI</span>
+          </div>
+
+          <h5 class="card-title">Convert OpenAPI to Advanced Functions</h5>
+          <p class="card-text text-muted">
+            Learn how to use Swagger/OpenAPI files to automatically generate multiple advanced functions at once.
+          </p>
+
+          <hr>
+
+          <h6 class="text-muted mb-3">What you'll learn:</h6>
+          <ul class="list-unstyled small">
+            <li class="mb-2">
+              <i class="bi bi-check-circle text-primary me-2"></i>
+              Download and prepare Swagger files
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-check-circle text-primary me-2"></i>
+              Import OpenAPI specifications
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-check-circle text-primary me-2"></i>
+              Auto-generate multiple functions
+            </li>
+          </ul>
+
+          <hr>
+
+          <h6 class="text-muted mb-3">Use case:</h6>
+          <p class="small text-muted mb-0">
+            <i class="bi bi-lightbulb text-warning me-1"></i>
+            Quickly integrate existing APIs with documentation.
+          </p>
+        </div>
+        <div class="card-footer bg-white border-0 p-4">
+          <%= link_to demo2_path, class: "btn btn-primary btn-lg w-100" do %>
+            <i class="bi bi-play-circle me-2"></i>
+            Start Demo 2
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <%# Demo Cards - Row 2 %>
+  <div class="row g-4 mb-4">
+
+    <%# Demo 3 Card %>
+    <div class="col-lg-6">
+      <div class="card h-100 shadow-lg border-0 card-hover">
+        <div class="card-header text-white py-3" style="background: linear-gradient(135deg, #00a4ef 0%, #0078d4 100%);">
+          <h4 class="mb-0">
+            <i class="bi bi-3-circle me-2"></i>
+            Demo 3: E-commerce Function
+          </h4>
+        </div>
+        <div class="card-body p-4">
+          <div class="mb-4">
+            <span class="badge bg-info-subtle text-info me-2">Advanced</span>
+            <span class="badge bg-warning-subtle text-warning">E-commerce</span>
+          </div>
+
+          <h5 class="card-title">Product Catalog & Order Management</h5>
+          <p class="card-text text-muted">
+            Build functions to search products, check inventory, and process orders through conversational AI.
+          </p>
+
+          <hr>
+
+          <h6 class="text-muted mb-3">What you'll learn:</h6>
+          <ul class="list-unstyled small">
+            <li class="mb-2">
+              <i class="bi bi-check-circle text-info me-2"></i>
+              Product search functions
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-check-circle text-info me-2"></i>
+              Inventory management integration
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-check-circle text-info me-2"></i>
+              Order processing workflows
+            </li>
+          </ul>
+
+          <hr>
+
+          <h6 class="text-muted mb-3">Use case:</h6>
+          <p class="small text-muted mb-0">
+            <i class="bi bi-lightbulb text-warning me-1"></i>
+            Shopping assistants and order tracking bots.
+          </p>
+        </div>
+        <div class="card-footer bg-white border-0 p-4">
+          <%= link_to demo3_path, class: "btn btn-lg w-100 text-white", style: "background: linear-gradient(135deg, #00a4ef 0%, #0078d4 100%);" do %>
+            <i class="bi bi-play-circle me-2"></i>
+            Start Demo 3
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <%# Demo 4 Card %>
+    <div class="col-lg-6">
+      <div class="card h-100 shadow-lg border-0 card-hover">
+        <div class="card-header text-white py-3" style="background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);">
+          <h4 class="mb-0">
+            <i class="bi bi-4-circle me-2"></i>
+            Demo 4: Multi-Step Function
+          </h4>
+        </div>
+        <div class="card-body p-4">
+          <div class="mb-4">
+            <span class="badge bg-purple-subtle text-purple me-2" style="background-color: #ede9fe !important; color: #7c3aed !important;">Advanced</span>
+            <span class="badge bg-warning-subtle text-warning">Workflow</span>
+          </div>
+
+          <h5 class="card-title">Complex Multi-Step Workflows</h5>
+          <p class="card-text text-muted">
+            Create functions that orchestrate multiple steps, handling complex business logic and decision trees.
+          </p>
+
+          <hr>
+
+          <h6 class="text-muted mb-3">What you'll learn:</h6>
+          <ul class="list-unstyled small">
+            <li class="mb-2">
+              <i class="bi bi-check-circle me-2" style="color: #8b5cf6;"></i>
+              Build multi-step workflows
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-check-circle me-2" style="color: #8b5cf6;"></i>
+              Handle state between steps
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-check-circle me-2" style="color: #8b5cf6;"></i>
+              Implement error handling
+            </li>
+          </ul>
+
+          <hr>
+
+          <h6 class="text-muted mb-3">Use case:</h6>
+          <p class="small text-muted mb-0">
+            <i class="bi bi-lightbulb text-warning me-1"></i>
+            Booking systems and complex approval flows.
+          </p>
+        </div>
+        <div class="card-footer bg-white border-0 p-4">
+          <%= link_to demo4_path, class: "btn btn-lg w-100 text-white", style: "background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);" do %>
+            <i class="bi bi-play-circle me-2"></i>
+            Start Demo 4
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%# Demo Cards - Row 3 %>
+  <div class="row g-4 mb-5">
+
+    <%# Demo 5 Card %>
+    <div class="col-lg-6">
+      <div class="card h-100 shadow-lg border-0 card-hover">
+        <div class="card-header text-white py-3" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
+          <h4 class="mb-0">
+            <i class="bi bi-5-circle me-2"></i>
+            Demo 5: Testing & Debugging
+          </h4>
+        </div>
+        <div class="card-body p-4">
+          <div class="mb-4">
+            <span class="badge bg-warning-subtle text-warning me-2">All Levels</span>
+            <span class="badge bg-light text-dark">Best Practices</span>
+          </div>
+
+          <h5 class="card-title">Function Testing & Troubleshooting</h5>
+          <p class="card-text text-muted">
+            Learn best practices for testing, debugging, and monitoring your advanced functions in production.
+          </p>
+
+          <hr>
+
+          <h6 class="text-muted mb-3">What you'll learn:</h6>
+          <ul class="list-unstyled small">
+            <li class="mb-2">
+              <i class="bi bi-check-circle me-2" style="color: #f59e0b;"></i>
+              Test functions before deployment
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-check-circle me-2" style="color: #f59e0b;"></i>
+              Debug common issues
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-check-circle me-2" style="color: #f59e0b;"></i>
+              Monitor function performance
+            </li>
+          </ul>
+
+          <hr>
+
+          <h6 class="text-muted mb-3">Use case:</h6>
+          <p class="small text-muted mb-0">
+            <i class="bi bi-lightbulb text-warning me-1"></i>
+            Quality assurance and production monitoring.
+          </p>
+        </div>
+        <div class="card-footer bg-white border-0 p-4">
+          <%= link_to demo5_path, class: "btn btn-lg w-100 text-white", style: "background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);" do %>
+            <i class="bi bi-play-circle me-2"></i>
+            Start Demo 5
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <%# Comparison Table %>
+  <div class="row">
+    <div class="col-lg-12 mx-auto">
+      <div class="card border-0 shadow">
+        <div class="card-header bg-dark text-white">
+          <h5 class="mb-0">
+            <i class="bi bi-table me-2"></i>
+            Comparison: Function Types & Complexity
+          </h5>
+        </div>
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table table-striped mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th>Feature</th>
+                  <th class="text-center">Demo 1: Weather</th>
+                  <th class="text-center">Demo 2: Database</th>
+                  <th class="text-center">Demo 3: E-commerce</th>
+                  <th class="text-center">Demo 4: Multi-Step</th>
+                  <th class="text-center">Demo 5: Testing</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>External API calls</td>
+                  <td class="text-center"><i class="bi bi-check-circle text-success"></i> Yes</td>
+                  <td class="text-center"><i class="bi bi-x-circle text-danger"></i> No</td>
+                  <td class="text-center"><i class="bi bi-check-circle text-success"></i> Yes</td>
+                  <td class="text-center"><i class="bi bi-check-circle text-success"></i> Yes</td>
+                  <td class="text-center"><i class="bi bi-dash-circle text-muted"></i> N/A</td>
+                </tr>
+                <tr>
+                  <td>Database integration</td>
+                  <td class="text-center"><i class="bi bi-x-circle text-danger"></i> No</td>
+                  <td class="text-center"><i class="bi bi-check-circle text-success"></i> Yes</td>
+                  <td class="text-center"><i class="bi bi-check-circle text-success"></i> Yes</td>
+                  <td class="text-center"><i class="bi bi-check-circle text-success"></i> Yes</td>
+                  <td class="text-center"><i class="bi bi-dash-circle text-muted"></i> N/A</td>
+                </tr>
+                <tr>
+                  <td>Authentication required</td>
+                  <td class="text-center"><i class="bi bi-x-circle text-danger"></i> No</td>
+                  <td class="text-center"><i class="bi bi-check-circle text-success"></i> Yes</td>
+                  <td class="text-center"><i class="bi bi-check-circle text-success"></i> Yes</td>
+                  <td class="text-center"><i class="bi bi-check-circle text-success"></i> Yes</td>
+                  <td class="text-center"><i class="bi bi-dash-circle text-muted"></i> Varies</td>
+                </tr>
+                <tr>
+                  <td>State management</td>
+                  <td class="text-center"><i class="bi bi-x-circle text-danger"></i> No</td>
+                  <td class="text-center"><i class="bi bi-x-circle text-danger"></i> No</td>
+                  <td class="text-center"><i class="bi bi-check-circle text-success"></i> Yes</td>
+                  <td class="text-center"><i class="bi bi-check-circle text-success"></i> Yes</td>
+                  <td class="text-center"><i class="bi bi-dash-circle text-muted"></i> N/A</td>
+                </tr>
+                <tr>
+                  <td>Error handling</td>
+                  <td class="text-center">Basic</td>
+                  <td class="text-center">Intermediate</td>
+                  <td class="text-center">Advanced</td>
+                  <td class="text-center">Advanced</td>
+                  <td class="text-center">Comprehensive</td>
+                </tr>
+                <tr>
+                  <td>Complexity</td>
+                  <td class="text-center"><span class="badge bg-success">Low</span></td>
+                  <td class="text-center"><span class="badge bg-warning text-dark">Medium</span></td>
+                  <td class="text-center"><span class="badge bg-danger">High</span></td>
+                  <td class="text-center"><span class="badge bg-danger">High</span></td>
+                  <td class="text-center"><span class="badge bg-info">All Levels</span></td>
+                </tr>
+                <tr>
+                  <td>Best for</td>
+                  <td class="text-center">Simple APIs</td>
+                  <td class="text-center">Internal data</td>
+                  <td class="text-center">Transactions</td>
+                  <td class="text-center">Workflows</td>
+                  <td class="text-center">QA & monitoring</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%# Resources %>
+  <div class="row mt-5">
+    <div class="col-lg-10 mx-auto">
+      <div class="alert alert-info d-flex align-items-start">
+        <i class="bi bi-info-circle-fill fs-4 me-3"></i>
+        <div>
+          <h6 class="alert-heading mb-2">📚 Additional Resources</h6>
+          <ul class="mb-0 small">
+            <li><a href="https://docs.aisuru.com/" target="_blank">AIsuru Documentation</a></li>
+            <li><a href="https://docs.aisuru.com/advanced-functions" target="_blank">Advanced Functions Guide</a></li>
+            <li><a href="https://docs.aisuru.com/api-reference" target="_blank">API Reference</a></li>
+            <li><a href="https://www.npmjs.com/package/@memori.ai/memori-webcomponent" target="_blank">Web Component NPM Package</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

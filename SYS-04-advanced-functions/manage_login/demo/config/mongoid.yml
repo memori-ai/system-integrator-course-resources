@@ -1,0 +1,21 @@
+development:
+  clients:
+    default:
+      uri: <%= ENV['MONGO_URI'] || 'mongodb://localhost:27017/embedded_webcomponent_auth_development' %>
+      options:
+        server_selection_timeout: 5
+
+test:
+  clients:
+    default:
+      uri: <%= ENV['MONGO_URI'] || 'mongodb://localhost:27017/embedded_webcomponent_auth_test' %>
+      options:
+        server_selection_timeout: 5
+
+production:
+  clients:
+    default:
+      uri: <%= ENV['MONGO_URI'] %>
+      options:
+        server_selection_timeout: 5
+

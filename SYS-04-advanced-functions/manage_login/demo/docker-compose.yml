@@ -1,0 +1,57 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    command: ./bin/rails server -b '0.0.0.0'
+    image: sys-04-advanced-functions-demo
+    volumes:
+      - .:/rails
+      - bundle_cache:/usr/local/bundle
+      - node_modules:/rails/node_modules
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env_dev
+    depends_on:
+      - mongodb
+      - redis
+
+  sidekiq:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    image: sys-04-advanced-functions-demo
+    shm_size: 2gb
+    entrypoint: bundle exec sidekiq -C /rails/config/sidekiq.yml
+    volumes:
+      - .:/rails
+      - bundle_cache:/usr/local/bundle
+    env_file:
+      - .env_dev
+    depends_on:
+      - mongodb
+      - redis
+
+  mongodb:
+    image: mongo:8.0
+    volumes:
+      - mongodb_data:/data/db
+    environment:
+      - MONGO_INITDB_DATABASE=sys_04_advanced_functions_development
+
+  redis:
+    image: 'redis:8-alpine'
+    command: redis-server
+    volumes:
+      - redis-data:/data
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+      - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
+
+
+volumes:
+  mongodb_data:
+  bundle_cache:
+  node_modules:
+  redis-data:
