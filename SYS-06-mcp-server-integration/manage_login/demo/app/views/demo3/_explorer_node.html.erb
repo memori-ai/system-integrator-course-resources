@@ -1,0 +1,48 @@
+<%
+  indent = level * 1.5
+  node_id = "node-#{SecureRandom.hex(4)}"
+%>
+
+<div class="file-node" style="padding-left: <%= indent %>rem;">
+  <% if node[:type] == "dir" %>
+    <%# Directory %>
+    <div onclick="toggleDir('<%= node_id %>')">
+      <i class="bi bi-folder-fill file-icon text-warning"></i>
+      <strong><%= node[:name] %>/</strong>
+    </div>
+    <div id="<%= node_id %>" style="display: block;">
+      <% node[:children]&.each do |child| %>
+        <%= render partial: "demo3/explorer_node", locals: { node: child, level: level + 1 } %>
+      <% end %>
+    </div>
+  <% else %>
+    <%# File %>
+    <div onclick="toggleFile('<%= node_id %>')">
+      <i class="bi bi-file-earmark-text file-icon text-primary"></i>
+      <%= node[:name] %>
+    </div>
+    <div id="<%= node_id %>" class="file-content" style="display: none; margin-left: <%= indent + 1.5 %>rem;">
+      <%= node[:content] %>
+    </div>
+  <% end %>
+</div>
+
+<script>
+  function toggleDir(id) {
+    const el = document.getElementById(id);
+    if (el.style.display === 'none') {
+      el.style.display = 'block';
+    } else {
+      el.style.display = 'none';
+    }
+  }
+
+  function toggleFile(id) {
+    const el = document.getElementById(id);
+    if (el.style.display === 'none') {
+      el.style.display = 'block';
+    } else {
+      el.style.display = 'none';
+    }
+  }
+</script>

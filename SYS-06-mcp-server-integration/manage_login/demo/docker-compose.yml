@@ -30,6 +30,29 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=adminpassword
       - MONGO_INITDB_DATABASE=mcp_demo
 
+  mcp-server:
+    build:
+      context: ./docker/mcp-server
+      dockerfile: Dockerfile
+    image: sys-06-mcp-filesystem-server
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./test:/workspace
+    environment:
+      - WORKSPACE_ROOT=/workspace
+      - PORT=8000
+
+  ngrok-mcp:
+    image: ngrok/ngrok:latest
+    command: http mcp-server:8000 --log=stdout
+    ports:
+      - "4041:4040"
+    environment:
+      - NGROK_AUTHTOKEN=${NGROK_AUTHTOKEN}
+    depends_on:
+      - mcp-server
+
 volumes:
   mongodb_data:
   bundle_cache:

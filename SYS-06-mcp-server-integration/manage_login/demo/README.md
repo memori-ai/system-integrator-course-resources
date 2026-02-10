@@ -1,6 +1,6 @@
-# Manage Login - Authentication Demo
+# MCP Server Integration - Demo
 
-This demo application showcases four approaches to integrate AIsuru authentication.
+This demo application showcases MCP (Model Context Protocol) server integrations with AIsuru AI agents.
 
 ## 🚀 Quick Start
 
@@ -19,58 +19,45 @@ open http://localhost:3000
 
 ## 📋 Available Demos
 
-### Demo 1: Self-Managed Login (`showLogin="true"`)
+### Demo 1: MongoDB via MCP Server
 
-The simplest approach where the web component handles authentication autonomously.
-
-**What you'll learn:**
-- Configure web component with agent credentials
-- Use `showLogin="true"` for built-in auth
-- CSS techniques for embedding the component
-
-**Best for:** Public websites, quick integration, no backend changes required.
-
-### Demo 2: Programmatic Auth with Trusted App
-
-Backend authentication using `LoginWithJWT` API - seamless SSO experience.
+Connect an AIsuru AI agent to a MongoDB database using platform-integrated MCP server.
 
 **What you'll learn:**
-- Create and configure a Trusted App
-- Use `LoginWithJWT` API for backend auth
-- Pass `loginToken` to web component via `additionalInfo`
+- Run MongoDB locally with Docker
+- Expose MongoDB over TCP using ngrok
+- Configure MCP server integration in AIsuru platform
+- Chat with your agent to query live data
 
-**Best for:** Enterprise applications, existing user systems, SSO requirements.
+**Architecture:**
+`AIsuru Agent → MCP Server (AIsuru) → ngrok TCP → MongoDB (Docker)`
 
-**Demo credentials:**
-- Email: `demo@demo.com`
-- Password: `demodemo`
+**Prerequisites:**
+- ngrok account and auth token
+- MongoDB running in Docker
 
-### Demo 3: Microsoft SSO (Azure AD / Entra ID)
+### Demo 3: Filesystem MCP Server
 
-Complete Single Sign-On integration with Microsoft identity platform.
-
-**What you'll learn:**
-- Create Azure App Registration
-- Use MSAL.js for Microsoft authentication
-- Chain Microsoft auth → AIsuru auth
-- Pre-authenticate users in the web component
-
-**Best for:** Corporate environments using Microsoft 365, Azure AD-integrated applications.
-
-### Demo 4: Login with Redirect
-
-Authenticate users in your app, then redirect them to the AIsuru platform.
+Connect an AIsuru AI agent to a custom filesystem MCP server for file operations.
 
 **What you'll learn:**
-- Enterprise login flow with your credentials
-- Magic link URL format: `https://{tenant}/{lang}/magiclink/{token}`
-- Redirect users to AIsuru instead of embedding web component
+- Build a custom MCP server in Node.js
+- Expose filesystem operations via MCP protocol
+- Deploy MCP server with Docker Compose
+- See real-time file changes in the workspace
 
-**Best for:** Enterprise portals, intranet sites, when you want users on the full AIsuru platform.
+**Architecture:**
+`AIsuru Agent → ngrok HTTPS → MCP Server (Node.js) → Shared Filesystem`
 
-**Demo credentials:**
-- Email: `demo@demo.com`
-- Password: `demodemo`
+**Available Tools:**
+- `list_files` - List files and directories
+- `read_file` - Read file contents
+- `write_file` - Update existing files
+- `create_file` - Create new files
+
+**Prerequisites:**
+- ngrok account and auth token
+- Docker and Docker Compose
 
 ## 🔧 How to Get Your Agent IDs
 
@@ -81,21 +68,30 @@ Authenticate users in your app, then redirect them to the AIsuru platform.
    - **Secondary Memori (Agent) ID** → `memoriID`
    - **Owner user ID** → `ownerUserID`
 
-## 🔑 Creating a Trusted App (Demo 2 & 3)
+## 🔧 Setup ngrok
 
-1. Login to your AIsuru tenant as an administrator
-2. Go to **Admin → Trusted Apps** (or "Applicazioni Fidate" in Italian)
-3. Click **+ Create** to add a new Trusted App
-4. Fill in:
-   - **Name**: A descriptive name (e.g., "My Demo App")
-   - **Base URL**: Your application's URL (e.g., `http://localhost:3000`)
-5. Save and copy the **API Key**
+Both demos require ngrok to expose local services publicly:
 
-⚠️ **Security Note:** Never expose your API Key in frontend code! Always call AIsuru APIs from your backend.
+1. Create an account at [ngrok.com](https://ngrok.com)
+2. Get your auth token from [dashboard](https://dashboard.ngrok.com/get-started/your-authtoken)
+3. Create a `.env` file in the demo directory:
+   ```
+   NGROK_AUTHTOKEN=your_token_here
+   ```
+4. Start services: `docker-compose up -d`
 
-## 🔄 How LoginWithJWT Works (Demo 2 & 3)
+**For Demo 1 (MongoDB):**
+- ngrok TCP tunnel: `ngrok tcp 27017`
+- Use the TCP URL in AIsuru MCP configuration
 
-The programmatic authentication flow:
+**For Demo 3 (Filesystem):**
+- ngrok is automatically started via docker-compose
+- Check URL at http://localhost:4041
+- Use the HTTPS URL + `/mcp` endpoint in AIsuru
+
+## 🔧 Configure MCP Server in AIsuru
+
+The integration flow:
 
 1. **User logs in** to your application (via your form or Microsoft SSO)
 2. **Your backend creates a JWT** signed with the Trusted App API Key (HS256)

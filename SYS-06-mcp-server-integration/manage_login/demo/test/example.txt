@@ -1,0 +1,4 @@
+This is an example file in the workspace.
+
+The MCP server can read and modify this file.
+Ask the agent to update this content!
