@@ -1,0 +1,42 @@
+<% if @workspace_files.empty? %>
+  <div class="text-muted text-center py-4">
+    <i class="bi bi-folder-x display-4"></i>
+    <p class="mt-2">Workspace is empty</p>
+    <small>Ask the agent to create some files!</small>
+  </div>
+<% else %>
+  <div class="file-tree">
+    <% @workspace_files.each do |node| %>
+      <%= render partial: "demo3/explorer_node", locals: { node: node, level: 0 } %>
+    <% end %>
+  </div>
+<% end %>
+
+<style>
+  .file-tree {
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+  }
+  .file-node {
+    padding: 0.25rem 0;
+    cursor: pointer;
+  }
+  .file-node:hover {
+    background-color: #f8f9fa;
+  }
+  .file-icon {
+    margin-right: 0.5rem;
+  }
+  .file-content {
+    margin-top: 0.5rem;
+    padding: 0.75rem;
+    background-color: #f8f9fa;
+    border-left: 3px solid #0078d4;
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+</style>

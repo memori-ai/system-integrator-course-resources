@@ -1,0 +1,413 @@
+<% content_for :title, "Demo 3: Filesystem MCP Server" %>
+
+<div class="container py-5">
+
+  <%# Back to Home %>
+  <div class="row mb-4">
+    <div class="col">
+      <%= link_to root_path, class: "btn btn-outline-secondary" do %>
+        <i class="bi bi-arrow-left me-1"></i> Back to Demo Selection
+      <% end %>
+    </div>
+  </div>
+
+  <%# Hero Section %>
+  <div class="row mb-5">
+    <div class="col-lg-8 mx-auto text-center">
+      <span class="badge mb-3 text-white" style="background: linear-gradient(135deg, #00a4ef 0%, #0078d4 100%);">Demo 3</span>
+      <h1 class="display-5 fw-bold mb-3">
+        <i class="bi bi-folder2-open me-2" style="color: #00a4ef;"></i>
+        Filesystem MCP Server
+      </h1>
+      <p class="lead text-muted">
+        Connect an AIsuru agent to a custom MCP filesystem server. The agent can read, write,
+        and create files in a shared workspace directory.
+      </p>
+    </div>
+  </div>
+
+  <%# What is Filesystem MCP Server %>
+  <div class="row mb-5">
+    <div class="col-lg-10 mx-auto">
+      <div class="card border-primary">
+        <div class="card-header text-white" style="background: linear-gradient(135deg, #00a4ef 0%, #0078d4 100%);">
+          <h5 class="mb-0">
+            <i class="bi bi-question-circle me-2"></i>
+            What is the Filesystem MCP Server?
+          </h5>
+        </div>
+        <div class="card-body">
+          <p>
+            The Filesystem MCP server exposes file operations through the Model Context Protocol.
+            It runs in a Docker container and shares a directory (<code>./test</code>) with this application.
+          </p>
+          <ul class="mb-0">
+            <li><strong>Four tools:</strong> <code>list_files</code>, <code>read_file</code>, <code>write_file</code>, <code>create_file</code></li>
+            <li><strong>Secure:</strong> Only <code>./test</code> directory is accessible</li>
+            <li><strong>Real-time:</strong> Changes are immediately visible in the workspace panel</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%# Setup Instructions %>
+  <% unless @show_agent %>
+    <%# Architecture Diagram %>
+    <div class="row mb-4">
+      <div class="col-lg-10 mx-auto">
+        <div class="card border-0 shadow-sm" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
+          <div class="card-body text-center py-4">
+            <h6 class="text-muted mb-3">Architecture</h6>
+            <div class="d-flex justify-content-center align-items-center flex-wrap gap-2">
+              <span class="badge bg-primary fs-6 px-3 py-2">AIsuru Agent</span>
+              <i class="bi bi-arrow-right text-muted fs-4"></i>
+              <span class="badge bg-dark fs-6 px-3 py-2">ngrok HTTPS</span>
+              <i class="bi bi-arrow-right text-muted fs-4"></i>
+              <span class="badge fs-6 px-3 py-2" style="background: linear-gradient(135deg, #00a4ef 0%, #0078d4 100%);">MCP Server (Node.js)</span>
+              <i class="bi bi-arrow-right text-muted fs-4"></i>
+              <span class="badge bg-warning fs-6 px-3 py-2">Shared Filesystem</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%# Setup Instructions %>
+    <div class="row mb-4">
+      <div class="col-lg-10 mx-auto">
+        <div class="card border-primary">
+          <div class="card-header text-white" style="background: linear-gradient(135deg, #00a4ef 0%, #0078d4 100%);">
+            <h5 class="mb-0">
+              <i class="bi bi-tools me-2"></i>
+              Setup Instructions: Filesystem MCP Server
+            </h5>
+          </div>
+          <div class="card-body">
+            <p class="text-muted mb-4">
+              Follow these steps to connect your AIsuru agent to the custom filesystem MCP server.
+              The agent will be able to read, write, create, and list files in the shared workspace directory.
+            </p>
+
+            <%# Step 1 %>
+            <div class="d-flex mb-4">
+              <div class="flex-shrink-0 me-3">
+                <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #00a4ef 0%, #0078d4 100%);">1</span>
+              </div>
+              <div class="flex-grow-1">
+                <h6 class="fw-bold">Configure ngrok Authentication</h6>
+                <p class="text-muted mb-2">
+                  Get your ngrok auth token from <a href="https://dashboard.ngrok.com/get-started/your-authtoken" target="_blank">ngrok dashboard</a>.
+                  Create a <code>.env</code> file in the demo directory:
+                </p>
+                <pre class="bg-dark text-light p-3 rounded mb-1"><code>NGROK_AUTHTOKEN=your_token_here</code></pre>
+              </div>
+            </div>
+
+            <%# Step 2 %>
+            <div class="d-flex mb-4">
+              <div class="flex-shrink-0 me-3">
+                <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #00a4ef 0%, #0078d4 100%);">2</span>
+              </div>
+              <div class="flex-grow-1">
+                <h6 class="fw-bold">Start All Services with Docker Compose</h6>
+                <p class="text-muted mb-2">
+                  From the <code>demo/</code> directory, start all services including the MCP server:
+                </p>
+                <pre class="bg-dark text-light p-3 rounded mb-1"><code>docker-compose up --build</code></pre>
+                <small class="text-muted">
+                  This starts the Rails app, MongoDB, MCP filesystem server, and ngrok tunnel.
+                </small>
+              </div>
+            </div>
+
+            <%# Step 3 %>
+            <div class="d-flex mb-4">
+              <div class="flex-shrink-0 me-3">
+                <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #00a4ef 0%, #0078d4 100%);">3</span>
+              </div>
+              <div class="flex-grow-1">
+                <h6 class="fw-bold">Get the ngrok Public URL</h6>
+                <p class="text-muted mb-2">
+                  Open the ngrok dashboard to see the public HTTPS URL:
+                </p>
+                <pre class="bg-dark text-light p-3 rounded mb-1"><code>open http://localhost:4041</code></pre>
+                <small class="text-muted">
+                  Copy the HTTPS forwarding URL (e.g., <code>https://abc123.ngrok-free.app</code>)
+                </small>
+              </div>
+            </div>
+
+            <%# Step 4 %>
+            <div class="d-flex mb-4">
+              <div class="flex-shrink-0 me-3">
+                <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #00a4ef 0%, #0078d4 100%);">4</span>
+              </div>
+              <div class="flex-grow-1">
+                <h6 class="fw-bold">Configure MCP Integration in AIsuru</h6>
+                <p class="text-muted mb-2">
+                  In the AIsuru platform, open your agent settings and go to the <strong>Integrations</strong> section.
+                  Add a new <strong>MCP Server</strong> integration:
+                </p>
+                <div class="table-responsive">
+                  <table class="table table-bordered table-sm mb-2">
+                    <tbody>
+                      <tr>
+                        <td class="fw-bold bg-light" style="width: 150px;">MCP Server URL</td>
+                        <td><code>https://<span class="text-danger">&lt;YOUR_NGROK_URL&gt;</span>/mcp</code></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <small class="text-muted">
+                  Replace <code>&lt;YOUR_NGROK_URL&gt;</code> with your actual ngrok URL.
+                  For example: <code>https://abc123.ngrok-free.app/mcp</code>
+                </small>
+              </div>
+            </div>
+
+            <%# Step 5 %>
+            <div class="d-flex mb-3">
+              <div class="flex-shrink-0 me-3">
+                <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #00a4ef 0%, #0078d4 100%);">5</span>
+              </div>
+              <div class="flex-grow-1">
+                <h6 class="fw-bold">Load the Agent Below &amp; Start Chatting</h6>
+                <p class="text-muted mb-0">
+                  Enter your agent's credentials in the form below and click <strong>"Load Agent"</strong>.
+                  The agent will be able to manage files in the workspace via MCP.
+                  Use the <strong>Workspace Explorer</strong> panel on the right to see changes in real-time.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%# Info about how to get Agent IDs %>
+    <div class="row mb-4">
+      <div class="col-lg-10 mx-auto">
+        <div class="card border-info">
+          <div class="card-header bg-info text-white">
+            <h5 class="mb-0">
+              <i class="bi bi-info-circle me-2"></i>
+              How to get your Agent IDs
+            </h5>
+          </div>
+          <div class="card-body">
+            <ol class="mb-0">
+              <li class="mb-2">
+                <strong>Create an Agent</strong> on <a href="https://www.aisuru.com" target="_blank">AIsuru</a>
+                (or use your own tenant if you have a PaaS subscription)
+              </li>
+              <li class="mb-2">
+                <strong>Open your Agent</strong> and click on <strong>"Dev docs"</strong> in the left sidebar
+              </li>
+              <li class="mb-2">
+                Expand the <strong>"Other references"</strong> section (or "Altri riferimenti" in Italian)
+              </li>
+              <li class="mb-2">
+                Copy the following values:
+                <ul class="mt-2">
+                  <li><strong>Secondary Memori (Agent) ID</strong> &rarr; This is your <code>memoriID</code></li>
+                  <li><strong>Owner user ID</strong> &rarr; This is your <code>ownerUserID</code></li>
+                </ul>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%# Configuration Form %>
+    <div class="row mb-5">
+      <div class="col-lg-8 mx-auto">
+        <div class="card shadow">
+          <div class="card-header text-white" style="background: linear-gradient(135deg, #00a4ef 0%, #0078d4 100%);">
+            <h5 class="mb-0">
+              <i class="bi bi-gear me-2"></i>
+              Configure Your Agent
+            </h5>
+          </div>
+          <div class="card-body p-4">
+            <%= form_with url: demo3_configure_path, method: :post, local: true do |f| %>
+              <div class="mb-4">
+                <label for="memori_id" class="form-label fw-bold">
+                  <i class="bi bi-fingerprint me-1"></i>
+                  Memori ID (Secondary Agent ID)
+                </label>
+                <%= f.text_field :memori_id,
+                    class: "form-control form-control-lg",
+                    placeholder: "e.g., a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                    required: true,
+                    pattern: "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}" %>
+                <div class="form-text">
+                  Found in Dev docs &rarr; Other references &rarr; "Secondary Memori (Agent) ID"
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <label for="owner_user_id" class="form-label fw-bold">
+                  <i class="bi bi-person-badge me-1"></i>
+                  Owner User ID
+                </label>
+                <%= f.text_field :owner_user_id,
+                    class: "form-control form-control-lg",
+                    placeholder: "e.g., b2c3d4e5-f6a7-8901-bcde-f12345678901",
+                    required: true,
+                    pattern: "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}" %>
+                <div class="form-text">
+                  Found in Dev docs &rarr; Other references &rarr; "Owner user ID"
+                </div>
+              </div>
+
+              <hr class="my-4">
+              <h6 class="text-muted mb-3">
+                <i class="bi bi-sliders me-1"></i>
+                Advanced Configuration (pre-filled with defaults)
+              </h6>
+
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="tenant_id" class="form-label">
+                    <i class="bi bi-building me-1"></i>
+                    Tenant ID
+                  </label>
+                  <%= f.text_field :tenant_id,
+                      class: "form-control",
+                      value: @tenant_id || "www.aisuru.com",
+                      required: true %>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label for="base_url" class="form-label">
+                    <i class="bi bi-link-45deg me-1"></i>
+                    Base URL
+                  </label>
+                  <%= f.text_field :base_url,
+                      class: "form-control",
+                      value: @base_url || "https://www.aisuru.com",
+                      required: true %>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="engine_url" class="form-label">
+                  <i class="bi bi-cpu me-1"></i>
+                  Engine URL
+                </label>
+                <%= f.text_field :engine_url,
+                    class: "form-control",
+                    value: @engine_url || "https://engine.memori.ai/memori/v2",
+                    required: true %>
+              </div>
+
+              <div class="mb-4">
+                <label for="api_url" class="form-label">
+                  <i class="bi bi-server me-1"></i>
+                  API URL
+                </label>
+                <%= f.text_field :api_url,
+                    class: "form-control",
+                    value: @api_url || "https://backend.memori.ai/api/v2",
+                    required: true %>
+              </div>
+
+              <div class="d-grid">
+                <%= f.submit "Load Agent", class: "btn btn-lg text-white", style: "background: linear-gradient(135deg, #00a4ef 0%, #0078d4 100%);" %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <%# Agent & Workspace Split View %>
+  <% if @show_agent %>
+    <%# Agent Info Banner %>
+    <div class="row mb-3">
+      <div class="col-12">
+        <div class="alert d-flex align-items-center mb-0 text-white" style="background: linear-gradient(135deg, #00a4ef 0%, #0078d4 100%);">
+          <i class="bi bi-check-circle-fill me-2 fs-5"></i>
+          <div class="flex-grow-1">
+            <strong>Agent Connected!</strong>
+            Chat with the agent on the left &mdash; it can manage files in the workspace via MCP.
+            Click <strong>"Refresh"</strong> on the right to see live changes.
+          </div>
+          <%= link_to demo3_path, class: "btn btn-outline-light btn-sm ms-3" do %>
+            <i class="bi bi-arrow-counterclockwise me-1"></i> Reconfigure
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <%# Two-Column Layout %>
+    <div class="row g-3">
+
+      <%# LEFT: Agent %>
+      <div class="col-lg-6">
+        <div class="card shadow h-100">
+          <div class="card-header text-white d-flex align-items-center" style="background: linear-gradient(135deg, #00a4ef 0%, #0078d4 100%);">
+            <i class="bi bi-robot me-2"></i>
+            <strong>AIsuru Agent</strong>
+            <span class="badge bg-light text-dark ms-auto">MCP-enabled</span>
+          </div>
+          <div class="card-body p-0">
+            <div class="memori-container" style="height: 650px;">
+              <memori-client
+                memoriName="YourAgent"
+                ownerUserName="owner"
+                memoriID="<%= @memori_id %>"
+                ownerUserID="<%= @owner_user_id %>"
+                tenantID="<%= @tenant_id %>"
+                engineURL="<%= @engine_url %>"
+                apiURL="<%= @api_url %>"
+                baseURL="<%= @base_url %>"
+                layout="CHAT"
+                uiLang="EN"
+                spokenLang="EN"
+                showLogin="true"
+              ></memori-client>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <%# RIGHT: Workspace Explorer %>
+      <div class="col-lg-6">
+        <div class="card shadow h-100">
+          <div class="card-header bg-warning text-dark d-flex align-items-center">
+            <i class="bi bi-folder2 me-2"></i>
+            <strong>Workspace Explorer</strong>
+            <span class="badge bg-dark ms-2">./test</span>
+            <button class="btn btn-sm btn-outline-dark ms-auto" onclick="refreshWorkspace()">
+              <i class="bi bi-arrow-clockwise me-1"></i> Refresh
+            </button>
+          </div>
+          <div class="card-body" style="height: 650px; overflow-y: auto;">
+            <div id="workspace-tree">
+              <%= render partial: "demo3/explorer_tree" %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <script>
+      function refreshWorkspace() {
+        fetch('<%= demo3_workspace_files_path %>')
+          .then(response => response.text())
+          .then(html => {
+            document.getElementById('workspace-tree').innerHTML = html;
+          });
+      }
+
+      // Auto-refresh every 5 seconds
+      setInterval(refreshWorkspace, 5000);
+    </script>
+  <% end %>
+
+</div>

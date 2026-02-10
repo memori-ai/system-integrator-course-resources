@@ -1,0 +1,7 @@
+# Ignore all files created by the agent
+*
+
+# Except these example files
+!.gitignore
+!README.md
+!example.txt
