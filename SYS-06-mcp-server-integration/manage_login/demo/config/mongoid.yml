@@ -1,14 +1,14 @@
 development:
   clients:
     default:
-      uri: <%= ENV['MONGO_URI'] || 'mongodb://localhost:27017/embedded_webcomponent_auth_development' %>
+      uri: <%= ENV['MONGO_URI'] || 'mongodb://admin:adminpassword@localhost:27017/mcp_demo_rails?authSource=admin' %>
       options:
         server_selection_timeout: 5
 
 test:
   clients:
     default:
-      uri: <%= ENV['MONGO_URI'] || 'mongodb://localhost:27017/embedded_webcomponent_auth_test' %>
+      uri: <%= ENV['MONGO_URI'] || 'mongodb://admin:adminpassword@localhost:27017/mcp_demo_test?authSource=admin' %>
       options:
         server_selection_timeout: 5
 

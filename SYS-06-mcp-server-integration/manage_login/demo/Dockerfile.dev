@@ -11,7 +11,7 @@ ENV RAILS_SERVE_STATIC_FILES="true" \
     RAILS_LOG_TO_STDOUT="true" \
     BUNDLE_PATH="/usr/local/bundle"
 
-ENV NODE_ARCH x64
+ENV NODE_ARCH arm64
 ENV NODE_VERSION 20.11.1
 
 # Install packages needed to build gems
@@ -39,3 +39,4 @@ ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 3000
 CMD [ "./bin/rails", "server", "-b", "0.0.0.0" ]
+

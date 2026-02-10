@@ -1,89 +1,36 @@
+name: sys06-mcp-demo
+
 services:
   web:
     build:
       context: .
       dockerfile: Dockerfile.dev
     command: ./bin/rails server -b '0.0.0.0'
-    image: sys-06-mcp-server-integration-demo
+    image: mcp-server-integration-demo
     volumes:
       - .:/rails
       - bundle_cache:/usr/local/bundle
       - node_modules:/rails/node_modules
     ports:
       - "3000:3000"
-    env_file:
-      - .env_dev
+    environment:
+      - MONGO_URI=mongodb://admin:adminpassword@mongodb:27017/mcp_demo_rails?authSource=admin
     depends_on:
       - mongodb
-      - redis
-
-  sidekiq:
-    build:
-      context: .
-      dockerfile: Dockerfile.dev
-    image: sys-06-mcp-server-integration-demo
-    shm_size: 2gb
-    entrypoint: bundle exec sidekiq -C /rails/config/sidekiq.yml
-    volumes:
-      - .:/rails
-      - bundle_cache:/usr/local/bundle
-    env_file:
-      - .env_dev
-    depends_on:
-      - mongodb
-      - redis
 
   mongodb:
     image: mongo:8.0
     volumes:
       - mongodb_data:/data/db
-    environment:
-      - MONGO_INITDB_DATABASE=sys_06_mcp_server_integration_development
-
-  redis:
-    image: 'redis:8-alpine'
-    command: redis-server
-    volumes:
-      - redis-data:/data
-    environment:
-      - ALLOW_EMPTY_PASSWORD=yes
-      - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
-
-  # ---------------------------------------------------------------------------
-  # MCP Filesystem Server — Demo 3
-  # Shares the ./test directory with the web container via a bind mount.
-  # The web container sees it at /rails/test, this container at /workspace.
-  # Listens on port 8000 (SSE transport); ngrok tunnels it to the public internet.
-  # ---------------------------------------------------------------------------
-  mcp-server:
-    build:
-      context: ./docker/mcp-server
-      dockerfile: Dockerfile
-    image: sys-06-mcp-filesystem-server
+      - ./docker/mongo-init/:/docker-entrypoint-initdb.d/:ro
     ports:
-      - "8000:8000"
-    volumes:
-      - ./test:/workspace
+      - "27017:27017"
     environment:
-      - WORKSPACE_ROOT=/workspace
-      - PORT=8000
-
-  # ---------------------------------------------------------------------------
-  # ngrok — exposes mcp-server to the public internet.
-  # Set NGROK_AUTHTOKEN in .env_dev (or inline) before starting.
-  # The public URL is printed in the ngrok container logs on startup.
-  # ---------------------------------------------------------------------------
-  ngrok:
-    image: ngrok/ngrok:latest
-    command: http mcp-server:8000 --log=stdout
-    env_file:
-      - .env_dev
-    depends_on:
-      - mcp-server
-
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=adminpassword
+      - MONGO_INITDB_DATABASE=mcp_demo
 
 volumes:
   mongodb_data:
   bundle_cache:
   node_modules:
-  redis-data:

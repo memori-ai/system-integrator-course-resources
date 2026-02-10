@@ -10,8 +10,6 @@ gem "jbuilder"
 
 gem 'amazing_print'
 gem "mongoid", "~> 8.1"
-gem 'sidekiq'
-gem 'jwt'  # For AIsuru Trusted App authentication
 
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 gem "bootsnap", require: false
