@@ -84,6 +84,67 @@
       </div>
     </div>
 
+    <%# Demo 2 Card: MySQL via MCP Server %>
+    <div class="col-lg-6">
+      <div class="card h-100 shadow-lg border-0 card-hover">
+        <div class="card-header text-white py-3" style="background: linear-gradient(135deg, #e85d04 0%, #f48c06 100%);">
+          <h4 class="mb-0">
+            <i class="bi bi-2-circle me-2"></i>
+            Demo 2: MySQL via MCP Server
+          </h4>
+        </div>
+        <div class="card-body p-4">
+          <div class="mb-4">
+            <span class="badge bg-danger-subtle text-danger me-2">MCP Server</span>
+            <span class="badge bg-light text-dark">MySQL</span>
+            <span class="badge bg-warning-subtle text-warning">ngrok</span>
+          </div>
+
+          <h5 class="card-title">AI Agent manages MySQL through self-hosted MCP</h5>
+          <p class="card-text text-muted">
+            Deploy a self-hosted MCP server (from npm package) that allows an AIsuru AI agent to
+            perform CRUD operations on a MySQL database. The agent can query, insert, update and delete data in real time.
+          </p>
+
+          <hr>
+
+          <h6 class="text-muted mb-3">What you'll learn:</h6>
+          <ul class="list-unstyled small">
+            <li class="mb-2">
+              <i class="bi bi-check-circle text-success me-2"></i>
+              Deploy MCP server from npm package
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-check-circle text-success me-2"></i>
+              Run MySQL database with Docker
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-check-circle text-success me-2"></i>
+              Configure MCP server to connect to MySQL
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-check-circle text-success me-2"></i>
+              See real-time database changes via agent
+            </li>
+          </ul>
+
+          <hr>
+
+          <h6 class="text-muted mb-3">Architecture:</h6>
+          <p class="small text-muted mb-0">
+            <i class="bi bi-diagram-3 text-primary me-1"></i>
+            <strong>AIsuru Agent</strong> &rarr; <strong>ngrok HTTPS</strong> &rarr; <strong>MCP Server (npm)</strong> &rarr; <strong>MySQL (Docker)</strong>
+          </p>
+        </div>
+        <div class="card-footer bg-white border-0 p-4">
+          <%= link_to demo2_path, class: "btn btn-lg w-100 text-white", style: "background: linear-gradient(135deg, #e85d04 0%, #f48c06 100%);" do %>
+            <i class="bi bi-play-circle me-2"></i>
+            Start Demo 2
+          <% end %>
+        </div>
+      </div>
+    </div>
+
     <%# Demo 3 Card: Filesystem MCP Server %>
     <div class="col-lg-6">
       <div class="card h-100 shadow-lg border-0 card-hover">

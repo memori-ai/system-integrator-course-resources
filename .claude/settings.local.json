@@ -1,7 +1,10 @@
 {
   "permissions": {
     "allow": [
-      "Bash(git ls-tree:*)"
+      "Bash(git ls-tree:*)",
+      "Bash(docker compose exec:*)",
+      "Bash(curl:*)",
+      "Bash(docker compose restart:*)"
     ]
   }
 }
