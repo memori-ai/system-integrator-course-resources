@@ -1,4 +1,4 @@
-<% content_for :title, "Demo 1: MongoDB via MCP Server" %>
+<% content_for :title, "Demo 2: MySQL via MCP Server" %>
 
 <div class="container-fluid py-4">
 
@@ -19,15 +19,15 @@
     <%# Hero Section %>
     <div class="row mb-4">
       <div class="col-lg-10 mx-auto text-center">
-        <span class="badge bg-success mb-3 fs-6">Demo 1</span>
+        <span class="badge mb-3 fs-6 text-white" style="background: linear-gradient(135deg, #e85d04 0%, #f48c06 100%);">Demo 2</span>
         <h1 class="display-5 fw-bold mb-3">
-          <i class="bi bi-database me-2" style="color: #47A248;"></i>
-          MongoDB via MCP Server
+          <i class="bi bi-database-fill-gear me-2" style="color: #e85d04;"></i>
+          MySQL via MCP Server
         </h1>
         <p class="lead text-muted">
-          Connect an AIsuru agent to your local MongoDB database using the
-          <strong>MCP (Model Context Protocol)</strong> integration.
-          The agent will be able to read and modify data in real-time.
+          Connect an AIsuru agent to your local MySQL database using a
+          <strong>self-hosted MCP server</strong> deployed from npm.
+          The agent will be able to query and modify data in real-time.
         </p>
       </div>
     </div>
@@ -41,11 +41,11 @@
             <div class="d-flex justify-content-center align-items-center flex-wrap gap-2">
               <span class="badge bg-primary fs-6 px-3 py-2">AIsuru Agent</span>
               <i class="bi bi-arrow-right text-muted fs-4"></i>
-              <span class="badge fs-6 px-3 py-2" style="background-color: #6f42c1;">MCP Server</span>
+              <span class="badge bg-dark fs-6 px-3 py-2">ngrok HTTPS</span>
               <i class="bi bi-arrow-right text-muted fs-4"></i>
-              <span class="badge bg-dark fs-6 px-3 py-2">ngrok TCP Tunnel</span>
+              <span class="badge fs-6 px-3 py-2 text-white" style="background: linear-gradient(135deg, #e85d04 0%, #f48c06 100%);">MCP Server (npm)</span>
               <i class="bi bi-arrow-right text-muted fs-4"></i>
-              <span class="badge fs-6 px-3 py-2" style="background-color: #47A248;">MongoDB (Docker)</span>
+              <span class="badge fs-6 px-3 py-2" style="background-color: #00618a; color: white;">MySQL (Docker)</span>
             </div>
           </div>
         </div>
@@ -55,32 +55,32 @@
     <%# Setup Instructions %>
     <div class="row mb-4">
       <div class="col-lg-10 mx-auto">
-        <div class="card border-success">
-          <div class="card-header text-white" style="background-color: #47A248;">
+        <div class="card border-danger">
+          <div class="card-header text-white" style="background: linear-gradient(135deg, #e85d04 0%, #f48c06 100%);">
             <h5 class="mb-0">
               <i class="bi bi-tools me-2"></i>
-              Setup Instructions: MCP MongoDB Integration
+              Setup Instructions: MySQL MCP Server
             </h5>
           </div>
           <div class="card-body">
             <p class="text-muted mb-4">
-              Follow these steps to connect your AIsuru agent to the local MongoDB database through the MCP server.
-              The MCP MongoDB integration is already built into AIsuru &mdash; you just need to provide the connection details.
+              Follow these steps to connect your AIsuru agent to the local MySQL database through a self-hosted MCP server.
+              The MCP server is deployed from an npm package and runs in a Docker container.
             </p>
 
             <%# Step 1 %>
             <div class="d-flex mb-4">
               <div class="flex-shrink-0 me-3">
-                <span class="badge rounded-circle bg-success fs-5 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">1</span>
+                <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #e85d04 0%, #f48c06 100%);">1</span>
               </div>
               <div class="flex-grow-1">
-                <h6 class="fw-bold">Start MongoDB with Docker Compose</h6>
+                <h6 class="fw-bold">Free ngrok Tunnel (if needed)</h6>
                 <p class="text-muted mb-2">
-                  From the <code>demo/</code> directory, start the MongoDB container with authentication enabled:
+                  <strong>⚠️ ngrok free accounts support only 1 active tunnel.</strong> If you were using another demo, stop all ngrok tunnels first:
                 </p>
-                <pre class="bg-dark text-light p-3 rounded mb-1"><code>docker compose up -d mongodb</code></pre>
+                <pre class="bg-dark text-light p-3 rounded mb-1"><code>docker compose stop ngrok-mcp ngrok-mcp-mysql</code></pre>
                 <small class="text-muted">
-                  This starts a MongoDB 8.0 instance with seed data (products, customers, orders) in the <code>mcp_demo</code> database.
+                  This stops all ngrok tunnels, freeing the connection for this demo.
                 </small>
               </div>
             </div>
@@ -88,16 +88,16 @@
             <%# Step 2 %>
             <div class="d-flex mb-4">
               <div class="flex-shrink-0 me-3">
-                <span class="badge rounded-circle bg-success fs-5 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">2</span>
+                <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #e85d04 0%, #f48c06 100%);">2</span>
               </div>
               <div class="flex-grow-1">
-                <h6 class="fw-bold">Expose MongoDB with ngrok TCP Tunnel</h6>
+                <h6 class="fw-bold">Start the MCP Server for MySQL</h6>
                 <p class="text-muted mb-2">
-                  Use ngrok to expose the local MongoDB port to the internet, so the AIsuru MCP server can reach it:
+                  Start the ngrok tunnel for the MySQL MCP server (Demo 2):
                 </p>
-                <pre class="bg-dark text-light p-3 rounded mb-1"><code>ngrok tcp 27017</code></pre>
+                <pre class="bg-dark text-light p-3 rounded mb-1"><code>docker compose up -d ngrok-mcp-mysql</code></pre>
                 <small class="text-muted">
-                  Copy the forwarding address (e.g. <code>tcp://X.tcp.ngrok.io:XXXXX</code>). You'll need the host and port.
+                  Access the ngrok dashboard at <a href="http://localhost:4042" target="_blank" class="text-decoration-none">http://localhost:4042</a> to see the public HTTPS URL.
                 </small>
               </div>
             </div>
@@ -105,45 +105,46 @@
             <%# Step 3 %>
             <div class="d-flex mb-4">
               <div class="flex-shrink-0 me-3">
-                <span class="badge rounded-circle bg-success fs-5 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">3</span>
+                <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #e85d04 0%, #f48c06 100%);">3</span>
               </div>
               <div class="flex-grow-1">
-                <h6 class="fw-bold">Configure the MCP Integration in AIsuru</h6>
+                <h6 class="fw-bold">Get the ngrok HTTPS URL</h6>
                 <p class="text-muted mb-2">
-                  In the AIsuru platform, open your agent settings and go to the <strong>Integrations</strong> section.
-                  Add a new <strong>MCP Server</strong> integration with the following details:
+                  Open the ngrok dashboard at <a href="http://localhost:4042" target="_blank" class="text-decoration-none">http://localhost:4042</a> and copy the <strong>HTTPS URL</strong> (e.g., <code>https://abc123.ngrok-free.dev</code>).
                 </p>
-                <div class="table-responsive">
-                  <table class="table table-bordered table-sm mb-2">
-                    <tbody>
-                      <tr>
-                        <td class="fw-bold bg-light" style="width: 180px;">Connection String</td>
-                        <td><code>mongodb://admin:adminpassword@<span class="text-danger">&lt;NGROK_HOST&gt;</span>:<span class="text-danger">&lt;NGROK_PORT&gt;</span>/mcp_demo?authSource=admin</code></td>
-                      </tr>
-                      <tr>
-                        <td class="fw-bold bg-light">Database Name</td>
-                        <td><code>mcp_demo</code></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
                 <small class="text-muted">
-                  Replace <code>&lt;NGROK_HOST&gt;</code> and <code>&lt;NGROK_PORT&gt;</code> with the values from your ngrok output.
-                  For example: <code>mongodb://admin:adminpassword@8.tcp.ngrok.io:12811/mcp_demo?authSource=admin</code>
+                  You'll use this URL with the <code>/mcp</code> endpoint to configure the MCP server in AIsuru.
                 </small>
               </div>
             </div>
 
             <%# Step 4 %>
+            <div class="d-flex mb-4">
+              <div class="flex-shrink-0 me-3">
+                <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #e85d04 0%, #f48c06 100%);">4</span>
+              </div>
+              <div class="flex-grow-1">
+                <h6 class="fw-bold">Configure the MCP Server in AIsuru</h6>
+                <p class="text-muted mb-2">
+                  In AIsuru, add the MCP server using the HTTPS URL from ngrok with <code>/mcp</code> endpoint:
+                </p>
+                <pre class="bg-dark text-light p-3 rounded mb-1"><code>https://your-ngrok-url.ngrok-free.dev/mcp</code></pre>
+                <small class="text-muted">
+                  The MCP server exposes MySQL database tools: <code>query</code> (SELECT), <code>execute</code> (INSERT/UPDATE/DELETE), <code>list_tables</code>, and <code>describe_table</code>.
+                </small>
+              </div>
+            </div>
+
+            <%# Step 5 %>
             <div class="d-flex mb-3">
               <div class="flex-shrink-0 me-3">
-                <span class="badge rounded-circle bg-success fs-5 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">4</span>
+                <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #e85d04 0%, #f48c06 100%);">5</span>
               </div>
               <div class="flex-grow-1">
                 <h6 class="fw-bold">Load the Agent Below &amp; Start Chatting</h6>
                 <p class="text-muted mb-0">
                   Enter your agent's credentials in the form below and click <strong>"Load Agent"</strong>.
-                  The agent will be able to query and modify the MongoDB database via MCP.
+                  The agent will be able to query and modify the MySQL database via MCP.
                   Use the <strong>DB Explorer</strong> panel on the right to see changes in real-time.
                 </p>
               </div>
@@ -192,14 +193,14 @@
     <div class="row mb-5">
       <div class="col-lg-8 mx-auto">
         <div class="card shadow">
-          <div class="card-header text-white" style="background-color: #47A248;">
+          <div class="card-header text-white" style="background: linear-gradient(135deg, #e85d04 0%, #f48c06 100%);">
             <h5 class="mb-0">
               <i class="bi bi-gear me-2"></i>
               Configure Your Agent
             </h5>
           </div>
           <div class="card-body p-4">
-            <%= form_with url: demo1_configure_path, method: :post, local: true do |f| %>
+            <%= form_with url: demo2_configure_path, method: :post, local: true do |f| %>
               <div class="mb-4">
                 <label for="memori_id" class="form-label fw-bold">
                   <i class="bi bi-fingerprint me-1"></i>
@@ -283,7 +284,7 @@
               </div>
 
               <div class="d-grid">
-                <%= f.submit "Load Agent", class: "btn btn-lg text-white", style: "background-color: #47A248;" %>
+                <%= f.submit "Load Agent", class: "btn btn-lg text-white", style: "background: linear-gradient(135deg, #e85d04 0%, #f48c06 100%);" %>
               </div>
             <% end %>
           </div>
@@ -301,7 +302,7 @@
                 <i class="bi bi-robot display-4 text-primary mb-3"></i>
                 <h5 class="card-title">Chat with the Agent</h5>
                 <p class="card-text text-muted">
-                  Ask the agent to query products, look up customers, check order status, or even modify data.
+                  Ask the agent to query users, look up products, check orders, or even modify data.
                 </p>
               </div>
             </div>
@@ -309,10 +310,10 @@
           <div class="col-md-4">
             <div class="card h-100 border-0 shadow-sm">
               <div class="card-body text-center p-4">
-                <i class="bi bi-database-gear display-4 mb-3" style="color: #47A248;"></i>
+                <i class="bi bi-database-gear display-4 mb-3" style="color: #e85d04;"></i>
                 <h5 class="card-title">Live DB Explorer</h5>
                 <p class="card-text text-muted">
-                  See the MongoDB data update in real-time as the agent performs operations through MCP.
+                  See the MySQL data update in real-time as the agent performs operations through MCP.
                 </p>
               </div>
             </div>
@@ -320,10 +321,10 @@
           <div class="col-md-4">
             <div class="card h-100 border-0 shadow-sm">
               <div class="card-body text-center p-4">
-                <i class="bi bi-diagram-3 display-4" style="color: #6f42c1;"></i>
-                <h5 class="card-title">MCP Protocol</h5>
+                <i class="bi bi-box-seam display-4" style="color: #f48c06;"></i>
+                <h5 class="card-title">Self-Hosted MCP</h5>
                 <p class="card-text text-muted">
-                  The Model Context Protocol enables secure, structured communication between AI agents and external tools.
+                  The MCP server runs from an npm package, giving you full control over database operations.
                 </p>
               </div>
             </div>
@@ -340,14 +341,14 @@
     <%# Agent Info Banner %>
     <div class="row mb-3">
       <div class="col-12">
-        <div class="alert alert-success d-flex align-items-center mb-0">
+        <div class="alert d-flex align-items-center mb-0 text-white" style="background: linear-gradient(135deg, #e85d04 0%, #f48c06 100%);">
           <i class="bi bi-check-circle-fill me-2 fs-5"></i>
           <div class="flex-grow-1">
             <strong>Agent Connected!</strong>
-            Chat with the agent on the left &mdash; it can read and modify the MongoDB database via MCP.
+            Chat with the agent on the left &mdash; it can read and modify the MySQL database via MCP.
             Click <strong>"Refresh Data"</strong> on the right to see live changes.
           </div>
-          <%= link_to demo1_path, class: "btn btn-outline-success btn-sm ms-3" do %>
+          <%= link_to demo2_path, class: "btn btn-outline-light btn-sm ms-3" do %>
             <i class="bi bi-arrow-counterclockwise me-1"></i> Reconfigure
           <% end %>
         </div>
@@ -360,7 +361,7 @@
       <%# LEFT: Agent %>
       <div class="col-lg-6">
         <div class="card shadow h-100">
-          <div class="card-header text-white d-flex align-items-center" style="background-color: #47A248;">
+          <div class="card-header text-white d-flex align-items-center" style="background: linear-gradient(135deg, #e85d04 0%, #f48c06 100%);">
             <i class="bi bi-robot me-2"></i>
             <strong>AIsuru Agent</strong>
             <span class="badge bg-light text-dark ms-auto">MCP-enabled</span>
@@ -389,10 +390,10 @@
       <%# RIGHT: DB Explorer %>
       <div class="col-lg-6">
         <div class="card shadow h-100">
-          <div class="card-header bg-dark text-white d-flex align-items-center">
+          <div class="card-header text-white d-flex align-items-center" style="background-color: #00618a;">
             <i class="bi bi-database me-2"></i>
-            <strong>MongoDB Explorer</strong>
-            <span class="badge bg-secondary ms-2">mcp_demo</span>
+            <strong>MySQL Explorer</strong>
+            <span class="badge bg-light text-dark ms-2">mcp_demo_mysql</span>
             <button class="btn btn-sm btn-outline-light ms-auto" id="btn-refresh-db" onclick="refreshDbData()">
               <i class="bi bi-arrow-clockwise me-1"></i> Refresh Data
             </button>
@@ -401,13 +402,13 @@
 
             <%# Initial state %>
             <div class="d-flex flex-column align-items-center justify-content-center h-100 text-muted" id="db-placeholder">
-              <i class="bi bi-database-gear display-1 mb-3" style="color: #47A248; opacity: 0.5;"></i>
-              <h5>MongoDB Data Explorer</h5>
+              <i class="bi bi-database-gear display-1 mb-3" style="color: #e85d04; opacity: 0.5;"></i>
+              <h5>MySQL Data Explorer</h5>
               <p class="text-center px-4">
-                Click <strong>"Refresh Data"</strong> to load the current state of the <code>mcp_demo</code> database.<br>
+                Click <strong>"Refresh Data"</strong> to load the current state of the <code>mcp_demo_mysql</code> database.<br>
                 After chatting with the agent, refresh again to see the changes.
               </p>
-              <button class="btn text-white" style="background-color: #47A248;" onclick="refreshDbData()">
+              <button class="btn text-white" style="background: linear-gradient(135deg, #e85d04 0%, #f48c06 100%);" onclick="refreshDbData()">
                 <i class="bi bi-arrow-clockwise me-1"></i> Load Database
               </button>
             </div>
@@ -416,21 +417,21 @@
             <div class="d-none p-3" id="db-data-container">
               <div class="d-flex align-items-center justify-content-between mb-3">
                 <small class="text-muted" id="db-timestamp"></small>
-                <span class="badge bg-success" id="db-status-badge">Connected</span>
+                <span class="badge text-white" style="background: linear-gradient(135deg, #e85d04 0%, #f48c06 100%);" id="db-status-badge">Connected</span>
               </div>
 
-              <%# Tabs for collections %>
-              <ul class="nav nav-tabs" role="tablist" id="collection-tabs">
+              <%# Tabs for tables %>
+              <ul class="nav nav-tabs" role="tablist" id="table-tabs">
                 <li class="nav-item" role="presentation">
-                  <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-products" type="button" role="tab">
-                    <i class="bi bi-box-seam me-1"></i> Products
-                    <span class="badge bg-secondary ms-1" id="count-products">0</span>
+                  <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-users" type="button" role="tab">
+                    <i class="bi bi-people me-1"></i> Users
+                    <span class="badge bg-secondary ms-1" id="count-users">0</span>
                   </button>
                 </li>
                 <li class="nav-item" role="presentation">
-                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-customers" type="button" role="tab">
-                    <i class="bi bi-people me-1"></i> Customers
-                    <span class="badge bg-secondary ms-1" id="count-customers">0</span>
+                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-products" type="button" role="tab">
+                    <i class="bi bi-box-seam me-1"></i> Products
+                    <span class="badge bg-secondary ms-1" id="count-products">0</span>
                   </button>
                 </li>
                 <li class="nav-item" role="presentation">
@@ -441,14 +442,14 @@
                 </li>
               </ul>
 
-              <div class="tab-content mt-2" id="collection-tab-content">
-                <%# Products tab %>
-                <div class="tab-pane fade show active" id="tab-products" role="tabpanel">
-                  <div id="table-products"></div>
+              <div class="tab-content mt-2" id="table-tab-content">
+                <%# Users tab %>
+                <div class="tab-pane fade show active" id="tab-users" role="tabpanel">
+                  <div id="table-users"></div>
                 </div>
-                <%# Customers tab %>
-                <div class="tab-pane fade" id="tab-customers" role="tabpanel">
-                  <div id="table-customers"></div>
+                <%# Products tab %>
+                <div class="tab-pane fade" id="tab-products" role="tabpanel">
+                  <div id="table-products"></div>
                 </div>
                 <%# Orders tab %>
                 <div class="tab-pane fade" id="tab-orders" role="tabpanel">
@@ -509,9 +510,9 @@
         btn.disabled = true;
         btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> Loading...';
 
-        fetch('<%= demo1_db_status_path %>')
+        fetch('<%= demo2_db_status_path %>')
           .then(response => {
-            if (!response.ok) throw new Error('Failed to connect to MongoDB');
+            if (!response.ok) throw new Error('Failed to connect to MySQL');
             return response.json();
           })
           .then(data => {
@@ -528,14 +529,14 @@
               'Last refreshed: ' + ts.toLocaleTimeString();
 
             // Update counts
-            document.getElementById('count-products').textContent = data.collections.products.count;
-            document.getElementById('count-customers').textContent = data.collections.customers.count;
-            document.getElementById('count-orders').textContent = data.collections.orders.count;
+            document.getElementById('count-users').textContent = data.tables.users.count;
+            document.getElementById('count-products').textContent = data.tables.products.count;
+            document.getElementById('count-orders').textContent = data.tables.orders.count;
 
             // Render tables
-            renderProductsTable(data.collections.products.documents);
-            renderCustomersTable(data.collections.customers.documents);
-            renderOrdersTable(data.collections.orders.documents);
+            renderUsersTable(data.tables.users.records);
+            renderProductsTable(data.tables.products.records);
+            renderOrdersTable(data.tables.orders.records);
           })
           .catch(error => {
             placeholder.classList.add('d-none');
@@ -549,69 +550,67 @@
           });
       }
 
-      function renderProductsTable(docs) {
-        if (!docs.length) {
+      function renderUsersTable(records) {
+        if (!records.length) {
+          document.getElementById('table-users').innerHTML =
+            '<p class="text-muted p-3">No users found.</p>';
+          return;
+        }
+        let html = '<div class="table-responsive"><table class="table table-sm table-striped table-hover mb-0">';
+        html += '<thead class="table-light"><tr><th>ID</th><th>Name</th><th>Email</th><th>Role</th><th>Created</th></tr></thead><tbody>';
+        records.forEach(record => {
+          const roleClass = { 'admin': 'bg-danger', 'moderator': 'bg-warning text-dark', 'user': 'bg-secondary' }[record.role] || 'bg-light text-dark';
+          const createdAt = record.created_at ? new Date(record.created_at).toLocaleDateString() : '';
+          html += '<tr>';
+          html += '<td><small class="text-muted">#' + record.id + '</small></td>';
+          html += '<td class="fw-semibold">' + escHtml(record.name || '') + '</td>';
+          html += '<td><small>' + escHtml(record.email || '') + '</small></td>';
+          html += '<td><span class="badge ' + roleClass + '">' + escHtml(record.role || '') + '</span></td>';
+          html += '<td><small>' + createdAt + '</small></td>';
+          html += '</tr>';
+        });
+        html += '</tbody></table></div>';
+        document.getElementById('table-users').innerHTML = html;
+      }
+
+      function renderProductsTable(records) {
+        if (!records.length) {
           document.getElementById('table-products').innerHTML =
             '<p class="text-muted p-3">No products found.</p>';
           return;
         }
         let html = '<div class="table-responsive"><table class="table table-sm table-striped table-hover mb-0">';
-        html += '<thead class="table-light"><tr><th>Name</th><th>Category</th><th>Price</th><th>Stock</th><th>Tags</th></tr></thead><tbody>';
-        docs.forEach(doc => {
-          const tags = (doc.tags || []).map(t => '<span class="badge bg-light text-dark border me-1">' + t + '</span>').join('');
+        html += '<thead class="table-light"><tr><th>ID</th><th>Name</th><th>Category</th><th>Price</th><th>Stock</th></tr></thead><tbody>';
+        records.forEach(record => {
           html += '<tr>';
-          html += '<td class="fw-semibold">' + escHtml(doc.name || '') + '</td>';
-          html += '<td>' + escHtml(doc.category || '') + '</td>';
-          html += '<td>$' + (doc.price || 0).toFixed(2) + '</td>';
-          html += '<td>' + (doc.stock || 0) + '</td>';
-          html += '<td>' + tags + '</td>';
+          html += '<td><small class="text-muted">#' + record.id + '</small></td>';
+          html += '<td class="fw-semibold">' + escHtml(record.name || '') + '</td>';
+          html += '<td>' + escHtml(record.category || '') + '</td>';
+          html += '<td>$' + parseFloat(record.price || 0).toFixed(2) + '</td>';
+          html += '<td>' + (record.stock || 0) + '</td>';
           html += '</tr>';
         });
         html += '</tbody></table></div>';
         document.getElementById('table-products').innerHTML = html;
       }
 
-      function renderCustomersTable(docs) {
-        if (!docs.length) {
-          document.getElementById('table-customers').innerHTML =
-            '<p class="text-muted p-3">No customers found.</p>';
-          return;
-        }
-        let html = '<div class="table-responsive"><table class="table table-sm table-striped table-hover mb-0">';
-        html += '<thead class="table-light"><tr><th>Name</th><th>Email</th><th>City</th><th>Tier</th><th>Orders</th><th>Spent</th></tr></thead><tbody>';
-        docs.forEach(doc => {
-          const tierClass = { 'Platinum': 'bg-dark', 'Gold': 'bg-warning text-dark', 'Silver': 'bg-secondary', 'Bronze': 'bg-danger' }[doc.tier] || 'bg-light text-dark';
-          html += '<tr>';
-          html += '<td class="fw-semibold">' + escHtml((doc.firstName || '') + ' ' + (doc.lastName || '')) + '</td>';
-          html += '<td><small>' + escHtml(doc.email || '') + '</small></td>';
-          html += '<td>' + escHtml(doc.city || '') + '</td>';
-          html += '<td><span class="badge ' + tierClass + '">' + escHtml(doc.tier || '') + '</span></td>';
-          html += '<td>' + (doc.totalOrders || 0) + '</td>';
-          html += '<td>$' + (doc.totalSpent || 0).toFixed(2) + '</td>';
-          html += '</tr>';
-        });
-        html += '</tbody></table></div>';
-        document.getElementById('table-customers').innerHTML = html;
-      }
-
-      function renderOrdersTable(docs) {
-        if (!docs.length) {
+      function renderOrdersTable(records) {
+        if (!records.length) {
           document.getElementById('table-orders').innerHTML =
             '<p class="text-muted p-3">No orders found.</p>';
           return;
         }
         let html = '<div class="table-responsive"><table class="table table-sm table-striped table-hover mb-0">';
-        html += '<thead class="table-light"><tr><th>Customer</th><th>Items</th><th>Total</th><th>Status</th><th>Date</th></tr></thead><tbody>';
-        docs.forEach(doc => {
-          const statusClass = { 'delivered': 'bg-success', 'shipped': 'bg-info', 'processing': 'bg-warning text-dark', 'cancelled': 'bg-danger' }[doc.status] || 'bg-secondary';
-          const items = (doc.items || []).map(i => i.product + ' x' + i.quantity).join(', ');
-          const orderDate = doc.orderDate ? new Date(doc.orderDate).toLocaleDateString() : '';
+        html += '<thead class="table-light"><tr><th>ID</th><th>User ID</th><th>Total Amount</th><th>Status</th><th>Created</th></tr></thead><tbody>';
+        records.forEach(record => {
+          const statusClass = { 'completed': 'bg-success', 'shipped': 'bg-info', 'processing': 'bg-warning text-dark', 'pending': 'bg-secondary' }[record.status] || 'bg-light text-dark';
+          const createdAt = record.created_at ? new Date(record.created_at).toLocaleDateString() : '';
           html += '<tr>';
-          html += '<td><small>' + escHtml(doc.customerEmail || '') + '</small></td>';
-          html += '<td><small>' + escHtml(items) + '</small></td>';
-          html += '<td class="fw-semibold">$' + (doc.total || 0).toFixed(2) + '</td>';
-          html += '<td><span class="badge ' + statusClass + '">' + escHtml(doc.status || '') + '</span></td>';
-          html += '<td><small>' + orderDate + '</small></td>';
+          html += '<td><small class="text-muted">#' + record.id + '</small></td>';
+          html += '<td><small>#' + record.user_id + '</small></td>';
+          html += '<td class="fw-semibold">$' + parseFloat(record.total_amount || 0).toFixed(2) + '</td>';
+          html += '<td><span class="badge ' + statusClass + '">' + escHtml(record.status || '') + '</span></td>';
+          html += '<td><small>' + createdAt + '</small></td>';
           html += '</tr>';
         });
         html += '</tbody></table></div>';

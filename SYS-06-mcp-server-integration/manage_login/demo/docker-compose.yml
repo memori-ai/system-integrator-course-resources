@@ -15,8 +15,14 @@ services:
       - "3000:3000"
     environment:
       - MONGO_URI=mongodb://admin:adminpassword@mongodb:27017/mcp_demo_rails?authSource=admin
+      - MYSQL_HOST=mysql
+      - MYSQL_PORT=3306
+      - MYSQL_DATABASE=mcp_demo_mysql
+      - MYSQL_USER=mcpuser
+      - MYSQL_PASSWORD=mcppassword
     depends_on:
       - mongodb
+      - mysql
 
   mongodb:
     image: mongo:8.0
@@ -29,6 +35,19 @@ services:
       - MONGO_INITDB_ROOT_USERNAME=admin
       - MONGO_INITDB_ROOT_PASSWORD=adminpassword
       - MONGO_INITDB_DATABASE=mcp_demo
+
+  mysql:
+    image: mysql:8.0
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./docker/mysql-init/:/docker-entrypoint-initdb.d/:ro
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=rootpassword
+      - MYSQL_DATABASE=mcp_demo_mysql
+      - MYSQL_USER=mcpuser
+      - MYSQL_PASSWORD=mcppassword
 
   mcp-server:
     build:
@@ -43,6 +62,23 @@ services:
       - WORKSPACE_ROOT=/workspace
       - PORT=8000
 
+  mcp-server-mysql:
+    build:
+      context: ./docker/mcp-server-mysql
+      dockerfile: Dockerfile
+    image: sys-06-mcp-mysql-server
+    ports:
+      - "8001:8001"
+    environment:
+      - MYSQL_HOST=mysql
+      - MYSQL_PORT=3306
+      - MYSQL_DATABASE=mcp_demo_mysql
+      - MYSQL_USER=mcpuser
+      - MYSQL_PASSWORD=mcppassword
+      - PORT=8001
+    depends_on:
+      - mysql
+
   ngrok-mcp:
     image: ngrok/ngrok:latest
     command: http mcp-server:8000 --log=stdout
@@ -53,7 +89,18 @@ services:
     depends_on:
       - mcp-server
 
+  ngrok-mcp-mysql:
+    image: ngrok/ngrok:latest
+    command: http mcp-server-mysql:8001 --log=stdout
+    ports:
+      - "4042:4040"
+    environment:
+      - NGROK_AUTHTOKEN=${NGROK_AUTHTOKEN}
+    depends_on:
+      - mcp-server-mysql
+
 volumes:
   mongodb_data:
+  mysql_data:
   bundle_cache:
   node_modules:

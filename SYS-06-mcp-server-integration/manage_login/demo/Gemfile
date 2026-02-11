@@ -10,6 +10,7 @@ gem "jbuilder"
 
 gem 'amazing_print'
 gem "mongoid", "~> 8.1"
+gem "mysql2", "~> 0.5"
 
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 gem "bootsnap", require: false
