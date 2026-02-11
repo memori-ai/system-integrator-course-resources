@@ -74,13 +74,13 @@
                 <span class="badge rounded-circle bg-success fs-5 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">1</span>
               </div>
               <div class="flex-grow-1">
-                <h6 class="fw-bold">Free ngrok Tunnel (if needed)</h6>
+                <h6 class="fw-bold">Start MongoDB with Docker Compose</h6>
                 <p class="text-muted mb-2">
-                  <strong>⚠️ ngrok free accounts support only 1 active tunnel.</strong> If you were using another demo, stop all ngrok tunnels first:
+                  From the <code>demo/</code> directory, start the MongoDB container with authentication enabled:
                 </p>
-                <pre class="bg-dark text-light p-3 rounded mb-1"><code>docker compose stop ngrok-mcp ngrok-mcp-mysql</code></pre>
+                <pre class="bg-dark text-light p-3 rounded mb-1"><code>docker compose up -d mongodb</code></pre>
                 <small class="text-muted">
-                  This stops all ngrok tunnels, freeing the connection for this demo.
+                  This starts a MongoDB 8.0 instance with seed data (products, customers, orders) in the <code>mcp_demo</code> database.
                 </small>
               </div>
             </div>
@@ -91,13 +91,13 @@
                 <span class="badge rounded-circle bg-success fs-5 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">2</span>
               </div>
               <div class="flex-grow-1">
-                <h6 class="fw-bold">Start the MCP Server for Filesystem Operations</h6>
+                <h6 class="fw-bold">Expose MongoDB with ngrok TCP Tunnel</h6>
                 <p class="text-muted mb-2">
-                  Start the ngrok tunnel for the filesystem MCP server (Demo 1):
+                  Use ngrok to expose the local MongoDB port to the internet, so the AIsuru MCP server can reach it:
                 </p>
-                <pre class="bg-dark text-light p-3 rounded mb-1"><code>docker compose up -d ngrok-mcp</code></pre>
+                <pre class="bg-dark text-light p-3 rounded mb-1"><code>ngrok tcp 27017</code></pre>
                 <small class="text-muted">
-                  Access the ngrok dashboard at <a href="http://localhost:4041" target="_blank" class="text-decoration-none">http://localhost:4041</a> to see the public HTTPS URL.
+                  Copy the forwarding address (e.g. <code>tcp://X.tcp.ngrok.io:XXXXX</code>). You'll need the host and port.
                 </small>
               </div>
             </div>
@@ -108,44 +108,43 @@
                 <span class="badge rounded-circle bg-success fs-5 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">3</span>
               </div>
               <div class="flex-grow-1">
-                <h6 class="fw-bold">Get the ngrok HTTPS URL</h6>
+                <h6 class="fw-bold">Configure the MCP Integration in AIsuru</h6>
                 <p class="text-muted mb-2">
-                  Open the ngrok dashboard at <a href="http://localhost:4041" target="_blank" class="text-decoration-none">http://localhost:4041</a> and copy the <strong>HTTPS URL</strong> (e.g., <code>https://abc123.ngrok-free.dev</code>).
+                  In the AIsuru platform, open your agent settings and go to the <strong>Integrations</strong> section.
+                  Add a new <strong>MCP Server</strong> integration with the following details:
                 </p>
+                <div class="table-responsive">
+                  <table class="table table-bordered table-sm mb-2">
+                    <tbody>
+                      <tr>
+                        <td class="fw-bold bg-light" style="width: 180px;">Connection String</td>
+                        <td><code>mongodb://admin:adminpassword@<span class="text-danger">&lt;NGROK_HOST&gt;</span>:<span class="text-danger">&lt;NGROK_PORT&gt;</span>/mcp_demo?authSource=admin</code></td>
+                      </tr>
+                      <tr>
+                        <td class="fw-bold bg-light">Database Name</td>
+                        <td><code>mcp_demo</code></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
                 <small class="text-muted">
-                  You'll use this URL to configure the MCP server connection in AIsuru.
+                  Replace <code>&lt;NGROK_HOST&gt;</code> and <code>&lt;NGROK_PORT&gt;</code> with the values from your ngrok output.
+                  For example: <code>mongodb://admin:adminpassword@8.tcp.ngrok.io:12811/mcp_demo?authSource=admin</code>
                 </small>
               </div>
             </div>
 
             <%# Step 4 %>
-            <div class="d-flex mb-4">
-              <div class="flex-shrink-0 me-3">
-                <span class="badge rounded-circle bg-success fs-5 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">4</span>
-              </div>
-              <div class="flex-grow-1">
-                <h6 class="fw-bold">Configure the MCP Server in AIsuru</h6>
-                <p class="text-muted mb-2">
-                  In AIsuru, add the MCP server using the HTTPS URL from ngrok with <code>/mcp</code> endpoint:
-                </p>
-                <pre class="bg-dark text-light p-3 rounded mb-1"><code>https://your-ngrok-url.ngrok-free.dev/mcp</code></pre>
-                <small class="text-muted">
-                  The MCP server exposes filesystem tools to read, write, and list files in the workspace.
-                </small>
-              </div>
-            </div>
-
-            <%# Step 5 %>
             <div class="d-flex mb-3">
               <div class="flex-shrink-0 me-3">
-                <span class="badge rounded-circle bg-success fs-5 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">5</span>
+                <span class="badge rounded-circle bg-success fs-5 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">4</span>
               </div>
               <div class="flex-grow-1">
                 <h6 class="fw-bold">Load the Agent Below &amp; Start Chatting</h6>
                 <p class="text-muted mb-0">
                   Enter your agent's credentials in the form below and click <strong>"Load Agent"</strong>.
-                  The agent will be able to interact with files via the MCP server.
-                  Use the <strong>File Explorer</strong> panel on the right to see changes in real-time.
+                  The agent will be able to query and modify the MongoDB database via MCP.
+                  Use the <strong>DB Explorer</strong> panel on the right to see changes in real-time.
                 </p>
               </div>
             </div>

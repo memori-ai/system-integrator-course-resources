@@ -15,8 +15,14 @@ services:
       - "3000:3000"
     environment:
       - MONGO_URI=mongodb://admin:adminpassword@mongodb:27017/mcp_demo_rails?authSource=admin
+      - MYSQL_HOST=mysql
+      - MYSQL_PORT=3306
+      - MYSQL_DATABASE=mcp_demo_mysql
+      - MYSQL_USER=mcpuser
+      - MYSQL_PASSWORD=mcppassword
     depends_on:
       - mongodb
+      - mysql
 
   mongodb:
     image: mongo:8.0

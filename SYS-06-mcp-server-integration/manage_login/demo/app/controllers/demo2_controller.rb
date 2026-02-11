@@ -40,9 +40,9 @@ class Demo2Controller < ApplicationController
     require 'mysql2'
 
     client = Mysql2::Client.new(
-      host: ENV['MYSQL_HOST'] || 'localhost',
+      host: ENV['MYSQL_HOST'] || 'mysql',
       port: ENV['MYSQL_PORT']&.to_i || 3306,
-      database: 'mcp_demo_mysql',
+      database: ENV['MYSQL_DATABASE'] || 'mcp_demo_mysql',
       username: ENV['MYSQL_USER'] || 'mcpuser',
       password: ENV['MYSQL_PASSWORD'] || 'mcppassword'
     )
