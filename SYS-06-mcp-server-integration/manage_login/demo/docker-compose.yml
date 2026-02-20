@@ -48,6 +48,11 @@ services:
       - MYSQL_DATABASE=mcp_demo_mysql
       - MYSQL_USER=mcpuser
       - MYSQL_PASSWORD=mcppassword
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-prootpassword"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
   mcp-server:
     build:
@@ -61,6 +66,8 @@ services:
     environment:
       - WORKSPACE_ROOT=/workspace
       - PORT=8000
+    profiles:
+      - mcp-filesystem
 
   mcp-server-mysql:
     build:
@@ -77,7 +84,10 @@ services:
       - MYSQL_PASSWORD=mcppassword
       - PORT=8001
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
+    profiles:
+      - mcp-mysql
 
   ngrok-mcp:
     image: ngrok/ngrok:latest
@@ -88,6 +98,8 @@ services:
       - NGROK_AUTHTOKEN=${NGROK_AUTHTOKEN}
     depends_on:
       - mcp-server
+    profiles:
+      - mcp-filesystem
 
   ngrok-mcp-mysql:
     image: ngrok/ngrok:latest
@@ -98,6 +110,8 @@ services:
       - NGROK_AUTHTOKEN=${NGROK_AUTHTOKEN}
     depends_on:
       - mcp-server-mysql
+    profiles:
+      - mcp-mysql
 
 volumes:
   mongodb_data:
