@@ -59,7 +59,12 @@ Come **AIsuru AI System Integrator**, imparerai a:
 ```
 system-integrator-course-resources/
 ├── SYS-03-integrating-enterprise-authentication/
-│   └── README.md          # Esempi integrazione autenticazione enterprise
+│   ├── README.md          # Panoramica modulo (EN)
+│   ├── README-IT.md       # Panoramica modulo (IT)
+│   └── manage_login/      # Demo app autenticazione
+│       ├── README.md      # Guida completa: auth web component (EN)
+│       ├── README-IT.md   # Guida completa: auth web component (IT)
+│       └── demo/          # App Rails 8 con tutte le demo auth
 ├── SYS-04-advanced-functions/
 │   └── README.md          # Esempi REST, GRPC, JSONRPC
 ├── SYS-05-web-component-programming/
@@ -125,10 +130,26 @@ Prima di iniziare il corso, assicurati di avere:
 - Casi d'uso enterprise reali
 
 ### SYS-03: Autenticazione Aziendale
-- Autenticazione web component embedded
-- Integrazione Microsoft Azure AD / Entra ID
-- Implementazione API LoginPWD
-- Flussi OAuth 2.0 e login con redirect
+
+Impara a integrare sistemi di autenticazione enterprise con gli agenti AI conversazionali di AIsuru. Il modulo include una demo completa in Rails che copre quattro approcci di autenticazione:
+
+| Demo | Metodo di Autenticazione | Descrizione |
+|------|--------------------------|-------------|
+| **Demo 1** | Login Autonomo | Il web component gestisce il login via `showLogin="true"` — nessun backend richiesto |
+| **Demo 2** | Auth Programmatica (LoginWithJWT) | Il backend autentica gli utenti via Trusted App API per un SSO seamless |
+| **Demo 3** | Microsoft SSO (Azure AD / Entra ID) | Integrazione completa con Microsoft identity platform tramite MSAL.js |
+| **Demo 4** | Login con Redirect | Autentica gli utenti localmente, poi li reindirizza ad AIsuru via magic link |
+
+**Obiettivi di apprendimento:**
+- Implementare l'autenticazione in web component AIsuru embedded
+- Usare l'API `LoginWithJWT` per l'autenticazione programmatica
+- Configurare Trusted Application per la comunicazione sicura backend-to-backend
+- Configurare Microsoft Azure AD / Entra ID SSO
+- Costruire flussi di autenticazione con redirect
+
+**Prerequisiti:** Conoscenza base di OAuth 2.0, JWT, SSO; Docker installato.
+
+📁 **Risorse del modulo:** [SYS-03 →](./SYS-03-integrating-enterprise-authentication/manage_login/README-IT.md)
 
 ### SYS-04: Funzioni Avanzate
 - Connessione servizi REST con Swagger/OpenAPI

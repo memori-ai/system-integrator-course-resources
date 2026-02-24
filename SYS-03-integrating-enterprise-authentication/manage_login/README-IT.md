@@ -2,7 +2,7 @@
 
 > Guida completa alla configurazione del web component AIsuru con autenticazione per scenari embedded
 
-## 🎯 Panoramica
+## Panoramica
 
 Questa guida spiega come integrare il web component AIsuru nelle tue applicazioni e configurare l'autenticazione per fornire esperienze AI personalizzate. Imparerai a:
 
@@ -11,13 +11,15 @@ Questa guida spiega come integrare il web component AIsuru nelle tue applicazion
 - Usare variabili di contesto e domande iniziali
 - Implementare flussi di autenticazione sicuri
 
-## 🚀 Prova le Demo
+---
 
-Questo modulo include **quattro demo applicative funzionanti** che mostrano diversi approcci all'autenticazione.
+## Applicazione Demo
+
+Questo modulo include **quattro demo applicative funzionanti** realizzate con Ruby on Rails 8 + MongoDB che mostrano diversi approcci all'autenticazione.
 
 ![Pagina di Selezione Demo](./img/home.png)
 
-### Avviare le Demo
+### Quick Start
 
 ```bash
 # Naviga nella cartella demo
@@ -35,7 +37,9 @@ docker compose up
 open http://localhost:3000
 ```
 
-### Demo 1: Login Autonomo (`showLogin="true"`)
+### Demo Disponibili
+
+#### Demo 1: Login Autonomo (`showLogin="true"`)
 
 L'approccio più semplice dove il web component gestisce l'autenticazione autonomamente.
 
@@ -43,16 +47,20 @@ L'approccio più semplice dove il web component gestisce l'autenticazione autono
 - Gli utenti accedono tramite il pannello di autenticazione integrato
 - Non richiede modifiche al backend
 
-### Demo 2: Autenticazione Programmatica con Trusted App
+**Ideale per:** Siti pubblici, integrazione rapida, nessuna modifica al backend richiesta.
+
+#### Demo 2: Autenticazione Programmatica con Trusted App
 
 Autenticazione backend usando l'API `LoginWithJWT` per un'esperienza SSO senza interruzioni.
 
 - Crea e configura una Trusted App nel tuo tenant
 - Il tuo backend autentica gli utenti via `LoginWithJWT`
 - Passa il token al web component tramite `additionalInfo.loginToken`
-- Utente demo: `demo@demo.com` / `demodemo`
+- Credenziali demo: `demo@demo.com` / `demodemo`
 
-### Demo 3: Microsoft SSO (Azure AD / Entra ID)
+**Ideale per:** Applicazioni enterprise, sistemi utente esistenti, requisiti SSO.
+
+#### Demo 3: Microsoft SSO (Azure AD / Entra ID)
 
 Integrazione completa Single Sign-On con la piattaforma di identità Microsoft.
 
@@ -61,7 +69,9 @@ Integrazione completa Single Sign-On con la piattaforma di identità Microsoft.
 - Concatena autenticazione Microsoft → `LoginWithJWT` AIsuru per un SSO seamless
 - Gli utenti sono pre-autenticati nel web component
 
-### Demo 4: Login con Redirect
+**Ideale per:** Ambienti aziendali che usano Microsoft 365, applicazioni integrate con Azure AD.
+
+#### Demo 4: Login con Redirect
 
 Autentica gli utenti nella tua app, poi reindirizzali alla piattaforma AIsuru.
 
@@ -69,12 +79,65 @@ Autentica gli utenti nella tua app, poi reindirizzali alla piattaforma AIsuru.
 - Usa `LoginWithJWT` per ottenere un token AIsuru
 - Redirect a `https://{tenant}/{lang}/magiclink/{token}`
 - Gli utenti arrivano sull'interfaccia completa AIsuru, già autenticati
+- Credenziali demo: `demo@demo.com` / `demodemo`
 
-📁 **Codice Sorgente Demo**: [demo/](./demo/)
+**Ideale per:** Portali enterprise, siti intranet, quando vuoi gli utenti sull'interfaccia completa AIsuru.
+
+### Struttura del Progetto
+
+```
+demo/
+├── app/
+│   ├── controllers/
+│   │   ├── home_controller.rb      # Pagina di selezione demo
+│   │   ├── demo1_controller.rb     # Demo 1: showLogin
+│   │   ├── demo2_controller.rb     # Demo 2: autenticazione Trusted App
+│   │   ├── demo3_controller.rb     # Demo 3: Microsoft SSO
+│   │   └── demo4_controller.rb     # Demo 4: Redirect ad AIsuru
+│   ├── models/
+│   │   └── user.rb                 # Modello utente (Demo 2, 3, 4)
+│   ├── services/
+│   │   └── aisuru_auth_service.rb  # Integrazione API AIsuru
+│   └── views/
+│       ├── home/index.html.erb     # Selezione demo
+│       ├── demo1/index.html.erb    # Pagina Demo 1
+│       ├── demo2/
+│       │   ├── index.html.erb      # Pagina principale Demo 2
+│       │   └── login.html.erb      # Pagina login Demo 2
+│       ├── demo3/index.html.erb    # Pagina Demo 3 MS SSO
+│       └── demo4/
+│           ├── index.html.erb      # Pagina principale Demo 4
+│           └── login.html.erb      # Pagina login Demo 4
+├── docker-compose.yml
+├── Dockerfile.dev
+└── Gemfile
+```
+
+### Comandi Docker
+
+```bash
+# Avvia l'applicazione
+docker compose up
+
+# Avvia in background
+docker compose up -d
+
+# Ferma l'applicazione
+docker compose down
+
+# Visualizza i log
+docker compose logs -f web
+
+# Installa/aggiorna le gem
+docker compose run --rm web bundle
+
+# Rails console
+docker compose run --rm web rails console
+```
 
 ---
 
-## 📋 Prerequisiti
+## Prerequisiti
 
 Prima di iniziare, hai bisogno di:
 
@@ -85,7 +148,7 @@ Prima di iniziare, hai bisogno di:
 
 ---
 
-## 🔧 Configurazione Base del Web Component
+## Configurazione Base del Web Component
 
 ### Step 1: Includere il Web Component
 
@@ -139,7 +202,7 @@ Aggiungi il web component al tuo HTML:
 
 ---
 
-## 🔐 Configurazione dell'Autenticazione
+## Configurazione dell'Autenticazione
 
 ### Passare un Token di Login
 
@@ -174,10 +237,10 @@ Per applicazioni dinamiche, inietta il token via JavaScript:
 
 <script>
   const memoriWidget = document.getElementById('memori-widget');
-  
+
   // Ottieni il token dell'utente dal tuo sistema di autenticazione
   const userToken = await getUserAuthToken();
-  
+
   // Configura il widget
   memoriWidget.setAttribute('memoriName', 'NomeDelTuoAgente');
   memoriWidget.setAttribute('ownerUserName', 'tuo.username');
@@ -197,7 +260,7 @@ Per applicazioni dinamiche, inietta il token via JavaScript:
 
 ---
 
-## 🎛️ Variabili di Contesto e Domande Iniziali
+## Variabili di Contesto e Domande Iniziali
 
 ### Usare le Variabili di Contesto
 
@@ -241,7 +304,7 @@ Può essere usato anche per dare istruzioni all'agente:
 
 ---
 
-## 🔑 Ottenere Token di Login via API
+## Ottenere Token di Login via API
 
 Per autenticare utenti programmaticamente, usa l'API Backend di AIsuru.
 
@@ -260,17 +323,18 @@ Content-Type: application/json
 }
 ```
 
-### Opzione 2: Login con JWT
+### Opzione 2: Login con JWT (Trusted App)
 
-Per integrazioni SSO aziendali, usa l'autenticazione basata su JWT:
+Per integrazioni SSO aziendali, usa l'autenticazione basata su JWT. Richiede una **Trusted Application** (vedi sezione sotto):
 
-```bash
+```http
 POST https://backend.memori.ai/api/v2/LoginWithJWT
 Content-Type: application/json
+X-Memori-Trusted-App: LA_TUA_CHIAVE_API_TRUSTED_APP
 
 {
   "tenant": "www.aisuru.com",
-  "jwt": "IL_TUO_JWT_FIRMATO"
+  "jwtToken": "eyJhbGciOiJIUzI1NiJ9..."
 }
 ```
 
@@ -278,14 +342,14 @@ Content-Type: application/json
 
 ```json
 {
+  "token": "183c7061-a5f5-4bea-ab2b-e4e6a7bbc3a4",
   "user": {
-    "userID": "c3d4e5f6-a7b8-9012-cdef-123456789012",
-    "userName": "utente@esempio.com",
-    ...
+    "userID": "6057f403-777f-413b-b4f5-5b6ed4ef84b6",
+    "userName": "Demo-User",
+    "eMail": "demo@demo.com"
   },
-  "token": "f1e2d3c4-b5a6-9780-1234-567890abcdef",
   "resultCode": 0,
-  "resultMessage": "OK"
+  "resultMessage": "Ok"
 }
 ```
 
@@ -295,7 +359,7 @@ Usa il valore `token` restituito nell'attributo `additionalInfo.loginToken`.
 
 ---
 
-## 🔐 Applicazioni Fidate (Trusted Applications)
+## Applicazioni Fidate (Trusted Applications)
 
 Per usare `LoginWithJWT` per l'autenticazione programmatica, hai bisogno di una **Trusted Application**.
 
@@ -313,8 +377,10 @@ Una Trusted Application è un modo sicuro per il tuo backend di comunicare con l
 3. Clicca **+ Crea** per aggiungere una nuova Trusted App
 4. Compila:
    - **Nome**: Un nome descrittivo (es. "La Mia App Production")
-   - **URL Base**: L'URL della tua applicazione (per validazione CORS)
+   - **URL Base**: L'URL della tua applicazione (es. `http://localhost:3000`)
 5. Salva e copia la **Chiave API**
+
+> ⚠️ **Avviso di Sicurezza:** Non esporre mai la Chiave API della Trusted App nel codice frontend! Chiama sempre le API AIsuru dal tuo backend.
 
 ### Usare la Chiave API della Trusted App
 
@@ -322,7 +388,7 @@ Il flusso di autenticazione richiede due passaggi:
 
 #### Passaggio 1: Creare un JWT firmato
 
-Crea un token JWT firmato con la Chiave API della Trusted App usando l'algoritmo HS256:
+Crea un token JWT firmato con la Chiave API della Trusted App usando l'algoritmo HS256. Nella demo app, questo è gestito da `app/services/aisuru_auth_service.rb`:
 
 ```javascript
 // Codice backend (esempio Node.js)
@@ -344,6 +410,22 @@ const jwtToken = jwt.sign(
 );
 ```
 
+```ruby
+# Codice backend (esempio Ruby - come usato nella demo app)
+require 'jwt'
+
+jwt_payload = {
+  sub: user.email,
+  email: user.email,
+  name: user.name,
+  tenant: tenant_id,
+  iat: Time.now.to_i,
+  exp: Time.now.to_i + 300  # 5 minuti
+}
+
+jwt_token = JWT.encode(jwt_payload, trusted_app_api_key, 'HS256')
+```
+
 #### Passaggio 2: Chiamare l'API LoginWithJWT
 
 Effettua una richiesta POST al backend AIsuru con:
@@ -361,30 +443,119 @@ X-Memori-Trusted-App: LA_TUA_CHIAVE_API_TRUSTED_APP
 }
 ```
 
-**Risposta di Successo:**
+### Come Funziona LoginWithJWT (Demo 2 & 3)
 
-```json
-{
-  "token": "183c7061-a5f5-4bea-ab2b-e4e6a7bbc3a4",
-  "user": {
-    "userID": "6057f403-777f-413b-b4f5-5b6ed4ef84b6",
-    "userName": "Demo-User",
-    "eMail": "demo@demo.com"
-  },
-  "resultCode": 0,
-  "resultMessage": "Ok"
-}
 ```
-
-Il `token` restituito è quello che passi al web component tramite `additionalInfo.loginToken`.
-
-> ⚠️ **Avviso di Sicurezza:** Non esporre mai la Chiave API della Trusted App nel codice frontend! Chiama sempre le API AIsuru dal tuo backend.
+┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
+│   Il Tuo Utente │────▶│   Il Tuo Backend│────▶│  AIsuru API     │
+│   (Browser)     │     │                 │     │                 │
+└─────────────────┘     └─────────────────┘     └─────────────────┘
+        │                       │                       │
+        │ 1. Login              │ 2. Crea JWT           │
+        │                       │ 3. Chiama LoginWithJWT│
+        │                       │◀──────────────────────│
+        │                       │ 4. Ricevi token       │
+        │◀──────────────────────│                       │
+        │ 5. Pagina con         │                       │
+        │    loginToken impostato                       │
+        ▼                       │                       │
+┌─────────────────┐             │                       │
+│ Web Component   │─────────────┼──────────────────────▶│
+│ (autenticato)   │             │                       │
+└─────────────────┘             │                       │
+```
 
 ---
 
-## 📝 Esempio Completo
+## Registrazione App Microsoft Azure (Demo 3)
 
-Ecco un esempio completo con autenticazione e contesto:
+Per usare la Demo 3, hai bisogno di una Azure App Registration.
+
+### Step 1: Creare la App Registration
+
+1. Vai al [Azure Portal](https://portal.azure.com)
+2. Cerca **"Microsoft Entra ID"** (ex Azure AD)
+3. Naviga su **Registrazioni app** → **+ Nuova registrazione**
+4. Configura:
+   - **Nome**: es. "AIsuru Demo App"
+   - **Tipi di account supportati**:
+     - "Account in qualsiasi directory organizzativa" per multi-tenant
+     - "Account solo in questa directory organizzativa" per single-tenant
+   - **URI di reindirizzamento**: Seleziona **"Applicazione a pagina singola (SPA)"** e inserisci `http://localhost:3000`
+
+### Step 2: Ottenere le Credenziali
+
+1. Dopo la registrazione, vai su **Panoramica**
+2. Copia l'**ID applicazione (client)** — questo è il tuo `clientId`
+3. Annota l'**ID directory (tenant)** se usi la modalità single-tenant
+
+### Step 3: Configurare le Autorizzazioni API (opzionale)
+
+Le autorizzazioni predefinite di solito funzionano, ma puoi verificare:
+1. Vai su **Autorizzazioni API**
+2. Assicurati che siano presenti:
+   - `User.Read` (delegato)
+   - `openid`, `profile`, `email` (delegato)
+
+### Come Funziona la Demo 3
+
+```
+┌──────────────┐    ┌──────────────┐    ┌──────────────┐    ┌──────────────┐
+│   Utente     │───▶│  MSAL.js     │───▶│  Il Tuo      │───▶│  AIsuru      │
+│   Browser    │    │  (Auth MS)   │    │  Backend     │    │  API         │
+└──────────────┘    └──────────────┘    └──────────────┘    └──────────────┘
+       │                   │                   │                   │
+       │ 1. Click          │                   │                   │
+       │ "Login con MS"    │                   │                   │
+       │──────────────────▶│                   │                   │
+       │                   │ 2. Login MS       │                   │
+       │                   │    Popup          │                   │
+       │◀──────────────────│                   │                   │
+       │ 3. Email/Nome     │                   │                   │
+       │    da MS          │                   │                   │
+       │───────────────────┼──────────────────▶│                   │
+       │                   │                   │ 4. Crea JWT       │
+       │                   │                   │    + LoginWithJWT │
+       │                   │                   │──────────────────▶│
+       │                   │                   │◀──────────────────│
+       │                   │                   │ 5. Token AIsuru   │
+       │◀──────────────────┼───────────────────│                   │
+       │ 6. Redirect con   │                   │                   │
+       │    loginToken     │                   │                   │
+       ▼                   │                   │                   │
+┌──────────────┐           │                   │                   │
+│ Web Component│           │                   │                   │
+│ (pre-auth)   │           │                   │                   │
+└──────────────┘           │                   │                   │
+```
+
+---
+
+## URL Magic Link (Demo 4)
+
+Dopo aver ottenuto il `token` da `LoginWithJWT`, puoi reindirizzare gli utenti ad AIsuru usando il formato URL magic link. Nella demo app, questo è costruito da `demo4_controller.rb`:
+
+```
+https://{TENANT_BASE_URL}/{LINGUA}/magiclink/{TOKEN}
+```
+
+**Esempi:**
+```
+https://www.aisuru.com/en/magiclink/183c7061-a5f5-4bea-ab2b-e4e6a7bbc3a4
+https://www.aisuru.com/it/magiclink/183c7061-a5f5-4bea-ab2b-e4e6a7bbc3a4
+https://your-tenant.aisuru.com/it/magiclink/IL_TUO_TOKEN
+```
+
+**Parametri:**
+- `{TENANT_BASE_URL}` — L'URL del tuo tenant AIsuru (es. `www.aisuru.com`)
+- `{LINGUA}` — Codice lingua interfaccia (`en`, `it`, ecc.)
+- `{TOKEN}` — Il valore `token` dalla risposta di `LoginWithJWT`
+
+---
+
+## Esempio Completo
+
+Ecco un esempio HTML completo con autenticazione e contesto:
 
 ```html
 <!DOCTYPE html>
@@ -393,15 +564,15 @@ Ecco un esempio completo con autenticazione e contesto:
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Il Mio Assistente AI</title>
-  
+
   <!-- AIsuru Web Component -->
   <script type="module" src="https://cdn.jsdelivr.net/npm/@memori.ai/memori-webcomponent/dist/memori-webcomponent.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@memori.ai/memori-react/dist/styles.min.css" />
 </head>
 <body>
-  
+
   <h1>Benvenuto nella Mia Applicazione</h1>
-  
+
   <!-- Agente AI Autenticato -->
   <memori-client
     memoriName="MioAssistente"
@@ -427,7 +598,7 @@ Ecco un esempio completo con autenticazione e contesto:
 
 ---
 
-## 🎨 Opzioni di Layout
+## Opzioni di Layout
 
 L'attributo `layout` supporta diverse modalità di visualizzazione:
 
@@ -440,7 +611,7 @@ L'attributo `layout` supporta diverse modalità di visualizzazione:
 
 ---
 
-## 🔗 Riferimento Rapido
+## Riferimento Rapido
 
 ### Attributi Obbligatori
 
@@ -469,13 +640,15 @@ L'attributo `layout` supporta diverse modalità di visualizzazione:
 
 ---
 
-## 📚 Risorse
+## Risorse
 
 - [Documentazione AIsuru](https://docs.aisuru.com/)
 - [Riferimento API PwlUser](https://docs.aisuru.com/api/backend/pwluser)
+- [API Trusted Application](https://docs.aisuru.com/api/backend/trustedapplication)
 - [Pacchetto NPM Web Component](https://www.npmjs.com/package/@memori.ai/memori-webcomponent)
+- [Microsoft Identity Platform](https://learn.microsoft.com/en-us/azure/active-directory/develop/)
+- [Documentazione MSAL.js](https://github.com/AzureAD/microsoft-authentication-library-for-js)
 
 ---
 
 📚 [Torna al Modulo SYS-03](../README.md) | 🏠 [Home del Corso](../../README.md)
-

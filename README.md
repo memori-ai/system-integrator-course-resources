@@ -59,7 +59,12 @@ As an **AIsuru AI System Integrator**, you'll master how to:
 ```
 system-integrator-course-resources/
 ├── SYS-03-integrating-enterprise-authentication/
-│   └── README.md          # Enterprise auth integration examples
+│   ├── README.md          # Module overview (EN)
+│   ├── README-IT.md       # Module overview (IT)
+│   └── manage_login/      # Authentication demo app
+│       ├── README.md      # Full guide: web component auth (EN)
+│       ├── README-IT.md   # Full guide: web component auth (IT)
+│       └── demo/          # Rails 8 app with all auth demos
 ├── SYS-04-advanced-functions/
 │   └── README.md          # REST, GRPC, JSONRPC examples
 ├── SYS-05-web-component-programming/
@@ -125,10 +130,26 @@ Before starting the course, ensure you have:
 - Real-world enterprise use cases
 
 ### SYS-03: Enterprise Authentication
-- Web component embedded authentication
-- Microsoft Azure AD / Entra ID integration
-- LoginPWD API implementation
-- OAuth 2.0 and redirect-based login flows
+
+Learn how to integrate enterprise authentication systems with AIsuru conversational AI agents. The module provides a complete demo Rails application covering four authentication approaches:
+
+| Demo | Authentication Method | Description |
+|------|----------------------|-------------|
+| **Demo 1** | Self-Managed Login | Web component handles login via `showLogin="true"` — no backend required |
+| **Demo 2** | Programmatic Auth (LoginWithJWT) | Backend authenticates users via Trusted App API for seamless SSO |
+| **Demo 3** | Microsoft SSO (Azure AD / Entra ID) | Full Microsoft identity platform integration using MSAL.js |
+| **Demo 4** | Login with Redirect | Authenticate users locally, then redirect to AIsuru via magic link |
+
+**Learning objectives:**
+- Implement authentication in embedded AIsuru web components
+- Use the `LoginWithJWT` API for programmatic authentication
+- Configure Trusted Applications for secure backend-to-backend communication
+- Configure Microsoft Azure AD / Entra ID SSO
+- Build redirect-based authentication flows
+
+**Prerequisites:** Basic understanding of OAuth 2.0, JWT, SSO concepts; Docker installed.
+
+📁 **Module resources:** [SYS-03 →](./SYS-03-integrating-enterprise-authentication/manage_login/README.md)
 
 ### SYS-04: Advanced Functions
 - Connecting REST services with Swagger/OpenAPI
