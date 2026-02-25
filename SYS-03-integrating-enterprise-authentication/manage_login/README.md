@@ -26,7 +26,11 @@ This module includes **four live demo applications** built with Ruby on Rails 8 
 cd demo
 ```
 
-Create an empty file named `.env_dev` in the `demo/` folder (first time only).
+Create a file named `.env_dev` in the `demo/` folder (first time only) with the following content:
+
+```
+MONGO_URI=mongodb://mongodb:27017/embedded_webcomponent_auth_development
+```
 
 ```bash
 docker compose build

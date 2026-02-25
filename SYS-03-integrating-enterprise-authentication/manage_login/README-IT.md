@@ -26,7 +26,11 @@ Questo modulo include **quattro demo applicative funzionanti** realizzate con Ru
 cd demo
 ```
 
-Crea un file vuoto chiamato `.env_dev` nella cartella `demo/` (solo la prima volta).
+Crea un file chiamato `.env_dev` nella cartella `demo/` (solo la prima volta) con il seguente contenuto:
+
+```
+MONGO_URI=mongodb://mongodb:27017/embedded_webcomponent_auth_development
+```
 
 ```bash
 docker compose build
