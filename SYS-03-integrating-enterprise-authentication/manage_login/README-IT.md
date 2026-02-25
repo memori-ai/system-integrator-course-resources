@@ -24,7 +24,11 @@ Questo modulo include **quattro demo applicative funzionanti** realizzate con Ru
 ```bash
 # Naviga nella cartella demo
 cd demo
+```
 
+Crea un file vuoto chiamato `.env_dev` nella cartella `demo/` (solo la prima volta).
+
+```bash
 docker compose build
 
 # Installa le dipendenze (solo la prima volta)

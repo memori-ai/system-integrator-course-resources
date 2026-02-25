@@ -24,7 +24,11 @@ This module includes **four live demo applications** built with Ruby on Rails 8 
 ```bash
 # Navigate to the demo folder
 cd demo
+```
 
+Create an empty file named `.env_dev` in the `demo/` folder (first time only).
+
+```bash
 docker compose build
 
 # Install dependencies (first time only)
