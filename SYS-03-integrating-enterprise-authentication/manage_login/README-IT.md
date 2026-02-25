@@ -33,13 +33,8 @@ MONGO_URI=mongodb://mongodb:27017/embedded_webcomponent_auth_development
 ```
 
 ```bash
-docker compose build
-
-# Installa le dipendenze (solo la prima volta)
-docker compose run --rm web bundle install
-
-# Avvia l'applicazione con Docker Compose
-docker compose up
+# Costruisci e avvia l'applicazione (comando unico)
+npm run start
 
 # Apri nel browser
 open http://localhost:3000

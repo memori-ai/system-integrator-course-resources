@@ -23,13 +23,8 @@ This module includes **four live demo applications** that showcase different aut
 # Navigate to the demo folder
 cd demo
 
-docker compose build
-
-# Install dependencies (first time only)
-docker compose run --rm web bundle install
-
-# Start the application with Docker Compose
-docker compose up
+# Build and start the application (single command)
+npm run start
 
 # Open in your browser
 open http://localhost:3000

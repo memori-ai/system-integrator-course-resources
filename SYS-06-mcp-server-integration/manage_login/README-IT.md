@@ -23,13 +23,8 @@ Questo modulo include **quattro demo applicative funzionanti** che mostrano dive
 # Naviga nella cartella demo
 cd demo
 
-docker compose build
-
-# Installa le dipendenze (solo la prima volta)
-docker compose run --rm web bundle install
-
-# Avvia l'applicazione con Docker Compose
-docker compose up
+# Costruisci e avvia l'applicazione (comando unico)
+npm run start
 
 # Apri nel browser
 open http://localhost:3000

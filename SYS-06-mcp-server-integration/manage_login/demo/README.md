@@ -5,13 +5,8 @@ This demo application showcases MCP (Model Context Protocol) server integrations
 ## 🚀 Quick Start
 
 ```bash
-docker compose build
-
-# Install dependencies (first time only)
-docker compose run --rm web bundle install
-
-# Build and start the application
-docker compose up
+# Build and start the application (single command)
+npm run start
 
 # Visit the application
 open http://localhost:3000
