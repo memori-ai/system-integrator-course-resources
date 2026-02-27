@@ -189,7 +189,7 @@ Dopo aver avviato la demo, configura il server MCP nella piattaforma AIsuru:
 SYS-06-mcp-server-integration/
 ├── README.md          # Panoramica modulo (EN)
 ├── README-IT.md       # Panoramica modulo (IT)
-└── manage_login/      # Demo app integrazione MCP server
+└── manage-server-mcp/ # Demo app integrazione MCP server
     ├── README.md      # Guida completa (EN)
     ├── README-IT.md   # Questo file — guida completa (IT)
     └── demo/          # Applicazione Rails con demo MCP

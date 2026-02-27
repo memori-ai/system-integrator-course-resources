@@ -73,9 +73,7 @@ system-integrator-course-resources/
 ├── SYS-05-web-component-programming/
 │   └── README.md          # Esempi Web Component e Dialog API
 ├── SYS-06-mcp-server-integration/
-│   ├── README.md          # Panoramica modulo (EN)
-│   ├── README-IT.md       # Panoramica modulo (IT)
-│   └── manage_login/      # Demo app integrazione MCP server
+│   └── manage-server-mcp/ # Demo app integrazione MCP server
 │       ├── README.md      # Guida completa: integrazione MCP server (EN)
 │       ├── README-IT.md   # Guida completa: integrazione MCP server (IT)
 │       └── demo/          # App Rails con demo MCP
@@ -205,7 +203,7 @@ Impara a connettere gli agenti AIsuru a sorgenti dati e servizi esterni usando i
 
 **Prerequisiti:** Comprensione base di Docker e Docker Compose; familiarità con i web component AIsuru (SYS-03); account ngrok; conoscenza base di Node.js.
 
-📁 **Risorse del modulo:** [SYS-06 →](./SYS-06-mcp-server-integration/manage_login/README-IT.md)
+📁 **Risorse del modulo:** [SYS-06 →](./SYS-06-mcp-server-integration/manage-server-mcp/README-IT.md)
 
 ### SYS-07: Integrazione Automazioni
 - Implementazione sintetizzatore riunioni
