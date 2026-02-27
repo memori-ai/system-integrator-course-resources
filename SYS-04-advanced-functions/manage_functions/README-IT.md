@@ -545,6 +545,18 @@ Configurali nelle impostazioni della funzione, non nel prompt dell'agente.
 
 ---
 
+## 📂 Struttura del Modulo
+
+```
+SYS-04-advanced-functions/
+├── README.md          # Panoramica modulo (EN)
+├── README-IT.md       # Panoramica modulo (IT)
+└── manage_functions/  # Demo app funzioni avanzate
+    ├── README.md      # Guida completa (EN)
+    ├── README-IT.md   # Questo file — guida completa (IT)
+    └── demo/          # Applicazione Rails con demo funzioni
+```
+
 ## 🔗 Risorse
 
 - [Documentazione AIsuru](https://docs.aisuru.com/)
@@ -555,4 +567,4 @@ Configurali nelle impostazioni della funzione, non nel prompt dell'agente.
 
 ---
 
-📚 [Torna al Modulo SYS-04](../README.md) | 🏠 [Home del Corso](../../README.md)
+🏠 [Home del Corso](../../README.md)

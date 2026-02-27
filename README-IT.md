@@ -66,11 +66,19 @@ system-integrator-course-resources/
 │       ├── README-IT.md   # Guida completa: auth web component (IT)
 │       └── demo/          # App Rails 8 con tutte le demo auth
 ├── SYS-04-advanced-functions/
-│   └── README.md          # Esempi REST, GRPC, JSONRPC
+│   └── manage_functions/  # Demo app funzioni avanzate
+│       ├── README.md      # Guida completa: funzioni avanzate (EN)
+│       ├── README-IT.md   # Guida completa: funzioni avanzate (IT)
+│       └── demo/          # App Rails con demo funzioni
 ├── SYS-05-web-component-programming/
 │   └── README.md          # Esempi Web Component e Dialog API
 ├── SYS-06-mcp-server-integration/
-│   └── README.md          # Guide implementazione MCP Server
+│   ├── README.md          # Panoramica modulo (EN)
+│   ├── README-IT.md       # Panoramica modulo (IT)
+│   └── manage_login/      # Demo app integrazione MCP server
+│       ├── README.md      # Guida completa: integrazione MCP server (EN)
+│       ├── README-IT.md   # Guida completa: integrazione MCP server (IT)
+│       └── demo/          # App Rails con demo MCP
 ├── README.md              # Versione inglese
 └── README-IT.md           # Questo file
 ```
@@ -152,9 +160,26 @@ Impara a integrare sistemi di autenticazione enterprise con gli agenti AI conver
 📁 **Risorse del modulo:** [SYS-03 →](./SYS-03-integrating-enterprise-authentication/manage_login/README-IT.md)
 
 ### SYS-04: Funzioni Avanzate
-- Connessione servizi REST con Swagger/OpenAPI
-- Integrazione servizi GRPC e JSONRPC
-- Costruzione Gateway REST verso MCP Server
+
+Impara come creare funzioni avanzate che collegano gli agenti AIsuru a REST API e servizi esterni. Il modulo include una demo completa in Rails che copre due approcci:
+
+| Demo | Tipo di Funzione | Descrizione |
+|------|-----------------|-------------|
+| **Demo 1** | Integrazione Weather API | Collega agenti a servizi REST usando webhook e variabili template |
+| **Demo 2** | Import OpenAPI/Swagger | Auto-genera multiple funzioni da specifiche Swagger/OpenAPI |
+
+**Obiettivi di apprendimento:**
+- Creare funzioni avanzate in AIsuru e configurare URL webhook
+- Configurare integrazioni webhook con REST API esterne
+- Usare file OpenAPI/Swagger per auto-generare funzioni
+- Collegare funzioni agli agenti e configurare il loro utilizzo
+- Debuggare e verificare le chiamate alle funzioni nelle conversazioni
+- Gestire parametri e risposte delle funzioni
+- Applicare best practice per il design delle funzioni e la gestione errori
+
+**Prerequisiti:** Comprensione base di REST API e metodi HTTP; familiarità con i web component AIsuru (SYS-03); accesso alla piattaforma AIsuru e credenziali agente; conoscenza base di JSON e parametri API; Docker installato.
+
+📁 **Risorse del modulo:** [SYS-04 →](./SYS-04-advanced-functions/manage_functions/README-IT.md)
 
 ### SYS-05: Programmazione Web Component
 - Gestione completa del dialogo tramite Dialog API
@@ -162,12 +187,25 @@ Impara a integrare sistemi di autenticazione enterprise con gli agenti AI conver
 - Caso studio: implementazione AI4furn
 
 ### SYS-06: Integrazione MCP Server
-- Comprensione di Tool, Risorse e Prompt
-- Esempi MCP Server: MySQL, MongoDB, Filesystem, WhatsApp, Blender, Zendesk
-- Capacità AIsuru MCP e Data Analysis
-- Tipi di trasporto (stdio, HTTP, SSE) e criteri di selezione
-- Configurazione Skill e casi d'uso pratici
-- Costruzione e deployment di MCP Server personalizzati
+
+Impara a connettere gli agenti AIsuru a sorgenti dati e servizi esterni usando il Model Context Protocol (MCP). Il modulo include una demo completa in Rails che copre due approcci di integrazione:
+
+| Demo | Tipo di Integrazione | Descrizione |
+|------|---------------------|-------------|
+| **Demo 1** | MongoDB via MCP | Connette agenti a MongoDB usando il server MCP integrato nella piattaforma AIsuru e tunnel ngrok TCP |
+| **Demo 3** | Filesystem MCP Server | Costruisce e distribuisce un server MCP personalizzato in Node.js per operazioni sui file in tempo reale |
+
+**Obiettivi di apprendimento:**
+- Comprendere l'architettura MCP (Model Context Protocol)
+- Connettere agenti AIsuru a MongoDB via server MCP integrato nella piattaforma
+- Costruire server MCP personalizzati in Node.js
+- Esporre servizi locali pubblicamente usando tunnel ngrok
+- Configurare le integrazioni MCP server nella piattaforma AIsuru
+- Distribuire server MCP con Docker Compose
+
+**Prerequisiti:** Comprensione base di Docker e Docker Compose; familiarità con i web component AIsuru (SYS-03); account ngrok; conoscenza base di Node.js.
+
+📁 **Risorse del modulo:** [SYS-06 →](./SYS-06-mcp-server-integration/manage_login/README-IT.md)
 
 ### SYS-07: Integrazione Automazioni
 - Implementazione sintetizzatore riunioni
