@@ -22,13 +22,8 @@ Questo modulo include **demo applicative funzionanti** che mostrano diversi appr
 # Naviga nella cartella demo
 cd demo
 
-docker compose build
-
-# Installa le dipendenze (solo la prima volta)
-docker compose run --rm web bundle install
-
-# Avvia l'applicazione con Docker Compose
-docker compose up
+# Costruisci e avvia l'applicazione (comando unico)
+npm run start
 
 # Apri nel browser
 open http://localhost:3000
@@ -550,6 +545,18 @@ Configurali nelle impostazioni della funzione, non nel prompt dell'agente.
 
 ---
 
+## 📂 Struttura del Modulo
+
+```
+SYS-04-advanced-functions/
+├── README.md          # Panoramica modulo (EN)
+├── README-IT.md       # Panoramica modulo (IT)
+└── manage_functions/  # Demo app funzioni avanzate
+    ├── README.md      # Guida completa (EN)
+    ├── README-IT.md   # Questo file — guida completa (IT)
+    └── demo/          # Applicazione Rails con demo funzioni
+```
+
 ## 🔗 Risorse
 
 - [Documentazione AIsuru](https://docs.aisuru.com/)
@@ -560,4 +567,4 @@ Configurali nelle impostazioni della funzione, non nel prompt dell'agente.
 
 ---
 
-📚 [Torna al Modulo SYS-04](../README.md) | 🏠 [Home del Corso](../../README.md)
+🏠 [Home del Corso](../../README.md)
