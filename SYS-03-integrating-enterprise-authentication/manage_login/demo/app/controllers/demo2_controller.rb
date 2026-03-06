@@ -8,13 +8,13 @@
 # Documentation: https://docs.aisuru.com/api/backend/pwluser
 
 class Demo2Controller < ApplicationController
-  # Default values for AIsuru configuration
-  DEFAULT_TENANT_ID = "www.aisuru.com".freeze
-  DEFAULT_ENGINE_URL = "https://engine.memori.ai/memori/v2".freeze
-  DEFAULT_API_URL = "https://backend.memori.ai/api/v2".freeze
-  DEFAULT_BASE_URL = "https://www.aisuru.com".freeze
+  DEFAULTS = {
+    "tenant_id" => "www.aisuru.com",
+    "engine_url" => "https://engine.memori.ai/memori/v2",
+    "api_url" => "https://backend.memori.ai/api/v2",
+    "base_url" => "https://www.aisuru.com"
+  }.freeze
 
-  # Demo user credentials
   DEMO_USER_EMAIL = "demo@demo.com".freeze
   DEMO_USER_PASSWORD = "demodemo".freeze
   DEMO_USER_NAME = "Demo User".freeze
@@ -65,16 +65,16 @@ class Demo2Controller < ApplicationController
   end
 
   def configure
-    # Save AIsuru configuration in session
-    session[:demo2_config] = {
+    config = DemoConfig.for("demo2")
+    config.merge_settings!(
       memori_id: params[:memori_id],
       owner_user_id: params[:owner_user_id],
-      tenant_id: params[:tenant_id].presence || DEFAULT_TENANT_ID,
-      engine_url: params[:engine_url].presence || DEFAULT_ENGINE_URL,
-      api_url: params[:api_url].presence || DEFAULT_API_URL,
-      base_url: params[:base_url].presence || DEFAULT_BASE_URL,
+      tenant_id: params[:tenant_id].presence || DEFAULTS["tenant_id"],
+      engine_url: params[:engine_url].presence || DEFAULTS["engine_url"],
+      api_url: params[:api_url].presence || DEFAULTS["api_url"],
+      base_url: params[:base_url].presence || DEFAULTS["base_url"],
       trusted_app_api_key: params[:trusted_app_api_key]
-    }
+    )
 
     flash[:notice] = "✅ Configuration saved! Now login to see the authenticated web component."
     redirect_to demo2_path
@@ -93,16 +93,15 @@ class Demo2Controller < ApplicationController
   private
 
   def load_configuration
-    config = session[:demo2_config] || {}
-    
-    # Rails session converts symbol keys to strings, so we need to handle both
-    @memori_id = config["memori_id"] || config[:memori_id]
-    @owner_user_id = config["owner_user_id"] || config[:owner_user_id]
-    @tenant_id = config["tenant_id"] || config[:tenant_id] || DEFAULT_TENANT_ID
-    @engine_url = config["engine_url"] || config[:engine_url] || DEFAULT_ENGINE_URL
-    @api_url = config["api_url"] || config[:api_url] || DEFAULT_API_URL
-    @base_url = config["base_url"] || config[:base_url] || DEFAULT_BASE_URL
-    @trusted_app_api_key = config["trusted_app_api_key"] || config[:trusted_app_api_key]
+    config = DemoConfig.for("demo2")
+
+    @memori_id = config.get("memori_id") || ENV["DEMO2_MEMORI_ID"]
+    @owner_user_id = config.get("owner_user_id") || ENV["DEMO2_OWNER_USER_ID"]
+    @tenant_id = config.get("tenant_id") || ENV["DEMO2_TENANT_ID"] || DEFAULTS["tenant_id"]
+    @engine_url = config.get("engine_url") || ENV["DEMO2_ENGINE_URL"] || DEFAULTS["engine_url"]
+    @api_url = config.get("api_url") || ENV["DEMO2_API_URL"] || DEFAULTS["api_url"]
+    @base_url = config.get("base_url") || ENV["DEMO2_BASE_URL"] || DEFAULTS["base_url"]
+    @trusted_app_api_key = config.get("trusted_app_api_key") || ENV["DEMO2_TRUSTED_APP_API_KEY"]
   end
 
   def find_current_user

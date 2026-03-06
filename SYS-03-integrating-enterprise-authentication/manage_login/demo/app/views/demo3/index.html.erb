@@ -70,16 +70,19 @@
 
             <div class="mb-4">
               <label for="ms_tenant_id" class="form-label fw-bold">Tenant ID</label>
-              <%= f.select :ms_tenant_id, 
-                  options_for_select([
-                    ["organizations (Multi-tenant work/school)", "organizations"],
-                    ["common (Any Microsoft account)", "common"],
-                    ["consumers (Personal accounts only)", "consumers"]
-                  ], @ms_tenant_id),
-                  {},
-                  class: "form-select" %>
+              <%= f.text_field :ms_tenant_id,
+                  class: "form-control",
+                  value: @ms_tenant_id,
+                  list: "tenant_id_options",
+                  placeholder: "e.g., common, organizations, or your Tenant GUID" %>
+              <datalist id="tenant_id_options">
+                <option value="organizations" label="Multi-tenant (work/school only)">
+                <option value="common" label="Any Microsoft account">
+                <option value="consumers" label="Personal accounts only">
+              </datalist>
               <div class="form-text">
-                For single-tenant, enter your specific Tenant ID (GUID)
+                For single-tenant apps, enter your specific Tenant ID (GUID).
+                For multi-tenant, use <code>common</code> or <code>organizations</code>.
               </div>
             </div>
 
@@ -418,11 +421,11 @@
 <%# MSAL.js Script for Microsoft Login %>
 <% if ms_configured? && !@current_user %>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
+function initMsLogin() {
   const msLoginBtn = document.getElementById('msLoginBtn');
-  if (!msLoginBtn) return;
+  if (!msLoginBtn || msLoginBtn.dataset.initialized) return;
+  msLoginBtn.dataset.initialized = "true";
 
-  // MSAL Configuration - values from server
   const msalConfig = {
     auth: {
       clientId: "<%= @ms_client_id %>",
@@ -449,7 +452,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
       console.log("Microsoft login successful", loginResponse);
 
-      // Get user info from the response
       const account = loginResponse.account;
       const userData = {
         email: account.username,
@@ -457,7 +459,6 @@ document.addEventListener('DOMContentLoaded', function() {
         ms_id: account.homeAccountId
       };
 
-      // Send to our backend to authenticate with AIsuru
       const response = await fetch('<%= demo3_ms_callback_path %>', {
         method: 'POST',
         headers: {
@@ -488,7 +489,11 @@ document.addEventListener('DOMContentLoaded', function() {
       msLoginBtn.innerHTML = '<i class="bi bi-microsoft me-2"></i>Login with Microsoft';
     }
   });
-});
+}
+
+document.addEventListener('DOMContentLoaded', initMsLogin);
+document.addEventListener('turbo:load', initMsLogin);
+document.addEventListener('turbo:render', initMsLogin);
 </script>
 <% end %>
 

@@ -2,37 +2,36 @@ class Demo3Controller < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:ms_callback]
   before_action :load_configuration
 
-  # Default Microsoft configuration
-  DEFAULT_MS_CLIENT_ID = "your-azure-client-id-here"
-  DEFAULT_MS_TENANT_ID = "organizations" # or "common" or specific tenant ID
-  
-  # Default AIsuru configuration (same as Demo 2)
-  DEFAULT_MEMORI_ID = "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
-  DEFAULT_OWNER_USER_ID = "c3d4e5f6-a7b8-9012-cdef-123456789012"
-  DEFAULT_TENANT_ID = "www.aisuru.com"
-  DEFAULT_ENGINE_URL = "https://engine.memori.ai/memori/v2"
-  DEFAULT_API_URL = "https://backend.memori.ai/api/v2"
-  DEFAULT_BASE_URL = "https://www.aisuru.com"
-  DEFAULT_TRUSTED_APP_API_KEY = "your-trusted-app-api-key-here"
+  DEFAULTS = {
+    "ms_client_id" => "your-azure-client-id-here",
+    "ms_tenant_id" => "organizations",
+    "memori_id" => "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "owner_user_id" => "c3d4e5f6-a7b8-9012-cdef-123456789012",
+    "tenant_id" => "www.aisuru.com",
+    "engine_url" => "https://engine.memori.ai/memori/v2",
+    "api_url" => "https://backend.memori.ai/api/v2",
+    "base_url" => "https://www.aisuru.com",
+    "trusted_app_api_key" => "your-trusted-app-api-key-here"
+  }.freeze
 
   def index
     @current_user = User.where(id: session[:demo3_user_id]).first if session[:demo3_user_id]
   end
 
   def configure
-    # Microsoft settings
-    session[:demo3_ms_client_id] = params[:ms_client_id]
-    session[:demo3_ms_tenant_id] = params[:ms_tenant_id]
-    
-    # AIsuru settings
-    session[:demo3_memori_id] = params[:memori_id]
-    session[:demo3_owner_user_id] = params[:owner_user_id]
-    session[:demo3_tenant_id] = params[:tenant_id]
-    session[:demo3_engine_url] = params[:engine_url]
-    session[:demo3_api_url] = params[:api_url]
-    session[:demo3_base_url] = params[:base_url]
-    session[:demo3_trusted_app_api_key] = params[:trusted_app_api_key]
-    
+    config = DemoConfig.for("demo3")
+    config.merge_settings!(
+      ms_client_id: params[:ms_client_id],
+      ms_tenant_id: params[:ms_tenant_id],
+      memori_id: params[:memori_id],
+      owner_user_id: params[:owner_user_id],
+      tenant_id: params[:tenant_id],
+      engine_url: params[:engine_url],
+      api_url: params[:api_url],
+      base_url: params[:base_url],
+      trusted_app_api_key: params[:trusted_app_api_key]
+    )
+
     flash[:notice] = "Configuration saved! Now you can login with Microsoft."
     redirect_to demo3_path
   end
@@ -106,29 +105,28 @@ class Demo3Controller < ApplicationController
   private
 
   def load_configuration
-    # Microsoft settings
-    @ms_client_id = session[:demo3_ms_client_id] || DEFAULT_MS_CLIENT_ID
-    @ms_tenant_id = session[:demo3_ms_tenant_id] || DEFAULT_MS_TENANT_ID
-    
-    # AIsuru settings
-    @memori_id = session[:demo3_memori_id] || DEFAULT_MEMORI_ID
-    @owner_user_id = session[:demo3_owner_user_id] || DEFAULT_OWNER_USER_ID
-    @tenant_id = session[:demo3_tenant_id] || DEFAULT_TENANT_ID
-    @engine_url = session[:demo3_engine_url] || DEFAULT_ENGINE_URL
-    @api_url = session[:demo3_api_url] || DEFAULT_API_URL
-    @base_url = session[:demo3_base_url] || DEFAULT_BASE_URL
-    @trusted_app_api_key = session[:demo3_trusted_app_api_key] || DEFAULT_TRUSTED_APP_API_KEY
+    config = DemoConfig.for("demo3")
+
+    @ms_client_id = config.get("ms_client_id") || ENV["DEMO3_MS_CLIENT_ID"] || DEFAULTS["ms_client_id"]
+    @ms_tenant_id = config.get("ms_tenant_id") || ENV["DEMO3_MS_TENANT_ID"] || DEFAULTS["ms_tenant_id"]
+    @memori_id = config.get("memori_id") || ENV["DEMO3_MEMORI_ID"] || DEFAULTS["memori_id"]
+    @owner_user_id = config.get("owner_user_id") || ENV["DEMO3_OWNER_USER_ID"] || DEFAULTS["owner_user_id"]
+    @tenant_id = config.get("tenant_id") || ENV["DEMO3_TENANT_ID"] || DEFAULTS["tenant_id"]
+    @engine_url = config.get("engine_url") || ENV["DEMO3_ENGINE_URL"] || DEFAULTS["engine_url"]
+    @api_url = config.get("api_url") || ENV["DEMO3_API_URL"] || DEFAULTS["api_url"]
+    @base_url = config.get("base_url") || ENV["DEMO3_BASE_URL"] || DEFAULTS["base_url"]
+    @trusted_app_api_key = config.get("trusted_app_api_key") || ENV["DEMO3_TRUSTED_APP_API_KEY"] || DEFAULTS["trusted_app_api_key"]
   end
 
   def aisuru_configured?
-    @memori_id.present? && 
-    @owner_user_id.present? && 
-    @trusted_app_api_key.present? && 
-    @trusted_app_api_key != DEFAULT_TRUSTED_APP_API_KEY
+    @memori_id.present? &&
+    @owner_user_id.present? &&
+    @trusted_app_api_key.present? &&
+    @trusted_app_api_key != DEFAULTS["trusted_app_api_key"]
   end
 
   def ms_configured?
-    @ms_client_id.present? && @ms_client_id != DEFAULT_MS_CLIENT_ID
+    @ms_client_id.present? && @ms_client_id != DEFAULTS["ms_client_id"]
   end
 
   def authenticate_with_aisuru(user)

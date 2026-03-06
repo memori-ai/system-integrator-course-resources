@@ -5,14 +5,15 @@ class Demo4Controller < ApplicationController
   DEMO_USER_EMAIL = "demo@demo.com"
   DEMO_USER_PASSWORD = "demodemo"
 
-  # Default AIsuru configuration
-  DEFAULT_MEMORI_ID = "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
-  DEFAULT_OWNER_USER_ID = "c3d4e5f6-a7b8-9012-cdef-123456789012"
-  DEFAULT_TENANT_ID = "www.aisuru.com"
-  DEFAULT_API_URL = "https://backend.memori.ai/api/v2"
-  DEFAULT_BASE_URL = "https://www.aisuru.com"
-  DEFAULT_TRUSTED_APP_API_KEY = "your-trusted-app-api-key-here"
-  DEFAULT_UI_LANG = "en"
+  DEFAULTS = {
+    "memori_id" => "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "owner_user_id" => "c3d4e5f6-a7b8-9012-cdef-123456789012",
+    "tenant_id" => "www.aisuru.com",
+    "api_url" => "https://backend.memori.ai/api/v2",
+    "base_url" => "https://www.aisuru.com",
+    "trusted_app_api_key" => "your-trusted-app-api-key-here",
+    "ui_lang" => "en"
+  }.freeze
 
   def index
     @current_user = User.where(id: session[:demo4_user_id]).first if session[:demo4_user_id]
@@ -53,11 +54,14 @@ class Demo4Controller < ApplicationController
   end
 
   def configure
-    session[:demo4_tenant_id] = params[:tenant_id]
-    session[:demo4_api_url] = params[:api_url]
-    session[:demo4_base_url] = params[:base_url]
-    session[:demo4_trusted_app_api_key] = params[:trusted_app_api_key]
-    session[:demo4_ui_lang] = params[:ui_lang]
+    config = DemoConfig.for("demo4")
+    config.merge_settings!(
+      tenant_id: params[:tenant_id],
+      api_url: params[:api_url],
+      base_url: params[:base_url],
+      trusted_app_api_key: params[:trusted_app_api_key],
+      ui_lang: params[:ui_lang]
+    )
     flash[:notice] = "Configuration saved!"
     redirect_to demo4_path
   end
@@ -99,15 +103,17 @@ class Demo4Controller < ApplicationController
   end
 
   def load_configuration
-    @tenant_id = session[:demo4_tenant_id] || DEFAULT_TENANT_ID
-    @api_url = session[:demo4_api_url] || DEFAULT_API_URL
-    @base_url = session[:demo4_base_url] || DEFAULT_BASE_URL
-    @trusted_app_api_key = session[:demo4_trusted_app_api_key] || DEFAULT_TRUSTED_APP_API_KEY
-    @ui_lang = session[:demo4_ui_lang] || DEFAULT_UI_LANG
+    config = DemoConfig.for("demo4")
+
+    @tenant_id = config.get("tenant_id") || ENV["DEMO4_TENANT_ID"] || DEFAULTS["tenant_id"]
+    @api_url = config.get("api_url") || ENV["DEMO4_API_URL"] || DEFAULTS["api_url"]
+    @base_url = config.get("base_url") || ENV["DEMO4_BASE_URL"] || DEFAULTS["base_url"]
+    @trusted_app_api_key = config.get("trusted_app_api_key") || ENV["DEMO4_TRUSTED_APP_API_KEY"] || DEFAULTS["trusted_app_api_key"]
+    @ui_lang = config.get("ui_lang") || ENV["DEMO4_UI_LANG"] || DEFAULTS["ui_lang"]
   end
 
   def aisuru_configured?
-    @trusted_app_api_key.present? && @trusted_app_api_key != DEFAULT_TRUSTED_APP_API_KEY
+    @trusted_app_api_key.present? && @trusted_app_api_key != DEFAULTS["trusted_app_api_key"]
   end
 
   def authenticate_with_aisuru(user)
