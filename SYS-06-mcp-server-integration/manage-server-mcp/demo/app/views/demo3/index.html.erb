@@ -110,13 +110,13 @@
                 <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #00a4ef 0%, #0078d4 100%);">2</span>
               </div>
               <div class="flex-grow-1">
-                <h6 class="fw-bold">Start All Services with Docker Compose</h6>
+                <h6 class="fw-bold">Free ngrok Tunnel (if needed)</h6>
                 <p class="text-muted mb-2">
-                  From the <code>demo/</code> directory, start all services including the MCP server:
+                  <strong>⚠️ ngrok free accounts support only 1 active tunnel.</strong> If you were using another demo, stop all ngrok tunnels first:
                 </p>
-                <pre class="bg-dark text-light p-3 rounded mb-1"><code>docker-compose up --build</code></pre>
+                <pre class="bg-dark text-light p-3 rounded mb-1"><code>docker compose stop ngrok-mcp ngrok-mcp-mysql</code></pre>
                 <small class="text-muted">
-                  This starts the Rails app, MongoDB, MCP filesystem server, and ngrok tunnel.
+                  This stops all ngrok tunnels, freeing the connection for this demo.
                 </small>
               </div>
             </div>
@@ -127,13 +127,13 @@
                 <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #00a4ef 0%, #0078d4 100%);">3</span>
               </div>
               <div class="flex-grow-1">
-                <h6 class="fw-bold">Get the ngrok Public URL</h6>
+                <h6 class="fw-bold">Start the MCP Server for Filesystem</h6>
                 <p class="text-muted mb-2">
-                  Open the ngrok dashboard to see the public HTTPS URL:
+                  Start the ngrok tunnel for the Filesystem MCP server (Demo 3):
                 </p>
-                <pre class="bg-dark text-light p-3 rounded mb-1"><code>open http://localhost:4041</code></pre>
+                <pre class="bg-dark text-light p-3 rounded mb-1"><code>docker compose up -d ngrok-mcp</code></pre>
                 <small class="text-muted">
-                  Copy the HTTPS forwarding URL (e.g., <code>https://abc123.ngrok-free.app</code>)
+                  Access the ngrok dashboard at <a href="http://localhost:4041" target="_blank" class="text-decoration-none">http://localhost:4041</a> to see the public HTTPS URL.
                 </small>
               </div>
             </div>
@@ -142,6 +142,22 @@
             <div class="d-flex mb-4">
               <div class="flex-shrink-0 me-3">
                 <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #00a4ef 0%, #0078d4 100%);">4</span>
+              </div>
+              <div class="flex-grow-1">
+                <h6 class="fw-bold">Get the ngrok Public URL</h6>
+                <p class="text-muted mb-2">
+                  Go to the <a href="https://dashboard.ngrok.com/tunnels" target="_blank">ngrok dashboard &rarr; Tunnels</a> (the same page where you found the authtoken) and copy the active tunnel's <strong>HTTPS URL</strong> (e.g., <code>https://abc123.ngrok-free.app</code>).
+                </p>
+                <small class="text-muted">
+                  You'll use this URL with the <code>/mcp</code> endpoint to configure the MCP server in AIsuru.
+                </small>
+              </div>
+            </div>
+
+            <%# Step 5 %>
+            <div class="d-flex mb-4">
+              <div class="flex-shrink-0 me-3">
+                <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #00a4ef 0%, #0078d4 100%);">5</span>
               </div>
               <div class="flex-grow-1">
                 <h6 class="fw-bold">Configure MCP Integration in AIsuru</h6>
@@ -166,10 +182,10 @@
               </div>
             </div>
 
-            <%# Step 5 %>
+            <%# Step 6 %>
             <div class="d-flex mb-3">
               <div class="flex-shrink-0 me-3">
-                <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #00a4ef 0%, #0078d4 100%);">5</span>
+                <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #00a4ef 0%, #0078d4 100%);">6</span>
               </div>
               <div class="flex-grow-1">
                 <h6 class="fw-bold">Load the Agent Below &amp; Start Chatting</h6>

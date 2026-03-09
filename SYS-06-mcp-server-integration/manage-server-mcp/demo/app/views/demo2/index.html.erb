@@ -74,6 +74,21 @@
                 <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #e85d04 0%, #f48c06 100%);">1</span>
               </div>
               <div class="flex-grow-1">
+                <h6 class="fw-bold">Configure ngrok Authentication</h6>
+                <p class="text-muted mb-2">
+                  Get your ngrok auth token from <a href="https://dashboard.ngrok.com/get-started/your-authtoken" target="_blank">ngrok dashboard</a>.
+                  Create a <code>.env</code> file in the demo directory:
+                </p>
+                <pre class="bg-dark text-light p-3 rounded mb-1"><code>NGROK_AUTHTOKEN=your_token_here</code></pre>
+              </div>
+            </div>
+
+            <%# Step 2 %>
+            <div class="d-flex mb-4">
+              <div class="flex-shrink-0 me-3">
+                <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #e85d04 0%, #f48c06 100%);">2</span>
+              </div>
+              <div class="flex-grow-1">
                 <h6 class="fw-bold">Free ngrok Tunnel (if needed)</h6>
                 <p class="text-muted mb-2">
                   <strong>⚠️ ngrok free accounts support only 1 active tunnel.</strong> If you were using another demo, stop all ngrok tunnels first:
@@ -85,10 +100,10 @@
               </div>
             </div>
 
-            <%# Step 2 %>
+            <%# Step 3 %>
             <div class="d-flex mb-4">
               <div class="flex-shrink-0 me-3">
-                <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #e85d04 0%, #f48c06 100%);">2</span>
+                <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #e85d04 0%, #f48c06 100%);">3</span>
               </div>
               <div class="flex-grow-1">
                 <h6 class="fw-bold">Start the MCP Server for MySQL</h6>
@@ -102,15 +117,15 @@
               </div>
             </div>
 
-            <%# Step 3 %>
+            <%# Step 4 %>
             <div class="d-flex mb-4">
               <div class="flex-shrink-0 me-3">
-                <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #e85d04 0%, #f48c06 100%);">3</span>
+                <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #e85d04 0%, #f48c06 100%);">4</span>
               </div>
               <div class="flex-grow-1">
                 <h6 class="fw-bold">Get the ngrok HTTPS URL</h6>
                 <p class="text-muted mb-2">
-                  Open the ngrok dashboard at <a href="http://localhost:4042" target="_blank" class="text-decoration-none">http://localhost:4042</a> and copy the <strong>HTTPS URL</strong> (e.g., <code>https://abc123.ngrok-free.dev</code>).
+                  Go to the <a href="https://dashboard.ngrok.com/tunnels" target="_blank">ngrok dashboard &rarr; Tunnels</a> (the same page where you found the authtoken) and copy the active tunnel's <strong>HTTPS URL</strong> (e.g., <code>https://abc123.ngrok-free.dev</code>).
                 </p>
                 <small class="text-muted">
                   You'll use this URL with the <code>/mcp</code> endpoint to configure the MCP server in AIsuru.
@@ -118,10 +133,10 @@
               </div>
             </div>
 
-            <%# Step 4 %>
+            <%# Step 5 %>
             <div class="d-flex mb-4">
               <div class="flex-shrink-0 me-3">
-                <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #e85d04 0%, #f48c06 100%);">4</span>
+                <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #e85d04 0%, #f48c06 100%);">5</span>
               </div>
               <div class="flex-grow-1">
                 <h6 class="fw-bold">Configure the MCP Server in AIsuru</h6>
@@ -135,10 +150,10 @@
               </div>
             </div>
 
-            <%# Step 5 %>
+            <%# Step 6 %>
             <div class="d-flex mb-3">
               <div class="flex-shrink-0 me-3">
-                <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #e85d04 0%, #f48c06 100%);">5</span>
+                <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #e85d04 0%, #f48c06 100%);">6</span>
               </div>
               <div class="flex-grow-1">
                 <h6 class="fw-bold">Load the Agent Below &amp; Start Chatting</h6>
