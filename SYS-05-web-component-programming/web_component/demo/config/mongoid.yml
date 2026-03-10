@@ -1,0 +1,20 @@
+development:
+  clients:
+    default:
+      uri: <%= ENV['MONGO_URI'] || 'mongodb://localhost:27017/sys_05_web_component_development' %>
+      options:
+        server_selection_timeout: 5
+
+test:
+  clients:
+    default:
+      uri: <%= ENV['MONGO_URI'] || 'mongodb://localhost:27017/sys_05_web_component_test' %>
+      options:
+        server_selection_timeout: 5
+
+production:
+  clients:
+    default:
+      uri: <%= ENV['MONGO_URI'] %>
+      options:
+        server_selection_timeout: 5

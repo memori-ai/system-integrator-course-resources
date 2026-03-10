@@ -1,0 +1,5 @@
+{
+  "scripts": {
+    "start": "docker compose build && docker compose run --rm web bundle install && docker compose up"
+  }
+}
