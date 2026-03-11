@@ -183,6 +183,102 @@
       </div>
     </div>
 
+    <%# Try These Commands %>
+    <div class="row mb-5">
+      <div class="col-lg-10 mx-auto">
+        <div class="card border-info">
+          <div class="card-header bg-info text-white">
+            <h5 class="mb-0">
+              <i class="bi bi-chat-dots me-2"></i>
+              Try These Commands
+            </h5>
+          </div>
+          <div class="card-body">
+            <p class="text-muted mb-4">
+              Ask the agent one of the following phrases to trigger a DOM action on this page.
+              The agent must be configured to respond with the corresponding <code>&lt;output class="memori-test"&gt;</code> tag.
+            </p>
+
+            <div class="row g-4">
+              <div class="col-md-4">
+                <div class="card h-100 border-warning">
+                  <div class="card-header bg-warning text-dark">
+                    <h6 class="mb-0">
+                      <i class="bi bi-cursor me-2"></i>
+                      Highlight the Back Button
+                    </h6>
+                  </div>
+                  <div class="card-body">
+                    <p class="small text-muted mb-3">Adds a yellow outline to the "Back to Demo Selection" button. The highlight persists until the button is clicked.</p>
+                    <p class="small mb-1 fw-bold">Example phrases:</p>
+                    <ul class="small mb-0">
+                      <li><em>"Highlight the home button"</em></li>
+                      <li><em>"Show me how to go back"</em></li>
+                    </ul>
+                  </div>
+                  <div class="card-footer bg-light">
+                    <small class="text-muted">Action: <code>highlight_home_button</code></small>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="card h-100 border-warning">
+                  <div class="card-header bg-warning text-dark">
+                    <h6 class="mb-0">
+                      <i class="bi bi-bell me-2"></i>
+                      Show a Page Alert
+                    </h6>
+                  </div>
+                  <div class="card-body">
+                    <p class="small text-muted mb-3">Displays a dismissible warning alert at the top of the page. It disappears automatically after 4 seconds.</p>
+                    <p class="small mb-1 fw-bold">Example phrases:</p>
+                    <ul class="small mb-0">
+                      <li><em>"Show me an alert"</em></li>
+                      <li><em>"Trigger a page notification"</em></li>
+                    </ul>
+                  </div>
+                  <div class="card-footer bg-light">
+                    <small class="text-muted">Action: <code>show_alert</code></small>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="card h-100 border-warning">
+                  <div class="card-header bg-warning text-dark">
+                    <h6 class="mb-0">
+                      <i class="bi bi-palette me-2"></i>
+                      Flash the Background
+                    </h6>
+                  </div>
+                  <div class="card-body">
+                    <p class="small text-muted mb-3">Briefly changes the page background to a warm yellow color, then fades back to normal after 1.5 seconds.</p>
+                    <p class="small mb-1 fw-bold">Example phrases:</p>
+                    <ul class="small mb-0">
+                      <li><em>"Flash the background"</em></li>
+                      <li><em>"Change the page color"</em></li>
+                    </ul>
+                  </div>
+                  <div class="card-footer bg-light">
+                    <small class="text-muted">Action: <code>flash_background_temp</code></small>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="alert alert-secondary mt-4 mb-0 small">
+              <i class="bi bi-info-circle me-1"></i>
+              <strong>How it works:</strong> The agent must include
+              <code>&lt;output class="memori-test"&gt;["action_name"]&lt;/output&gt;</code>
+              somewhere in its response. The page listens for the <code>MemoriNewDialogState</code> event,
+              parses that tag, and executes the corresponding JavaScript function.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <%# Web Component %>
     <div class="row mb-5">
       <div class="col-lg-10 mx-auto">
@@ -214,6 +310,59 @@
         </div>
       </div>
     </div>
+
+    <%# Agent Command Listener %>
+    <script>
+      document.addEventListener('MemoriNewDialogState', (e) => {
+        const emission = e.detail.emission;
+        if (!emission) return;
+
+        const match = emission.match(/<output class="memori-test">([\s\S]*?)<\/output>/);
+        if (!match) return;
+
+        const actions = JSON.parse(match[1].trim());
+
+        actions.forEach((action) => {
+          if (action === 'highlight_home_button') {
+            highlightHomeButton();
+          } else if (action === 'show_alert') {
+            showAlert();
+          } else if (action === 'flash_background_temp') {
+            flashBackground();
+          }
+        });
+      });
+
+      function highlightHomeButton() {
+        const btn = document.querySelector('.btn.btn-outline-secondary[href="/"]');
+        if (!btn) return;
+        btn.style.outline = '3px solid #ffc107';
+        btn.style.outlineOffset = '4px';
+        btn.style.borderRadius = '4px';
+        btn.addEventListener('click', () => {
+          btn.style.outline = '';
+          btn.style.outlineOffset = '';
+          btn.style.borderRadius = '';
+        }, { once: true });
+      }
+
+      function showAlert() {
+        const alertEl = document.createElement('div');
+        alertEl.className = 'alert alert-warning alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x mt-3';
+        alertEl.style.zIndex = '9999';
+        alertEl.innerHTML = '<strong>Alert from agent!</strong> The agent triggered a page alert. <button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
+        document.body.appendChild(alertEl);
+        setTimeout(() => alertEl.remove(), 4000);
+      }
+
+      function flashBackground() {
+        document.body.style.cssText += 'transition: background-color 0.4s ease !important; background-color: #fff3cd !important;';
+        setTimeout(() => {
+          document.body.style.removeProperty('background-color');
+          document.body.style.removeProperty('transition');
+        }, 1500);
+      }
+    </script>
 
     <%# HTML Code Example %>
     <div class="row mb-5">
