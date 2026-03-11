@@ -1,0 +1,91 @@
+<% content_for :title, "Web Component Programming - Demo Selection" %>
+
+<div class="container py-5">
+
+  <%# Hero Section %>
+  <div class="row mb-5">
+    <div class="col-lg-10 mx-auto text-center">
+      <h1 class="display-4 fw-bold mb-3">
+        <i class="bi bi-puzzle text-primary me-2"></i>
+        Web Component Programming with AIsuru
+      </h1>
+      <p class="lead text-muted mb-4">
+        Learn how to integrate and customize the AIsuru web component in your applications.
+      </p>
+      <div class="badge bg-info text-white fs-6 px-3 py-2">
+        <i class="bi bi-book me-1"></i>
+        SYS-05 Module - System Integrator Course
+      </div>
+    </div>
+  </div>
+
+  <%# Demo Cards %>
+  <div class="row g-4 mb-5">
+
+    <%# Demo 1 Card %>
+    <div class="col-lg-6">
+      <div class="card h-100 shadow-lg border-0 card-hover">
+        <div class="card-header bg-success text-white py-3">
+          <h4 class="mb-0">
+            <i class="bi bi-1-circle me-2"></i>
+            Demo 1: Agent to Control Page Content
+          </h4>
+        </div>
+        <div class="card-body p-4">
+          <div class="mb-4">
+            <span class="badge bg-success-subtle text-success me-2">Beginner</span>
+            <span class="badge bg-light text-dark">Web Component</span>
+          </div>
+
+          <h5 class="card-title">Agent to Control Page Content</h5>
+          <p class="card-text text-muted">
+            Learn how to make your AIsuru agent aware of the web page it is embedded in,
+            enabling it to answer questions about what the user is currently seeing.
+          </p>
+
+          <hr>
+
+          <h6 class="text-muted mb-3">What you'll learn:</h6>
+          <ul class="list-unstyled small">
+            <li class="mb-2">
+              <i class="bi bi-check-circle text-success me-2"></i>
+              Embed an AIsuru agent in a web page
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-check-circle text-success me-2"></i>
+              Pass page content to the agent at session start
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-check-circle text-success me-2"></i>
+              Enable context-aware conversations tied to the current page
+            </li>
+          </ul>
+        </div>
+        <div class="card-footer bg-white border-0 p-4">
+          <%= link_to demo1_path, class: "btn btn-success btn-lg w-100" do %>
+            <i class="bi bi-play-circle me-2"></i>
+            Start Demo 1
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <%# Resources %>
+  <div class="row mt-5">
+    <div class="col-lg-10 mx-auto">
+      <div class="alert alert-info d-flex align-items-start">
+        <i class="bi bi-info-circle-fill fs-4 me-3"></i>
+        <div>
+          <h6 class="alert-heading mb-2">📚 Additional Resources</h6>
+          <ul class="mb-0 small">
+            <li><a href="https://docs.aisuru.com/" target="_blank">AIsuru Documentation</a></li>
+            <li><a href="https://www.npmjs.com/package/@memori.ai/memori-webcomponent" target="_blank">Web Component NPM Package</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

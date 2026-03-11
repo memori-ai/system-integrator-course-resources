@@ -1,0 +1,29 @@
+# Ignore bundler config
+/.bundle
+
+# Ignore all logfiles and tempfiles
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
+
+# Ignore pidfiles, but keep the directory
+/tmp/pids/*
+!/tmp/pids/.keep
+
+# Ignore node_modules
+/node_modules
+
+# Ignore .env files (contain secrets)
+.env
+.env_dev
+.env_prod
+
+# Ignore coverage reports
+/coverage
+
+# Ignore yarn files
+yarn-error.log
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml

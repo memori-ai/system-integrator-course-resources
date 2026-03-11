@@ -393,8 +393,8 @@
                 apiURL="<%= @api_url %>"
                 baseURL="<%= @base_url %>"
                 layout="CHAT"
-                uiLang="EN"
-                spokenLang="EN"
+                uiLang="IT"
+                spokenLang="IT"
                 showLogin="true"
               ></memori-client>
             </div>
@@ -515,15 +515,23 @@
     </div>
 
     <script>
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          mutation.addedNodes.forEach((node) => {
+            if (node.nodeType === 1 && node.classList.contains('memori-chat--with-addon')) {
+              refreshDbData();
+            }
+          });
+        });
+      });
+
+      observer.observe(document.body, { childList: true, subtree: true });
+
       function refreshDbData() {
         const btn = document.getElementById('btn-refresh-db');
         const placeholder = document.getElementById('db-placeholder');
         const dataContainer = document.getElementById('db-data-container');
         const errorContainer = document.getElementById('db-error-container');
-
-        // Disable button and show spinner
-        btn.disabled = true;
-        btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> Loading...';
 
         fetch('<%= demo2_db_status_path %>')
           .then(response => {
@@ -561,7 +569,6 @@
           })
           .finally(() => {
             btn.disabled = false;
-            btn.innerHTML = '<i class="bi bi-arrow-clockwise me-1"></i> Refresh Data';
           });
       }
 

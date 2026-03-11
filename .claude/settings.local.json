@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(BASE=\"/c/Users/flavi/Desktop/LAVORO/demo-memori/system-integrator-course-resources/SYS-05-web-component-programming\")",
+      "Bash(mkdir -p \"$BASE/web_component/demo/app/controllers\" \"$BASE/web_component/demo/app/helpers\" \"$BASE/web_component/demo/app/javascript/controllers\" \"$BASE/web_component/demo/app/models\" \"$BASE/web_component/demo/app/services\" \"$BASE/web_component/demo/app/views/home\" \"$BASE/web_component/demo/app/views/demo1\" \"$BASE/web_component/demo/app/views/layouts\" \"$BASE/web_component/demo/bin\" \"$BASE/web_component/demo/config/environments\" \"$BASE/web_component/demo/config/initializers\" \"$BASE/web_component/demo/config/locales\" \"$BASE/web_component/demo/log\" \"$BASE/web_component/demo/public\" \"$BASE/web_component/demo/tmp/pids\")",
+      "Bash(chmod +x \"/c/Users/flavi/Desktop/LAVORO/demo-memori/system-integrator-course-resources/SYS-05-web-component-programming/web_component/demo/bin/docker-entrypoint\" \"/c/Users/flavi/Desktop/LAVORO/demo-memori/system-integrator-course-resources/SYS-05-web-component-programming/web_component/demo/bin/rails\" \"/c/Users/flavi/Desktop/LAVORO/demo-memori/system-integrator-course-resources/SYS-05-web-component-programming/web_component/demo/bin/rake\" \"/c/Users/flavi/Desktop/LAVORO/demo-memori/system-integrator-course-resources/SYS-05-web-component-programming/web_component/demo/bin/importmap\")",
+      "Bash(BASE=\"/c/Users/flavi/Desktop/LAVORO/demo-memori/system-integrator-course-resources/SYS-05-web-component-programming/web_component/demo\")",
+      "Bash(touch \"$BASE/log/development.log\")",
+      "Bash(touch \"$BASE/tmp/pids/.gitkeep\")",
+      "Bash(touch \"$BASE/public/favicon.ico\")"
+    ]
+  }
+}

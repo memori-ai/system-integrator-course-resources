@@ -1,0 +1,403 @@
+<% content_for :title, "Demo 1: Agent to Control Page Content" %>
+
+<div class="container py-5">
+
+  <%# Back to Home %>
+  <div class="row mb-4">
+    <div class="col">
+      <%= link_to root_path, class: "btn btn-outline-secondary" do %>
+        <i class="bi bi-arrow-left me-1"></i> Back to Demo Selection
+      <% end %>
+    </div>
+  </div>
+
+  <%# Hero Section %>
+  <div class="row mb-5">
+    <div class="col-lg-8 mx-auto text-center">
+      <span class="badge bg-success mb-3">Demo 1</span>
+      <h1 class="display-5 fw-bold mb-3">
+        <i class="bi bi-layout-text-window-reverse text-success me-2"></i>
+        Agent to Control Page Content
+      </h1>
+      <p class="lead text-muted">
+        Learn how to make your AIsuru agent aware of the web page it is embedded in.
+      </p>
+    </div>
+  </div>
+
+  <% unless @show_agent %>
+  <%# How to get your Agent IDs %>
+  <div class="row mb-5">
+    <div class="col-lg-10 mx-auto">
+      <div class="card border-info">
+        <div class="card-header bg-info text-white">
+          <h5 class="mb-0">
+            <i class="bi bi-info-circle me-2"></i>
+            How to get your Agent IDs
+          </h5>
+        </div>
+        <div class="card-body">
+          <ol class="mb-0">
+            <li class="mb-2">
+              <strong>Create an Agent</strong> on <a href="https://www.aisuru.com" target="_blank">AIsuru</a>
+              (or use your own tenant if you have a PaaS subscription)
+            </li>
+            <li class="mb-2">
+              <strong>Open your Agent</strong> and click on <strong>"Dev docs"</strong> in the left sidebar
+            </li>
+            <li class="mb-2">
+              Expand the <strong>"▼ Other references"</strong> section (or "Altri riferimenti" in Italian)
+            </li>
+            <li class="mb-2">
+              Copy the following values:
+              <ul class="mt-2">
+                <li><strong>Secondary Memori (Agent) ID</strong> → This is your <code>memoriID</code></li>
+                <li><strong>Owner user ID</strong> → This is your <code>ownerUserID</code></li>
+              </ul>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%# Configuration Form %>
+  <div class="row mb-5">
+    <div class="col-lg-8 mx-auto">
+      <div class="card shadow">
+        <div class="card-header bg-success text-white">
+          <h5 class="mb-0">
+            <i class="bi bi-gear me-2"></i>
+            Configure Your Agent
+          </h5>
+        </div>
+        <div class="card-body p-4">
+          <%= form_with url: demo1_configure_path, method: :post, local: true do |f| %>
+            <div class="mb-4">
+              <label for="memori_id" class="form-label fw-bold">
+                <i class="bi bi-fingerprint me-1"></i>
+                Memori (Agent) Secondary ID *
+              </label>
+              <%= f.text_field :memori_id,
+                  class: "form-control form-control-lg",
+                  placeholder: "e.g., a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                  value: @memori_id,
+                  required: true,
+                  pattern: "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}" %>
+              <div class="form-text">
+                Found in Dev docs → Other references → "Secondary Memori (Agent) ID"
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label for="owner_user_id" class="form-label fw-bold">
+                <i class="bi bi-person-badge me-1"></i>
+                Owner User ID *
+              </label>
+              <%= f.text_field :owner_user_id,
+                  class: "form-control form-control-lg",
+                  placeholder: "e.g., b2c3d4e5-f6a7-8901-bcde-f12345678901",
+                  value: @owner_user_id,
+                  required: true,
+                  pattern: "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}" %>
+              <div class="form-text">
+                Found in Dev docs → Other references → "Owner user ID"
+              </div>
+            </div>
+
+            <hr class="my-4">
+            <h6 class="text-muted mb-3">
+              <i class="bi bi-sliders me-1"></i>
+              Advanced Configuration (pre-filled with defaults)
+            </h6>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="tenant_id" class="form-label">
+                  <i class="bi bi-building me-1"></i>
+                  Tenant ID
+                </label>
+                <%= f.text_field :tenant_id,
+                    class: "form-control",
+                    value: @tenant_id,
+                    required: true %>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="base_url" class="form-label">
+                  <i class="bi bi-link-45deg me-1"></i>
+                  Base URL
+                </label>
+                <%= f.text_field :base_url,
+                    class: "form-control",
+                    value: @base_url,
+                    required: true %>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="engine_url" class="form-label">
+                <i class="bi bi-cpu me-1"></i>
+                Engine URL
+              </label>
+              <%= f.text_field :engine_url,
+                  class: "form-control",
+                  value: @engine_url,
+                  required: true %>
+            </div>
+
+            <div class="mb-4">
+              <label for="api_url" class="form-label">
+                <i class="bi bi-server me-1"></i>
+                API URL
+              </label>
+              <%= f.text_field :api_url,
+                  class: "form-control",
+                  value: @api_url,
+                  required: true %>
+            </div>
+
+            <div class="d-grid">
+              <%= f.submit "Load Agent", class: "btn btn-success btn-lg" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% end %>
+
+  <% if @show_agent %>
+    <%# Agent Success Alert %>
+    <div class="row mb-4">
+      <div class="col-lg-10 mx-auto">
+        <div class="alert alert-success d-flex align-items-center justify-content-between">
+          <div>
+            <i class="bi bi-check-circle-fill me-2 fs-5"></i>
+            <strong>Agent loaded successfully!</strong>
+          </div>
+          <%= link_to demo1_path, class: "btn btn-outline-success btn-sm" do %>
+            <i class="bi bi-gear me-1"></i> Reconfigure
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <%# Try These Commands %>
+    <div class="row mb-5">
+      <div class="col-lg-10 mx-auto">
+        <div class="card border-info">
+          <div class="card-header bg-info text-white">
+            <h5 class="mb-0">
+              <i class="bi bi-chat-dots me-2"></i>
+              Try These Commands
+            </h5>
+          </div>
+          <div class="card-body">
+            <p class="text-muted mb-4">
+              Ask the agent one of the following phrases to trigger a DOM action on this page.
+              The agent must be configured to respond with the corresponding <code>&lt;output class="memori-test"&gt;</code> tag.
+            </p>
+
+            <div class="row g-4">
+              <div class="col-md-4">
+                <div class="card h-100 border-warning">
+                  <div class="card-header bg-warning text-dark">
+                    <h6 class="mb-0">
+                      <i class="bi bi-cursor me-2"></i>
+                      Highlight the Back Button
+                    </h6>
+                  </div>
+                  <div class="card-body">
+                    <p class="small text-muted mb-3">Adds a yellow outline to the "Back to Demo Selection" button. The highlight persists until the button is clicked.</p>
+                    <p class="small mb-1 fw-bold">Example phrases:</p>
+                    <ul class="small mb-0">
+                      <li><em>"Highlight the home button"</em></li>
+                      <li><em>"Show me how to go back"</em></li>
+                    </ul>
+                  </div>
+                  <div class="card-footer bg-light">
+                    <small class="text-muted">Action: <code>highlight_home_button</code></small>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="card h-100 border-warning">
+                  <div class="card-header bg-warning text-dark">
+                    <h6 class="mb-0">
+                      <i class="bi bi-bell me-2"></i>
+                      Show a Page Alert
+                    </h6>
+                  </div>
+                  <div class="card-body">
+                    <p class="small text-muted mb-3">Displays a dismissible warning alert at the top of the page. It disappears automatically after 4 seconds.</p>
+                    <p class="small mb-1 fw-bold">Example phrases:</p>
+                    <ul class="small mb-0">
+                      <li><em>"Show me an alert"</em></li>
+                      <li><em>"Trigger a page notification"</em></li>
+                    </ul>
+                  </div>
+                  <div class="card-footer bg-light">
+                    <small class="text-muted">Action: <code>show_alert</code></small>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="card h-100 border-warning">
+                  <div class="card-header bg-warning text-dark">
+                    <h6 class="mb-0">
+                      <i class="bi bi-palette me-2"></i>
+                      Flash the Background
+                    </h6>
+                  </div>
+                  <div class="card-body">
+                    <p class="small text-muted mb-3">Briefly changes the page background to a warm yellow color, then fades back to normal after 1.5 seconds.</p>
+                    <p class="small mb-1 fw-bold">Example phrases:</p>
+                    <ul class="small mb-0">
+                      <li><em>"Flash the background"</em></li>
+                      <li><em>"Change the page color"</em></li>
+                    </ul>
+                  </div>
+                  <div class="card-footer bg-light">
+                    <small class="text-muted">Action: <code>flash_background_temp</code></small>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="alert alert-secondary mt-4 mb-0 small">
+              <i class="bi bi-info-circle me-1"></i>
+              <strong>How it works:</strong> The agent must include
+              <code>&lt;output class="memori-test"&gt;["action_name"]&lt;/output&gt;</code>
+              somewhere in its response. The page listens for the <code>MemoriNewDialogState</code> event,
+              parses that tag, and executes the corresponding JavaScript function.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%# Web Component %>
+    <div class="row mb-5">
+      <div class="col-lg-10 mx-auto">
+        <div class="card shadow">
+          <div class="card-header bg-success text-white">
+            <h5 class="mb-0">
+              <i class="bi bi-robot me-2"></i>
+              Your Agent
+            </h5>
+          </div>
+          <div class="card-body p-0">
+            <div class="memori-container">
+              <memori-client
+                memoriName=""
+                ownerUserName="owner"
+                memoriID="<%= @memori_id %>"
+                ownerUserID="<%= @owner_user_id %>"
+                tenantID="<%= @tenant_id %>"
+                engineURL="<%= @engine_url %>"
+                apiURL="<%= @api_url %>"
+                baseURL="<%= @base_url %>"
+                layout="CHAT"
+                uiLang="EN"
+                spokenLang="EN"
+                showLogin="true"
+              ></memori-client>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%# Agent Command Listener %>
+    <script>
+      document.addEventListener('MemoriNewDialogState', (e) => {
+        const emission = e.detail.emission;
+        if (!emission) return;
+
+        const match = emission.match(/<output class="memori-test">([\s\S]*?)<\/output>/);
+        if (!match) return;
+
+        const actions = JSON.parse(match[1].trim());
+
+        actions.forEach((action) => {
+          if (action === 'highlight_home_button') {
+            highlightHomeButton();
+          } else if (action === 'show_alert') {
+            showAlert();
+          } else if (action === 'flash_background_temp') {
+            flashBackground();
+          }
+        });
+      });
+
+      function highlightHomeButton() {
+        const btn = document.querySelector('.btn.btn-outline-secondary[href="/"]');
+        if (!btn) return;
+        btn.style.outline = '3px solid #ffc107';
+        btn.style.outlineOffset = '4px';
+        btn.style.borderRadius = '4px';
+        btn.addEventListener('click', () => {
+          btn.style.outline = '';
+          btn.style.outlineOffset = '';
+          btn.style.borderRadius = '';
+        }, { once: true });
+      }
+
+      function showAlert() {
+        const alertEl = document.createElement('div');
+        alertEl.className = 'alert alert-warning alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x mt-3';
+        alertEl.style.zIndex = '9999';
+        alertEl.innerHTML = '<strong>Alert from agent!</strong> The agent triggered a page alert. <button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
+        document.body.appendChild(alertEl);
+        setTimeout(() => alertEl.remove(), 4000);
+      }
+
+      function flashBackground() {
+        document.body.style.cssText += 'transition: background-color 0.4s ease !important; background-color: #fff3cd !important;';
+        setTimeout(() => {
+          document.body.style.removeProperty('background-color');
+          document.body.style.removeProperty('transition');
+        }, 1500);
+      }
+    </script>
+
+    <%# HTML Code Example %>
+    <div class="row mb-5">
+      <div class="col-lg-10 mx-auto">
+        <div class="card border-dark">
+          <div class="card-header bg-dark text-white">
+            <h6 class="mb-0">
+              <i class="bi bi-file-code me-2"></i>
+              HTML Code Example
+            </h6>
+          </div>
+          <div class="card-body bg-light">
+            <pre class="mb-0"><code>&lt;!-- Include AIsuru Web Component --&gt;
+&lt;script type="module" src="https://cdn.jsdelivr.net/npm/@memori.ai/memori-webcomponent/dist/memori-webcomponent.js"&gt;&lt;/script&gt;
+&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@memori.ai/memori-react/dist/styles.min.css" /&gt;
+
+&lt;!-- Embed your agent --&gt;
+&lt;memori-client
+  memoriName=""
+  ownerUserName="owner"
+  memoriID="<%= @memori_id %>"
+  ownerUserID="<%= @owner_user_id %>"
+  tenantID="<%= @tenant_id %>"
+  engineURL="<%= @engine_url %>"
+  apiURL="<%= @api_url %>"
+  baseURL="<%= @base_url %>"
+  layout="CHAT"
+  uiLang="EN"
+  spokenLang="EN"
+  showLogin="true"
+&gt;&lt;/memori-client&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+</div>
