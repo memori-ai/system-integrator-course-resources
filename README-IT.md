@@ -102,7 +102,7 @@ Prima di iniziare il corso, assicurati di avere:
 - ✅ Conoscenza base di **sviluppo web** (HTML, CSS, JavaScript)
 - ✅ Familiarità con **API REST** e protocolli HTTP
 - ✅ Comprensione dei **concetti di autenticazione** (OAuth 2.0, JWT, SSO)
-- ✅ **Docker** e **Docker Compose** installati (per eseguire le demo)
+- ✅ **[Docker Desktop](https://www.docker.com/products/docker-desktop/)** installato (include Docker Engine e Docker Compose — necessario per eseguire tutte le demo)
 - ✅ Un editor di codice (VS Code consigliato)
 
 ## 🚀 Come Iniziare
