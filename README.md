@@ -104,7 +104,7 @@ Before starting the course, ensure you have:
 - ✅ Basic knowledge of **web development** (HTML, CSS, JavaScript)
 - ✅ Familiarity with **REST APIs** and HTTP protocols
 - ✅ Understanding of **authentication concepts** (OAuth 2.0, JWT, SSO)
-- ✅ **Docker** and **Docker Compose** installed (for running demos)
+- ✅ **[Docker Desktop](https://www.docker.com/products/docker-desktop/)** installed (includes Docker Engine and Docker Compose — required to run all demo applications)
 - ✅ A code editor (VS Code recommended)
 
 ## 🚀 Getting Started

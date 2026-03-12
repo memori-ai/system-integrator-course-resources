@@ -37,6 +37,100 @@
     </div>
   </div>
 
+  <%# Instructions %>
+  <div class="row mb-5">
+    <div class="col-lg-10 mx-auto">
+      <div class="card border-info">
+        <div class="card-header bg-info text-white">
+          <h5 class="mb-0">
+            <i class="bi bi-info-circle me-2"></i>
+            How to get your Agent IDs
+          </h5>
+        </div>
+        <div class="card-body">
+          <ol class="mb-0">
+            <li class="mb-2">
+              <strong>Create an Agent</strong> on <a href="https://www.aisuru.com" target="_blank">AIsuru</a>
+              (or use your own tenant if you have a PaaS subscription)
+            </li>
+            <li class="mb-2">
+              <strong>Open your Agent</strong> and click on <strong>"Dev docs"</strong> in the left sidebar
+            </li>
+            <li class="mb-2">
+              Expand the <strong>"▼ Other references"</strong> section (or "Altri riferimenti" in Italian)
+            </li>
+            <li class="mb-2">
+              Copy the following values:
+              <ul class="mt-2">
+                <li><strong>Secondary Memori (Agent) ID</strong> → This is your <code>memoriID</code></li>
+                <li><strong>Owner user ID</strong> → This is your <code>ownerUserID</code></li>
+              </ul>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%# Azure App Registration Guide %>
+  <div class="row mb-5">
+    <div class="col-lg-10 mx-auto">
+      <div class="card border-primary">
+        <div class="card-header bg-primary text-white">
+          <h5 class="mb-0">
+            <i class="bi bi-gear me-2"></i>
+            How to Create an Azure App Registration
+          </h5>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <h6><i class="bi bi-1-circle me-2"></i>Go to Azure Portal</h6>
+              <ol class="small text-muted">
+                <li>Navigate to <a href="https://portal.azure.com" target="_blank">portal.azure.com</a></li>
+                <li>Search for "Microsoft Entra ID" (formerly Azure AD)</li>
+                <li>Go to "App registrations"</li>
+                <li>Click "+ New registration"</li>
+              </ol>
+
+              <h6><i class="bi bi-2-circle me-2"></i>Configure the App</h6>
+              <ol class="small text-muted">
+                <li><strong>Name:</strong> e.g., "AIsuru Demo App"</li>
+                <li><strong>Supported account types:</strong>
+                  <ul>
+                    <li>"Accounts in any organizational directory" for multi-tenant</li>
+                    <li>"Accounts in this organizational directory only" for single-tenant</li>
+                  </ul>
+                </li>
+                <li><strong>Redirect URI:</strong> Select "Single-page application (SPA)" and enter <code><%= request.base_url %></code></li>
+              </ol>
+            </div>
+            <div class="col-md-6">
+              <h6><i class="bi bi-3-circle me-2"></i>Get the Client ID</h6>
+              <ol class="small text-muted">
+                <li>After registration, go to "Overview"</li>
+                <li>Copy the <strong>Application (client) ID</strong></li>
+                <li>Paste it in the configuration form above</li>
+              </ol>
+
+              <h6><i class="bi bi-4-circle me-2"></i>API Permissions (optional)</h6>
+              <ol class="small text-muted">
+                <li>Go to "API permissions"</li>
+                <li>The default <code>User.Read</code> permission is usually sufficient</li>
+                <li>If needed, add: <code>openid</code>, <code>profile</code>, <code>email</code></li>
+              </ol>
+
+              <div class="alert alert-warning mt-3 mb-0">
+                <i class="bi bi-exclamation-triangle me-1"></i>
+                <strong>Important:</strong> Make sure the Redirect URI in Azure matches your app URL exactly!
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <%# Main Content: Config + User Status %>
   <div class="row g-4">
     
@@ -364,64 +458,6 @@
     </div>
   </div>
 
-  <%# Azure App Registration Guide %>
-  <div class="row mt-4">
-    <div class="col-12">
-      <div class="card border-primary">
-        <div class="card-header bg-primary text-white">
-          <h5 class="mb-0">
-            <i class="bi bi-gear me-2"></i>
-            How to Create an Azure App Registration
-          </h5>
-        </div>
-        <div class="card-body">
-          <div class="row">
-            <div class="col-md-6">
-              <h6><i class="bi bi-1-circle me-2"></i>Go to Azure Portal</h6>
-              <ol class="small text-muted">
-                <li>Navigate to <a href="https://portal.azure.com" target="_blank">portal.azure.com</a></li>
-                <li>Search for "Microsoft Entra ID" (formerly Azure AD)</li>
-                <li>Go to "App registrations"</li>
-                <li>Click "+ New registration"</li>
-              </ol>
-              
-              <h6><i class="bi bi-2-circle me-2"></i>Configure the App</h6>
-              <ol class="small text-muted">
-                <li><strong>Name:</strong> e.g., "AIsuru Demo App"</li>
-                <li><strong>Supported account types:</strong>
-                  <ul>
-                    <li>"Accounts in any organizational directory" for multi-tenant</li>
-                    <li>"Accounts in this organizational directory only" for single-tenant</li>
-                  </ul>
-                </li>
-                <li><strong>Redirect URI:</strong> Select "Single-page application (SPA)" and enter <code><%= request.base_url %></code></li>
-              </ol>
-            </div>
-            <div class="col-md-6">
-              <h6><i class="bi bi-3-circle me-2"></i>Get the Client ID</h6>
-              <ol class="small text-muted">
-                <li>After registration, go to "Overview"</li>
-                <li>Copy the <strong>Application (client) ID</strong></li>
-                <li>Paste it in the configuration form above</li>
-              </ol>
-              
-              <h6><i class="bi bi-4-circle me-2"></i>API Permissions (optional)</h6>
-              <ol class="small text-muted">
-                <li>Go to "API permissions"</li>
-                <li>The default <code>User.Read</code> permission is usually sufficient</li>
-                <li>If needed, add: <code>openid</code>, <code>profile</code>, <code>email</code></li>
-              </ol>
-
-              <div class="alert alert-warning mt-3 mb-0">
-                <i class="bi bi-exclamation-triangle me-1"></i>
-                <strong>Important:</strong> Make sure the Redirect URI in Azure matches your app URL exactly!
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 
 </div>
 

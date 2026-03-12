@@ -13,6 +13,19 @@ Questa guida spiega come integrare il web component AIsuru nelle tue applicazion
 
 ---
 
+## Prerequisiti
+
+Prima di iniziare, hai bisogno di:
+
+1. Un **account AIsuru** su [aisuru.com](https://www.aisuru.com)
+2. Un **Agente AI (Memori)** configurato nel tuo account
+3. Accesso alla sezione **Dev Docs** del tuo agente
+4. Conoscenza base di HTML e JavaScript
+
+> ⚠️ **Docker Desktop obbligatorio** — L'applicazione demo gira interamente in container Docker. Assicurati di avere [Docker Desktop](https://www.docker.com/products/docker-desktop/) installato e avviato sulla tua macchina prima di eseguire `npm run start`.
+
+---
+
 ## Applicazione Demo
 
 Questo modulo include **quattro demo applicative funzionanti** realizzate con Ruby on Rails 8 + MongoDB che mostrano diversi approcci all'autenticazione.
@@ -39,6 +52,11 @@ npm run start
 # Apri nel browser
 open http://localhost:3000
 ```
+
+> 💡 **Utenti Windows — se `npm run start` non funziona:** Git su Windows può convertire automaticamente i line endings in CRLF, causando errori negli script shell dentro Docker. Esegui questo comando una volta dal terminale e poi riprova:
+> ```bash
+> git config --global core.autocrlf false
+> ```
 
 ### Demo Disponibili
 
@@ -137,17 +155,6 @@ docker compose run --rm web bundle
 # Rails console
 docker compose run --rm web rails console
 ```
-
----
-
-## Prerequisiti
-
-Prima di iniziare, hai bisogno di:
-
-1. Un **account AIsuru** su [aisuru.com](https://www.aisuru.com)
-2. Un **Agente AI (Memori)** configurato nel tuo account
-3. Accesso alla sezione **Dev Docs** del tuo agente
-4. Conoscenza base di HTML e JavaScript
 
 ---
 

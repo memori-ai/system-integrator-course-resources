@@ -13,6 +13,19 @@ This guide covers how to embed the AIsuru web component in your applications and
 
 ---
 
+## Prerequisites
+
+Before starting, you need:
+
+1. An **AIsuru account** at [aisuru.com](https://www.aisuru.com)
+2. A configured **AI Agent (Memori)** in your account
+3. Access to the **Dev Docs** section of your agent
+4. Basic knowledge of HTML and JavaScript
+
+> ⚠️ **Docker Desktop required** — The demo application runs entirely inside Docker containers. Make sure you have [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed and running on your machine before executing `npm run start`.
+
+---
+
 ## Demo Application
 
 This module includes **four live demo applications** built with Ruby on Rails 8 + MongoDB that showcase different authentication approaches.
@@ -39,6 +52,11 @@ npm run start
 # Open in your browser
 open http://localhost:3000
 ```
+
+> 💡 **Windows users — if `npm run start` fails:** Git on Windows may convert line endings to CRLF, which breaks shell scripts inside Docker. Run this command once in your terminal and then retry:
+> ```bash
+> git config --global core.autocrlf false
+> ```
 
 ### Available Demos
 
@@ -137,17 +155,6 @@ docker compose run --rm web bundle
 # Rails console
 docker compose run --rm web rails console
 ```
-
----
-
-## Prerequisites
-
-Before starting, you need:
-
-1. An **AIsuru account** at [aisuru.com](https://www.aisuru.com)
-2. A configured **AI Agent (Memori)** in your account
-3. Access to the **Dev Docs** section of your agent
-4. Basic knowledge of HTML and JavaScript
 
 ---
 
