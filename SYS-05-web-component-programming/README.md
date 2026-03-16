@@ -1,4 +1,14 @@
-# system-integrator-course-resources
+# SYS-05: Web Component Programming
+
+> Learn how to integrate and customize the AIsuru web component in your applications
+
+## Overview
+
+This module covers web component programming techniques to create context-aware AI experiences embedded in web pages.
+
+📁 **Full Guide**: [web_component/README.md](./web_component/README.md)
+
+---
 
 ## Quick Start
 
@@ -25,3 +35,7 @@ open http://localhost:3000
 > ```bash
 > git config --global core.autocrlf false
 > ```
+
+---
+
+🏠 [Course Home](../README.md)
