@@ -7,7 +7,10 @@
       "Bash(BASE=\"/c/Users/flavi/Desktop/LAVORO/demo-memori/system-integrator-course-resources/SYS-05-web-component-programming/web_component/demo\")",
       "Bash(touch \"$BASE/log/development.log\")",
       "Bash(touch \"$BASE/tmp/pids/.gitkeep\")",
-      "Bash(touch \"$BASE/public/favicon.ico\")"
+      "Bash(touch \"$BASE/public/favicon.ico\")",
+      "Bash(wc -l '/c/Users/flavi/Desktop/LAVORO/demo-memori/system-integrator-course-resources/SYS-04-advanced-functions/manage_functions/demo/app/views/demo'*'/index.html.erb')",
+      "Bash(rm \"c:/Users/flavi/Desktop/LAVORO/demo-memori/system-integrator-course-resources/SYS-04-advanced-functions/manage_functions/demo/app/controllers/demo3_controller.rb\" \"c:/Users/flavi/Desktop/LAVORO/demo-memori/system-integrator-course-resources/SYS-04-advanced-functions/manage_functions/demo/app/controllers/demo4_controller.rb\" \"c:/Users/flavi/Desktop/LAVORO/demo-memori/system-integrator-course-resources/SYS-04-advanced-functions/manage_functions/demo/app/controllers/demo5_controller.rb\")",
+      "Bash(rm -rf \"c:/Users/flavi/Desktop/LAVORO/demo-memori/system-integrator-course-resources/SYS-04-advanced-functions/manage_functions/demo/app/views/demo3\" \"c:/Users/flavi/Desktop/LAVORO/demo-memori/system-integrator-course-resources/SYS-04-advanced-functions/manage_functions/demo/app/views/demo4\" \"c:/Users/flavi/Desktop/LAVORO/demo-memori/system-integrator-course-resources/SYS-04-advanced-functions/manage_functions/demo/app/views/demo5\")"
     ]
   }
 }
