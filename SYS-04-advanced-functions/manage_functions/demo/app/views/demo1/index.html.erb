@@ -151,6 +151,7 @@
     </div>
   </div>
 
+  <% unless @show_agent %>
   <%# Configuration Form %>
   <div class="row mb-5">
     <div class="col-lg-10 mx-auto">
@@ -253,6 +254,7 @@
       </div>
     </div>
   </div>
+  <% end %>
 
   <% if @show_agent %>
     <%# Agent Success Alert %>
