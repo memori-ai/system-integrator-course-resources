@@ -100,7 +100,7 @@
           <h6 class="fw-bold mb-3 mt-4">Part 3: Import the Swagger File</h6>
           <ol start="4" class="mb-4">
             <li class="mb-2">
-              <strong>Navigate to Advanced Functions</strong> in the left sidebar
+              <strong>Navigate to Tools, then AIsuru Functions</strong> in the left sidebar
             </li>
             <li class="mb-2">
               <strong>Click on "Converti OpenAPI in funzioni"</strong> (Convert OpenAPI to functions)
@@ -144,6 +144,7 @@
     </div>
   </div>
 
+  <% unless @show_agent %>
   <%# Configuration Form %>
   <div class="row mb-5">
     <div class="col-lg-10 mx-auto">
@@ -246,6 +247,7 @@
       </div>
     </div>
   </div>
+  <% end %>
 
   <% if @show_agent %>
     <%# Agent Success Alert %>

@@ -21,7 +21,15 @@ This module includes **two live demo applications** that showcase different appr
 ```bash
 # Navigate to the demo folder
 cd demo
+```
 
+Create a file named `.env_dev` in the `demo/` folder (first time only) with the following content:
+
+```
+MONGO_URI=mongodb://mongodb:27017/sys_04_advanced_functions_development
+```
+
+```bash
 # Build and start the application (single command)
 npm run start
 
@@ -73,7 +81,7 @@ Before starting, you need:
 ### Step 1: Navigate to Advanced Functions
 
 In your AIsuru agent dashboard:
-1. Click on **Advanced Functions** in the left sidebar
+1. Click on **Tools** in the left sidebar, then **Advanced Functions**
 2. Click **Create New Function**
 
 ### Step 2: Configure the Function
@@ -137,7 +145,7 @@ OpenAPI (Swagger) specifications offer several advantages:
    - Download from the API documentation
    - Or export from your own API
 
-2. **Navigate to Advanced Functions**
+2. **Navigate to Tools, then AIsuru Functions**
    - Click on **"Converti OpenAPI in funzioni"** (Convert OpenAPI to functions)
 
 3. **Configure the import**

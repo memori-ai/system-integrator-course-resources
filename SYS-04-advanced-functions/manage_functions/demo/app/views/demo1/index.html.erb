@@ -47,7 +47,7 @@
           <h6 class="fw-bold mb-3 mt-4">Part 2: Create the Advanced Function</h6>
           <ol start="2" class="mb-4">
             <li class="mb-2">
-              <strong>Navigate to Advanced Functions</strong> from the left sidebar menu
+              <strong>Navigate to Tools, then Advanced Functions</strong> from the left sidebar menu
             </li>
             <li class="mb-2">
               <strong>Click "Create New Function"</strong> and configure:
@@ -73,27 +73,21 @@
               </ul>
             </li>
             <li class="mb-2">
+              <strong>Add the function parameters:</strong>
+              <ul class="mt-2">
+                <li><strong>Name:</strong> <code>lat</code> — <strong>Type:</strong> String — <strong>Required:</strong> Yes</li>
+                <li><strong>Name:</strong> <code>lon</code> — <strong>Type:</strong> String — <strong>Required:</strong> Yes</li>
+              </ul>
+            </li>
+            <li class="mb-2">
               <strong>Save the function</strong>
             </li>
           </ol>
 
-          <h6 class="fw-bold mb-3 mt-4">Part 3: Link Function to Agent</h6>
-          <ol start="6" class="mb-4">
+          <h6 class="fw-bold mb-3 mt-4">Part 3: Configure the Agent Prompt</h6>
+          <ol start="7" class="mb-4">
             <li class="mb-2">
-              <strong>Go to Agent Settings → Advanced Functions</strong>
-            </li>
-            <li class="mb-2">
-              <strong>Add the <code>FUNZIONE_RECUPERA_DATI_METEO</code> function</strong> to your agent
-            </li>
-            <li class="mb-2">
-              <strong>Save the agent configuration</strong>
-            </li>
-          </ol>
-
-          <h6 class="fw-bold mb-3 mt-4">Part 4: Configure the Agent Prompt</h6>
-          <ol start="9" class="mb-4">
-            <li class="mb-2">
-              <strong>Go to Agent Settings → Prompt</strong>
+              <strong>Go to Agent Settings → AI</strong>
             </li>
             <li class="mb-2">
               <strong>Add instructions to the agent prompt:</strong> Now that the function is linked, teach the agent how to use it:
@@ -115,8 +109,8 @@
             </li>
           </ol>
 
-          <h6 class="fw-bold mb-3 mt-4">Part 5: Get Your Agent IDs</h6>
-          <ol start="12" class="mb-0">
+          <h6 class="fw-bold mb-3 mt-4">Part 4: Get Your Agent IDs</h6>
+          <ol start="10" class="mb-0">
             <li class="mb-2">
               <strong>Open your Agent</strong> and click on <strong>"Dev docs"</strong> in the left sidebar
             </li>
@@ -137,8 +131,8 @@
 
           <hr class="my-4">
 
-          <h6 class="fw-bold mb-3">Part 6: Test and Verify the Function</h6>
-          <ol start="16" class="mb-0">
+          <h6 class="fw-bold mb-3">Part 5: Test and Verify the Function</h6>
+          <ol start="14" class="mb-0">
             <li class="mb-2">
               <strong>Start a conversation</strong> with your agent in the web component below
             </li>
@@ -164,6 +158,7 @@
     </div>
   </div>
 
+  <% unless @show_agent %>
   <%# Configuration Form %>
   <div class="row mb-5">
     <div class="col-lg-10 mx-auto">
@@ -266,6 +261,7 @@
       </div>
     </div>
   </div>
+  <% end %>
 
   <% if @show_agent %>
     <%# Agent Success Alert %>
