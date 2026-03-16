@@ -82,7 +82,7 @@ Prima di iniziare, hai bisogno di:
 
 Nel tuo dashboard agente AIsuru:
 
-1. Clicca su **Funzioni Avanzate** nel menu laterale sinistro
+1. Clicca su **Tools** nel menu laterale sinistro, poi su **Funzioni Avanzate**
 2. Clicca **Crea Nuova Funzione**
 
 ### Step 2: Configurare la Funzione
@@ -147,7 +147,7 @@ Le specifiche OpenAPI (Swagger) offrono diversi vantaggi:
    - Scarica dalla documentazione API
    - Oppure esporta dalla tua API
 
-2. **Navigare nelle Funzioni Avanzate**
+2. **Navigare in Tools, poi AIsuru Functions**
    - Clicca su **"Converti OpenAPI in funzioni"**
 
 3. **Configurare l'importazione**
