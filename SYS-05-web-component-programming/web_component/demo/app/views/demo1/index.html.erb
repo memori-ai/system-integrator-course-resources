@@ -26,22 +26,47 @@
   </div>
 
   <% unless @show_agent %>
-  <%# How to get your Agent IDs %>
+  <%# Step-by-Step Guide %>
   <div class="row mb-5">
     <div class="col-lg-10 mx-auto">
       <div class="card border-info">
         <div class="card-header bg-info text-white">
           <h5 class="mb-0">
             <i class="bi bi-info-circle me-2"></i>
-            How to get your Agent IDs
+            Step-by-Step Guide
           </h5>
         </div>
         <div class="card-body">
-          <ol class="mb-0">
+
+          <h6 class="fw-bold mb-3">Part 1: Download and Configure the Agent Prompt</h6>
+          <ol class="mb-4">
             <li class="mb-2">
-              <strong>Create an Agent</strong> on <a href="https://www.aisuru.com" target="_blank">AIsuru</a>
-              (or use your own tenant if you have a PaaS subscription)
+              <strong>Download the agent prompt file</strong> — it contains the instructions you need to paste into your agent:
+              <div class="mt-2">
+                <%= link_to download_prompt_demo1_path, class: "btn btn-sm btn-success" do %>
+                  <i class="bi bi-download me-1"></i>
+                  Download agent_prompt.txt
+                <% end %>
+              </div>
+              <small class="text-muted d-block mt-2">
+                <i class="bi bi-info-circle me-1"></i>
+                This file contains the prompt that teaches the agent how to trigger DOM actions on the page
+              </small>
             </li>
+            <li class="mb-2">
+              <strong>Create a new Agent</strong> on AIsuru
+              (or use an existing one)
+            </li>
+            <li class="mb-2">
+              <strong>Open your Agent settings</strong> and navigate to the <strong>AI</strong> section
+            </li>
+            <li class="mb-2">
+              <strong>Paste the contents</strong> of <code>agent_prompt.txt</code> into the prompt field and save
+            </li>
+          </ol>
+
+          <h6 class="fw-bold mb-3 mt-4">Part 2: Get Your Agent IDs</h6>
+          <ol start="5" class="mb-4">
             <li class="mb-2">
               <strong>Open your Agent</strong> and click on <strong>"Dev docs"</strong> in the left sidebar
             </li>
@@ -55,7 +80,31 @@
                 <li><strong>Owner user ID</strong> → This is your <code>ownerUserID</code></li>
               </ul>
             </li>
+            <li class="mb-2">
+              <strong>Paste them in the form below</strong> to load the agent in this page
+            </li>
           </ol>
+
+          <h6 class="fw-bold mb-3 mt-4">Part 3: Test the Agent</h6>
+          <ol start="9" class="mb-0">
+            <li class="mb-2">
+              <strong>Start a conversation</strong> with your agent in the chat below
+            </li>
+            <li class="mb-2">
+              <strong>Ask the agent to perform a page action</strong>, for example:
+              <ul class="mt-2">
+                <li><em>"Highlight the home button"</em> → adds a yellow outline to the Back button</li>
+                <li><em>"Show me an alert"</em> → displays a dismissible alert at the top of the page</li>
+                <li><em>"Flash the background"</em> → briefly changes the page background color</li>
+              </ul>
+            </li>
+            <li class="mb-2">
+              <strong>Observe the page reacting</strong> to the agent's response — the agent includes a hidden
+              <code>&lt;output class="memori-test"&gt;</code> tag in its reply, which the page JavaScript intercepts
+              and uses to execute the corresponding DOM action
+            </li>
+          </ol>
+
         </div>
       </div>
     </div>

@@ -1,6 +1,7 @@
-# Demo 1 Controller: Web Component Programming
+# Demo 1 Controller: Agent to Control Page Content
 #
-# TODO: Add demo-specific description here.
+# This demo shows how to make an AIsuru agent aware of the web page it is
+# embedded in and how to trigger DOM actions from agent responses.
 
 class Demo1Controller < ApplicationController
   DEFAULT_TENANT_ID = "www.aisuru.com".freeze
@@ -28,5 +29,18 @@ class Demo1Controller < ApplicationController
       api_url: params[:api_url],
       base_url: params[:base_url]
     )
+  end
+
+  def download_prompt
+    prompt_file_path = Rails.root.join("agent_prompt.txt")
+
+    if File.exist?(prompt_file_path)
+      send_file prompt_file_path,
+                filename: "agent_prompt.txt",
+                type: "text/plain",
+                disposition: "attachment"
+    else
+      redirect_to demo1_path, alert: "Prompt file not found."
+    end
   end
 end
