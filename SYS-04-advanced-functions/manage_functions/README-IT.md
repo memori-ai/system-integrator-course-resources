@@ -21,7 +21,15 @@ Questo modulo include **demo applicative funzionanti** che mostrano diversi appr
 ```bash
 # Naviga nella cartella demo
 cd demo
+```
 
+Crea un file chiamato `.env_dev` nella cartella `demo/` (solo la prima volta) con il seguente contenuto:
+
+```
+MONGO_URI=mongodb://mongodb:27017/sys_04_advanced_functions_development
+```
+
+```bash
 # Costruisci e avvia l'applicazione (comando unico)
 npm run start
 

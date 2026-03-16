@@ -21,7 +21,15 @@ This module includes **two live demo applications** that showcase different appr
 ```bash
 # Navigate to the demo folder
 cd demo
+```
 
+Create a file named `.env_dev` in the `demo/` folder (first time only) with the following content:
+
+```
+MONGO_URI=mongodb://mongodb:27017/sys_04_advanced_functions_development
+```
+
+```bash
 # Build and start the application (single command)
 npm run start
 
