@@ -35,8 +35,10 @@ NGROK_AUTHTOKEN=your_token_here
 npm run start
 
 # Open in your browser
-open http://localhost:3000
+open http://localhost:3006
 ```
+
+> ℹ️ This demo's `web` service is mapped to host port **3006** (instead of 3000) so it can run at the same time as the SYS-03 and SYS-04 demos. Inside the container it still listens on 3000.
 
 ### Available Demos
 

@@ -1,3 +1,5 @@
+name: sys03-login-demo
+
 services:
   web:
     build:

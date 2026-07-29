@@ -122,6 +122,13 @@ Prima di iniziare il corso, assicurati di avere:
    docker compose up
    ```
 
+   Oppure, per avviare **tutte** le demo insieme (ognuna sulla propria porta) e navigarle da un'unica pagina:
+   ```bash
+   ./start-all.sh
+   open index.html   # hub delle demo — scegli un modulo, apri subito la sua demo
+   ```
+   Ferma tutto con `./stop-all.sh`.
+
 ## 📖 Dettagli dei Moduli
 
 ### SYS-01: Principi di System Integration

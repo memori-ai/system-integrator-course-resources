@@ -12,7 +12,7 @@ services:
       - bundle_cache:/usr/local/bundle
       - node_modules:/rails/node_modules
     ports:
-      - "3000:3000"
+      - "3006:3000"
     environment:
       - MONGO_URI=mongodb://admin:adminpassword@mongodb:27017/mcp_demo_rails?authSource=admin
       - MYSQL_HOST=mysql

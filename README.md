@@ -124,6 +124,13 @@ Before starting the course, ensure you have:
    npm run start
    ```
 
+   Or, to start **all** demos at once (each on its own port) and browse them from a single page:
+   ```bash
+   ./start-all.sh
+   open index.html   # demo hub — pick a module, jump straight to its demo
+   ```
+   Stop everything with `./stop-all.sh`.
+
 ## 📖 Module Details
 
 ### SYS-01: System Integration Principles
