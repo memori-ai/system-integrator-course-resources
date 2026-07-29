@@ -40,6 +40,24 @@ open http://localhost:3006
 
 > ℹ️ This demo's `web` service is mapped to host port **3006** (instead of 3000) so it can run at the same time as the SYS-03 and SYS-04 demos. Inside the container it still listens on 3000.
 
+### One-Click Demo Start
+
+Each demo page has a **"Start demo"** button: click it and the app automatically
+stops the ngrok tunnel of any other demo (free ngrok accounts allow one active
+tunnel at a time), starts the right tunnel container, and shows the value to
+paste into AIsuru (connection string for Demo 1, MCP URL for Demos 2/3), ready
+to copy. A **"Stop all tunnels"** button shuts every tunnel down when you're done.
+
+No terminal needed — the manual step-by-step guide is still available on each
+demo page as a fallback.
+
+**How it works (security note):** the Rails app talks to Docker through a
+filtered socket proxy (`docker-socket-proxy` in `docker-compose.yml`) that only
+exposes the container start/stop APIs; the service names are hardcoded in
+`app/controllers/infra_controller.rb` and no user input ever reaches a command
+line. Keep tunnels running only while you're actually using a demo: they expose
+the demo services (with demo credentials) on the public internet.
+
 ### Available Demos
 
 #### Demo 1: MongoDB via MCP Server
@@ -160,14 +178,23 @@ Both demos require ngrok to expose local services publicly:
    NGROK_AUTHTOKEN=your_token_here
    ```
 
+The easiest way to start the right tunnel is the **"Start demo"** button on each
+demo page. Manual equivalents (from the `demo/` folder):
+
 **For Demo 1 (MongoDB):**
-- ngrok TCP tunnel: `ngrok tcp 27017`
-- Use the TCP URL in AIsuru MCP configuration
+- `docker compose up -d ngrok-mongo` (TCP tunnel to MongoDB; dashboard at http://localhost:4043)
+- Use the TCP host/port in the AIsuru MCP connection string
+
+**For Demo 2 (MySQL):**
+- `docker compose up -d ngrok-mcp-mysql` (dashboard at http://localhost:4042)
+- Use the HTTPS URL + `/mcp` endpoint in AIsuru
 
 **For Demo 3 (Filesystem):**
-- ngrok is automatically started via docker-compose
-- Check URL at http://localhost:4041
+- `docker compose up -d ngrok-mcp` (dashboard at http://localhost:4041)
 - Use the HTTPS URL + `/mcp` endpoint in AIsuru
+
+⚠️ Free ngrok accounts allow **one active tunnel at a time**: stop the other
+tunnels first with `docker compose stop ngrok-mongo ngrok-mcp ngrok-mcp-mysql`.
 
 ---
 

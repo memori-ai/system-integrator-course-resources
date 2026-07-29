@@ -52,19 +52,23 @@
       </div>
     </div>
 
-    <%# Setup Instructions %>
-    <div class="row mb-4">
+    <%# One-click starter %>
+    <%= render "shared/infra_launcher", demo: "demo2", color: "linear-gradient(135deg, #e85d04 0%, #f48c06 100%)" %>
+
+    <%# Setup Instructions (manual fallback) %>
+    <div class="row mb-4" id="manual-setup">
       <div class="col-lg-10 mx-auto">
         <div class="card border-danger">
           <div class="card-header text-white" style="background: linear-gradient(135deg, #e85d04 0%, #f48c06 100%);">
             <h5 class="mb-0">
               <i class="bi bi-tools me-2"></i>
-              Setup Instructions: MySQL MCP Server
+              Manual Setup Guide: MySQL MCP Server
             </h5>
           </div>
           <div class="card-body">
             <p class="text-muted mb-4">
-              Follow these steps to connect your AIsuru agent to the local MySQL database through a self-hosted MCP server.
+              This is the step-by-step alternative to the one-click starter above &mdash; use it if the button
+              doesn't work or if you want to understand what happens under the hood.
               The MCP server is deployed from an npm package and runs in a Docker container.
             </p>
 
@@ -93,7 +97,7 @@
                 <p class="text-muted mb-2">
                   <strong>⚠️ ngrok free accounts support only 1 active tunnel.</strong> If you were using another demo, stop all ngrok tunnels first:
                 </p>
-                <pre class="bg-dark text-light p-3 rounded mb-1"><code>docker compose stop ngrok-mcp ngrok-mcp-mysql</code></pre>
+                <pre class="bg-dark text-light p-3 rounded mb-1"><code>docker compose stop ngrok-mongo ngrok-mcp ngrok-mcp-mysql</code></pre>
                 <small class="text-muted">
                   This stops all ngrok tunnels, freeing the connection for this demo.
                 </small>

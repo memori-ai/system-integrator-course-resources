@@ -1,5 +1,5 @@
 {
   "scripts": {
-    "start": "docker compose build && docker compose run --rm web bundle install && docker compose up"
+    "start": "docker compose build && docker compose pull docker-socket-proxy ngrok-mongo && docker compose run --rm web bundle install && docker compose up"
   }
 }

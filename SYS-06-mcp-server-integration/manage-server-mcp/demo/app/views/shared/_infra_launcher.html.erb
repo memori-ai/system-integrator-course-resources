@@ -1,0 +1,220 @@
+<%# One-click demo starter.
+    Locals:
+      demo  - "demo1" | "demo2" | "demo3"
+      color - CSS background for buttons/header (hex or gradient) %>
+
+<div class="row mb-4">
+  <div class="col-lg-10 mx-auto">
+    <div class="card shadow border-0">
+      <div class="card-header text-white d-flex align-items-center" style="background: <%= color %>;">
+        <i class="bi bi-lightning-charge-fill me-2"></i>
+        <h5 class="mb-0">Quick Start &mdash; One Click</h5>
+      </div>
+      <div class="card-body p-4">
+        <p class="text-muted mb-3">
+          Click <strong>Start demo</strong> and everything this demo needs is started for you:
+          the ngrok tunnel of any other demo is stopped (free ngrok accounts allow one active
+          tunnel at a time), the right tunnel is started, and the value to paste into AIsuru
+          appears below, ready to copy. No terminal needed.
+          Prefer full control, or is the button not working?
+          <a href="#manual-setup">Follow the manual setup guide below</a> instead.
+        </p>
+
+        <div class="d-flex flex-wrap gap-2 mb-3">
+          <button type="button" class="btn btn-lg text-white" id="infra-start-btn" style="background: <%= color %>;">
+            <i class="bi bi-play-circle me-2"></i>Start demo
+          </button>
+          <button type="button" class="btn btn-outline-secondary" id="infra-stop-btn">
+            <i class="bi bi-stop-circle me-1"></i>Stop all tunnels
+          </button>
+        </div>
+
+        <div class="alert d-none mb-3" id="infra-status" role="alert"></div>
+
+        <div class="d-none" id="infra-result">
+          <div class="alert alert-success mb-0">
+            <h6 class="fw-bold mb-3">
+              <i class="bi bi-check-circle-fill me-1"></i>
+              Tunnel ready! Paste this into AIsuru (agent settings &rarr; MCP Servers):
+            </h6>
+            <div id="infra-result-rows"></div>
+            <small class="text-muted d-block mt-2">
+              Note: the URL changes every time the tunnel restarts &mdash; if you restart the demo,
+              update the value in AIsuru too.
+            </small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    const startPath = "<%= infra_start_path(demo: demo) %>";
+    const statusPath = "<%= infra_status_path(demo: demo) %>";
+    const stopPath = "<%= infra_stop_all_path %>";
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content || "";
+
+    const startBtn = document.getElementById("infra-start-btn");
+    const stopBtn = document.getElementById("infra-stop-btn");
+    const statusBox = document.getElementById("infra-status");
+    const resultBox = document.getElementById("infra-result");
+    const resultRows = document.getElementById("infra-result-rows");
+
+    const MAX_POLLS = 45;      // x2s = 90s before giving up
+    let pollTimer = null;
+
+    function setStatus(kind, html) {
+      statusBox.className = "alert mb-3 alert-" + kind;
+      statusBox.innerHTML = html;
+      statusBox.classList.remove("d-none");
+    }
+
+    function clearStatus() {
+      statusBox.classList.add("d-none");
+    }
+
+    function escHtmlInfra(str) {
+      const div = document.createElement("div");
+      div.appendChild(document.createTextNode(str || ""));
+      return div.innerHTML;
+    }
+
+    function copyRow(label, value) {
+      const id = "infra-copy-" + label.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+      return (
+        '<div class="mb-2">' +
+        '<label class="form-label fw-bold mb-1 small">' + escHtmlInfra(label) + "</label>" +
+        '<div class="input-group">' +
+        '<input type="text" readonly class="form-control font-monospace" id="' + id + '" value="' + escHtmlInfra(value) + '">' +
+        '<button type="button" class="btn btn-outline-success" data-copy-target="' + id + '">' +
+        '<i class="bi bi-clipboard me-1"></i>Copy</button>' +
+        "</div></div>"
+      );
+    }
+
+    function showResult(data) {
+      let html = "";
+      if (data.connection_string) {
+        html += copyRow("Connection String", data.connection_string);
+        html += copyRow("Database Name", data.database);
+      } else if (data.mcp_url) {
+        html += copyRow("MCP Server URL", data.mcp_url);
+      }
+      resultRows.innerHTML = html;
+      resultBox.classList.remove("d-none");
+
+      resultRows.querySelectorAll("[data-copy-target]").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          const input = document.getElementById(btn.dataset.copyTarget);
+          input.select();
+          const done = () => {
+            btn.innerHTML = '<i class="bi bi-clipboard-check me-1"></i>Copied!';
+            setTimeout(() => { btn.innerHTML = '<i class="bi bi-clipboard me-1"></i>Copy'; }, 2000);
+          };
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(input.value).then(done, () => { document.execCommand("copy"); done(); });
+          } else {
+            document.execCommand("copy");
+            done();
+          }
+        });
+      });
+    }
+
+    function hideResult() {
+      resultBox.classList.add("d-none");
+    }
+
+    function poll(attempt) {
+      fetch(statusPath)
+        .then((r) => r.json())
+        .then((data) => {
+          if (data.ready) {
+            clearStatus();
+            showResult(data);
+            startBtn.disabled = false;
+            startBtn.innerHTML = '<i class="bi bi-play-circle me-2"></i>Start demo';
+            return;
+          }
+          if (attempt >= MAX_POLLS) {
+            let extra = "";
+            if (data.logs) {
+              extra = '<pre class="bg-dark text-light p-2 rounded small mt-2 mb-0">' + escHtmlInfra(data.logs) + "</pre>";
+            }
+            setStatus("danger",
+              "<strong>The tunnel did not come up.</strong> Check that NGROK_AUTHTOKEN is set in " +
+              "<code>demo/.env</code> and that no other ngrok agent is running on your account, " +
+              'or <a href="#manual-setup">follow the manual setup guide below</a>.' + extra);
+            startBtn.disabled = false;
+            startBtn.innerHTML = '<i class="bi bi-play-circle me-2"></i>Start demo';
+            return;
+          }
+          let extra = "";
+          if (attempt > 10 && data.logs) {
+            extra = '<pre class="bg-dark text-light p-2 rounded small mt-2 mb-0">' + escHtmlInfra(data.logs) + "</pre>";
+          }
+          setStatus("info",
+            '<span class="spinner-border spinner-border-sm me-2"></span>' +
+            "Waiting for the ngrok tunnel to come up&hellip; (" + attempt + ")" + extra);
+          pollTimer = setTimeout(() => poll(attempt + 1), 2000);
+        })
+        .catch(() => {
+          pollTimer = setTimeout(() => poll(attempt + 1), 2000);
+        });
+    }
+
+    startBtn.addEventListener("click", function () {
+      clearTimeout(pollTimer);
+      hideResult();
+      startBtn.disabled = true;
+      startBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Starting&hellip;';
+      setStatus("info", '<span class="spinner-border spinner-border-sm me-2"></span>Starting containers&hellip; (the first run may take a minute while the ngrok image is downloaded)');
+
+      fetch(startPath, {
+        method: "POST",
+        headers: { "X-CSRF-Token": csrfToken, "Accept": "application/json" },
+      })
+        .then((r) => r.json().then((data) => ({ ok: r.ok, data })))
+        .then(({ ok, data }) => {
+          if (!ok || data.error) {
+            throw new Error(data.details || data.error || "Unknown error");
+          }
+          poll(1);
+        })
+        .catch((err) => {
+          setStatus("danger",
+            "<strong>Could not start the demo.</strong> " +
+            'You can still <a href="#manual-setup">follow the manual setup guide below</a>.' +
+            '<pre class="bg-dark text-light p-2 rounded small mt-2 mb-0">' + escHtmlInfra(err.message) + "</pre>");
+          startBtn.disabled = false;
+          startBtn.innerHTML = '<i class="bi bi-play-circle me-2"></i>Start demo';
+        });
+    });
+
+    stopBtn.addEventListener("click", function () {
+      clearTimeout(pollTimer);
+      stopBtn.disabled = true;
+      fetch(stopPath, {
+        method: "POST",
+        headers: { "X-CSRF-Token": csrfToken, "Accept": "application/json" },
+      })
+        .then((r) => r.json())
+        .then(() => {
+          hideResult();
+          setStatus("secondary", '<i class="bi bi-stop-circle me-1"></i>All ngrok tunnels stopped.');
+        })
+        .catch(() => {
+          setStatus("danger", "Could not stop the tunnels. Try <code>docker compose stop ngrok-mongo ngrok-mcp ngrok-mcp-mysql</code> from the <code>demo/</code> directory.");
+        })
+        .finally(() => { stopBtn.disabled = false; });
+    });
+
+    // On page load: if this demo's tunnel is already up, show its URL right away.
+    fetch(statusPath)
+      .then((r) => r.json())
+      .then((data) => { if (data.ready) showResult(data); })
+      .catch(() => {});
+  })();
+</script>

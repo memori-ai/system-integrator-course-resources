@@ -19,5 +19,10 @@ Rails.application.routes.draw do
   get "demo3", to: "demo3#index", as: :demo3
   post "demo3/configure", to: "demo3#configure", as: :demo3_configure
   get "demo3/workspace_files", to: "demo3#workspace_files", as: :demo3_workspace_files
+
+  # One-click demo infrastructure (starts/stops the ngrok tunnel containers)
+  post "infra/:demo/start", to: "infra#start", as: :infra_start, constraints: { demo: /demo[123]/ }
+  get "infra/:demo/status", to: "infra#status", as: :infra_status, constraints: { demo: /demo[123]/ }
+  post "infra/stop_all", to: "infra#stop_all", as: :infra_stop_all
 end
 
