@@ -39,7 +39,10 @@ start_demo() {
     fi
   fi
 
-  (cd "${dir}" && docker compose up -d --build)
+  (cd "${dir}" && \
+    docker compose build && \
+    docker compose run --rm web bundle install && \
+    docker compose up -d)
   echo "  Started."
   echo
 }
