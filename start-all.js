@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Starts all course demos (SYS-03, SYS-04, SYS-06) in the background, each on
+// Starts all course demos (SYS-03, SYS-04, SYS-05, SYS-06) in the background, each on
 // its own port, so you don't have to `cd` into each demo/ folder one by one.
 //
 // Cross-platform on purpose (Windows/macOS/Linux): uses Node's child_process
@@ -13,7 +13,7 @@
 
 'use strict';
 
-const { execSync } = require('child_process');
+const { execSync, exec } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
@@ -33,6 +33,13 @@ const DEMOS = [
     port: 3004,
     envFile: '.env_dev',
     envContent: 'MONGO_URI=mongodb://mongodb:27017/sys_04_advanced_functions_development\n',
+  },
+  {
+    name: 'SYS-05 - Web Component Programming',
+    dir: path.join(SCRIPT_DIR, 'SYS-05-web-component-programming', 'web_component', 'demo'),
+    port: 3005,
+    envFile: '.env_dev',
+    envContent: 'MONGO_URI=mongodb://mongodb:27017/sys_05_web_component_development\n',
   },
   {
     name: 'SYS-06 - MCP Server Integration',
@@ -79,6 +86,26 @@ function startDemo(demo) {
   }
 }
 
+function openInBrowser(filePath) {
+  // Cross-platform "open this file with the default browser".
+  // macOS: `open`, Windows: `start` (a cmd.exe builtin, needs a shell), Linux: `xdg-open`.
+  let cmd;
+  if (process.platform === 'darwin') {
+    cmd = `open "${filePath}"`;
+  } else if (process.platform === 'win32') {
+    // `start` needs an empty title argument ("") when the path might contain spaces.
+    cmd = `start "" "${filePath}"`;
+  } else {
+    cmd = `xdg-open "${filePath}"`;
+  }
+
+  exec(cmd, (err) => {
+    if (err) {
+      console.log(`Could not open the hub page automatically. Open it yourself:\n  ${filePath}`);
+    }
+  });
+}
+
 console.log('Starting all course demos in the background (this can take a while on first run)...');
 
 for (const demo of DEMOS) {
@@ -89,10 +116,8 @@ console.log(`
 All demos are starting up:
   SYS-03  ->  http://localhost:3000
   SYS-04  ->  http://localhost:3004
+  SYS-05  ->  http://localhost:3005
   SYS-06  ->  http://localhost:3006
-
-Open the hub page to jump between them:
-  index.html  (double-click it, or drag it into your browser)
 
 Check status any time with:
   docker ps
@@ -100,3 +125,5 @@ Check status any time with:
 Stop everything with:
   npm run stop:all
 `);
+
+openInBrowser(path.join(SCRIPT_DIR, 'index.html'));

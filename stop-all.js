@@ -23,6 +23,10 @@ const DEMOS = [
     dir: path.join(SCRIPT_DIR, 'SYS-04-advanced-functions', 'manage_functions', 'demo'),
   },
   {
+    name: 'SYS-05 - Web Component Programming',
+    dir: path.join(SCRIPT_DIR, 'SYS-05-web-component-programming', 'web_component', 'demo'),
+  },
+  {
     name: 'SYS-06 - MCP Server Integration',
     dir: path.join(SCRIPT_DIR, 'SYS-06-mcp-server-integration', 'manage-server-mcp', 'demo'),
   },
