@@ -24,5 +24,7 @@ Rails.application.routes.draw do
   post "infra/:demo/start", to: "infra#start", as: :infra_start, constraints: { demo: /demo[123]/ }
   get "infra/:demo/status", to: "infra#status", as: :infra_status, constraints: { demo: /demo[123]/ }
   post "infra/stop_all", to: "infra#stop_all", as: :infra_stop_all
+  get "infra/token", to: "infra#token_status", as: :infra_token_status
+  post "infra/token", to: "infra#save_token", as: :infra_save_token
 end
 

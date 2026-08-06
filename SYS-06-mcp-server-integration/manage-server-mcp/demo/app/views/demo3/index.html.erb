@@ -118,7 +118,7 @@
                 <p class="text-muted mb-2">
                   <strong>⚠️ ngrok free accounts support only 1 active tunnel.</strong> If you were using another demo, stop all ngrok tunnels first:
                 </p>
-                <pre class="bg-dark text-light p-3 rounded mb-1"><code>docker compose stop ngrok-mongo ngrok-mcp ngrok-mcp-mysql</code></pre>
+                <pre class="bg-dark text-light p-3 rounded mb-1"><code>docker compose stop ngrok-mongo ngrok-mcp ngrok-demo2</code></pre>
                 <small class="text-muted">
                   This stops all ngrok tunnels, freeing the connection for this demo.
                 </small>
@@ -143,7 +143,7 @@
             </div>
 
             <%# Step 4 %>
-            <div class="d-flex mb-4">
+            <div class="d-flex mb-3">
               <div class="flex-shrink-0 me-3">
                 <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #00a4ef 0%, #0078d4 100%);">4</span>
               </div>
@@ -153,57 +153,19 @@
                   Go to the <a href="https://dashboard.ngrok.com/tunnels" target="_blank">ngrok dashboard &rarr; Tunnels</a> (the same page where you found the authtoken) and copy the active tunnel's <strong>HTTPS URL</strong> (e.g., <code>https://abc123.ngrok-free.app</code>).
                 </p>
                 <small class="text-muted">
-                  You'll use this URL with the <code>/mcp</code> endpoint to configure the MCP server in AIsuru.
+                  Appending the <code>/mcp</code> endpoint to it gives you the string to paste into AIsuru
+                  in the next section.
                 </small>
               </div>
             </div>
 
-            <%# Step 5 %>
-            <div class="d-flex mb-4">
-              <div class="flex-shrink-0 me-3">
-                <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #00a4ef 0%, #0078d4 100%);">5</span>
-              </div>
-              <div class="flex-grow-1">
-                <h6 class="fw-bold">Configure MCP Integration in AIsuru</h6>
-                <p class="text-muted mb-2">
-                  In the AIsuru platform, open your agent settings and go to the <strong>Integrations</strong> section.
-                  Add a new <strong>MCP Server</strong> integration:
-                </p>
-                <div class="table-responsive">
-                  <table class="table table-bordered table-sm mb-2">
-                    <tbody>
-                      <tr>
-                        <td class="fw-bold bg-light" style="width: 150px;">MCP Server URL</td>
-                        <td><code>https://<span class="text-danger">&lt;YOUR_NGROK_URL&gt;</span>/mcp</code></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-                <small class="text-muted">
-                  Replace <code>&lt;YOUR_NGROK_URL&gt;</code> with your actual ngrok URL.
-                  For example: <code>https://abc123.ngrok-free.app/mcp</code>
-                </small>
-              </div>
-            </div>
-
-            <%# Step 6 %>
-            <div class="d-flex mb-3">
-              <div class="flex-shrink-0 me-3">
-                <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #00a4ef 0%, #0078d4 100%);">6</span>
-              </div>
-              <div class="flex-grow-1">
-                <h6 class="fw-bold">Load the Agent Below &amp; Start Chatting</h6>
-                <p class="text-muted mb-0">
-                  Enter your agent's credentials in the form below and click <strong>"Load Agent"</strong>.
-                  The agent will be able to manage files in the workspace via MCP.
-                  Use the <strong>Workspace Explorer</strong> panel on the right to see changes in real-time.
-                </p>
-              </div>
-            </div>
           </div>
         </div>
       </div>
     </div>
+
+    <%# AIsuru side — required whichever route was taken above %>
+    <%= render "shared/aisuru_mcp_setup", demo: "demo3", color: "linear-gradient(135deg, #00a4ef 0%, #0078d4 100%)" %>
 
     <%# Info about how to get Agent IDs %>
     <div class="row mb-4">

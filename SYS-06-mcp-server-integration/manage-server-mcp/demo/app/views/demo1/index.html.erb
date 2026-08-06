@@ -90,7 +90,7 @@
             </div>
 
             <%# Step 2 %>
-            <div class="d-flex mb-4">
+            <div class="d-flex mb-3">
               <div class="flex-shrink-0 me-3">
                 <span class="badge rounded-circle bg-success fs-5 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">2</span>
               </div>
@@ -101,7 +101,7 @@
                   Stop any tunnel left over from the other demos first (free ngrok accounts allow one active tunnel),
                   then start the MongoDB tunnel container:
                 </p>
-                <pre class="bg-dark text-light p-3 rounded mb-1"><code>docker compose stop ngrok-mcp ngrok-mcp-mysql
+                <pre class="bg-dark text-light p-3 rounded mb-1"><code>docker compose stop ngrok-mcp ngrok-demo2
 docker compose up -d ngrok-mongo</code></pre>
                 <small class="text-muted">
                   Check the tunnel dashboard at <a href="http://localhost:4043" target="_blank" class="text-decoration-none">http://localhost:4043</a>
@@ -111,56 +111,13 @@ docker compose up -d ngrok-mongo</code></pre>
               </div>
             </div>
 
-            <%# Step 3 %>
-            <div class="d-flex mb-4">
-              <div class="flex-shrink-0 me-3">
-                <span class="badge rounded-circle bg-success fs-5 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">3</span>
-              </div>
-              <div class="flex-grow-1">
-                <h6 class="fw-bold">Configure the MCP Integration in AIsuru</h6>
-                <p class="text-muted mb-2">
-                  In the AIsuru platform, open your agent settings and go to the <strong>Integrations</strong> section.
-                  Add a new <strong>MCP Server</strong> integration with the following details:
-                </p>
-                <div class="table-responsive">
-                  <table class="table table-bordered table-sm mb-2">
-                    <tbody>
-                      <tr>
-                        <td class="fw-bold bg-light" style="width: 180px;">Connection String</td>
-                        <td><code>mongodb://admin:adminpassword@<span class="text-danger">&lt;NGROK_HOST&gt;</span>:<span class="text-danger">&lt;NGROK_PORT&gt;</span>/mcp_demo?authSource=admin</code></td>
-                      </tr>
-                      <tr>
-                        <td class="fw-bold bg-light">Database Name</td>
-                        <td><code>mcp_demo</code></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-                <small class="text-muted">
-                  Replace <code>&lt;NGROK_HOST&gt;</code> and <code>&lt;NGROK_PORT&gt;</code> with the values from your ngrok output.
-                  For example: <code>mongodb://admin:adminpassword@8.tcp.ngrok.io:12811/mcp_demo?authSource=admin</code>
-                </small>
-              </div>
-            </div>
-
-            <%# Step 4 %>
-            <div class="d-flex mb-3">
-              <div class="flex-shrink-0 me-3">
-                <span class="badge rounded-circle bg-success fs-5 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">4</span>
-              </div>
-              <div class="flex-grow-1">
-                <h6 class="fw-bold">Load the Agent Below &amp; Start Chatting</h6>
-                <p class="text-muted mb-0">
-                  Enter your agent's credentials in the form below and click <strong>"Load Agent"</strong>.
-                  The agent will be able to query and modify the MongoDB database via MCP.
-                  Use the <strong>DB Explorer</strong> panel on the right to see changes in real-time.
-                </p>
-              </div>
-            </div>
           </div>
         </div>
       </div>
     </div>
+
+    <%# AIsuru side — required whichever route was taken above %>
+    <%= render "shared/aisuru_mcp_setup", demo: "demo1", color: "#47A248" %>
 
     <%# Info about how to get Agent IDs %>
     <div class="row mb-4">

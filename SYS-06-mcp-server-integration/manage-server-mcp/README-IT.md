@@ -116,8 +116,7 @@ demo/
 │       ├── demo1/index.html.erb    # Pagina Demo 1
 │       └── demo3/index.html.erb    # Pagina Demo 3
 ├── docker/
-│   ├── mcp-server/                 # Server MCP Filesystem (Node.js)
-│   └── mcp-server-mysql/           # Server MCP MySQL (Node.js)
+│   └── mcp-server/                 # Server MCP Filesystem (Node.js)
 ├── docker-compose.yml
 ├── Dockerfile.dev
 └── Gemfile
@@ -188,29 +187,42 @@ in ogni pagina demo. Equivalenti manuali (dalla cartella `demo/`):
 - Usa host/porta TCP nella connection string MCP di AIsuru
 
 **Per la Demo 2 (MySQL):**
-- `docker compose up -d ngrok-mcp-mysql` (dashboard su http://localhost:4042)
-- Usa l'URL HTTPS + endpoint `/mcp` in AIsuru
+- `docker compose up -d ngrok-demo2` (tunnel TCP verso MySQL; dashboard su http://localhost:4044)
+- Usa host/porta TCP come `MYSQL_HOST` / `MYSQL_PORT` nel server MCP MySQL integrato di AIsuru
 
 **Per la Demo 3 (Filesystem):**
 - `docker compose up -d ngrok-mcp` (dashboard su http://localhost:4041)
 - Usa l'URL HTTPS + endpoint `/mcp` in AIsuru
 
 ⚠️ Gli account ngrok gratuiti permettono **un solo tunnel attivo alla volta**:
-prima ferma gli altri tunnel con `docker compose stop ngrok-mongo ngrok-mcp ngrok-mcp-mysql`.
+prima ferma gli altri tunnel con `docker compose stop ngrok-mongo ngrok-mcp ngrok-demo2`.
 
 ---
 
 ## Configurare il Server MCP in AIsuru
 
-Dopo aver avviato la demo, configura il server MCP nella piattaforma AIsuru:
+Questo passaggio serve **sempre**, qualunque strada tu abbia seguito per avviare
+la demo: il bottone "Start demo" (o la guida manuale) alza solo il tunnel, non
+può configurare nulla dentro il tuo agente.
 
-1. Vai nelle impostazioni del tuo agente in AIsuru
-2. Naviga nella sezione **MCP Servers**
-3. Clicca **+ Aggiungi MCP Server**
-4. Inserisci l'URL ngrok per la demo corrispondente:
-   - Demo 1: `tcp://tuo-url-ngrok:porta` (MongoDB)
-   - Demo 3: `https://tuo-url-ngrok/mcp` (Filesystem)
-5. Salva e testa la connessione conversando con il tuo agente
+Vai nelle impostazioni del tuo agente in AIsuru, poi nella sezione
+**MCP Servers**. Cosa fare dipende dalla demo:
+
+**Demo 1 e 2 — server integrati.** MongoDB e MySQL sono già inclusi in AIsuru:
+scegli il server pronto dalla lista e compila i parametri di connessione.
+- Demo 1 (MongoDB): connection string
+  `mongodb://admin:adminpassword@<NGROK_HOST>:<NGROK_PORT>/mcp_demo?authSource=admin`,
+  database `mcp_demo`
+- Demo 2 (MySQL): `MYSQL_HOST` / `MYSQL_PORT` dal tunnel TCP,
+  `MYSQL_USER=mcpuser`, `MYSQL_PASS=mcppassword`, `MYSQL_DB=mcp_demo_mysql`.
+  Lascia `ALLOW_INSERT/UPDATE/DELETE/DDL_OPERATION` disattivati finché non vuoi
+  che l'agente scriva.
+
+**Demo 3 — server personalizzato.** Il server MCP filesystem è tuo, quindi non
+compare nel catalogo: usa la sezione **"Aggiungi MCP Personalizzato"** e incolla
+lì la stringa `https://tuo-url-ngrok/mcp`, endpoint `/mcp` compreso.
+
+Salva e testa la connessione conversando con il tuo agente.
 
 ---
 

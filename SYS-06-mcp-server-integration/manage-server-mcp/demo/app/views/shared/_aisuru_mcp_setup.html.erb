@@ -1,0 +1,163 @@
+<%# The AIsuru side of the setup, deliberately kept OUTSIDE the manual guide.
+    The two routes above (one-click starter and manual guide) are alternatives —
+    you follow one or the other — but both end in the same place: registering the
+    MCP server in AIsuru and loading the agent. So these steps live on their own.
+    Locals:
+      demo  - "demo1" | "demo2" | "demo3"
+      color - CSS background for the header/step badges %>
+
+<div class="row mb-4" id="aisuru-setup">
+  <div class="col-lg-10 mx-auto">
+    <div class="card shadow-sm border-primary">
+      <div class="card-header text-white d-flex align-items-center" style="background: <%= color %>;">
+        <i class="bi bi-robot me-2"></i>
+        <h5 class="mb-0">Configure AIsuru &mdash; required in both cases</h5>
+      </div>
+      <div class="card-body">
+        <div class="alert alert-light border mb-4">
+          <i class="bi bi-signpost-split me-1"></i>
+          Above you pick <strong>one</strong> route: the
+          <a href="#quick-start">one-click starter</a> <em>or</em> the
+          <a href="#manual-setup">manual setup guide</a>. Both hand you the same values.
+          <strong>What follows happens in AIsuru and is always required</strong>, whichever route you took.
+        </div>
+
+        <%# Step 1 — register the MCP server in AIsuru %>
+        <div class="d-flex mb-4">
+          <div class="flex-shrink-0 me-3">
+            <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: <%= color %>;">1</span>
+          </div>
+          <div class="flex-grow-1">
+            <% case demo %>
+            <% when "demo1" %>
+              <h6 class="fw-bold">Add the built-in MongoDB MCP server</h6>
+              <p class="text-muted mb-2">
+                In AIsuru open your agent, go to <strong>Integrations</strong> &rarr;
+                <strong>MCP Servers</strong> and pick the ready-made <strong>MongoDB</strong> server
+                from the list (no custom MCP needed here &mdash; AIsuru talks to the database directly).
+                Fill in the connection details:
+              </p>
+              <div class="table-responsive">
+                <table class="table table-bordered table-sm mb-2">
+                  <tbody>
+                    <tr>
+                      <td class="fw-bold bg-light" style="width: 180px;">Connection String</td>
+                      <td><code>mongodb://admin:adminpassword@<span class="text-danger">&lt;NGROK_HOST&gt;</span>:<span class="text-danger">&lt;NGROK_PORT&gt;</span>/mcp_demo?authSource=admin</code></td>
+                    </tr>
+                    <tr>
+                      <td class="fw-bold bg-light">Database Name</td>
+                      <td><code>mcp_demo</code></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <small class="text-muted">
+                Replace <code>&lt;NGROK_HOST&gt;</code> and <code>&lt;NGROK_PORT&gt;</code> with the TCP
+                address of your tunnel &mdash; the one-click starter gives you the whole string already
+                assembled. Example:
+                <code>mongodb://admin:adminpassword@8.tcp.ngrok.io:12811/mcp_demo?authSource=admin</code>
+              </small>
+
+            <% when "demo2" %>
+              <h6 class="fw-bold">Add the built-in MySQL MCP server</h6>
+              <p class="text-muted mb-2">
+                In AIsuru open your agent, go to <strong>Integrations</strong> &rarr;
+                <strong>MCP Servers</strong> and pick the ready-made <strong>MySQL</strong> server
+                from the list. It inspects the schema and runs the queries by connecting straight to
+                the database, so no MCP server of your own is involved. Fill in the parameters:
+              </p>
+              <div class="table-responsive">
+                <table class="table table-bordered table-sm mb-2">
+                  <tbody>
+                    <tr>
+                      <td class="fw-bold bg-light" style="width: 180px;"><code>MYSQL_HOST</code></td>
+                      <td><span class="text-danger">&lt;NGROK_HOST&gt;</span> &mdash; host of the TCP tunnel</td>
+                    </tr>
+                    <tr>
+                      <td class="fw-bold bg-light"><code>MYSQL_PORT</code></td>
+                      <td><span class="text-danger">&lt;NGROK_PORT&gt;</span> &mdash; port of the TCP tunnel</td>
+                    </tr>
+                    <tr>
+                      <td class="fw-bold bg-light"><code>MYSQL_USER</code></td>
+                      <td><code>mcpuser</code></td>
+                    </tr>
+                    <tr>
+                      <td class="fw-bold bg-light"><code>MYSQL_PASS</code></td>
+                      <td><code>mcppassword</code></td>
+                    </tr>
+                    <tr>
+                      <td class="fw-bold bg-light"><code>MYSQL_DB</code></td>
+                      <td><code>mcp_demo_mysql</code></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <p class="small mb-2">
+                <strong>⚠️ Leave <code>ALLOW_INSERT_OPERATION</code>, <code>ALLOW_UPDATE_OPERATION</code>,
+                <code>ALLOW_DELETE_OPERATION</code> and <code>ALLOW_DDL_OPERATION</code> off</strong>
+                until you actually want the agent to write: with them disabled it can only read.
+              </p>
+              <small class="text-muted">
+                The tunnel address (e.g. <code>tcp://8.tcp.eu.ngrok.io:12345</code>) is the one from the
+                one-click starter, or from <a href="http://localhost:4044" target="_blank" class="text-decoration-none">http://localhost:4044</a>
+                if you started it by hand. Remember the tunnel is public while it is up &mdash; stop it when you are done.
+              </small>
+
+            <% when "demo3" %>
+              <h6 class="fw-bold">Add the MCP server as a <em>custom</em> MCP</h6>
+              <p class="text-muted mb-2">
+                This server is yours, not one of AIsuru's built-in connectors, so it does <strong>not</strong>
+                appear in the list of ready-made servers. In AIsuru open your agent, go to
+                <strong>Integrations</strong> &rarr; <strong>MCP Servers</strong> and use the
+                <strong>&ldquo;Aggiungi MCP Personalizzato&rdquo;</strong>
+                (<em>Add Custom MCP</em>) section &mdash; not the catalog above it.
+                Paste the URL there:
+              </p>
+              <div class="table-responsive">
+                <table class="table table-bordered table-sm mb-2">
+                  <tbody>
+                    <tr>
+                      <td class="fw-bold bg-light" style="width: 150px;">MCP Server URL</td>
+                      <td><code>https://<span class="text-danger">&lt;YOUR_NGROK_URL&gt;</span>/mcp</code></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <small class="text-muted">
+                Paste the string exactly as it is, <code>/mcp</code> endpoint included &mdash; that is the
+                single value the one-click starter gives you. Example:
+                <code>https://abc123.ngrok-free.app/mcp</code>.
+                Save, and AIsuru will list the four tools
+                (<code>list_files</code>, <code>read_file</code>, <code>write_file</code>, <code>create_file</code>).
+              </small>
+            <% end %>
+          </div>
+        </div>
+
+        <%# Step 2 — load the agent in this page %>
+        <div class="d-flex mb-0">
+          <div class="flex-shrink-0 me-3">
+            <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: <%= color %>;">2</span>
+          </div>
+          <div class="flex-grow-1">
+            <h6 class="fw-bold">Load the Agent Below &amp; Start Chatting</h6>
+            <p class="text-muted mb-0">
+              Enter your agent's credentials in the form below and click <strong>"Load Agent"</strong>.
+              <% case demo %>
+              <% when "demo1" %>
+                The agent will be able to query and modify the MongoDB database via MCP.
+                Use the <strong>DB Explorer</strong> panel on the right to see changes in real-time.
+              <% when "demo2" %>
+                The agent will be able to query and modify the MySQL database via MCP.
+                Use the <strong>DB Explorer</strong> panel on the right to see changes in real-time.
+              <% when "demo3" %>
+                The agent will be able to manage files in the workspace via MCP.
+                Use the <strong>Workspace Explorer</strong> panel on the right to see changes in real-time.
+              <% end %>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
