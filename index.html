@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIsuru System Integrator Course — Demo Hub</title>
+<style>
+  :root {
+    --blue: #2563eb;
+    --blue-dark: #1d4ed8;
+    --green: #16a34a;
+    --bg: #f7f8fa;
+    --card-bg: #ffffff;
+    --text: #1a1d23;
+    --text-muted: #5b6472;
+    --border: #e3e6ea;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+  }
+  header {
+    background: linear-gradient(135deg, var(--blue) 0%, var(--blue-dark) 100%);
+    color: white;
+    padding: 48px 24px 40px;
+    text-align: center;
+  }
+  header h1 {
+    margin: 0 0 8px;
+    font-size: 28px;
+    font-weight: 700;
+  }
+  header p {
+    margin: 0;
+    opacity: 0.9;
+    font-size: 15px;
+  }
+  main {
+    max-width: 960px;
+    margin: -24px auto 48px;
+    padding: 0 24px;
+  }
+  .howto {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 28px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+  .howto h2 {
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-muted);
+    margin: 0 0 12px;
+  }
+  .howto code, .howto pre {
+    background: #0f172a;
+    color: #e2e8f0;
+    border-radius: 8px;
+    padding: 12px 16px;
+    display: block;
+    font-size: 13.5px;
+    overflow-x: auto;
+    margin: 0;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+  }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+  }
+  .badge {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    color: var(--blue-dark);
+    background: #e8efff;
+    padding: 4px 10px;
+    border-radius: 999px;
+    margin-bottom: 12px;
+    width: fit-content;
+  }
+  .card h3 {
+    margin: 0 0 8px;
+    font-size: 18px;
+  }
+  .card p.desc {
+    color: var(--text-muted);
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0 0 16px;
+    flex-grow: 1;
+  }
+  .card ul {
+    margin: 0 0 16px;
+    padding-left: 18px;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+  .card ul li { margin-bottom: 4px; }
+  .port {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+  }
+  .port code {
+    background: #f1f3f5;
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+  .btn {
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    background: var(--blue);
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 10px 16px;
+    border-radius: 8px;
+    transition: background 0.15s ease;
+  }
+  .btn:hover { background: var(--blue-dark); }
+  footer {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 13px;
+    padding: 24px;
+  }
+  footer a { color: var(--blue-dark); }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>AIsuru System Integrator Course</h1>
+  <p>Demo Hub — pick a module below to open its running demo</p>
+</header>
+
+<main>
+  <div class="grid">
+
+    <div class="card">
+      <span class="badge">SYS-03</span>
+      <h3>Enterprise Authentication</h3>
+      <p class="desc">Embed the AIsuru web component with enterprise auth: self-managed login, JWT/Trusted App SSO, Microsoft Entra ID, and redirect-based magic links.</p>
+      <ul>
+        <li>Demo 1 — Self-managed login</li>
+        <li>Demo 2 — Trusted App / JWT SSO</li>
+        <li>Demo 3 — Microsoft SSO (Entra ID)</li>
+        <li>Demo 4 — Login with redirect</li>
+      </ul>
+      <div class="port">Runs on <code>localhost:13000</code></div>
+      <a class="btn" href="http://localhost:13000" target="_blank" rel="noopener">Open SYS-03 demo →</a>
+    </div>
+
+    <div class="card">
+      <span class="badge">SYS-04</span>
+      <h3>Advanced Functions</h3>
+      <p class="desc">Connect AIsuru agents to external REST APIs using webhook functions, and auto-generate functions from OpenAPI/Swagger specs.</p>
+      <ul>
+        <li>Demo 1 — Weather API webhook function</li>
+        <li>Demo 2 — Import from Swagger/OpenAPI</li>
+      </ul>
+      <div class="port">Runs on <code>localhost:13004</code></div>
+      <a class="btn" href="http://localhost:13004" target="_blank" rel="noopener">Open SYS-04 demo →</a>
+    </div>
+
+    <div class="card">
+      <span class="badge">SYS-05</span>
+      <h3>Web Component Programming</h3>
+      <p class="desc">Program the AIsuru web component with the Dialog API: pass page content to the agent, and let its responses trigger real actions on the page (highlights, alerts, DOM changes).</p>
+      <ul>
+        <li>Demo 1 — Context-aware agent driving page actions</li>
+      </ul>
+      <div class="port">Runs on <code>localhost:13005</code></div>
+      <a class="btn" href="http://localhost:13005" target="_blank" rel="noopener">Open SYS-05 demo →</a>
+    </div>
+
+    <div class="card">
+      <span class="badge">SYS-06</span>
+      <h3>MCP Server Integration</h3>
+      <p class="desc">Connect AIsuru agents to external data sources via the Model Context Protocol: MongoDB through the built-in MCP server, and a custom filesystem MCP server.</p>
+      <ul>
+        <li>Demo 1 — MongoDB via MCP + ngrok</li>
+        <li>Demo 3 — Custom filesystem MCP server</li>
+      </ul>
+      <div class="port">Runs on <code>localhost:13006</code> (requires <code>NGROK_AUTHTOKEN</code>)</div>
+      <a class="btn" href="http://localhost:13006" target="_blank" rel="noopener">Open SYS-06 demo →</a>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  Part of the <a href="./README.md">System Integrator Course Resources</a> · © 2025 Memori S.R.L.
+</footer>
+
+</body>
+</html>

@@ -50,8 +50,10 @@ MONGO_URI=mongodb://mongodb:27017/embedded_webcomponent_auth_development
 npm run start
 
 # Open in your browser
-open http://localhost:3000
+open http://localhost:13000
 ```
+
+> ℹ️ This demo's `web` service is mapped to host port **13000** (instead of 3000) to avoid colliding with other local projects that commonly use the 3000 range. Inside the container it still listens on 3000.
 
 > 💡 **Windows users — if `npm run start` fails:** Git on Windows may convert line endings to CRLF, which breaks shell scripts inside Docker. Run this command once in your terminal and then retry:
 > ```bash
@@ -387,7 +389,7 @@ A Trusted Application is a secure way for your backend to communicate with AIsur
 3. Click **+ Create** to add a new Trusted App
 4. Fill in:
    - **Name**: A descriptive name (e.g., "My Production App")
-   - **Base URL**: Your application's URL (e.g., `http://localhost:3000`)
+   - **Base URL**: Your application's URL (e.g., `http://localhost:13000`)
 5. Save and copy the **API Key**
 
 > ⚠️ **Security Warning:** Never expose your Trusted App API Key in frontend code! Always call AIsuru APIs from your backend.
@@ -491,7 +493,9 @@ To use Demo 3, you need an Azure App Registration.
    - **Supported account types**:
      - "Accounts in any organizational directory" for multi-tenant
      - "Accounts in this organizational directory only" for single-tenant
-   - **Redirect URI**: Select **"Single-page application (SPA)"** and enter `http://localhost:3000`
+   - **Redirect URI**: Select **"Single-page application (SPA)"** and enter `http://localhost:13000`
+
+> ⚠️ If you already created this Trusted App or Azure App Registration with the old `http://localhost:3000` value, you must update it by hand in AIsuru / the Azure Portal — changing the port here does not update it there automatically.
 
 ### Step 2: Get Credentials
 

@@ -25,9 +25,10 @@
           MySQL via MCP Server
         </h1>
         <p class="lead text-muted">
-          Connect an AIsuru agent to your local MySQL database using a
-          <strong>self-hosted MCP server</strong> deployed from npm.
-          The agent will be able to query and modify data in real-time.
+          Connect an AIsuru agent to your local MySQL database with AIsuru's
+          <strong>built-in MySQL MCP server</strong>, which talks to the database directly:
+          no MCP server of your own to write or deploy. The agent will be able to query and
+          modify data in real-time.
         </p>
       </div>
     </div>
@@ -41,9 +42,9 @@
             <div class="d-flex justify-content-center align-items-center flex-wrap gap-2">
               <span class="badge bg-primary fs-6 px-3 py-2">AIsuru Agent</span>
               <i class="bi bi-arrow-right text-muted fs-4"></i>
-              <span class="badge bg-dark fs-6 px-3 py-2">ngrok HTTPS</span>
+              <span class="badge bg-secondary fs-6 px-3 py-2">Built-in MySQL MCP</span>
               <i class="bi bi-arrow-right text-muted fs-4"></i>
-              <span class="badge fs-6 px-3 py-2 text-white" style="background: linear-gradient(135deg, #e85d04 0%, #f48c06 100%);">MCP Server (npm)</span>
+              <span class="badge bg-dark fs-6 px-3 py-2">ngrok TCP</span>
               <i class="bi bi-arrow-right text-muted fs-4"></i>
               <span class="badge fs-6 px-3 py-2" style="background-color: #00618a; color: white;">MySQL (Docker)</span>
             </div>
@@ -52,20 +53,25 @@
       </div>
     </div>
 
-    <%# Setup Instructions %>
-    <div class="row mb-4">
+    <%# One-click starter %>
+    <%= render "shared/infra_launcher", demo: "demo2", color: "linear-gradient(135deg, #e85d04 0%, #f48c06 100%)" %>
+
+    <%# Setup Instructions (manual fallback) %>
+    <div class="row mb-4" id="manual-setup">
       <div class="col-lg-10 mx-auto">
         <div class="card border-danger">
           <div class="card-header text-white" style="background: linear-gradient(135deg, #e85d04 0%, #f48c06 100%);">
             <h5 class="mb-0">
               <i class="bi bi-tools me-2"></i>
-              Setup Instructions: MySQL MCP Server
+              Manual Setup Guide: MySQL MCP Server
             </h5>
           </div>
           <div class="card-body">
             <p class="text-muted mb-4">
-              Follow these steps to connect your AIsuru agent to the local MySQL database through a self-hosted MCP server.
-              The MCP server is deployed from an npm package and runs in a Docker container.
+              This is the step-by-step alternative to the one-click starter above &mdash; use it if the button
+              doesn't work or if you want to understand what happens under the hood.
+              AIsuru's MySQL MCP server connects straight to the database, so all you have to do here is
+              make MySQL reachable through an ngrok <strong>TCP</strong> tunnel.
             </p>
 
             <%# Step 1 %>
@@ -93,7 +99,7 @@
                 <p class="text-muted mb-2">
                   <strong>⚠️ ngrok free accounts support only 1 active tunnel.</strong> If you were using another demo, stop all ngrok tunnels first:
                 </p>
-                <pre class="bg-dark text-light p-3 rounded mb-1"><code>docker compose stop ngrok-mcp ngrok-mcp-mysql</code></pre>
+                <pre class="bg-dark text-light p-3 rounded mb-1"><code>docker compose stop ngrok-mongo ngrok-mcp ngrok-demo2</code></pre>
                 <small class="text-muted">
                   This stops all ngrok tunnels, freeing the connection for this demo.
                 </small>
@@ -106,68 +112,42 @@
                 <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #e85d04 0%, #f48c06 100%);">3</span>
               </div>
               <div class="flex-grow-1">
-                <h6 class="fw-bold">Start the MCP Server for MySQL</h6>
+                <h6 class="fw-bold">Expose MySQL with an ngrok TCP Tunnel</h6>
                 <p class="text-muted mb-2">
-                  Start the ngrok tunnel for the MySQL MCP server (Demo 2):
+                  Start the TCP tunnel that publishes the MySQL container (Demo 2):
                 </p>
-                <pre class="bg-dark text-light p-3 rounded mb-1"><code>docker compose up -d ngrok-mcp-mysql</code></pre>
+                <pre class="bg-dark text-light p-3 rounded mb-1"><code>docker compose up -d ngrok-demo2</code></pre>
                 <small class="text-muted">
-                  Access the ngrok dashboard at <a href="http://localhost:4042" target="_blank" class="text-decoration-none">http://localhost:4042</a> to see the public HTTPS URL.
+                  Access the ngrok dashboard at <a href="http://localhost:4044" target="_blank" class="text-decoration-none">http://localhost:4044</a> to see the assigned address.
                 </small>
               </div>
             </div>
 
             <%# Step 4 %>
-            <div class="d-flex mb-4">
+            <div class="d-flex mb-3">
               <div class="flex-shrink-0 me-3">
                 <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #e85d04 0%, #f48c06 100%);">4</span>
               </div>
               <div class="flex-grow-1">
-                <h6 class="fw-bold">Get the ngrok HTTPS URL</h6>
+                <h6 class="fw-bold">Read the Tunnel Address</h6>
                 <p class="text-muted mb-2">
-                  Go to the <a href="https://dashboard.ngrok.com/tunnels" target="_blank">ngrok dashboard &rarr; Tunnels</a> (the same page where you found the authtoken) and copy the active tunnel's <strong>HTTPS URL</strong> (e.g., <code>https://abc123.ngrok-free.dev</code>).
+                  Open <a href="http://localhost:4044" target="_blank" class="text-decoration-none">http://localhost:4044</a>
+                  (or the <a href="https://dashboard.ngrok.com/tunnels" target="_blank">ngrok dashboard &rarr; Tunnels</a>)
+                  and copy the forwarding address, e.g. <code>tcp://8.tcp.eu.ngrok.io:12345</code>.
                 </p>
                 <small class="text-muted">
-                  You'll use this URL with the <code>/mcp</code> endpoint to configure the MCP server in AIsuru.
+                  Host and port of that address are the <code>MYSQL_HOST</code> and <code>MYSQL_PORT</code>
+                  you will hand to AIsuru in the next section.
                 </small>
-              </div>
-            </div>
-
-            <%# Step 5 %>
-            <div class="d-flex mb-4">
-              <div class="flex-shrink-0 me-3">
-                <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #e85d04 0%, #f48c06 100%);">5</span>
-              </div>
-              <div class="flex-grow-1">
-                <h6 class="fw-bold">Configure the MCP Server in AIsuru</h6>
-                <p class="text-muted mb-2">
-                  In AIsuru, add the MCP server using the HTTPS URL from ngrok with <code>/mcp</code> endpoint:
-                </p>
-                <pre class="bg-dark text-light p-3 rounded mb-1"><code>https://your-ngrok-url.ngrok-free.dev/mcp</code></pre>
-                <small class="text-muted">
-                  The MCP server exposes MySQL database tools: <code>query</code> (SELECT), <code>execute</code> (INSERT/UPDATE/DELETE), <code>list_tables</code>, and <code>describe_table</code>.
-                </small>
-              </div>
-            </div>
-
-            <%# Step 6 %>
-            <div class="d-flex mb-3">
-              <div class="flex-shrink-0 me-3">
-                <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #e85d04 0%, #f48c06 100%);">6</span>
-              </div>
-              <div class="flex-grow-1">
-                <h6 class="fw-bold">Load the Agent Below &amp; Start Chatting</h6>
-                <p class="text-muted mb-0">
-                  Enter your agent's credentials in the form below and click <strong>"Load Agent"</strong>.
-                  The agent will be able to query and modify the MySQL database via MCP.
-                  Use the <strong>DB Explorer</strong> panel on the right to see changes in real-time.
-                </p>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+
+    <%# AIsuru side — required whichever route was taken above %>
+    <%= render "shared/aisuru_mcp_setup", demo: "demo2", color: "linear-gradient(135deg, #e85d04 0%, #f48c06 100%)" %>
 
     <%# Info about how to get Agent IDs %>
     <div class="row mb-4">

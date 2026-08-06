@@ -1,0 +1,9 @@
+{
+  "name": "system-integrator-course-resources",
+  "private": true,
+  "description": "Launcher for the AIsuru System Integrator Course demos (SYS-03, SYS-04, SYS-06). Cross-platform: works on macOS, Linux, and Windows.",
+  "scripts": {
+    "start:all": "node start-all.js",
+    "stop:all": "node stop-all.js"
+  }
+}

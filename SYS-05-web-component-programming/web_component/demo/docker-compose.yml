@@ -1,3 +1,5 @@
+name: sys05-webcomponent-demo
+
 services:
   web:
     build:
@@ -10,7 +12,7 @@ services:
       - bundle_cache:/usr/local/bundle
       - node_modules:/rails/node_modules
     ports:
-      - "3000:3000"
+      - "13005:3000"
     env_file:
       - .env_dev
     depends_on:

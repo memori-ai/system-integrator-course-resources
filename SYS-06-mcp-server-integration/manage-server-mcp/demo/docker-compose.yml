@@ -12,7 +12,7 @@ services:
       - bundle_cache:/usr/local/bundle
       - node_modules:/rails/node_modules
     ports:
-      - "3000:3000"
+      - "13006:3000"
     environment:
       - MONGO_URI=mongodb://admin:adminpassword@mongodb:27017/mcp_demo_rails?authSource=admin
       - MYSQL_HOST=mysql
@@ -20,9 +20,28 @@ services:
       - MYSQL_DATABASE=mcp_demo_mysql
       - MYSQL_USER=mcpuser
       - MYSQL_PASSWORD=mcppassword
+      # Docker access goes through the socket proxy: the app can only
+      # start/stop containers, everything else is blocked by the proxy.
+      - DOCKER_HOST=tcp://docker-socket-proxy:2375
     depends_on:
       - mongodb
       - mysql
+      - docker-socket-proxy
+
+  # Filtered gateway to the Docker socket used by the one-click demo starter.
+  # Only the container and image/network APIs needed by "docker compose up/stop"
+  # are exposed; dangerous sections (exec, volumes, build, swarm...) stay blocked.
+  docker-socket-proxy:
+    image: tecnativa/docker-socket-proxy:latest
+    environment:
+      - CONTAINERS=1
+      - IMAGES=1
+      - NETWORKS=1
+      - VOLUMES=1
+      - INFO=1
+      - POST=1
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
 
   mongodb:
     image: mongo:8.0
@@ -62,23 +81,10 @@ services:
       - WORKSPACE_ROOT=/workspace
       - PORT=8000
 
-  mcp-server-mysql:
-    build:
-      context: ./docker/mcp-server-mysql
-      dockerfile: Dockerfile
-    image: sys-06-mcp-mysql-server
-    ports:
-      - "8001:8001"
-    environment:
-      - MYSQL_HOST=mysql
-      - MYSQL_PORT=3306
-      - MYSQL_DATABASE=mcp_demo_mysql
-      - MYSQL_USER=mcpuser
-      - MYSQL_PASSWORD=mcppassword
-      - PORT=8001
-    depends_on:
-      - mysql
-
+  # ngrok tunnels: free accounts allow only ONE active agent at a time, so
+  # the tunnels live in the "tunnels" profile and are NOT started by default.
+  # They are started on demand by the "Start demo" button in the web UI
+  # (or manually: docker compose up -d <service>).
   ngrok-mcp:
     image: ngrok/ngrok:latest
     command: http mcp-server:8000 --log=stdout
@@ -88,16 +94,33 @@ services:
       - NGROK_AUTHTOKEN=${NGROK_AUTHTOKEN}
     depends_on:
       - mcp-server
+    profiles: ["tunnels"]
 
-  ngrok-mcp-mysql:
+  # TCP tunnel for Demo 2 (MySQL): exposes the database so AIsuru's built-in
+  # MySQL MCP server can connect to it directly.
+  ngrok-demo2:
     image: ngrok/ngrok:latest
-    command: http mcp-server-mysql:8001 --log=stdout
+    command: tcp mysql:3306 --log=stdout
     ports:
-      - "4042:4040"
+      - "4044:4040"
     environment:
       - NGROK_AUTHTOKEN=${NGROK_AUTHTOKEN}
     depends_on:
-      - mcp-server-mysql
+      - mysql
+    profiles: ["tunnels"]
+
+  # TCP tunnel for Demo 1 (MongoDB): replaces the manual "ngrok tcp 27017"
+  # previously required on the host machine.
+  ngrok-mongo:
+    image: ngrok/ngrok:latest
+    command: tcp mongodb:27017 --log=stdout
+    ports:
+      - "4043:4040"
+    environment:
+      - NGROK_AUTHTOKEN=${NGROK_AUTHTOKEN}
+    depends_on:
+      - mongodb
+    profiles: ["tunnels"]
 
 volumes:
   mongodb_data:

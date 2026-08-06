@@ -11,23 +11,41 @@ ENV RAILS_SERVE_STATIC_FILES="true" \
     RAILS_LOG_TO_STDOUT="true" \
     BUNDLE_PATH="/usr/local/bundle"
 
-ENV NODE_ARCH x64
+ARG TARGETARCH
 ENV NODE_VERSION 20.11.1
 
 # Install packages needed to build gems
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y build-essential git pkg-config wget default-libmysqlclient-dev
 
+# Docker CLI + compose plugin: used by the one-click demo starter to
+# start/stop the ngrok tunnel containers (via the socket proxy, see
+# DOCKER_HOST in docker-compose.yml). No Docker daemon runs in here.
+RUN apt-get install --no-install-recommends -y ca-certificates curl && \
+    install -m 0755 -d /etc/apt/keyrings && \
+    curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc && \
+    echo "deb [signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian bookworm stable" > /etc/apt/sources.list.d/docker.list && \
+    apt-get update -qq && \
+    apt-get install --no-install-recommends -y docker-ce-cli docker-compose-plugin
+
 RUN gem install bundler -v=2.5.4
 
-ENV PATH=/opt/node-v${NODE_VERSION}-linux-${NODE_ARCH}/bin:$PATH
-
 WORKDIR /opt
-RUN wget https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-${NODE_ARCH}.tar.gz && \
-  tar xzvf node-v${NODE_VERSION}-linux-${NODE_ARCH}.tar.gz -C /opt/  && \
-  rm -rf node-v${NODE_VERSION}-linux-${NODE_ARCH}.tar.gz
+# Map Docker's TARGETARCH (amd64/arm64) to Node.js release naming (x64/arm64),
+# so this works on both Intel and Apple Silicon without manual edits.
+RUN set -eux; \
+  case "${TARGETARCH}" in \
+    amd64) NODE_ARCH=x64 ;; \
+    arm64) NODE_ARCH=arm64 ;; \
+    *) echo "Unsupported architecture: ${TARGETARCH}" >&2; exit 1 ;; \
+  esac; \
+  wget https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-${NODE_ARCH}.tar.gz && \
+  tar xzf node-v${NODE_VERSION}-linux-${NODE_ARCH}.tar.gz -C /opt/ && \
+  mv /opt/node-v${NODE_VERSION}-linux-${NODE_ARCH} /opt/node && \
+  rm -f node-v${NODE_VERSION}-linux-${NODE_ARCH}.tar.gz
 
-RUN echo "export PATH=/opt/node-v${NODE_VERSION}-linux-${NODE_ARCH}/bin:$PATH" >> /etc/profile
+ENV PATH=/opt/node/bin:$PATH
+RUN echo "export PATH=/opt/node/bin:$PATH" >> /etc/profile
 
 ARG YARN_VERSION=latest
 RUN corepack enable && yarn set version $YARN_VERSION

@@ -28,8 +28,10 @@ MONGO_URI=mongodb://mongodb:27017/sys_05_web_component_development
 npm run start
 
 # Open in your browser
-open http://localhost:3000
+open http://localhost:13005
 ```
+
+> ℹ️ This demo's `web` service is mapped to host port **13005** (instead of 3000) so it can run at the same time as the other demos.
 
 > 💡 **Windows users — if `npm run start` fails:** Git on Windows may convert line endings to CRLF, which breaks shell scripts inside Docker. Run this command once in your terminal and then retry:
 > ```bash

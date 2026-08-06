@@ -1,0 +1,394 @@
+<%# One-click demo starter.
+    Locals:
+      demo  - "demo1" | "demo2" | "demo3"
+      color - CSS background for buttons/header (hex or gradient) %>
+
+<div class="row mb-4" id="quick-start">
+  <div class="col-lg-10 mx-auto">
+    <div class="card shadow border-0">
+      <div class="card-header text-white d-flex align-items-center" style="background: <%= color %>;">
+        <i class="bi bi-lightning-charge-fill me-2"></i>
+        <h5 class="mb-0">Quick Start &mdash; One Click</h5>
+      </div>
+      <div class="card-body p-4">
+        <p class="text-muted mb-3">
+          Click <strong>Start demo</strong> and everything this demo needs is started for you:
+          the ngrok tunnel of any other demo is stopped (free ngrok accounts allow one active
+          tunnel at a time), the right tunnel is started, and the value to paste into AIsuru
+          appears below, ready to copy. No terminal needed.
+          Prefer full control, or is the button not working?
+          <a href="#manual-setup">Follow the manual setup guide below</a> instead.
+        </p>
+        <p class="text-muted mb-3">
+          <i class="bi bi-info-circle me-1"></i>
+          Either way, you then have to
+          <a href="#aisuru-setup"><strong>configure AIsuru</strong></a>: the button only starts the
+          tunnel, it cannot register the MCP server in your agent for you.
+        </p>
+
+        <div class="d-flex flex-wrap gap-2 mb-3">
+          <button type="button" class="btn btn-lg text-white" id="infra-start-btn" style="background: <%= color %>;">
+            <i class="bi bi-play-circle me-2"></i>Start demo
+          </button>
+          <button type="button" class="btn btn-outline-secondary" id="infra-stop-btn">
+            <i class="bi bi-stop-circle me-1"></i>Stop all tunnels
+          </button>
+        </div>
+
+        <%# Shown only when demo/.env has no NGROK_AUTHTOKEN yet. %>
+        <div class="alert alert-warning d-none mb-3" id="infra-token-box">
+          <h6 class="fw-bold mb-2">
+            <i class="bi bi-key-fill me-1"></i>ngrok authtoken required
+          </h6>
+          <p class="mb-2 small">
+            The tunnel cannot start without an ngrok authtoken. Grab yours (free account) from
+            <a href="https://dashboard.ngrok.com/get-started/your-authtoken" target="_blank" rel="noopener">
+              dashboard.ngrok.com/get-started/your-authtoken</a>
+            and paste it here: it will be saved into <code>demo/.env</code> for you.
+          </p>
+          <div class="input-group mb-2">
+            <input type="text" class="form-control font-monospace" id="infra-token-input"
+                   placeholder="2abc...XyZ" autocomplete="off" spellcheck="false">
+            <button type="button" class="btn btn-warning" id="infra-token-save">
+              <i class="bi bi-save me-1"></i>Save token
+            </button>
+          </div>
+          <div class="small text-muted mb-0" id="infra-token-feedback">
+            Prefer doing it by hand? Create the file <code>demo/.env</code> with a single line:
+            <code>NGROK_AUTHTOKEN=your_token_here</code>, then click <strong>Start demo</strong>.
+          </div>
+        </div>
+
+        <div class="alert d-none mb-3" id="infra-status" role="alert"></div>
+
+        <div class="d-none" id="infra-result">
+          <div class="alert alert-success mb-0">
+            <h6 class="fw-bold mb-3">
+              <i class="bi bi-check-circle-fill me-1"></i>
+              Tunnel ready! Copy these values, then
+              <a href="#aisuru-setup">configure AIsuru</a> with them:
+            </h6>
+            <div id="infra-result-rows"></div>
+            <small class="text-muted d-block mt-2">
+              Note: these values change every time the tunnel restarts &mdash; if you restart the demo,
+              update them in AIsuru too.
+            </small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    const startPath = "<%= infra_start_path(demo: demo) %>";
+    const statusPath = "<%= infra_status_path(demo: demo) %>";
+    const stopPath = "<%= infra_stop_all_path %>";
+    const tokenPath = "<%= infra_token_status_path %>";
+    // Read at request time, not at page load: the session (and with it the
+    // token) can rotate while the page stays open, and a cached token then
+    // makes every POST fail with a confusing 422.
+    function csrfHeaders() {
+      return {
+        "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]')?.content || "",
+        "Accept": "application/json",
+      };
+    }
+
+    // Parses a JSON response, turning an HTML error page (e.g. an expired CSRF
+    // token) into a readable message instead of a JSON syntax error.
+    function readJson(r) {
+      return r.text().then((body) => {
+        let data = {};
+        try { data = JSON.parse(body); } catch (e) {
+          data = { error: r.status === 422
+            ? "Session expired. Reload the page and try again."
+            : "Unexpected response from the server (HTTP " + r.status + ")." };
+        }
+        return { ok: r.ok, data: data };
+      });
+    }
+
+    const startBtn = document.getElementById("infra-start-btn");
+    const stopBtn = document.getElementById("infra-stop-btn");
+    const statusBox = document.getElementById("infra-status");
+    const resultBox = document.getElementById("infra-result");
+    const resultRows = document.getElementById("infra-result-rows");
+    const tokenBox = document.getElementById("infra-token-box");
+    const tokenInput = document.getElementById("infra-token-input");
+    const tokenSaveBtn = document.getElementById("infra-token-save");
+    const tokenFeedback = document.getElementById("infra-token-feedback");
+
+    const MAX_POLLS = 45;      // x2s = 90s before giving up
+    let pollTimer = null;
+    // Bumped on every start/stop click: an in-flight request or poll whose
+    // runId is stale must not touch the UI (otherwise stopping while a start
+    // is pending would leave the spinner turning forever).
+    let runId = 0;
+
+    function resetStartBtn() {
+      startBtn.disabled = false;
+      startBtn.innerHTML = '<i class="bi bi-play-circle me-2"></i>Start demo';
+    }
+
+    function abortRun() {
+      runId += 1;
+      clearTimeout(pollTimer);
+      pollTimer = null;
+      resetStartBtn();
+      return runId;
+    }
+
+    function setStatus(kind, html) {
+      statusBox.className = "alert mb-3 alert-" + kind;
+      statusBox.innerHTML = html;
+      statusBox.classList.remove("d-none");
+    }
+
+    function clearStatus() {
+      statusBox.classList.add("d-none");
+    }
+
+    function escHtmlInfra(str) {
+      const div = document.createElement("div");
+      div.appendChild(document.createTextNode(str || ""));
+      return div.innerHTML;
+    }
+
+    let copyRowSeq = 0;
+
+    function copyRow(label, value) {
+      const id = "infra-copy-" + (copyRowSeq += 1) + "-" + label.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+      return (
+        '<div class="mb-2">' +
+        '<label class="form-label fw-bold mb-1 small">' + escHtmlInfra(label) + "</label>" +
+        '<div class="input-group">' +
+        '<input type="text" readonly class="form-control font-monospace" id="' + id + '" value="' + escHtmlInfra(value) + '">' +
+        '<button type="button" class="btn btn-outline-success" data-copy-target="' + id + '">' +
+        '<i class="bi bi-clipboard me-1"></i>Copy</button>' +
+        "</div></div>"
+      );
+    }
+
+    // The backend returns one or more "sections": a block of labelled values to
+    // copy into AIsuru, kept as a list so a demo can expose more than one.
+    function showResult(data) {
+      const sections = data.sections || [];
+      let html = "";
+      sections.forEach(function (section, i) {
+        html += '<div class="' + (i > 0 ? "mt-4 pt-3 border-top" : "") + '">';
+        // title/note are server-side constants, safe to inject as HTML.
+        if (section.title) {
+          html += '<div class="fw-bold mb-1">' + section.title + "</div>";
+        }
+        if (section.note) {
+          html += '<p class="small text-muted mb-2">' + section.note + "</p>";
+        }
+        (section.rows || []).forEach(function (row) {
+          html += copyRow(row.label, row.value);
+        });
+        html += "</div>";
+      });
+      resultRows.innerHTML = html;
+      resultBox.classList.remove("d-none");
+
+      resultRows.querySelectorAll("[data-copy-target]").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          const input = document.getElementById(btn.dataset.copyTarget);
+          input.select();
+          const done = () => {
+            btn.innerHTML = '<i class="bi bi-clipboard-check me-1"></i>Copied!';
+            setTimeout(() => { btn.innerHTML = '<i class="bi bi-clipboard me-1"></i>Copy'; }, 2000);
+          };
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(input.value).then(done, () => { document.execCommand("copy"); done(); });
+          } else {
+            document.execCommand("copy");
+            done();
+          }
+        });
+      });
+    }
+
+    function hideResult() {
+      resultBox.classList.add("d-none");
+    }
+
+    function poll(attempt, myRun) {
+      fetch(statusPath)
+        .then((r) => r.json())
+        .then((data) => {
+          if (myRun !== runId) return;   // superseded by a stop or a new start
+          if (data.ready) {
+            clearStatus();
+            showResult(data);
+            resetStartBtn();
+            return;
+          }
+          if (attempt >= MAX_POLLS) {
+            let extra = "";
+            if (data.logs) {
+              extra = '<pre class="bg-dark text-light p-2 rounded small mt-2 mb-0">' + escHtmlInfra(data.logs) + "</pre>";
+            }
+            setStatus("danger",
+              "<strong>The tunnel did not come up.</strong> Check that NGROK_AUTHTOKEN is set in " +
+              "<code>demo/.env</code> and that no other ngrok agent is running on your account, " +
+              'or <a href="#manual-setup">follow the manual setup guide below</a>.' + extra);
+            resetStartBtn();
+            return;
+          }
+          let extra = "";
+          if (attempt > 10 && data.logs) {
+            extra = '<pre class="bg-dark text-light p-2 rounded small mt-2 mb-0">' + escHtmlInfra(data.logs) + "</pre>";
+          }
+          setStatus("info",
+            '<span class="spinner-border spinner-border-sm me-2"></span>' +
+            "Waiting for the ngrok tunnel to come up&hellip; (" + attempt + ")" + extra);
+          pollTimer = setTimeout(() => poll(attempt + 1, myRun), 2000);
+        })
+        .catch(() => {
+          if (myRun !== runId) return;
+          pollTimer = setTimeout(() => poll(attempt + 1, myRun), 2000);
+        });
+    }
+
+    // --- ngrok authtoken -------------------------------------------------
+    function showTokenBox(message) {
+      tokenBox.classList.remove("d-none");
+      if (message) {
+        tokenFeedback.innerHTML = message;
+      }
+      tokenInput.focus();
+    }
+
+    function refreshTokenState() {
+      return fetch(tokenPath)
+        .then((r) => r.json())
+        .then((data) => {
+          if (data.configured) {
+            tokenBox.classList.add("d-none");
+          } else {
+            tokenBox.classList.remove("d-none");
+          }
+          return !!data.configured;
+        })
+        .catch(() => true);   // backend unreachable: let Start surface the error
+    }
+
+    tokenSaveBtn.addEventListener("click", function () {
+      const token = tokenInput.value.trim();
+      if (!token) {
+        tokenFeedback.innerHTML = '<span class="text-danger">Paste your ngrok authtoken first.</span>';
+        return;
+      }
+      tokenSaveBtn.disabled = true;
+      const body = new URLSearchParams({ token: token });
+      fetch("<%= infra_save_token_path %>", {
+        method: "POST",
+        headers: Object.assign(csrfHeaders(), {
+          "Content-Type": "application/x-www-form-urlencoded",
+        }),
+        body: body,
+      })
+        .then(readJson)
+        .then(({ ok, data }) => {
+          if (!ok || data.error) {
+            throw new Error(data.details || data.error || "Unknown error");
+          }
+          tokenInput.value = "";
+          tokenBox.classList.add("d-none");
+          setStatus("success",
+            '<i class="bi bi-check-circle-fill me-1"></i>Token saved into <code>demo/.env</code>. ' +
+            "You can click <strong>Start demo</strong> now.");
+        })
+        .catch((err) => {
+          tokenFeedback.innerHTML = '<span class="text-danger">' + escHtmlInfra(err.message) + "</span>";
+        })
+        .finally(() => { tokenSaveBtn.disabled = false; });
+    });
+
+    startBtn.addEventListener("click", function () {
+      const myRun = abortRun();
+      hideResult();
+      startBtn.disabled = true;
+      startBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Starting&hellip;';
+      setStatus("info", '<span class="spinner-border spinner-border-sm me-2"></span>Checking the ngrok authtoken&hellip;');
+
+      // Guard: without a token in demo/.env the tunnel can only fail, so ask
+      // for it up front instead of spinning for 90s.
+      refreshTokenState()
+        .then((configured) => {
+          if (myRun !== runId) return;
+          if (!configured) {
+            clearStatus();
+            showTokenBox('<span class="text-danger fw-bold">No ngrok authtoken found in <code>demo/.env</code>. ' +
+              "Paste it above (or create the file by hand) and start the demo again.</span>");
+            resetStartBtn();
+            return;
+          }
+
+          setStatus("info", '<span class="spinner-border spinner-border-sm me-2"></span>Starting containers&hellip; (the first run may take a minute while the ngrok image is downloaded)');
+          return fetch(startPath, {
+            method: "POST",
+            headers: csrfHeaders(),
+          })
+            .then(readJson)
+            .then(({ ok, data }) => {
+              if (myRun !== runId) return;
+              if (data.error === "missing_token") {
+                clearStatus();
+                showTokenBox('<span class="text-danger fw-bold">No ngrok authtoken found in <code>demo/.env</code>. ' +
+                  "Paste it above and start the demo again.</span>");
+                resetStartBtn();
+                return;
+              }
+              if (!ok || data.error) {
+                throw new Error(data.details || data.error || "Unknown error");
+              }
+              poll(1, myRun);
+            });
+        })
+        .catch((err) => {
+          if (myRun !== runId) return;
+          setStatus("danger",
+            "<strong>Could not start the demo.</strong> " +
+            'You can still <a href="#manual-setup">follow the manual setup guide below</a>.' +
+            '<pre class="bg-dark text-light p-2 rounded small mt-2 mb-0">' + escHtmlInfra(err.message) + "</pre>");
+          resetStartBtn();
+        });
+    });
+
+    stopBtn.addEventListener("click", function () {
+      // Cancels any pending start/poll AND clears the Start spinner, so a
+      // failed start never leaves the button stuck in "Starting...".
+      abortRun();
+      stopBtn.disabled = true;
+      fetch(stopPath, { method: "POST", headers: csrfHeaders() })
+        .then(readJson)
+        .then(({ ok, data }) => {
+          if (!ok || data.error) {
+            throw new Error(data.details || data.error || "Unknown error");
+          }
+          hideResult();
+          setStatus("secondary", '<i class="bi bi-stop-circle me-1"></i>All ngrok tunnels stopped.');
+        })
+        .catch((err) => {
+          setStatus("danger",
+            "<strong>Could not stop the tunnels.</strong> Try " +
+            "<code>docker compose stop ngrok-mongo ngrok-mcp ngrok-demo2</code> " +
+            "from the <code>demo/</code> directory." +
+            '<pre class="bg-dark text-light p-2 rounded small mt-2 mb-0">' + escHtmlInfra(err.message) + "</pre>");
+        })
+        .finally(() => { stopBtn.disabled = false; });
+    });
+
+    // On page load: surface the token box if demo/.env has no authtoken, and
+    // if this demo's tunnel is already up show its URL right away.
+    refreshTokenState();
+    fetch(statusPath)
+      .then((r) => r.json())
+      .then((data) => { if (data.ready) showResult(data); })
+      .catch(() => {});
+  })();
+</script>

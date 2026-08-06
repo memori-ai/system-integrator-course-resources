@@ -35,8 +35,28 @@ NGROK_AUTHTOKEN=your_token_here
 npm run start
 
 # Open in your browser
-open http://localhost:3000
+open http://localhost:13006
 ```
+
+> ℹ️ This demo's `web` service is mapped to host port **13006** (instead of 3000) so it can run at the same time as the other demos. Inside the container it still listens on 3000.
+
+### One-Click Demo Start
+
+Each demo page has a **"Start demo"** button: click it and the app automatically
+stops the ngrok tunnel of any other demo (free ngrok accounts allow one active
+tunnel at a time), starts the right tunnel container, and shows the value to
+paste into AIsuru (connection string for Demo 1, MCP URL for Demos 2/3), ready
+to copy. A **"Stop all tunnels"** button shuts every tunnel down when you're done.
+
+No terminal needed — the manual step-by-step guide is still available on each
+demo page as a fallback.
+
+**How it works (security note):** the Rails app talks to Docker through a
+filtered socket proxy (`docker-socket-proxy` in `docker-compose.yml`) that only
+exposes the container start/stop APIs; the service names are hardcoded in
+`app/controllers/infra_controller.rb` and no user input ever reaches a command
+line. Keep tunnels running only while you're actually using a demo: they expose
+the demo services (with demo credentials) on the public internet.
 
 ### Available Demos
 
@@ -94,8 +114,7 @@ demo/
 │       ├── demo1/index.html.erb    # Demo 1 page
 │       └── demo3/index.html.erb    # Demo 3 page
 ├── docker/
-│   ├── mcp-server/                 # Filesystem MCP server (Node.js)
-│   └── mcp-server-mysql/           # MySQL MCP server (Node.js)
+│   └── mcp-server/                 # Filesystem MCP server (Node.js)
 ├── docker-compose.yml
 ├── Dockerfile.dev
 └── Gemfile
@@ -158,28 +177,50 @@ Both demos require ngrok to expose local services publicly:
    NGROK_AUTHTOKEN=your_token_here
    ```
 
+The easiest way to start the right tunnel is the **"Start demo"** button on each
+demo page. Manual equivalents (from the `demo/` folder):
+
 **For Demo 1 (MongoDB):**
-- ngrok TCP tunnel: `ngrok tcp 27017`
-- Use the TCP URL in AIsuru MCP configuration
+- `docker compose up -d ngrok-mongo` (TCP tunnel to MongoDB; dashboard at http://localhost:4043)
+- Use the TCP host/port in the AIsuru MCP connection string
+
+**For Demo 2 (MySQL):**
+- `docker compose up -d ngrok-demo2` (TCP tunnel to MySQL; dashboard at http://localhost:4044)
+- Use the TCP host/port as `MYSQL_HOST` / `MYSQL_PORT` in AIsuru's built-in MySQL MCP server
 
 **For Demo 3 (Filesystem):**
-- ngrok is automatically started via docker-compose
-- Check URL at http://localhost:4041
+- `docker compose up -d ngrok-mcp` (dashboard at http://localhost:4041)
 - Use the HTTPS URL + `/mcp` endpoint in AIsuru
+
+⚠️ Free ngrok accounts allow **one active tunnel at a time**: stop the other
+tunnels first with `docker compose stop ngrok-mongo ngrok-mcp ngrok-demo2`.
 
 ---
 
 ## Configure MCP Server in AIsuru
 
-After starting the demo, configure the MCP server in the AIsuru platform:
+This step is **always required**, no matter how you started the demo: the
+"Start demo" button (or the manual guide) only brings the tunnel up, it cannot
+register anything in your agent.
 
-1. Go to your agent settings in AIsuru
-2. Navigate to **MCP Servers** section
-3. Click **+ Add MCP Server**
-4. Enter the ngrok URL for the corresponding demo:
-   - Demo 1: `tcp://your-ngrok-url:port` (MongoDB)
-   - Demo 3: `https://your-ngrok-url/mcp` (Filesystem)
-5. Save and test the connection by chatting with your agent
+Go to your agent settings in AIsuru, then to the **MCP Servers** section. What
+you do there depends on the demo:
+
+**Demos 1 and 2 — built-in servers.** MongoDB and MySQL ship with AIsuru: pick
+the ready-made server from the list and fill in the connection details.
+- Demo 1 (MongoDB): connection string
+  `mongodb://admin:adminpassword@<NGROK_HOST>:<NGROK_PORT>/mcp_demo?authSource=admin`,
+  database `mcp_demo`
+- Demo 2 (MySQL): `MYSQL_HOST` / `MYSQL_PORT` from the TCP tunnel,
+  `MYSQL_USER=mcpuser`, `MYSQL_PASS=mcppassword`, `MYSQL_DB=mcp_demo_mysql`.
+  Leave `ALLOW_INSERT/UPDATE/DELETE/DDL_OPERATION` off until you want the agent
+  to write.
+
+**Demo 3 — custom server.** The filesystem MCP server is yours, so it is not in
+the catalog: use the **"Aggiungi MCP Personalizzato"** (*Add Custom MCP*)
+section and paste the URL `https://your-ngrok-url/mcp`, `/mcp` endpoint included.
+
+Save and test the connection by chatting with your agent.
 
 ---
 

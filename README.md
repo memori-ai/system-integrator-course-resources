@@ -73,7 +73,11 @@ system-integrator-course-resources/
 │       ├── README-IT.md   # Full guide: advanced functions (IT)
 │       └── demo/          # Rails app with function demos
 ├── SYS-05-web-component-programming/
-│   └── README.md          # Web component and Dialog API examples
+│   ├── README.md          # Module overview
+│   └── web_component/     # Web component / Dialog API demo app
+│       ├── README.md      # Full guide: web component programming (EN)
+│       ├── README-IT.md   # Full guide: web component programming (IT)
+│       └── demo/          # Rails app with the Dialog API demo
 ├── SYS-06-mcp-server-integration/
 │   └── manage-server-mcp/ # MCP server integration demo app
 │       ├── README.md      # Full guide: MCP server integration (EN)
@@ -105,6 +109,7 @@ Before starting the course, ensure you have:
 - ✅ Familiarity with **REST APIs** and HTTP protocols
 - ✅ Understanding of **authentication concepts** (OAuth 2.0, JWT, SSO)
 - ✅ **[Docker Desktop](https://www.docker.com/products/docker-desktop/)** installed (includes Docker Engine and Docker Compose — required to run all demo applications)
+- ✅ **[Node.js](https://nodejs.org/)** installed (needed to run `npm run start` in each demo, and the root `npm run start:all` launcher)
 - ✅ A code editor (VS Code recommended)
 
 ## 🚀 Getting Started
@@ -122,6 +127,17 @@ Before starting the course, ensure you have:
 4. **Run demos** — navigate to the `demo/` folder inside a module and run:
    ```bash
    npm run start
+   ```
+
+   Or, to start **all** demos at once (each on its own port) and browse them from a single page:
+   ```bash
+   npm run start:all
+   ```
+   This builds and starts SYS-03, SYS-04, SYS-05 and SYS-06 in the background, then opens the demo hub (`index.html`) in your default browser automatically — pick a module, jump straight to its demo. Works the same way on macOS, Linux, and Windows (requires [Node.js](https://nodejs.org/) in addition to Docker).
+
+   Stop everything with:
+   ```bash
+   npm run stop:all
    ```
 
 ## 📖 Module Details
@@ -182,9 +198,22 @@ Learn how to create advanced functions that connect AIsuru agents to external RE
 📁 **Module resources:** [SYS-04 →](./SYS-04-advanced-functions/manage_functions/README.md)
 
 ### SYS-05: Web Component Programming
+
+Learn how to program the AIsuru web component beyond basic embedding: pass page context to the agent, and let its responses trigger real actions on the page. The module includes a live demo Rails application.
+
+| Demo | Feature | Description |
+|------|---------|--------------|
+| **Demo 1** | Context-aware Dialog API | The agent receives page context and can trigger DOM actions (highlight elements, show alerts, flash the background) via a special output tag in its responses |
+
+**Learning objectives:**
 - Full dialog management via Dialog API
 - Custom UI development for AI agents
+- Trigger DOM actions from agent responses using structured output tags
 - Case study: AI4furn implementation
+
+**Prerequisites:** Basic understanding of HTML/JavaScript and AIsuru web components (SYS-03); Docker installed.
+
+📁 **Module resources:** [SYS-05 →](./SYS-05-web-component-programming/web_component/README.md)
 
 ### SYS-06: MCP Server Integration
 
