@@ -48,10 +48,10 @@ MONGO_URI=mongodb://mongodb:27017/sys_05_web_component_development
 npm run start
 
 # Apri nel browser
-open http://localhost:3005
+open http://localhost:13005
 ```
 
-> ℹ️ Il servizio `web` di questa demo è mappato sulla porta host **3005** (invece di 3000) per poter girare insieme alle demo SYS-03, SYS-04 e SYS-06. All'interno del container resta comunque sulla 3000.
+> ℹ️ Il servizio `web` di questa demo è mappato sulla porta host **13005** (invece di 3000) per poter girare insieme alle altre demo. All'interno del container resta comunque sulla 3000.
 
 > 💡 **Utenti Windows — se `npm run start` non funziona:** Git su Windows può convertire automaticamente i line endings in CRLF, causando errori negli script shell dentro Docker. Esegui questo comando una volta dal terminale e poi riprova:
 > ```bash

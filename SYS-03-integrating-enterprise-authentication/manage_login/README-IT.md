@@ -50,8 +50,10 @@ MONGO_URI=mongodb://mongodb:27017/embedded_webcomponent_auth_development
 npm run start
 
 # Apri nel browser
-open http://localhost:3000
+open http://localhost:13000
 ```
+
+> ℹ️ Il servizio `web` di questa demo è mappato sulla porta host **13000** (invece di 3000) per evitare conflitti con altri progetti locali che usano tipicamente il range 3000. All'interno del container resta comunque sulla 3000.
 
 > 💡 **Utenti Windows — se `npm run start` non funziona:** Git su Windows può convertire automaticamente i line endings in CRLF, causando errori negli script shell dentro Docker. Esegui questo comando una volta dal terminale e poi riprova:
 > ```bash
@@ -387,7 +389,7 @@ Una Trusted Application è un modo sicuro per il tuo backend di comunicare con l
 3. Clicca **+ Crea** per aggiungere una nuova Trusted App
 4. Compila:
    - **Nome**: Un nome descrittivo (es. "La Mia App Production")
-   - **URL Base**: L'URL della tua applicazione (es. `http://localhost:3000`)
+   - **URL Base**: L'URL della tua applicazione (es. `http://localhost:13000`)
 5. Salva e copia la **Chiave API**
 
 > ⚠️ **Avviso di Sicurezza:** Non esporre mai la Chiave API della Trusted App nel codice frontend! Chiama sempre le API AIsuru dal tuo backend.
@@ -491,7 +493,9 @@ Per usare la Demo 3, hai bisogno di una Azure App Registration.
    - **Tipi di account supportati**:
      - "Account in qualsiasi directory organizzativa" per multi-tenant
      - "Account solo in questa directory organizzativa" per single-tenant
-   - **URI di reindirizzamento**: Seleziona **"Applicazione a pagina singola (SPA)"** e inserisci `http://localhost:3000`
+   - **URI di reindirizzamento**: Seleziona **"Applicazione a pagina singola (SPA)"** e inserisci `http://localhost:13000`
+
+> ⚠️ Se hai già creato questa Trusted App o questa App Registration di Azure con il vecchio valore `http://localhost:3000`, devi aggiornarlo a mano in AIsuru / nel Portale Azure — cambiare la porta qui non lo aggiorna automaticamente lì.
 
 ### Step 2: Ottenere le Credenziali
 

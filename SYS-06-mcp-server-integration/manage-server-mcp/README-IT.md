@@ -35,10 +35,10 @@ NGROK_AUTHTOKEN=il_tuo_token_qui
 npm run start
 
 # Apri nel browser
-open http://localhost:3006
+open http://localhost:13006
 ```
 
-> ℹ️ Il servizio `web` di questa demo è mappato sulla porta host **3006** (invece di 3000) per poter girare insieme alle demo SYS-03 e SYS-04. All'interno del container resta comunque sulla 3000.
+> ℹ️ Il servizio `web` di questa demo è mappato sulla porta host **13006** (invece di 3000) per poter girare insieme alle altre demo. All'interno del container resta comunque sulla 3000.
 
 ### Avvio Demo con Un Click
 

@@ -23,28 +23,28 @@ const DEMOS = [
   {
     name: 'SYS-03 - Enterprise Authentication',
     dir: path.join(SCRIPT_DIR, 'SYS-03-integrating-enterprise-authentication', 'manage_login', 'demo'),
-    port: 3000,
+    port: 13000,
     envFile: '.env_dev',
     envContent: 'MONGO_URI=mongodb://mongodb:27017/embedded_webcomponent_auth_development\n',
   },
   {
     name: 'SYS-04 - Advanced Functions',
     dir: path.join(SCRIPT_DIR, 'SYS-04-advanced-functions', 'manage_functions', 'demo'),
-    port: 3004,
+    port: 13004,
     envFile: '.env_dev',
     envContent: 'MONGO_URI=mongodb://mongodb:27017/sys_04_advanced_functions_development\n',
   },
   {
     name: 'SYS-05 - Web Component Programming',
     dir: path.join(SCRIPT_DIR, 'SYS-05-web-component-programming', 'web_component', 'demo'),
-    port: 3005,
+    port: 13005,
     envFile: '.env_dev',
     envContent: 'MONGO_URI=mongodb://mongodb:27017/sys_05_web_component_development\n',
   },
   {
     name: 'SYS-06 - MCP Server Integration',
     dir: path.join(SCRIPT_DIR, 'SYS-06-mcp-server-integration', 'manage-server-mcp', 'demo'),
-    port: 3006,
+    port: 13006,
     envFile: '.env',
     // No default: NGROK_AUTHTOKEN is personal, must come from the user.
     envContent: null,
@@ -114,10 +114,10 @@ for (const demo of DEMOS) {
 
 console.log(`
 All demos are starting up:
-  SYS-03  ->  http://localhost:3000
-  SYS-04  ->  http://localhost:3004
-  SYS-05  ->  http://localhost:3005
-  SYS-06  ->  http://localhost:3006
+  SYS-03  ->  http://localhost:13000
+  SYS-04  ->  http://localhost:13004
+  SYS-05  ->  http://localhost:13005
+  SYS-06  ->  http://localhost:13006
 
 Check status any time with:
   docker ps
