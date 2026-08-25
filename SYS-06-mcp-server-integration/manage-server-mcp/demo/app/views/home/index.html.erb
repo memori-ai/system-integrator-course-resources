@@ -264,6 +264,68 @@
       </div>
     </div>
 
+    <%# Demo 5 Card: Agent as MCP %>
+    <div class="col-lg-6">
+      <div class="card h-100 shadow-lg border-0 card-hover">
+        <div class="card-header text-white py-3" style="background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);">
+          <h4 class="mb-0">
+            <i class="bi bi-5-circle me-2"></i>
+            Demo 5: Agent as MCP
+          </h4>
+        </div>
+        <div class="card-body p-4">
+          <div class="mb-4">
+            <span class="badge bg-light text-dark me-2">Agent Link</span>
+            <span class="badge bg-light text-dark me-2">Agent to agent</span>
+            <span class="badge bg-warning-subtle text-warning">No local infra</span>
+          </div>
+
+          <h5 class="card-title">One agent becomes the tool of another</h5>
+          <p class="card-text text-muted">
+            Expose an AIsuru agent as an <strong>MCP server</strong> through AIsuru Agent Link, then
+            register it as a custom MCP on a second agent. With a Builder token, the second agent can
+            even rewrite the first one&rsquo;s prompt.
+          </p>
+
+          <hr>
+
+          <h6 class="text-muted mb-3">What you'll learn:</h6>
+          <ul class="list-unstyled small">
+            <li class="mb-2">
+              <i class="bi bi-check-circle text-success me-2"></i>
+              Generate the two MCP tokens of an agent
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-check-circle text-success me-2"></i>
+              Tell apart the Consumer token and the Builder token
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-check-circle text-success me-2"></i>
+              Register a custom MCP server on a second agent
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-check-circle text-success me-2"></i>
+              Watch one agent modify another agent's prompt
+            </li>
+          </ul>
+
+          <hr>
+
+          <h6 class="text-muted mb-3">Architecture:</h6>
+          <p class="small text-muted mb-0">
+            <i class="bi bi-diagram-3 text-primary me-1"></i>
+            <strong>Assistant Agent</strong> &rarr; <strong>MCP Server (AIsuru Agent Link)</strong> &rarr; <strong>Expert Agent</strong>
+          </p>
+        </div>
+        <div class="card-footer bg-white border-0 p-4">
+          <%= link_to demo5_path, class: "btn btn-lg w-100 text-white", style: "background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);" do %>
+            <i class="bi bi-play-circle me-2"></i>
+            Start Demo 5
+          <% end %>
+        </div>
+      </div>
+    </div>
+
   </div>
 
 </div>

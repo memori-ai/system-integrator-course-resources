@@ -9,6 +9,10 @@ services:
     image: mcp-server-integration-demo
     volumes:
       - .:/rails
+      # Demo 5: the two agent prompts live one level up and are served as
+      # downloads by demo5#prompt, so the page can hand them to attendees who
+      # have no copy of this repository. Read-only: the app never writes here.
+      - ../agents:/rails/agents:ro
       - bundle_cache:/usr/local/bundle
       - node_modules:/rails/node_modules
     ports:

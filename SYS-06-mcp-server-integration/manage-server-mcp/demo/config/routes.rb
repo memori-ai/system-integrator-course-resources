@@ -24,6 +24,16 @@ Rails.application.routes.draw do
   get "demo4", to: "demo4#index", as: :demo4
   post "demo4/configure", to: "demo4#configure", as: :demo4_configure
 
+  # Demo 5: an AIsuru agent exposed as an MCP server, consumed by a second agent
+  get "demo5", to: "demo5#index", as: :demo5
+  post "demo5/configure", to: "demo5#configure", as: :demo5_configure
+
+  # Downloads the ready-made system prompt of one of the two demo agents.
+  # Course attendees do not have this repository, so the prompts have to be
+  # reachable from the page itself.
+  get "demo5/prompt/:agent", to: "demo5#prompt", as: :demo5_prompt,
+      constraints: { agent: /expert|assistant/ }
+
   # One-click demo infrastructure (starts/stops the ngrok tunnel containers)
   post "infra/:demo/start", to: "infra#start", as: :infra_start, constraints: { demo: /demo[123]/ }
   get "infra/:demo/status", to: "infra#status", as: :infra_status, constraints: { demo: /demo[123]/ }

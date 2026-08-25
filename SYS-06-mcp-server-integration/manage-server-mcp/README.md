@@ -100,6 +100,51 @@ Connect an AIsuru AI agent to a custom filesystem MCP server for file operations
 - ngrok account and auth token
 - Docker and Docker Compose
 
+#### Demo 5: Agent as MCP
+
+Expose an AIsuru agent as an MCP server through **AIsuru Agent Link**, then let a second
+agent consume it as a tool. Two agents are involved: the **Expert** (agent A) knows a set of
+invented ACME policy figures and is exposed as an MCP server; the **Assistant** (agent B)
+knows none of them and is told to consult the Expert whenever a question touches them. The
+demo page runs both chats side by side, so the answer before and after the MCP connection
+can be compared directly.
+
+**What you'll learn:**
+- Generate the two MCP tokens of an agent
+- Tell apart the Consumer token and the Builder token
+- Register a custom MCP server on a second agent
+- Watch one agent modify another agent's prompt
+
+**Architecture:**
+`Assistant Agent → MCP Server (AIsuru Agent Link) → Expert Agent`
+
+**Prerequisites:**
+- Two agents on AIsuru. Nothing local: no database, no ngrok tunnel, no self-hosted MCP
+  server. Everything happens inside AIsuru, so the "Start demo" button does not apply here.
+
+The two ready-made system prompts live in [`agents/`](agents/) and are also served as
+downloads by the demo page itself, since course attendees do not have this repository:
+
+- `agents/esperto-policy-acme.md` — agent A, the ACME Internal Policy Expert
+- `agents/assistente-onboarding.md` — agent B, the ACME Onboarding Assistant
+
+The Expert's figures are invented on purpose: a real regulation would already be known to
+the base model, and the "before and after" would prove nothing.
+
+**The two token types**
+
+| Token type | What it allows |
+|---|---|
+| Consumer | Query the agent as a tool. It answers, nothing else changes. |
+| Builder | Everything the Consumer token allows, **plus** modifying the agent, including its prompt. |
+
+The Builder token contains the Consumer one. Start with the narrower token and widen only
+when the task requires it.
+
+**Security note:** no MCP token ever reaches this Rails app. The only agent identifiers that
+travel in the querystring are `memoriID` and `ownerUserID`, both already public in any web
+component embed. All token exchange happens directly between the two agents inside AIsuru.
+
 ### Project Structure
 
 ```

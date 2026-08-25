@@ -102,6 +102,52 @@ Collega un agente AI AIsuru a un server MCP personalizzato per operazioni sul fi
 - Account ngrok e auth token
 - Docker e Docker Compose
 
+#### Demo 5: Agent come MCP
+
+Esponi un agente AIsuru come server MCP tramite **AIsuru Agent Link**, poi fai in modo che un
+secondo agente lo consumi come tool. Gli agenti coinvolti sono due: l'**Esperto** (agente A)
+conosce una serie di cifre inventate delle policy ACME ed è esposto come server MCP;
+l'**Assistente** (agente B) non ne conosce nessuna e ha istruzione di consultare l'Esperto
+ogni volta che una domanda le tocca. La pagina della demo mostra le due chat affiancate, così
+la risposta prima e dopo la connessione MCP si confronta direttamente.
+
+**Cosa imparerai:**
+- Generare i due token MCP di un agente
+- Distinguere il token Consumer dal token Builder
+- Registrare un server MCP custom su un secondo agente
+- Vedere un agente modificare il prompt di un altro agente
+
+**Architettura:**
+`Agente Assistente → Server MCP (AIsuru Agent Link) → Agente Esperto`
+
+**Prerequisiti:**
+- Due agenti su AIsuru. Niente in locale: nessun database, nessun tunnel ngrok, nessun server
+  MCP self-hosted. Tutto avviene dentro AIsuru, quindi qui il pulsante "Start demo" non serve.
+
+I due system prompt pronti all'uso si trovano in [`agents/`](agents/) e sono anche scaricabili
+dalla pagina stessa della demo, dato che i partecipanti al corso non hanno questo repository:
+
+- `agents/esperto-policy-acme.md` — agente A, l'Esperto Policy Interne ACME
+- `agents/assistente-onboarding.md` — agente B, l'Assistente Onboarding ACME
+
+Le cifre dell'Esperto sono inventate di proposito: una normativa reale sarebbe già nota al
+modello base e il confronto "prima e dopo" non dimostrerebbe nulla.
+
+**I due tipi di token**
+
+| Tipo di token | Cosa permette |
+|---|---|
+| Consumer | Interrogare l'agente come tool. Risponde, nient'altro cambia. |
+| Builder | Tutto quello che permette il Consumer, **più** la modifica dell'agente, prompt incluso. |
+
+Il token Builder contiene quello Consumer. Parti dal token più stretto e allargalo solo quando
+il task lo richiede.
+
+**Nota di sicurezza:** nessun token MCP raggiunge mai questa app Rails. Gli unici identificativi
+che viaggiano nella querystring sono `memoriID` e `ownerUserID`, entrambi già pubblici in
+qualsiasi embed del web component. Lo scambio dei token avviene direttamente tra i due agenti
+dentro AIsuru.
+
 ### Struttura del Progetto
 
 ```

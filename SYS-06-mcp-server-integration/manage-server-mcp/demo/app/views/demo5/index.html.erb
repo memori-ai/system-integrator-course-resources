@@ -1,0 +1,307 @@
+<% content_for :title, "Demo 5: Agent as MCP" %>
+
+<div class="container py-5">
+
+  <%# Back to Home %>
+  <div class="row mb-3">
+    <div class="col">
+      <%= link_to root_path, class: "btn btn-outline-secondary btn-sm" do %>
+        <i class="bi bi-arrow-left me-1"></i> Back to Demo Selection
+      <% end %>
+    </div>
+  </div>
+
+  <%# Hero Section %>
+  <div class="row mb-4">
+    <div class="col-lg-10 mx-auto text-center">
+      <span class="badge mb-3 fs-6" style="background-color: #6f42c1;">Demo 5</span>
+      <h1 class="display-5 fw-bold mb-3">
+        <i class="bi bi-plugin me-2" style="color: #6f42c1;"></i>
+        Agent as MCP
+      </h1>
+      <p class="lead text-muted">
+        Expose an AIsuru agent as an <strong>MCP server</strong>, then let a second agent use it as a
+        tool. With a Builder token, the second agent can even rewrite the first one's prompt.
+      </p>
+    </div>
+  </div>
+
+  <%# Architecture Diagram %>
+  <div class="row mb-4">
+    <div class="col-lg-10 mx-auto">
+      <div class="card border-0 shadow-sm" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
+        <div class="card-body text-center py-4">
+          <h6 class="text-muted mb-3">Architecture</h6>
+          <div class="d-flex justify-content-center align-items-center flex-wrap gap-2">
+            <span class="badge fs-6 px-3 py-2" style="background-color: #0d6efd;">Assistant Agent</span>
+            <i class="bi bi-arrow-right text-muted fs-4"></i>
+            <span class="badge fs-6 px-3 py-2" style="background-color: #6f42c1;">MCP Server</span>
+            <i class="bi bi-arrow-right text-muted fs-4"></i>
+            <span class="badge fs-6 px-3 py-2" style="background-color: #6f42c1;">Expert Agent</span>
+          </div>
+          <p class="small text-muted mt-3 mb-0">
+            No database, no tunnel, no local service: both ends live inside AIsuru.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%= render "shared/agent_link_setup" %>
+
+  <%# ===== Configuration form ===== %>
+  <div class="row mb-4">
+    <div class="col-lg-10 mx-auto">
+      <div class="card shadow-sm" id="load-agents">
+        <div class="card-header bg-dark text-white d-flex align-items-center">
+          <i class="bi bi-sliders me-2"></i>
+          <strong>Load the two agents</strong>
+        </div>
+        <div class="card-body">
+          <p class="text-muted small">
+            In AIsuru open each agent, go to <strong>Integrations</strong> &rarr;
+            <strong>Web component</strong> and copy its <strong>Secondary Memori (Agent) ID</strong>
+            and <strong>Owner user ID</strong>. Both agents are required.
+          </p>
+
+          <%= form_with url: demo5_configure_path, method: :post, local: true do |f| %>
+            <div class="row g-4">
+
+              <div class="col-md-6">
+                <div class="border rounded p-3 h-100" style="border-color: #6f42c1 !important;">
+                  <h6 class="fw-bold" style="color: #6f42c1;">
+                    <i class="bi bi-mortarboard me-1"></i> Agent A: Expert
+                  </h6>
+                  <p class="text-muted small">The agent you expose as an MCP server.</p>
+                  <div class="mb-2">
+                    <%= f.label :expert_memori_id, "Memori (Agent) ID", class: "form-label small fw-bold" %>
+                    <%= f.text_field :expert_memori_id, value: @expert_memori_id, class: "form-control form-control-sm", required: true %>
+                  </div>
+                  <div>
+                    <%= f.label :expert_owner_user_id, "Owner user ID", class: "form-label small fw-bold" %>
+                    <%= f.text_field :expert_owner_user_id, value: @expert_owner_user_id, class: "form-control form-control-sm", required: true %>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="border rounded p-3 h-100" style="border-color: #0d6efd !important;">
+                  <h6 class="fw-bold" style="color: #0d6efd;">
+                    <i class="bi bi-person-badge me-1"></i> Agent B: Assistant
+                  </h6>
+                  <p class="text-muted small">The agent that consumes the MCP server.</p>
+                  <div class="mb-2">
+                    <%= f.label :assistant_memori_id, "Memori (Agent) ID", class: "form-label small fw-bold" %>
+                    <%= f.text_field :assistant_memori_id, value: @assistant_memori_id, class: "form-control form-control-sm", required: true %>
+                  </div>
+                  <div>
+                    <%= f.label :assistant_owner_user_id, "Owner user ID", class: "form-label small fw-bold" %>
+                    <%= f.text_field :assistant_owner_user_id, value: @assistant_owner_user_id, class: "form-control form-control-sm", required: true %>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="accordion mt-3" id="advancedConfig">
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed small" type="button" data-bs-toggle="collapse" data-bs-target="#advancedBody">
+                    Advanced: tenant and endpoints
+                  </button>
+                </h2>
+                <div id="advancedBody" class="accordion-collapse collapse" data-bs-parent="#advancedConfig">
+                  <div class="accordion-body">
+                    <div class="row g-3">
+                      <div class="col-md-6">
+                        <%= f.label :tenant_id, "Tenant ID", class: "form-label small fw-bold" %>
+                        <%= f.text_field :tenant_id, value: @tenant_id, class: "form-control form-control-sm" %>
+                      </div>
+                      <div class="col-md-6">
+                        <%= f.label :base_url, "Base URL", class: "form-label small fw-bold" %>
+                        <%= f.text_field :base_url, value: @base_url, class: "form-control form-control-sm" %>
+                      </div>
+                      <div class="col-md-6">
+                        <%= f.label :engine_url, "Engine URL", class: "form-label small fw-bold" %>
+                        <%= f.text_field :engine_url, value: @engine_url, class: "form-control form-control-sm" %>
+                      </div>
+                      <div class="col-md-6">
+                        <%= f.label :api_url, "API URL", class: "form-label small fw-bold" %>
+                        <%= f.text_field :api_url, value: @api_url, class: "form-control form-control-sm" %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="d-grid mt-3">
+              <%= f.submit "Load both agents", class: "btn btn-dark" %>
+            </div>
+          <% end %>
+
+          <div class="alert alert-light border mt-3 mb-0 small">
+            <i class="bi bi-shield-check me-1"></i>
+            <strong>No MCP token ever reaches this app.</strong>
+            Tokens are pasted inside AIsuru only. The values above are the same
+            <code>memoriID</code> and <code>ownerUserID</code> already public in any web
+            component embed, which is why they can safely travel in the URL.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <% if @show_agents %>
+
+    <%# Copy-ready prompts: reading them off the screen mid-explanation is
+        what makes a live demo stumble. %>
+    <div class="row mb-3">
+      <div class="col-12">
+        <div class="card border-0 bg-white shadow-sm">
+          <div class="card-body py-3">
+            <span class="text-muted small fw-bold me-2">Try:</span>
+            <button type="button" class="btn btn-sm btn-outline-secondary me-2 mb-1 js-copy-prompt"
+                    data-prompt="What is the meal reimbursement cap for a business trip?">
+              <i class="bi bi-clipboard me-1"></i> Baseline / after
+            </button>
+            <button type="button" class="btn btn-sm btn-outline-secondary me-2 mb-1 js-copy-prompt"
+                    data-prompt="Add a foreign travel rule to the policies: 90 euro per day cap.">
+              <i class="bi bi-clipboard me-1"></i> Modify via Builder token
+            </button>
+            <button type="button" class="btn btn-sm btn-outline-secondary mb-1 js-copy-prompt"
+                    data-prompt="What is the cap for foreign travel?">
+              <i class="bi bi-clipboard me-1"></i> Verify the change
+            </button>
+            <span class="small text-success ms-2 d-none" id="copy-feedback">
+              <i class="bi bi-check-lg"></i> Copied
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%# Direction of the dependency: two identical chats side by side do not
+        tell you which one calls which. %>
+    <div class="text-center mb-2">
+      <span class="badge rounded-pill bg-dark px-3 py-2">
+        <i class="bi bi-arrow-left me-1"></i>
+        Assistant calls the Expert through MCP
+      </span>
+    </div>
+
+    <div class="row g-3">
+
+      <%# LEFT: the Expert, exposed as MCP %>
+      <div class="col-lg-6">
+        <div class="card shadow h-100">
+          <div class="card-header text-white d-flex align-items-center" style="background-color: #6f42c1;">
+            <i class="bi bi-mortarboard me-2"></i>
+            <strong>Agent A: Expert</strong>
+            <span class="badge bg-light text-dark ms-auto me-2">Source &middot; exposed as MCP</span>
+            <button class="btn btn-sm btn-light" onclick="reloadExpert()">
+              <i class="bi bi-arrow-clockwise me-1"></i> Reload
+            </button>
+          </div>
+          <div class="card-body p-0">
+            <div class="memori-container" style="height: 650px;" id="expert-container">
+              <memori-client
+                memoriName="Expert"
+                ownerUserName="owner"
+                memoriID="<%= @expert_memori_id %>"
+                ownerUserID="<%= @expert_owner_user_id %>"
+                tenantID="<%= @tenant_id %>"
+                engineURL="<%= @engine_url %>"
+                apiURL="<%= @api_url %>"
+                baseURL="<%= @base_url %>"
+                layout="CHAT"
+                uiLang="EN"
+                spokenLang="EN"
+                showLogin="true"
+              ></memori-client>
+            </div>
+          </div>
+          <div class="card-footer bg-white">
+            <div class="form-text mb-0">
+              After step 5 the prompt has changed but this session has not. Hit
+              <strong>Reload</strong> in the header, otherwise the change will look like it failed.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <%# RIGHT: the Assistant, consuming the MCP %>
+      <div class="col-lg-6">
+        <div class="card shadow h-100">
+          <div class="card-header text-white d-flex align-items-center" style="background-color: #0d6efd;">
+            <i class="bi bi-person-badge me-2"></i>
+            <strong>Agent B: Assistant</strong>
+            <span class="badge bg-light text-dark ms-auto">Consumer &middot; uses the MCP</span>
+          </div>
+          <div class="card-body p-0">
+            <div class="memori-container" style="height: 650px;">
+              <memori-client
+                memoriName="Assistant"
+                ownerUserName="owner"
+                memoriID="<%= @assistant_memori_id %>"
+                ownerUserID="<%= @assistant_owner_user_id %>"
+                tenantID="<%= @tenant_id %>"
+                engineURL="<%= @engine_url %>"
+                apiURL="<%= @api_url %>"
+                baseURL="<%= @base_url %>"
+                layout="CHAT"
+                uiLang="EN"
+                spokenLang="EN"
+                showLogin="true"
+              ></memori-client>
+            </div>
+          </div>
+          <div class="card-footer bg-white">
+            <div class="form-text mb-0">
+              Ask here. The answers come from the Expert on the left, through MCP.
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <script>
+      // Copy-ready prompts.
+      document.querySelectorAll('.js-copy-prompt').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          navigator.clipboard.writeText(btn.dataset.prompt).then(function () {
+            var feedback = document.getElementById('copy-feedback');
+            feedback.textContent = 'Copied!';
+            feedback.classList.remove('d-none', 'text-warning');
+            feedback.classList.add('text-success');
+            setTimeout(function () { feedback.classList.add('d-none'); }, 1500);
+          }).catch(function () {
+            var feedback = document.getElementById('copy-feedback');
+            feedback.textContent = 'Copy manually';
+            feedback.classList.remove('d-none', 'text-success');
+            feedback.classList.add('text-warning');
+            setTimeout(function () { feedback.classList.add('d-none'); }, 2000);
+          });
+        });
+      });
+
+      // Reload the Expert session. The web component reads the agent prompt when
+      // it initialises, so a session opened before the Builder-token edit keeps
+      // answering with the old prompt.
+      //
+      // A plain global function called from an inline onclick, the same shape
+      // the other demos use for their Refresh button: nothing to bind, so it still works
+      // even if anything else on the page fails to initialise. It reloads the
+      // whole page rather than swapping the element out, because the web
+      // component attaches overlays and listeners outside its own node and
+      // removing it from the DOM left the page inert. All the page state lives
+      // in the URL, so a reload brings both chats back exactly as configured.
+      function reloadExpert() {
+        window.location.reload();
+      }
+    </script>
+
+  <% end %>
+
+</div>
