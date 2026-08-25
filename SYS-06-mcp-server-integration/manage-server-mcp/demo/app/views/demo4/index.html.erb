@@ -1,0 +1,247 @@
+<% content_for :title, "Demo 4: MCP Scheduler + MCP Persistence" %>
+
+<div class="container py-5">
+
+  <%# Back to Home %>
+  <div class="row mb-3">
+    <div class="col">
+      <%= link_to root_path, class: "btn btn-outline-secondary btn-sm" do %>
+        <i class="bi bi-arrow-left me-1"></i> Back to Demo Selection
+      <% end %>
+    </div>
+  </div>
+
+  <% unless @show_agent %>
+    <%# Hero Section %>
+    <div class="row mb-4">
+      <div class="col-lg-10 mx-auto text-center">
+        <span class="badge mb-3 fs-6 text-white" style="background: linear-gradient(135deg, #6f42c1 0%, #9c6ade 100%);">Demo 4</span>
+        <h1 class="display-5 fw-bold mb-3">
+          <i class="bi bi-clock-history me-2" style="color: #6f42c1;"></i>
+          MCP Scheduler + MCP Persistence
+        </h1>
+        <p class="lead text-muted">
+          Connect an AIsuru agent to the platform's built-in <strong>Scheduler</strong> and
+          <strong>Persistence</strong> MCP servers &mdash; no self-hosted backend required for this demo.
+        </p>
+      </div>
+    </div>
+
+    <%# What this demo covers (placeholder -- to be filled in with the real
+        walkthrough once the Scheduler/Persistence setup steps are defined) %>
+    <div class="row mb-4">
+      <div class="col-lg-10 mx-auto">
+        <div class="card border-0 shadow-sm" style="border-left: 4px solid #6f42c1 !important;">
+          <div class="card-body">
+            <h5 class="fw-bold mb-3">
+              <i class="bi bi-info-circle me-2" style="color: #6f42c1;"></i>
+              About this demo
+            </h5>
+            <p class="text-muted mb-2">
+              <strong>MCP Scheduler</strong> lets the agent schedule a tool call to run at a later time
+              (e.g. a reminder, a follow-up action, a recurring check).
+            </p>
+            <p class="text-muted mb-0">
+              <strong>MCP Persistence</strong> lets the agent store and retrieve structured data across
+              turns and sessions, instead of relying only on conversation history.
+            </p>
+            <div class="alert alert-secondary small mt-3 mb-0">
+              <i class="bi bi-cone-striped me-1"></i>
+              This page is the base skeleton for the demo (config panel + agent embed). The
+              step-by-step setup guide and architecture diagram will be added next.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%# Info about how to get Agent IDs %>
+    <div class="row mb-4">
+      <div class="col-lg-10 mx-auto">
+        <div class="card border-info">
+          <div class="card-header bg-info text-white">
+            <h5 class="mb-0">
+              <i class="bi bi-info-circle me-2"></i>
+              How to get your Agent IDs
+            </h5>
+          </div>
+          <div class="card-body">
+            <ol class="mb-0">
+              <li class="mb-2">
+                <strong>Create an Agent</strong> on <a href="https://www.aisuru.com" target="_blank">AIsuru</a>
+                (or use your own tenant if you have a PaaS subscription)
+              </li>
+              <li class="mb-2">
+                <strong>Open your Agent</strong> and click on <strong>"Dev docs"</strong> in the left sidebar
+              </li>
+              <li class="mb-2">
+                Expand the <strong>"Other references"</strong> section (or "Altri riferimenti" in Italian)
+              </li>
+              <li class="mb-2">
+                Copy the following values:
+                <ul class="mt-2">
+                  <li><strong>Secondary Memori (Agent) ID</strong> &rarr; This is your <code>memoriID</code></li>
+                  <li><strong>Owner user ID</strong> &rarr; This is your <code>ownerUserID</code></li>
+                </ul>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%# Configuration Form %>
+    <div class="row mb-5">
+      <div class="col-lg-8 mx-auto">
+        <div class="card shadow">
+          <div class="card-header text-white" style="background: linear-gradient(135deg, #6f42c1 0%, #9c6ade 100%);">
+            <h5 class="mb-0">
+              <i class="bi bi-gear me-2"></i>
+              Configure Your Agent
+            </h5>
+          </div>
+          <div class="card-body p-4">
+            <%= form_with url: demo4_configure_path, method: :post, local: true do |f| %>
+              <div class="mb-4">
+                <label for="memori_id" class="form-label fw-bold">
+                  <i class="bi bi-fingerprint me-1"></i>
+                  Memori (Agent) Secondary ID *
+                </label>
+                <%= f.text_field :memori_id,
+                    class: "form-control form-control-lg",
+                    placeholder: "e.g., a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                    value: @memori_id,
+                    required: true,
+                    pattern: "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}" %>
+                <div class="form-text">
+                  Found in Dev docs &rarr; Other references &rarr; "Secondary Memori (Agent) ID"
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <label for="owner_user_id" class="form-label fw-bold">
+                  <i class="bi bi-person-badge me-1"></i>
+                  Owner User ID *
+                </label>
+                <%= f.text_field :owner_user_id,
+                    class: "form-control form-control-lg",
+                    placeholder: "e.g., b2c3d4e5-f6a7-8901-bcde-f12345678901",
+                    value: @owner_user_id,
+                    required: true,
+                    pattern: "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}" %>
+                <div class="form-text">
+                  Found in Dev docs &rarr; Other references &rarr; "Owner user ID"
+                </div>
+              </div>
+
+              <hr class="my-4">
+              <h6 class="text-muted mb-3">
+                <i class="bi bi-sliders me-1"></i>
+                Advanced Configuration (pre-filled with defaults)
+              </h6>
+
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="tenant_id" class="form-label">
+                    <i class="bi bi-building me-1"></i>
+                    Tenant ID
+                  </label>
+                  <%= f.text_field :tenant_id,
+                      class: "form-control",
+                      value: @tenant_id,
+                      required: true %>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label for="base_url" class="form-label">
+                    <i class="bi bi-link-45deg me-1"></i>
+                    Base URL
+                  </label>
+                  <%= f.text_field :base_url,
+                      class: "form-control",
+                      value: @base_url,
+                      required: true %>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="engine_url" class="form-label">
+                  <i class="bi bi-cpu me-1"></i>
+                  Engine URL
+                </label>
+                <%= f.text_field :engine_url,
+                    class: "form-control",
+                    value: @engine_url,
+                    required: true %>
+              </div>
+
+              <div class="mb-4">
+                <label for="api_url" class="form-label">
+                  <i class="bi bi-server me-1"></i>
+                  API URL
+                </label>
+                <%= f.text_field :api_url,
+                    class: "form-control",
+                    value: @api_url,
+                    required: true %>
+              </div>
+
+              <div class="d-grid">
+                <%= f.submit "Load Agent", class: "btn btn-lg text-white", style: "background: linear-gradient(135deg, #6f42c1 0%, #9c6ade 100%);" %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <% else %>
+    <%# Agent Info Banner %>
+    <div class="row mb-4">
+      <div class="col-lg-10 mx-auto">
+        <div class="alert d-flex align-items-center mb-0 text-white" style="background: linear-gradient(135deg, #6f42c1 0%, #9c6ade 100%);">
+          <i class="bi bi-check-circle-fill me-2 fs-5"></i>
+          <div class="flex-grow-1">
+            <strong>Agent Connected!</strong>
+            Chat with the agent below to try the Scheduler and Persistence MCP tools.
+          </div>
+          <%= link_to demo4_path, class: "btn btn-outline-light btn-sm ms-3" do %>
+            <i class="bi bi-arrow-counterclockwise me-1"></i> Reconfigure
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <%# Web Component %>
+    <div class="row mb-5">
+      <div class="col-lg-10 mx-auto">
+        <div class="card shadow">
+          <div class="card-header text-white d-flex align-items-center" style="background: linear-gradient(135deg, #6f42c1 0%, #9c6ade 100%);">
+            <i class="bi bi-robot me-2"></i>
+            <strong>AIsuru Agent</strong>
+            <span class="badge bg-light text-dark ms-auto">MCP-enabled</span>
+          </div>
+          <div class="card-body p-0">
+            <div class="memori-container" style="height: 650px;">
+              <memori-client
+                memoriName="YourAgent"
+                ownerUserName="owner"
+                memoriID="<%= @memori_id %>"
+                ownerUserID="<%= @owner_user_id %>"
+                tenantID="<%= @tenant_id %>"
+                engineURL="<%= @engine_url %>"
+                apiURL="<%= @api_url %>"
+                baseURL="<%= @base_url %>"
+                layout="CHAT"
+                uiLang="EN"
+                spokenLang="EN"
+                showLogin="true"
+              ></memori-client>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+</div>
