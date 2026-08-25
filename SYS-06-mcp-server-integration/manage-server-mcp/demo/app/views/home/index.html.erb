@@ -206,6 +206,64 @@
       </div>
     </div>
 
+    <%# Demo 4 Card: MCP Scheduler + MCP Persistence %>
+    <div class="col-lg-6">
+      <div class="card h-100 shadow-lg border-0 card-hover">
+        <div class="card-header text-white py-3" style="background: linear-gradient(135deg, #6f42c1 0%, #9c6ade 100%);">
+          <h4 class="mb-0">
+            <i class="bi bi-4-circle me-2"></i>
+            Demo 4: MCP Scheduler + Persistence
+          </h4>
+        </div>
+        <div class="card-body p-4">
+          <div class="mb-4">
+            <span class="badge bg-purple-subtle text-dark me-2" style="background-color: #f0e9fa;">MCP Server</span>
+            <span class="badge bg-light text-dark">Scheduler</span>
+            <span class="badge bg-light text-dark">Persistence</span>
+          </div>
+
+          <h5 class="card-title">AI Agent schedules tasks and persists data</h5>
+          <p class="card-text text-muted">
+            Connect an AIsuru AI agent to the platform's built-in Scheduler and Persistence MCP
+            servers &mdash; no self-hosted backend required. The agent can schedule follow-up actions
+            and store structured data across sessions.
+          </p>
+
+          <hr>
+
+          <h6 class="text-muted mb-3">What you'll learn:</h6>
+          <ul class="list-unstyled small">
+            <li class="mb-2">
+              <i class="bi bi-check-circle text-success me-2"></i>
+              Schedule a tool call to run at a later time
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-check-circle text-success me-2"></i>
+              Persist structured data across turns and sessions
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-check-circle text-success me-2"></i>
+              Configure the Scheduler and Persistence MCP servers in AIsuru
+            </li>
+          </ul>
+
+          <hr>
+
+          <h6 class="text-muted mb-3">Architecture:</h6>
+          <p class="small text-muted mb-0">
+            <i class="bi bi-diagram-3 text-primary me-1"></i>
+            <strong>AIsuru Agent</strong> &rarr; <strong>MCP Scheduler (AIsuru)</strong> + <strong>MCP Persistence (AIsuru)</strong>
+          </p>
+        </div>
+        <div class="card-footer bg-white border-0 p-4">
+          <%= link_to demo4_path, class: "btn btn-lg w-100 text-white", style: "background: linear-gradient(135deg, #6f42c1 0%, #9c6ade 100%);" do %>
+            <i class="bi bi-play-circle me-2"></i>
+            Start Demo 4
+          <% end %>
+        </div>
+      </div>
+    </div>
+
   </div>
 
 </div>

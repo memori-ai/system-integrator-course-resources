@@ -20,6 +20,10 @@ Rails.application.routes.draw do
   post "demo3/configure", to: "demo3#configure", as: :demo3_configure
   get "demo3/workspace_files", to: "demo3#workspace_files", as: :demo3_workspace_files
 
+  # Demo 4: MCP Scheduler + MCP Persistence
+  get "demo4", to: "demo4#index", as: :demo4
+  post "demo4/configure", to: "demo4#configure", as: :demo4_configure
+
   # One-click demo infrastructure (starts/stops the ngrok tunnel containers)
   post "infra/:demo/start", to: "infra#start", as: :infra_start, constraints: { demo: /demo[123]/ }
   get "infra/:demo/status", to: "infra#status", as: :infra_status, constraints: { demo: /demo[123]/ }
