@@ -23,6 +23,7 @@ class InfraController < ApplicationController
     "demo1" => { service: "ngrok-mongo", builder: :mongo_sections },
     "demo2" => { service: "ngrok-demo2", builder: :mysql_sections },
     "demo3" => { service: "ngrok-mcp",   builder: :mcp_sections },
+    "demo6" => { service: "ngrok-gestionale", builder: :gestionale_sections },
   }.freeze
   ALL_SERVICES = TUNNELS.values.map { |t| t[:service] }.uniq.freeze
 
@@ -80,7 +81,13 @@ class InfraController < ApplicationController
     others = ALL_SERVICES - [tunnel[:service]]
 
     compose("stop", *others)
-    out, err, ok = compose("up", "-d", "--no-deps", tunnel[:service])
+    # Demo 6's tunnel is useless without the gestionale API behind it: start
+    # it alongside the tunnel so the one-click path never returns 502s. The
+    # other demos keep --no-deps unchanged. "gestionale" is hardcoded, never
+    # user input.
+    up_services = params[:demo] == "demo6" ? [tunnel[:service], "gestionale"] : [tunnel[:service]]
+    up_args = params[:demo] == "demo6" ? ["up", "-d", *up_services] : ["up", "-d", "--no-deps", *up_services]
+    out, err, ok = compose(*up_args)
     if ok
       render json: { started: true }
     else
@@ -160,6 +167,30 @@ class InfraController < ApplicationController
         { label: "MYSQL_USER", value: "mcpuser" },
         { label: "MYSQL_PASS", value: "mcppassword" },
         { label: "MYSQL_DB",   value: "mcp_demo_mysql" },
+      ],
+    }]
+  end
+
+  # Demo 6 uses the OAuth/API connector: what the user pastes into AIsuru is a
+  # set of connector parameters, not a single URL. The two URLs are built from
+  # the same tunnel, and both have to be https:// — the connector rejects
+  # anything else.
+  def gestionale_sections(tunnels)
+    url = http_url(tunnels)
+    return [] if url.nil?
+
+    [{
+      title: "OAuth / API connector",
+      note: "Add the OAuth/API connector to your agent and fill in these parameters. " \
+            "Only https:// URLs are accepted, and these change every time the tunnel " \
+            "restarts.",
+      rows: [
+        { label: "oauth_auth_type",     value: "oauth2_client_credentials" },
+        { label: "oauth_token_url",     value: "#{url}/token" },
+        { label: "oauth_client_id",     value: "aisuru-demo" },
+        { label: "oauth_client_secret", value: "demo-secret-sys06" },
+        { label: "oauth_scope",         value: "commesse:read" },
+        { label: "oauth_openapi_url",   value: "#{url}/openapi.json" },
       ],
     }]
   end

@@ -15,7 +15,7 @@ Questa guida spiega come connettere gli agenti AI AIsuru a sorgenti dati e servi
 
 ## Applicazione Demo
 
-Questo modulo include **due applicazioni demo funzionanti** che mostrano diversi approcci all'integrazione di server MCP.
+Questo modulo include **sei applicazioni demo funzionanti** che mostrano diversi approcci all'integrazione di server MCP.
 
 ### Quick Start
 
@@ -46,10 +46,11 @@ Ogni pagina demo ha un pulsante **"Start demo"**: cliccandolo l'app ferma
 automaticamente il tunnel ngrok delle altre demo (gli account ngrok gratuiti
 permettono un solo tunnel attivo alla volta), avvia il container del tunnel
 giusto e mostra il valore da incollare in AIsuru (connection string per la
-Demo 1, URL MCP per le Demo 2/3), pronto da copiare. Il pulsante
-**"Stop all tunnels"** spegne tutti i tunnel a fine esercitazione.
+Demo 1, URL MCP per le Demo 2/3, parametri del connettore per la Demo 6),
+pronto da copiare. Il pulsante **"Stop all tunnels"** spegne tutti i tunnel a
+fine esercitazione.
 
-Niente terminale — la guida manuale passo-passo resta comunque disponibile in
+Niente terminale. La guida manuale passo-passo resta comunque disponibile in
 ogni pagina demo come alternativa.
 
 **Come funziona (nota di sicurezza):** l'app Rails parla con Docker attraverso
@@ -127,8 +128,8 @@ la risposta prima e dopo la connessione MCP si confronta direttamente.
 I due system prompt pronti all'uso si trovano in [`agents/`](agents/) e sono anche scaricabili
 dalla pagina stessa della demo, dato che i partecipanti al corso non hanno questo repository:
 
-- `agents/esperto-policy-acme.md` — agente A, l'Esperto Policy Interne ACME
-- `agents/assistente-onboarding.md` — agente B, l'Assistente Onboarding ACME
+- `agents/esperto-policy-acme.md`: agente A, l'Esperto Policy Interne ACME
+- `agents/assistente-onboarding.md`: agente B, l'Assistente Onboarding ACME
 
 Le cifre dell'Esperto sono inventate di proposito: una normativa reale sarebbe già nota al
 modello base e il confronto "prima e dopo" non dimostrerebbe nulla.
@@ -147,6 +148,32 @@ il task lo richiede.
 che viaggiano nella querystring sono `memoriID` e `ownerUserID`, entrambi già pubblici in
 qualsiasi embed del web component. Lo scambio dei token avviene direttamente tra i due agenti
 dentro AIsuru.
+
+#### Demo 6: Connettore OAuth / API
+
+Collega un'API REST esistente a un agente AIsuru senza scrivere una riga di codice. Punta il
+connettore a uno spec OpenAPI e ogni endpoint diventa un tool, con il token OAuth2 richiesto,
+messo in cache e rinnovato in automatico.
+
+**Cosa imparerai:**
+- Far girare un'API REST con OAuth2 client credentials in Docker
+- Esporla via HTTPS con ngrok
+- Importare ogni endpoint dallo spec OpenAPI, senza JSON scritto a mano
+- Osservare l'agente leggere dati e scriverli di nuovo
+
+**Architettura:**
+`Agente AIsuru → Connettore OAuth/API → ngrok HTTPS → ERP FastAPI (Docker)`
+
+**Prerequisiti:**
+- Account ngrok e auth token
+- Docker e Docker Compose
+
+**Porte:** il gestionale FastAPI risponde sulla `8100`; la dashboard del tunnel ngrok è sulla `4045`.
+
+⚠️ **Dati non aggiornati:** le date del seed vengono calcolate la prima volta che il database
+viene creato, e il volume `gestionale_data` sopravvive ai riavvii. Se il container è attivo
+da settimane, "questo mese" e "in ritardo" risulteranno sbagliati. Usa il bottone **Reset**
+su `/demo6` (oppure `docker compose down -v`) per rigenerare date fresche prima della lezione.
 
 ### Struttura del Progetto
 
@@ -240,8 +267,12 @@ in ogni pagina demo. Equivalenti manuali (dalla cartella `demo/`):
 - `docker compose up -d ngrok-mcp` (dashboard su http://localhost:4041)
 - Usa l'URL HTTPS + endpoint `/mcp` in AIsuru
 
+**Per la Demo 6 (Connettore OAuth / API):**
+- `docker compose up -d ngrok-gestionale` (tunnel HTTP verso il gestionale FastAPI; dashboard su http://localhost:4045)
+- Usa l'URL HTTPS come URL dello spec OpenAPI nel connettore OAuth/API
+
 ⚠️ Gli account ngrok gratuiti permettono **un solo tunnel attivo alla volta**:
-prima ferma gli altri tunnel con `docker compose stop ngrok-mongo ngrok-mcp ngrok-demo2`.
+prima ferma gli altri tunnel con `docker compose stop ngrok-mongo ngrok-mcp ngrok-demo2 ngrok-gestionale`.
 
 ---
 
@@ -254,7 +285,7 @@ può configurare nulla dentro il tuo agente.
 Vai nelle impostazioni del tuo agente in AIsuru, poi nella sezione
 **MCP Servers**. Cosa fare dipende dalla demo:
 
-**Demo 1 e 2 — server integrati.** MongoDB e MySQL sono già inclusi in AIsuru:
+**Demo 1 e 2, server integrati.** MongoDB e MySQL sono già inclusi in AIsuru:
 scegli il server pronto dalla lista e compila i parametri di connessione.
 - Demo 1 (MongoDB): connection string
   `mongodb://admin:adminpassword@<NGROK_HOST>:<NGROK_PORT>/mcp_demo?authSource=admin`,
@@ -264,11 +295,28 @@ scegli il server pronto dalla lista e compila i parametri di connessione.
   Lascia `ALLOW_INSERT/UPDATE/DELETE/DDL_OPERATION` disattivati finché non vuoi
   che l'agente scriva.
 
-**Demo 3 — server personalizzato.** Il server MCP filesystem è tuo, quindi non
+**Demo 3, server personalizzato.** Il server MCP filesystem è tuo, quindi non
 compare nel catalogo: usa la sezione **"Aggiungi MCP Personalizzato"** e incolla
 lì la stringa `https://tuo-url-ngrok/mcp`, endpoint `/mcp` compreso.
 
 Salva e testa la connessione conversando con il tuo agente.
+
+**Demo 6: un server MCP che non devi scrivere.** Qui non costruisci né
+distribuisci nessun server MCP: il gestionale viene collegato tramite il
+**connettore OAuth/API** di AIsuru, che importa lo spec OpenAPI e genera lui il
+server MCP. Una volta salvato lo ritrovi tra i **server MCP** del tuo agente,
+con un tool per ogni endpoint importato. Aggiungi il connettore OAuth/API al tuo
+agente e compila questi sei parametri (la pagina `/demo6` mostra gli stessi
+valori, pronti da copiare):
+
+| Parametro | Valore |
+|---|---|
+| `oauth_auth_type` | `oauth2_client_credentials` |
+| `oauth_token_url` | `<URL ngrok>/token` |
+| `oauth_client_id` | `aisuru-demo` |
+| `oauth_client_secret` | `demo-secret-sys06` |
+| `oauth_scope` | `commesse:read` |
+| `oauth_openapi_url` | `<URL ngrok>/openapi.json` |
 
 ---
 
@@ -280,7 +328,7 @@ SYS-06-mcp-server-integration/
 ├── README-IT.md       # Panoramica modulo (IT)
 └── manage-server-mcp/ # Demo app integrazione MCP server
     ├── README.md      # Guida completa (EN)
-    ├── README-IT.md   # Questo file — guida completa (IT)
+    ├── README-IT.md   # Questo file, guida completa (IT)
     └── demo/          # Applicazione Rails con demo MCP
 ```
 

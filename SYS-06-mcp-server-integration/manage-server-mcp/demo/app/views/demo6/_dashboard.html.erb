@@ -1,0 +1,78 @@
+<%# Live panel of Demo 6: KPIs + projects table, read from the very same REST
+    API the agent calls. Rendered on page load and by the AJAX refresh. %>
+
+<% if @gestionale_offline %>
+  <div class="alert alert-warning mb-0">
+    <i class="bi bi-exclamation-triangle me-1"></i>
+    <strong>The ERP API is not answering.</strong>
+    Start it with <code>docker compose up -d gestionale</code>, then hit Refresh.
+  </div>
+<% else %>
+  <div class="row g-2 mb-3">
+    <div class="col-6 col-xl-3">
+      <div class="border rounded p-2 text-center h-100">
+        <div class="small text-muted">Active</div>
+        <div class="fs-4 fw-bold"><%= @kpi["commesse_attive"] %></div>
+      </div>
+    </div>
+    <div class="col-6 col-xl-3">
+      <div class="border rounded p-2 text-center h-100">
+        <div class="small text-muted">Overdue</div>
+        <div class="fs-4 fw-bold text-danger"><%= @kpi["commesse_in_ritardo"] %></div>
+      </div>
+    </div>
+    <div class="col-6 col-xl-3">
+      <div class="border rounded p-2 text-center h-100">
+        <div class="small text-muted">Value</div>
+        <div class="fs-5 fw-bold">&euro;<%= number_with_delimiter(@kpi["valore_totale_eur"]) %></div>
+      </div>
+    </div>
+    <div class="col-6 col-xl-3">
+      <div class="border rounded p-2 text-center h-100">
+        <div class="small text-muted">Avg. progress</div>
+        <div class="fs-4 fw-bold"><%= @kpi["percentuale_media"] %>%</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-sm table-hover align-middle mb-0">
+      <thead class="table-light">
+        <tr>
+          <th class="text-nowrap">Code</th>
+          <th>Project</th>
+          <th>Customer</th>
+          <th>Status</th>
+          <th style="width: 130px;">Progress</th>
+          <th>Due</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @commesse.each do |c| %>
+          <tr>
+            <td class="text-nowrap"><code class="small"><%= c["codice"] %></code></td>
+            <td class="small"><%= c["titolo"] %></td>
+            <td class="small text-muted"><%= c["cliente"] %></td>
+            <td>
+              <% badge = { "attiva" => "bg-success", "in_ritardo" => "bg-danger",
+                           "completata" => "bg-secondary", "sospesa" => "bg-warning text-dark" } %>
+              <span class="badge <%= badge[c["stato"]] || "bg-light text-dark" %>">
+                <%= c["stato"].tr("_", " ") %>
+              </span>
+            </td>
+            <td>
+              <div class="progress" style="height: 14px;">
+                <div class="progress-bar" role="progressbar"
+                     style="width: <%= c["percentuale"] %>%; background: linear-gradient(135deg, #be123c 0%, #fb7185 100%);"
+                     aria-valuenow="<%= c["percentuale"] %>" aria-valuemin="0" aria-valuemax="100">
+                  <%= c["percentuale"] %>%
+                </div>
+              </div>
+            </td>
+            <td class="small text-muted"><%= c["data_scadenza"] %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>

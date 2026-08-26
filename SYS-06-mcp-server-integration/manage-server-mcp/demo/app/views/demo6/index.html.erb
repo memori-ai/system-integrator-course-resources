@@ -1,0 +1,598 @@
+<% content_for :title, "Demo 6: OAuth / API Connector" %>
+
+<div class="container py-5">
+
+  <%# Back to Home %>
+  <div class="row mb-4">
+    <div class="col">
+      <%= link_to root_path, class: "btn btn-outline-secondary" do %>
+        <i class="bi bi-arrow-left me-1"></i> Back to Demo Selection
+      <% end %>
+    </div>
+  </div>
+
+  <%# Hero Section %>
+  <div class="row mb-5">
+    <div class="col-lg-8 mx-auto text-center">
+      <span class="badge mb-3 text-white" style="background: linear-gradient(135deg, #be123c 0%, #fb7185 100%);">Demo 6</span>
+      <h1 class="display-5 fw-bold mb-3">
+        <i class="bi bi-plug me-2" style="color: #be123c;"></i>
+        OAuth / API Connector
+      </h1>
+      <p class="lead text-muted">
+        Connect any HTTP/REST API to your agent without writing code: point the connector at an
+        OpenAPI spec and every endpoint becomes a tool, with OAuth2 authentication handled for you.
+      </p>
+    </div>
+  </div>
+
+  <%# What is the OAuth/API connector %>
+  <div class="row mb-5">
+    <div class="col-lg-10 mx-auto">
+      <div class="card border-primary">
+        <div class="card-header text-white" style="background: linear-gradient(135deg, #be123c 0%, #fb7185 100%);">
+          <h5 class="mb-0">
+            <i class="bi bi-question-circle me-2"></i>
+            What is the OAuth/API connector?
+          </h5>
+        </div>
+        <div class="card-body">
+          <p>
+            The connector turns the endpoints of an existing HTTP/REST API into tools of your
+            agent: one tool per endpoint. You never write code. You either describe the
+            endpoints (<code>oauth_endpoints_json</code>) or, as in this demo, point it at an
+            OpenAPI spec (<code>oauth_openapi_url</code>) and let it import them.
+          </p>
+          <ul class="mb-3">
+            <li><strong>Authentication is handled for you:</strong> <code>none</code>,
+              <code>bearer_static</code>, <code>oauth2_client_credentials</code>,
+              <code>oauth2_password</code>, <code>oauth2_refresh</code>,
+              <code>oauth2_jwt_bearer</code>. The token is cached and renewed automatically.
+              This demo uses <code>oauth2_client_credentials</code> with a token that
+              expires after 15 minutes, so you can watch the renewal happen.</li>
+            <li><strong>Parameters travel where you want them:</strong> query string, path
+              (<code>/commesse/{id}</code>) or JSON body. This API uses all three.</li>
+            <li><strong>The agent does not memorise the tools.</strong> It asks the
+              gateway for them. Update the API and the agent gets the new tools without
+              being rebuilt. That also means the <code>summary</code> and
+              <code>description</code> of each endpoint <em>are</em> part of the prompt:
+              write them as instructions.</li>
+          </ul>
+          <div class="alert alert-warning mb-0 small">
+            <i class="bi bi-exclamation-triangle me-1"></i>
+            Only <code>https://</code> URLs are accepted, and responses over ~40&nbsp;KB are
+            truncated. That is why every list endpoint here is paginated and there is a
+            <code>/kpi/riepilogo</code> endpoint for counting instead of downloading.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%# Where the gestionale comes from %>
+  <div class="row mb-5">
+    <div class="col-lg-10 mx-auto">
+      <div class="card border-primary">
+        <div class="card-header text-white" style="background: linear-gradient(135deg, #be123c 0%, #fb7185 100%);">
+          <h5 class="mb-0">
+            <i class="bi bi-building-gear me-2"></i>
+            Where the gestionale comes from
+          </h5>
+        </div>
+        <div class="card-body">
+          <p>
+            The other demos hand you a service that is already there. Here the API on the far
+            side is one we built for the course. It is a small
+            <strong>ERP</strong> ("gestionale"): six customers, a couple of dozen projects
+            (<em>commesse</em>) with status, completion percentage, value and deadline, plus a
+            progress log. In your company this is <strong>your own private management system</strong>
+            (ERP, CRM, ticketing, whatever holds the data your colleagues ask about). Nothing
+            in the connector setup changes: it never knows the difference.
+          </p>
+
+          <h6 class="fw-bold mt-4">How it was built</h6>
+          <p class="text-muted small mb-2">
+            Roughly 500 lines in <code>demo/docker/gestionale/</code>, five pieces:
+          </p>
+          <div class="table-responsive">
+            <table class="table table-bordered table-sm">
+              <tbody>
+                <tr>
+                  <td class="fw-bold bg-light" style="width: 190px;"><code>db.py</code> + <code>seed.py</code></td>
+                  <td>SQLite with three tables (<code>clienti</code>, <code>commesse</code>,
+                    <code>avanzamenti</code>), filled with realistic sample data at startup. A real
+                    gestionale has a real database here, so that part is already done for you.</td>
+                </tr>
+                <tr>
+                  <td class="fw-bold bg-light"><code>main.py</code></td>
+                  <td>FastAPI with four read endpoints, written <em>for an agent to use</em>: lists
+                    are paginated and pre-sorted by urgency, and there is a
+                    <code>/kpi/riepilogo</code> so the agent counts with one small call instead of
+                    downloading every row.</td>
+                </tr>
+                <tr>
+                  <td class="fw-bold bg-light"><code>POST /token</code></td>
+                  <td>The OAuth2 <em>client credentials</em> endpoint. It checks the client
+                    id/secret and returns a JWT that expires after 15 minutes. The connector calls
+                    it on its own and renews the token, so you never handle it.</td>
+                </tr>
+                <tr>
+                  <td class="fw-bold bg-light"><code>/openapi.json</code></td>
+                  <td>Generated by FastAPI from the code itself, not written by hand.
+                    <strong>This is the contract the connector imports:</strong> every operation in
+                    it becomes a tool, and each one's <code>summary</code> and
+                    <code>description</code> become the instructions the agent reads.</td>
+                </tr>
+                <tr>
+                  <td class="fw-bold bg-light"><code>Dockerfile</code></td>
+                  <td>python:3.12-slim running uvicorn on port 8100, started as the
+                    <code>gestionale</code> service by the one-click starter below.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h6 class="fw-bold mt-4">How it gets out of your laptop</h6>
+          <p>
+            The API listens on <code>localhost:8100</code>, which AIsuru cannot reach, and the
+            connector only accepts <code>https://</code> addresses. So the starter opens an
+            <strong>ngrok</strong> tunnel and gives you a public HTTPS hostname pointing at your
+            container. That is a demo device: <strong>in production your gestionale already has an
+            HTTPS address</strong> reachable by AIsuru (or you expose a read-only slice of it behind
+            your firewall), ngrok disappears, and every other value stays exactly the same.
+          </p>
+
+          <h6 class="fw-bold mt-4">To do this with your own API</h6>
+          <ol class="mb-3">
+            <li>It must be reachable over <strong>HTTPS</strong>.</li>
+            <li>It needs an <strong>OpenAPI spec</strong>. Most frameworks generate one (FastAPI,
+              NestJS, Spring, Rails with rswag). If yours does not, describe the endpoints by hand
+              in <code>oauth_endpoints_json</code> instead.</li>
+            <li>Its authentication must be one the connector speaks: static bearer token,
+              OAuth2 client credentials, password, refresh, JWT bearer, or none at all.</li>
+            <li>Write the <strong>summary and description of every endpoint as instructions for the
+              agent</strong>, not as notes for developers. They end up in the prompt.</li>
+          </ol>
+
+          <div class="alert alert-info mb-0 small">
+            <i class="bi bi-lightbulb me-1"></i>
+            <strong>The point of all this:</strong> a colleague asks "how many projects are we late
+            on for Rossi Spa this month?" and gets an answer in chat. No login to the
+            gestionale, no export, and no MCP server written by you.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%# Setup Instructions %>
+  <% unless @show_agent %>
+    <%# Architecture Diagram %>
+    <div class="row mb-4">
+      <div class="col-lg-10 mx-auto">
+        <div class="card border-0 shadow-sm" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
+          <div class="card-body text-center py-4">
+            <h6 class="text-muted mb-3">Architecture</h6>
+            <div class="d-flex justify-content-center align-items-center flex-wrap gap-2">
+              <span class="badge bg-primary fs-6 px-3 py-2">AIsuru Agent</span>
+              <i class="bi bi-arrow-right text-muted fs-4"></i>
+              <span class="badge fs-6 px-3 py-2" style="background: linear-gradient(135deg, #be123c 0%, #fb7185 100%);">OAuth/API Connector<br><small class="fw-normal">(MCP server, generated)</small></span>
+              <i class="bi bi-arrow-right text-muted fs-4"></i>
+              <span class="badge bg-dark fs-6 px-3 py-2">ngrok HTTPS</span>
+              <i class="bi bi-arrow-right text-muted fs-4"></i>
+              <span class="badge bg-success fs-6 px-3 py-2">FastAPI ERP (Docker)</span>
+              <i class="bi bi-arrow-right text-muted fs-4"></i>
+              <span class="badge bg-warning fs-6 px-3 py-2">SQLite</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%# One-click starter %>
+    <%= render "shared/infra_launcher", demo: "demo6", color: "linear-gradient(135deg, #be123c 0%, #fb7185 100%)" %>
+
+    <%# Setup Instructions (manual fallback) %>
+    <div class="row mb-4" id="manual-setup">
+      <div class="col-lg-10 mx-auto">
+        <div class="card border-primary">
+          <div class="card-header text-white" style="background: linear-gradient(135deg, #be123c 0%, #fb7185 100%);">
+            <h5 class="mb-0">
+              <i class="bi bi-tools me-2"></i>
+              Manual Setup Guide: OAuth / API Connector
+            </h5>
+          </div>
+          <div class="card-body">
+            <p class="text-muted mb-4">
+              This is the step-by-step alternative to the one-click starter above. Use it if the button
+              doesn't work or if you want to understand what happens under the hood.
+              The agent will be able to query and update the ERP through its REST API.
+            </p>
+
+            <%# Step 1 %>
+            <div class="d-flex mb-4">
+              <div class="flex-shrink-0 me-3">
+                <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #be123c 0%, #fb7185 100%);">1</span>
+              </div>
+              <div class="flex-grow-1">
+                <h6 class="fw-bold">Configure ngrok Authentication</h6>
+                <p class="text-muted mb-2">
+                  Get your ngrok auth token from <a href="https://dashboard.ngrok.com/get-started/your-authtoken" target="_blank">ngrok dashboard</a>.
+                  Create a <code>.env</code> file in the demo directory:
+                </p>
+                <pre class="bg-dark text-light p-3 rounded mb-1"><code>NGROK_AUTHTOKEN=your_token_here</code></pre>
+              </div>
+            </div>
+
+            <%# Step 2 %>
+            <div class="d-flex mb-4">
+              <div class="flex-shrink-0 me-3">
+                <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #be123c 0%, #fb7185 100%);">2</span>
+              </div>
+              <div class="flex-grow-1">
+                <h6 class="fw-bold">Free the ngrok Tunnel (if needed)</h6>
+                <p class="text-muted mb-2">
+                  <strong>⚠️ ngrok free accounts support only 1 active tunnel.</strong> If you were using another demo, stop all ngrok tunnels first:
+                </p>
+                <pre class="bg-dark text-light p-3 rounded mb-1"><code>docker compose stop ngrok-mongo ngrok-mcp ngrok-demo2 ngrok-gestionale</code></pre>
+                <small class="text-muted">
+                  This stops all ngrok tunnels, freeing the connection for this demo.
+                </small>
+              </div>
+            </div>
+
+            <%# Step 3 %>
+            <div class="d-flex mb-4">
+              <div class="flex-shrink-0 me-3">
+                <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #be123c 0%, #fb7185 100%);">3</span>
+              </div>
+              <div class="flex-grow-1">
+                <h6 class="fw-bold">Start the ERP and its Tunnel</h6>
+                <p class="text-muted mb-2">
+                  Start the fake ERP (FastAPI) and the ngrok tunnel that exposes it over HTTPS:
+                </p>
+                <pre class="bg-dark text-light p-3 rounded mb-1"><code>docker compose up -d gestionale
+docker compose up -d ngrok-gestionale</code></pre>
+                <small class="text-muted">
+                  Access the ngrok dashboard at <a href="http://localhost:4045" target="_blank" class="text-decoration-none">http://localhost:4045</a> to see the public HTTPS URL.
+                </small>
+              </div>
+            </div>
+
+            <%# Step 4 %>
+            <div class="d-flex mb-3">
+              <div class="flex-shrink-0 me-3">
+                <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #be123c 0%, #fb7185 100%);">4</span>
+              </div>
+              <div class="flex-grow-1">
+                <h6 class="fw-bold">Build the six connector values</h6>
+                <p class="text-muted mb-2">
+                  Take the tunnel's <strong>HTTPS URL</strong> (e.g. <code>https://abc123.ngrok-free.app</code>)
+                  and build the six values you will paste into AIsuru in the next section:
+                </p>
+                <div class="table-responsive">
+                  <table class="table table-bordered table-sm mb-2">
+                    <tbody>
+                      <tr>
+                        <td class="fw-bold bg-light" style="width: 200px;"><code>oauth_auth_type</code></td>
+                        <td><code>oauth2_client_credentials</code></td>
+                      </tr>
+                      <tr>
+                        <td class="fw-bold bg-light"><code>oauth_token_url</code></td>
+                        <td><code>https://<span class="text-danger">&lt;YOUR_NGROK_URL&gt;</span>/token</code></td>
+                      </tr>
+                      <tr>
+                        <td class="fw-bold bg-light"><code>oauth_client_id</code></td>
+                        <td><code>aisuru-demo</code></td>
+                      </tr>
+                      <tr>
+                        <td class="fw-bold bg-light"><code>oauth_client_secret</code></td>
+                        <td><code>demo-secret-sys06</code></td>
+                      </tr>
+                      <tr>
+                        <td class="fw-bold bg-light"><code>oauth_scope</code></td>
+                        <td><code>commesse:read</code></td>
+                      </tr>
+                      <tr>
+                        <td class="fw-bold bg-light"><code>oauth_openapi_url</code></td>
+                        <td><code>https://<span class="text-danger">&lt;YOUR_NGROK_URL&gt;</span>/openapi.json</code></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <small class="text-muted">
+                  These credentials are printed here because this is a teaching demo. In
+                  production they live in a secret store, which is what the connector does for you:
+                  secrets are saved encrypted.
+                </small>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%# AIsuru side: required whichever route was taken above %>
+    <%= render "shared/aisuru_mcp_setup", demo: "demo6", color: "linear-gradient(135deg, #be123c 0%, #fb7185 100%)" %>
+
+    <%# Info about how to get Agent IDs %>
+    <div class="row mb-4">
+      <div class="col-lg-10 mx-auto">
+        <div class="card border-info">
+          <div class="card-header bg-info text-white">
+            <h5 class="mb-0">
+              <i class="bi bi-info-circle me-2"></i>
+              How to get your Agent IDs
+            </h5>
+          </div>
+          <div class="card-body">
+            <ol class="mb-0">
+              <li class="mb-2">
+                <strong>Create an Agent</strong> on <a href="https://www.aisuru.com" target="_blank">AIsuru</a>
+                (or use your own tenant if you have a PaaS subscription)
+              </li>
+              <li class="mb-2">
+                <strong>Open your Agent</strong> and click on <strong>"Dev docs"</strong> in the left sidebar
+              </li>
+              <li class="mb-2">
+                Expand the <strong>"Other references"</strong> section (or "Altri riferimenti" in Italian)
+              </li>
+              <li class="mb-2">
+                Copy the following values:
+                <ul class="mt-2">
+                  <li><strong>Secondary Memori (Agent) ID</strong> &rarr; This is your <code>memoriID</code></li>
+                  <li><strong>Owner user ID</strong> &rarr; This is your <code>ownerUserID</code></li>
+                </ul>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%# Configuration Form %>
+    <div class="row mb-5">
+      <div class="col-lg-8 mx-auto">
+        <div class="card shadow">
+          <div class="card-header text-white" style="background: linear-gradient(135deg, #be123c 0%, #fb7185 100%);">
+            <h5 class="mb-0">
+              <i class="bi bi-gear me-2"></i>
+              Configure Your Agent
+            </h5>
+          </div>
+          <div class="card-body p-4">
+            <%= form_with url: demo6_configure_path, method: :post, local: true do |f| %>
+              <div class="mb-4">
+                <label for="memori_id" class="form-label fw-bold">
+                  <i class="bi bi-fingerprint me-1"></i>
+                  Memori (Agent) Secondary ID *
+                </label>
+                <%= f.text_field :memori_id,
+                    class: "form-control form-control-lg",
+                    placeholder: "e.g., a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                    required: true,
+                    pattern: "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}" %>
+                <div class="form-text">
+                  Found in Dev docs &rarr; Other references &rarr; "Secondary Memori (Agent) ID"
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <label for="owner_user_id" class="form-label fw-bold">
+                  <i class="bi bi-person-badge me-1"></i>
+                  Owner User ID
+                </label>
+                <%= f.text_field :owner_user_id,
+                    class: "form-control form-control-lg",
+                    placeholder: "e.g., b2c3d4e5-f6a7-8901-bcde-f12345678901",
+                    required: true,
+                    pattern: "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}" %>
+                <div class="form-text">
+                  Found in Dev docs &rarr; Other references &rarr; "Owner user ID"
+                </div>
+              </div>
+
+              <hr class="my-4">
+              <h6 class="text-muted mb-3">
+                <i class="bi bi-sliders me-1"></i>
+                Advanced Configuration (pre-filled with defaults)
+              </h6>
+
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="tenant_id" class="form-label">
+                    <i class="bi bi-building me-1"></i>
+                    Tenant ID
+                  </label>
+                  <%= f.text_field :tenant_id,
+                      class: "form-control",
+                      value: @tenant_id || "www.aisuru.com",
+                      required: true %>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label for="base_url" class="form-label">
+                    <i class="bi bi-link-45deg me-1"></i>
+                    Base URL
+                  </label>
+                  <%= f.text_field :base_url,
+                      class: "form-control",
+                      value: @base_url || "https://www.aisuru.com",
+                      required: true %>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="engine_url" class="form-label">
+                  <i class="bi bi-cpu me-1"></i>
+                  Engine URL
+                </label>
+                <%= f.text_field :engine_url,
+                    class: "form-control",
+                    value: @engine_url || "https://engine.memori.ai/memori/v2",
+                    required: true %>
+              </div>
+
+              <div class="mb-4">
+                <label for="api_url" class="form-label">
+                  <i class="bi bi-server me-1"></i>
+                  API URL
+                </label>
+                <%= f.text_field :api_url,
+                    class: "form-control",
+                    value: @api_url || "https://backend.memori.ai/api/v2",
+                    required: true %>
+              </div>
+
+              <div class="d-grid">
+                <%= f.submit "Load Agent", class: "btn btn-lg text-white", style: "background: linear-gradient(135deg, #be123c 0%, #fb7185 100%);" %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <%# Agent & Live ERP Split View %>
+  <% if @show_agent %>
+    <%# Agent Info Banner %>
+    <div class="row mb-3">
+      <div class="col-12">
+        <div class="alert d-flex align-items-center mb-0 text-white" style="background: linear-gradient(135deg, #be123c 0%, #fb7185 100%);">
+          <i class="bi bi-check-circle-fill me-2 fs-5"></i>
+          <div class="flex-grow-1">
+            <strong>Agent Connected!</strong>
+            Chat with the agent on the left. It can query the ERP through its REST API.
+            Click <strong>"Refresh"</strong> on the right to see live changes.
+          </div>
+          <%= link_to demo6_path, class: "btn btn-outline-light btn-sm ms-3" do %>
+            <i class="bi bi-arrow-counterclockwise me-1"></i> Reconfigure
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <%# Two-Column Layout %>
+    <div class="row g-3">
+
+      <%# LEFT: Agent %>
+      <div class="col-lg-6">
+        <div class="card shadow">
+          <div class="card-header text-white d-flex align-items-center" style="background: linear-gradient(135deg, #be123c 0%, #fb7185 100%);">
+            <i class="bi bi-robot me-2"></i>
+            <strong>AIsuru Agent</strong>
+            <span class="badge bg-light text-dark ms-auto">API-enabled</span>
+          </div>
+          <div class="card-body p-0">
+            <div class="memori-container" style="height: 650px;">
+              <memori-client
+                memoriName="YourAgent"
+                ownerUserName="owner"
+                memoriID="<%= @memori_id %>"
+                ownerUserID="<%= @owner_user_id %>"
+                tenantID="<%= @tenant_id %>"
+                engineURL="<%= @engine_url %>"
+                apiURL="<%= @api_url %>"
+                baseURL="<%= @base_url %>"
+                layout="CHAT"
+                uiLang="EN"
+                spokenLang="EN"
+                showLogin="true"
+              ></memori-client>
+            </div>
+          </div>
+        </div>
+
+        <div class="card shadow-sm mt-3">
+          <div class="card-body py-3">
+            <h6 class="text-muted mb-2">
+              <i class="bi bi-chat-quote me-1"></i> Try these in the chat
+            </h6>
+            <div class="d-flex flex-column gap-2">
+              <% [
+                   "Quante commesse attive abbiamo questo mese?",
+                   "Mostrami le commesse del cliente Rossi Spa che sono in ritardo",
+                   "Porta la commessa CM-#{Date.current.year}-003 all'80% e annota: collaudo completato"
+                 ].each do |prompt| %>
+                <button type="button" class="btn btn-sm btn-outline-secondary text-start demo6-prompt"
+                        data-prompt="<%= prompt %>">
+                  <i class="bi bi-clipboard me-1"></i><%= prompt %>
+                </button>
+              <% end %>
+            </div>
+            <small class="text-muted d-block mt-2">
+              Click to copy, then paste into the chat. The third one writes: watch the panel
+              on the right change.
+            </small>
+            <small class="text-muted d-block mt-2">
+              <i class="bi bi-exclamation-triangle me-1"></i>
+              If the ERP container has been running for a while, "this month" and "in ritardo"
+              may look stale. Use the <strong>Reset</strong> button on the right (or
+              <code>docker compose down -v</code>) to regenerate fresh seed dates.
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <%# RIGHT: Live ERP data %>
+      <div class="col-lg-6">
+        <div class="card shadow h-100">
+          <div class="card-header text-white d-flex align-items-center" style="background: linear-gradient(135deg, #be123c 0%, #fb7185 100%);">
+            <i class="bi bi-kanban me-2"></i>
+            <strong>Live ERP data</strong>
+            <span class="badge bg-light text-dark ms-2">via REST API</span>
+            <button class="btn btn-sm btn-outline-light ms-auto" onclick="refreshDashboard()">
+              <i class="bi bi-arrow-clockwise me-1"></i> Refresh
+            </button>
+            <button class="btn btn-sm btn-outline-light ms-2" onclick="resetDemoData()">
+              <i class="bi bi-arrow-counterclockwise me-1"></i> Reset
+            </button>
+          </div>
+          <div class="card-body" style="height: 650px; overflow-y: auto;">
+            <div id="demo6-dashboard">
+              <%= render partial: "demo6/dashboard" %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function refreshDashboard() {
+        fetch('<%= demo6_commesse_path %>')
+          .then(response => response.text())
+          .then(html => {
+            document.getElementById('demo6-dashboard').innerHTML = html;
+          });
+      }
+
+      function resetDemoData() {
+        fetch('<%= demo6_reset_path %>', {
+          method: 'POST',
+          headers: {
+            'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]')?.content || '',
+          },
+        })
+          .then(response => response.text())
+          .then(html => {
+            document.getElementById('demo6-dashboard').innerHTML = html;
+          });
+      }
+
+      document.querySelectorAll('.demo6-prompt').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          navigator.clipboard.writeText(btn.dataset.prompt);
+          const icon = btn.querySelector('i');
+          icon.className = 'bi bi-check2 me-1';
+          setTimeout(() => { icon.className = 'bi bi-clipboard me-1'; }, 1500);
+        });
+      });
+
+      // Auto-refresh every 5 seconds
+      setInterval(refreshDashboard, 5000);
+    </script>
+  <% end %>
+
+</div>
