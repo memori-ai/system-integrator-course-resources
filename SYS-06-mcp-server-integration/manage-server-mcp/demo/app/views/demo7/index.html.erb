@@ -1,0 +1,354 @@
+<% content_for :title, "Demo 7: From Email to App" %>
+
+<div class="container py-5">
+
+  <%# Back to Home %>
+  <div class="row mb-3">
+    <div class="col">
+      <%= link_to root_path, class: "btn btn-outline-secondary btn-sm" do %>
+        <i class="bi bi-arrow-left me-1"></i> Back to Demo Selection
+      <% end %>
+    </div>
+  </div>
+
+  <%# Hero Section %>
+  <div class="row mb-4">
+    <div class="col-lg-10 mx-auto text-center">
+      <span class="badge mb-3 fs-6 text-white" style="background: linear-gradient(135deg, #4f46e5 0%, #db2777 100%);">Demo 7</span>
+      <h1 class="display-5 fw-bold mb-3">
+        <i class="bi bi-envelope-paper me-2" style="color: #4f46e5;"></i>
+        From Email to App
+      </h1>
+      <p class="lead text-muted">
+        Three MCP servers on one agent: <strong>Outlook</strong> brings a request in,
+        <strong>Vibe Coder</strong> turns it into software, <strong>Persistence</strong>
+        remembers what was built.
+      </p>
+    </div>
+  </div>
+
+  <div class="row mb-4">
+    <div class="col-lg-10 mx-auto">
+      <div class="card border-0 shadow-sm" style="border-left: 4px solid #4f46e5 !important;">
+        <div class="card-body">
+          <h5 class="fw-bold mb-3">
+            <i class="bi bi-info-circle me-2" style="color: #4f46e5;"></i>
+            About this demo
+          </h5>
+          <p class="text-muted mb-2">
+            The previous demos each connect an agent to one capability. This one puts three
+            on the same agent and lets them hand work to each other:
+            <strong>Outlook MCP Server</strong> reads the mailbox,
+            <strong>AIsuru Vibe Coder</strong> generates a self-contained HTML/JavaScript app,
+            and <strong>MCP Persistence</strong> keeps a library of every project produced.
+          </p>
+          <p class="text-muted mb-0">
+            The attendee writes no code, and no prompt either. They send an email,
+            and an application comes back.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%# The one thing that makes this demo different from every other page in the
+      module: there is no embedded chat here, and the reason is a security
+      default rather than an omission. Say it early and say it plainly, or the
+      class spends the demo looking for the missing web component. %>
+  <div class="row mb-4">
+    <div class="col-lg-10 mx-auto">
+      <div class="alert alert-warning border-warning d-flex mb-0">
+        <i class="bi bi-shield-lock-fill me-3 fs-4 text-warning"></i>
+        <div>
+          <strong>This demo runs inside AIsuru, not in an embedded chat.</strong>
+          <p class="text-muted mb-2 small">
+            The Outlook MCP Server ships with <code>IDENTITY_STRICT_MAILBOX</code> turned
+            <strong>on by default</strong>. With that flag on, the agent will only touch the mailbox
+            of the AIsuru account that owns it: a visitor arriving through an embedded web
+            component is a different identity, so every mailbox call is refused. That is the
+            point. It stops an agent published on a public page from reading its owner's
+            email on behalf of a stranger.
+          </p>
+          <p class="text-muted mb-0 small">
+            Turning the flag off would let the agent serve the mailbox to anyone who can reach the
+            chat. We leave it on, and run the demo where the identity matches: signed into AIsuru,
+            in the agent's own chat. Everything else on this page stays exactly the same: the
+            setup, the prompt, the email, the messages to send.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%# Setup Instructions %>
+  <div class="row mb-4">
+    <div class="col-lg-10 mx-auto">
+      <div class="card" style="border-color: #4f46e5;">
+        <div class="card-header text-white" style="background: linear-gradient(135deg, #4f46e5 0%, #db2777 100%);">
+          <h5 class="mb-0">
+            <i class="bi bi-tools me-2"></i>
+            Setup Instructions: Outlook + Vibe Coder + Persistence
+          </h5>
+        </div>
+        <div class="card-body">
+          <p class="text-muted mb-4">
+            All three MCP servers used here are provided by AIsuru, so there is nothing to run
+            or expose locally. Only the Outlook server needs values filled in.
+          </p>
+
+          <%# Step 1 %>
+          <div class="d-flex mb-4">
+            <div class="flex-shrink-0 me-3">
+              <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #4f46e5 0%, #db2777 100%);">1</span>
+            </div>
+            <div class="flex-grow-1">
+              <h6 class="fw-bold">Create an Agent on AIsuru</h6>
+              <p class="text-muted mb-0">
+                Create a new agent on <a href="https://www.aisuru.com" target="_blank">AIsuru</a>,
+                signed in with the account whose mailbox you will connect. Use a fresh agent: this
+                demo starts from an empty project library.
+              </p>
+            </div>
+          </div>
+
+          <%# Step 2 %>
+          <div class="d-flex mb-4">
+            <div class="flex-shrink-0 me-3">
+              <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #4f46e5 0%, #db2777 100%);">2</span>
+            </div>
+            <div class="flex-grow-1">
+              <h6 class="fw-bold">Add the Outlook MCP Server</h6>
+              <p class="text-muted mb-2">
+                In your agent, open the <strong>MCP</strong> section and add
+                <strong>Outlook MCP Server</strong> from the catalog. It asks for two values:
+              </p>
+              <pre class="bg-dark text-light p-3 rounded mb-2"><code>ms-tenant-id: &lt;ms-tenant-id&gt;
+ms-client-id: &lt;ms-client-id&gt;</code></pre>
+              <small class="text-muted d-block mb-2">
+                These identify the Microsoft app registration used for the demo. Whoever runs the
+                course provides them. They are not per-attendee values.
+              </small>
+              <small class="text-muted">
+                Leave <code>IDENTITY_STRICT_MAILBOX</code> at its default. It is what ties the
+                mailbox to your own AIsuru identity, and this run-through assumes it is on.
+              </small>
+            </div>
+          </div>
+
+          <%# Step 3 %>
+          <div class="d-flex mb-4">
+            <div class="flex-shrink-0 me-3">
+              <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #4f46e5 0%, #db2777 100%);">3</span>
+            </div>
+            <div class="flex-grow-1">
+              <h6 class="fw-bold">Add AIsuru Vibe Coder</h6>
+              <p class="text-muted mb-0">
+                From the same MCP catalog, add <strong>AIsuru Vibe Coder</strong>. No credentials
+                to fill in: this is the server that writes and renders the application.
+              </p>
+            </div>
+          </div>
+
+          <%# Step 4 %>
+          <div class="d-flex mb-4">
+            <div class="flex-shrink-0 me-3">
+              <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #4f46e5 0%, #db2777 100%);">4</span>
+            </div>
+            <div class="flex-grow-1">
+              <h6 class="fw-bold">Add MCP Persistence</h6>
+              <p class="text-muted mb-0">
+                Add <strong>MCP Persistence</strong>, again with no credentials. This is where the
+                agent's project library lives. You can inspect it at any time with the
+                <strong>Dashboard</strong> button next to the server, same as in Demo 4.
+              </p>
+            </div>
+          </div>
+
+          <%# Step 5 %>
+          <div class="d-flex mb-4">
+            <div class="flex-shrink-0 me-3">
+              <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #4f46e5 0%, #db2777 100%);">5</span>
+            </div>
+            <div class="flex-grow-1">
+              <h6 class="fw-bold">Install the agent's system prompt</h6>
+              <p class="text-muted mb-2">
+                Download the ready-made prompt and paste it into
+                <strong>Agent &rarr; Personalization &rarr; Prompt</strong>.
+              </p>
+              <%= link_to demo7_asset_path(kind: "prompt"), class: "btn btn-sm text-white", style: "background: linear-gradient(135deg, #4f46e5 0%, #db2777 100%);" do %>
+                <i class="bi bi-download me-1"></i> Download system prompt
+              <% end %>
+            </div>
+          </div>
+
+          <%# Step 6 %>
+          <div class="d-flex mb-3">
+            <div class="flex-shrink-0 me-3">
+              <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #4f46e5 0%, #db2777 100%);">6</span>
+            </div>
+            <div class="flex-grow-1">
+              <h6 class="fw-bold">Open the agent's chat on AIsuru</h6>
+              <p class="text-muted mb-0">
+                Stay signed in and open your agent's own chat on AIsuru. That is where the
+                run-through below happens. There is no <code>memoriID</code> to paste and no
+                agent to load on this page, because the mailbox will only answer to the account
+                that owns it.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%# Deliberately not a step. The Scheduler belongs in this picture, but
+      wiring it in hides the very flow the demo exists to show. %>
+  <div class="row mb-4">
+    <div class="col-lg-10 mx-auto">
+      <div class="alert alert-light border d-flex mb-0">
+        <i class="bi bi-clock-history me-3 fs-4" style="color: #4f46e5;"></i>
+        <div>
+          <strong>What about MCP Scheduler?</strong>
+          <p class="text-muted mb-0 small">
+            You could add it here and have the agent check the mailbox every hour, building
+            incoming requests unattended. We leave it out of this run-through on purpose: with a
+            schedule in the middle, the class no longer sees the moment the email turns into an
+            application. See <%= link_to "Demo 4", demo4_path %> for the Scheduler on its own.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%# The run-through, in order. Reading these off a slide mid-explanation is
+      what makes a live demo stumble, so they are one click each. They are
+      copied here and pasted into the agent's chat on AIsuru.
+      Italian on purpose: this is what the presenter types into the agent. %>
+  <div class="row mb-4">
+    <div class="col-lg-10 mx-auto">
+      <div class="card shadow-sm">
+        <div class="card-header text-white" style="background: linear-gradient(135deg, #4f46e5 0%, #db2777 100%);">
+          <h5 class="mb-0">
+            <i class="bi bi-list-ol me-2"></i>
+            The run-through
+          </h5>
+        </div>
+        <div class="card-body py-3">
+          <p class="text-muted small mb-3">
+            Copy each message and paste it into your agent's chat on AIsuru, in this order.
+          </p>
+
+          <div class="d-flex align-items-start mb-2">
+            <span class="badge bg-secondary rounded-pill me-2 mt-1">1</span>
+            <div>
+              <button type="button" class="btn btn-sm btn-outline-secondary js-copy-prompt"
+                      data-prompt="Inizializza il database della libreria progetti.">
+                <i class="bi bi-clipboard me-1"></i> Inizializza il database
+              </button>
+              <div class="form-text mb-0">Persistence creates the project library.</div>
+            </div>
+          </div>
+
+          <div class="d-flex align-items-start mb-2">
+            <span class="badge bg-secondary rounded-pill me-2 mt-1">2</span>
+            <div>
+              <button type="button" class="btn btn-sm btn-outline-secondary js-copy-prompt"
+                      data-prompt="Aggancia la mia casella Outlook.">
+                <i class="bi bi-clipboard me-1"></i> Aggancia la casella Outlook
+              </button>
+              <div class="form-text mb-0">
+                The agent replies with a Microsoft sign-in link or code. Sign in with the same
+                account you are using on AIsuru. With
+                <code>IDENTITY_STRICT_MAILBOX</code> on, any other mailbox is refused.
+              </div>
+            </div>
+          </div>
+
+          <div class="d-flex align-items-start mb-2">
+            <span class="badge bg-secondary rounded-pill me-2 mt-1">3</span>
+            <div>
+              <%= link_to demo7_asset_path(kind: "email"), class: "btn btn-sm btn-outline-primary" do %>
+                <i class="bi bi-download me-1"></i> Download the project email
+              <% end %>
+              <div class="form-text mb-0">
+                Send it to the mailbox you just connected, from any mail client. The first
+                line, "Oggetto: ...", is the subject. Put it in the subject field, not
+                the body.
+              </div>
+            </div>
+          </div>
+
+          <div class="d-flex align-items-start mb-2">
+            <span class="badge bg-secondary rounded-pill me-2 mt-1">4</span>
+            <div>
+              <button type="button" class="btn btn-sm btn-outline-secondary js-copy-prompt"
+                      data-prompt="Leggi le ultime 3 email e realizza il progetto che trovi.">
+                <i class="bi bi-clipboard me-1"></i> Leggi le email e costruisci
+              </button>
+              <div class="form-text mb-0">
+                Outlook &rarr; Vibe Coder &rarr; Persistence. The app is rendered right in the chat.
+              </div>
+            </div>
+          </div>
+
+          <div class="d-flex align-items-start">
+            <span class="badge bg-secondary rounded-pill me-2 mt-1">5</span>
+            <div>
+              <button type="button" class="btn btn-sm btn-outline-secondary js-copy-prompt"
+                      data-prompt="Che progetti hai in libreria?">
+                <i class="bi bi-clipboard me-1"></i> Che progetti hai in libreria?
+              </button>
+              <div class="form-text mb-0">
+                Answered from the persistence store, not from that conversation.
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2">
+            <span class="small text-success d-none" id="copy-feedback">
+              <i class="bi bi-check-lg"></i> Copied
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%# Where the demo actually happens. %>
+  <div class="row mb-5">
+    <div class="col-lg-10 mx-auto">
+      <div class="d-grid">
+        <a href="https://www.aisuru.com" target="_blank" rel="noopener"
+           class="btn btn-lg text-white" style="background: linear-gradient(135deg, #4f46e5 0%, #db2777 100%);">
+          <i class="bi bi-box-arrow-up-right me-2"></i>
+          Open your agent on AIsuru
+        </a>
+      </div>
+      <p class="text-center text-muted small mt-2 mb-0">
+        Signed in as the agent's owner. Keep this page open beside it for the messages above.
+      </p>
+    </div>
+  </div>
+
+  <script>
+    // Copy-ready prompts, same shape as Demo 5.
+    document.querySelectorAll('.js-copy-prompt').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        navigator.clipboard.writeText(btn.dataset.prompt).then(function () {
+          var feedback = document.getElementById('copy-feedback');
+          feedback.textContent = 'Copied!';
+          feedback.classList.remove('d-none', 'text-warning');
+          feedback.classList.add('text-success');
+          setTimeout(function () { feedback.classList.add('d-none'); }, 1500);
+        }).catch(function () {
+          var feedback = document.getElementById('copy-feedback');
+          feedback.textContent = 'Copy manually';
+          feedback.classList.remove('d-none', 'text-success');
+          feedback.classList.add('text-warning');
+          setTimeout(function () { feedback.classList.add('d-none'); }, 2000);
+        });
+      });
+    });
+  </script>
+
+</div>

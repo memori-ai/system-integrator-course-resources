@@ -41,6 +41,19 @@ Rails.application.routes.draw do
   get "demo6/commesse", to: "demo6#commesse", as: :demo6_commesse
   post "demo6/reset", to: "demo6#reset", as: :demo6_reset
 
+  # Demo 7: Outlook + Vibe Coder + Persistence on one agent. The agent reads a
+  # project request from the mailbox and builds the application it describes.
+  # No configure action and no embedded web component: the Outlook MCP Server
+  # enables IDENTITY_STRICT_MAILBOX by default, so the mailbox only answers the
+  # AIsuru account that owns the agent. The run-through happens inside AIsuru.
+  get "demo7", to: "demo7#index", as: :demo7
+
+  # Downloads the agent system prompt and the demo request email as plain text.
+  # Course attendees do not have this repository, so both have to be reachable
+  # from the page itself.
+  get "demo7/asset/:kind", to: "demo7#asset", as: :demo7_asset,
+      constraints: { kind: /prompt|email/ }
+
   # One-click demo infrastructure (starts/stops the ngrok tunnel containers)
   post "infra/:demo/start", to: "infra#start", as: :infra_start, constraints: { demo: /demo[1236]/ }
   get "infra/:demo/status", to: "infra#status", as: :infra_status, constraints: { demo: /demo[1236]/ }
