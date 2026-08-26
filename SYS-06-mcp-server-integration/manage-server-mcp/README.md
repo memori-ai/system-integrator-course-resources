@@ -15,7 +15,7 @@ This guide covers how to connect AIsuru AI agents to external data sources and s
 
 ## Demo Application
 
-This module includes **six live demo applications** that showcase different MCP server integration approaches.
+This module includes **seven live demo applications** that showcase different MCP server integration approaches.
 
 ### Quick Start
 
@@ -171,6 +171,62 @@ requested, cached and renewed for you.
 the `gestionale_data` volume survives restarts. If the container has been up for weeks,
 "this month" and "in ritardo" will look wrong. Use the **Reset** button on `/demo6` (or
 `docker compose down -v`) to regenerate fresh seed dates before class.
+
+#### Demo 7: From Email to App
+
+Three MCP servers on one agent: **Outlook MCP Server** reads the mailbox, **AIsuru Vibe
+Coder** generates a self-contained HTML/JavaScript app, and **MCP Persistence** keeps the
+project library. The attendee writes no code and no prompt: they send an email and get an
+application back.
+
+**What you'll learn:**
+- Combine three MCP servers on a single agent
+- Read a live mailbox through the Outlook MCP Server
+- Generate a self-contained HTML/JavaScript app with AIsuru Vibe Coder
+- Persist and list generated projects with MCP Persistence
+
+**Architecture:**
+`Email → Outlook MCP Server → AIsuru Vibe Coder → MCP Persistence → Generated App`
+
+**Prerequisites:**
+- An agent on AIsuru. Nothing local beyond the Rails page: no Docker service, no ngrok
+  tunnel, same as Demos 4 and 5.
+
+**Setup:**
+- Create an agent.
+- Add `Outlook MCP Server` (needs `ms-tenant-id` and `ms-client-id`, provided by whoever runs
+  the course).
+- Add `AIsuru Vibe Coder`.
+- Add `MCP Persistence`.
+- Download the ready-made system prompt from the page and paste it into Agent →
+  Personalization → Prompt.
+- Open the agent's own chat on AIsuru, signed in as its owner.
+
+**Why there is no embedded chat:** the Outlook MCP Server enables
+`IDENTITY_STRICT_MAILBOX` by default, which restricts mailbox access to the AIsuru account
+that owns the agent. A visitor arriving through an embedded web component is a different
+identity, so every mailbox call is refused. That is the protection working, not a
+misconfiguration. Demo 7 therefore keeps the flag on and runs the whole sequence inside
+AIsuru; the page holds the setup, the two downloads and the messages to paste.
+
+**Run-through, in order:**
+1. Initialise the project library.
+2. Connect the mailbox.
+3. Complete the Microsoft sign-in.
+4. Send the downloadable project email to that mailbox.
+5. Ask the agent to read the last 3 emails and build what it finds.
+6. Ask what is in the library.
+
+Every message in the run-through is pasted into the agent's chat on AIsuru.
+
+**Note:** `MCP Scheduler` is deliberately not used here; it could poll the mailbox on a
+schedule, but that pattern is covered on its own in Demo 4.
+
+The two ready-made downloads live in [`agents/`](agents/) and are also served as downloads
+by the demo page itself, at the route `demo7/asset/:kind`:
+
+- `agents/vibe-project-builder.md` — the system prompt to paste into the agent
+- `agents/email-sales-dashboard.md` — the downloadable project email to send to the mailbox
 
 ### Project Structure
 

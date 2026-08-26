@@ -389,6 +389,72 @@
       </div>
     </div>
 
+    <%# Demo 7 Card: Email to App %>
+    <div class="col-lg-6">
+      <div class="card h-100 shadow-lg border-0 card-hover">
+        <div class="card-header text-white py-3" style="background: linear-gradient(135deg, #4f46e5 0%, #db2777 100%);">
+          <h4 class="mb-0">
+            <i class="bi bi-7-circle me-2"></i>
+            Demo 7: From Email to App
+          </h4>
+        </div>
+        <div class="card-body p-4">
+          <div class="mb-4">
+            <span class="badge bg-light text-dark me-2">Outlook</span>
+            <span class="badge bg-light text-dark me-2">Vibe Coder</span>
+            <span class="badge bg-light text-dark me-2">Persistence</span>
+            <span class="badge bg-warning-subtle text-warning">No local infra</span>
+            <span class="badge bg-secondary-subtle text-secondary">Runs on AIsuru</span>
+          </div>
+
+          <h5 class="card-title">Send an email, get an application</h5>
+          <p class="card-text text-muted">
+            The closing demo of the module: three MCP servers on one agent. The agent reads a
+            project request from an <strong>Outlook</strong> mailbox, builds it with
+            <strong>Vibe Coder</strong>, and files it in a project library kept by
+            <strong>Persistence</strong>.
+          </p>
+
+          <hr>
+
+          <h6 class="text-muted mb-3">What you'll learn:</h6>
+          <ul class="list-unstyled small">
+            <li class="mb-2">
+              <i class="bi bi-check-circle text-success me-2"></i>
+              Connect an agent to an Outlook mailbox via MCP
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-check-circle text-success me-2"></i>
+              Generate a working app from a plain-text request
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-check-circle text-success me-2"></i>
+              Combine several MCP servers on a single agent
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-check-circle text-success me-2"></i>
+              Keep the mailbox tied to its owner with <code>IDENTITY_STRICT_MAILBOX</code>
+            </li>
+          </ul>
+
+          <hr>
+
+          <h6 class="text-muted mb-3">Architecture:</h6>
+          <p class="small text-muted mb-0">
+            <i class="bi bi-diagram-3 text-primary me-1"></i>
+            <strong>Email</strong> &rarr; <strong>Outlook MCP</strong> &rarr;
+            <strong>AIsuru Agent</strong> &rarr; <strong>Vibe Coder MCP</strong> +
+            <strong>Persistence MCP</strong>
+          </p>
+        </div>
+        <div class="card-footer bg-white border-0 p-4">
+          <%= link_to demo7_path, class: "btn btn-lg w-100 text-white", style: "background: linear-gradient(135deg, #4f46e5 0%, #db2777 100%);" do %>
+            <i class="bi bi-play-circle me-2"></i>
+            Start Demo 7
+          <% end %>
+        </div>
+      </div>
+    </div>
   </div>
 
 </div>

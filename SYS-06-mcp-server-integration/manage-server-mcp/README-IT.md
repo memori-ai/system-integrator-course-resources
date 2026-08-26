@@ -15,7 +15,7 @@ Questa guida spiega come connettere gli agenti AI AIsuru a sorgenti dati e servi
 
 ## Applicazione Demo
 
-Questo modulo include **sei applicazioni demo funzionanti** che mostrano diversi approcci all'integrazione di server MCP.
+Questo modulo include **sette applicazioni demo funzionanti** che mostrano diversi approcci all'integrazione di server MCP.
 
 ### Quick Start
 
@@ -174,6 +174,63 @@ messo in cache e rinnovato in automatico.
 viene creato, e il volume `gestionale_data` sopravvive ai riavvii. Se il container è attivo
 da settimane, "questo mese" e "in ritardo" risulteranno sbagliati. Usa il bottone **Reset**
 su `/demo6` (oppure `docker compose down -v`) per rigenerare date fresche prima della lezione.
+
+#### Demo 7: Dall'Email all'App
+
+Tre server MCP su un solo agente: **Outlook MCP Server** legge la casella di posta,
+**AIsuru Vibe Coder** genera un'app HTML/JavaScript autonoma, e **MCP Persistence** mantiene
+la libreria dei progetti. Il partecipante non scrive né codice né prompt: invia un'email e
+riceve un'applicazione.
+
+**Cosa imparerai:**
+- Combinare tre server MCP su un unico agente
+- Leggere una casella di posta reale tramite Outlook MCP Server
+- Generare un'app HTML/JavaScript autonoma con AIsuru Vibe Coder
+- Persistere ed elencare i progetti generati con MCP Persistence
+
+**Architettura:**
+`Email → Outlook MCP Server → AIsuru Vibe Coder → MCP Persistence → App generata`
+
+**Prerequisiti:**
+- Un agente su AIsuru. Niente in locale oltre alla pagina Rails: nessun servizio Docker,
+  nessun tunnel ngrok, come nelle Demo 4 e 5.
+
+**Setup:**
+- Crea un agente.
+- Aggiungi `Outlook MCP Server` (richiede `ms-tenant-id` e `ms-client-id`, forniti da chi
+  conduce il corso).
+- Aggiungi `AIsuru Vibe Coder`.
+- Aggiungi `MCP Persistence`.
+- Scarica il system prompt pronto all'uso dalla pagina e incollalo in Agent →
+  Personalizzazione → Prompt.
+- Apri la chat dell'agente su AIsuru, con l'account che lo possiede.
+
+**Perché non c'è la chat incorporata:** l'Outlook MCP Server ha
+`IDENTITY_STRICT_MAILBOX` attivo di default, che limita l'accesso alla casella all'account
+AIsuru proprietario dell'agente. Un visitatore che arriva da un web component incorporato è
+un'identità diversa, quindi ogni chiamata alla casella viene rifiutata. È la protezione che
+funziona, non un errore di configurazione. La Demo 7 lascia quindi il flag attivo e svolge
+tutta la sequenza dentro AIsuru; la pagina contiene il setup, i due download e i messaggi da
+incollare.
+
+**Svolgimento, in ordine:**
+1. Inizializza la libreria dei progetti.
+2. Connetti la casella di posta.
+3. Completa il login Microsoft.
+4. Invia a quella casella l'email di progetto scaricabile.
+5. Chiedi all'agente di leggere le ultime 3 email e costruire quello che trova.
+6. Chiedi cosa contiene la libreria.
+
+Ogni messaggio dello svolgimento va incollato nella chat dell'agente su AIsuru.
+
+**Nota:** `MCP Scheduler` non è usato di proposito in questa demo; potrebbe interrogare la
+casella a intervalli programmati, ma quel pattern è trattato a sé nella Demo 4.
+
+I due file scaricabili pronti all'uso si trovano in [`agents/`](agents/) e sono anche
+serviti come download dalla pagina della demo stessa, tramite la route `demo7/asset/:kind`:
+
+- `agents/vibe-project-builder.md` — il system prompt da incollare nell'agente
+- `agents/email-sales-dashboard.md` — l'email di progetto scaricabile da inviare alla casella
 
 ### Struttura del Progetto
 
