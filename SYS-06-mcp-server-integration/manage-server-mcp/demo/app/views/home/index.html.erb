@@ -326,6 +326,69 @@
       </div>
     </div>
 
+    <%# Demo 6 Card: OAuth / API Connector %>
+    <div class="col-lg-6">
+      <div class="card h-100 shadow-lg border-0 card-hover">
+        <div class="card-header text-white py-3" style="background: linear-gradient(135deg, #be123c 0%, #fb7185 100%);">
+          <h4 class="mb-0">
+            <i class="bi bi-6-circle me-2"></i>
+            Demo 6: OAuth / API Connector
+          </h4>
+        </div>
+        <div class="card-body p-4">
+          <div class="mb-4">
+            <span class="badge bg-danger-subtle text-danger me-2">OAuth2</span>
+            <span class="badge bg-light text-dark me-2">REST API</span>
+            <span class="badge bg-light text-dark me-2">OpenAPI</span>
+            <span class="badge bg-warning-subtle text-warning">ngrok</span>
+          </div>
+
+          <h5 class="card-title">AI Agent calls your REST API</h5>
+          <p class="card-text text-muted">
+            Connect an existing HTTP/REST API to an AIsuru agent without writing a line of code.
+            Point the connector at an OpenAPI spec and every endpoint becomes a tool, with the
+            OAuth2 token requested, cached and renewed for you.
+          </p>
+
+          <hr>
+
+          <h6 class="text-muted mb-3">What you'll learn:</h6>
+          <ul class="list-unstyled small">
+            <li class="mb-2">
+              <i class="bi bi-check-circle text-success me-2"></i>
+              Run a REST API with OAuth2 client credentials in Docker
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-check-circle text-success me-2"></i>
+              Expose it over HTTPS using ngrok
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-check-circle text-success me-2"></i>
+              Import every endpoint from the OpenAPI spec, no JSON by hand
+            </li>
+            <li class="mb-2">
+              <i class="bi bi-check-circle text-success me-2"></i>
+              Watch the agent read data and write it back
+            </li>
+          </ul>
+
+          <hr>
+
+          <h6 class="text-muted mb-3">Architecture:</h6>
+          <p class="small text-muted mb-0">
+            <i class="bi bi-diagram-3 text-primary me-1"></i>
+            <strong>AIsuru Agent</strong> &rarr; <strong>OAuth/API Connector</strong> &rarr; <strong>ngrok HTTPS</strong> &rarr; <strong>FastAPI ERP (Docker)</strong>
+          </p>
+        </div>
+        <div class="card-footer bg-white border-0 p-4">
+          <%= link_to demo6_path, class: "btn btn-lg w-100 text-white", style: "background: linear-gradient(135deg, #be123c 0%, #fb7185 100%);" do %>
+            <i class="bi bi-play-circle me-2"></i>
+            Start Demo 6
+          <% end %>
+        </div>
+      </div>
+    </div>
+
   </div>
 
 </div>

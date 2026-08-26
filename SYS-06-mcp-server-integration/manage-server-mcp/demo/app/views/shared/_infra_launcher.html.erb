@@ -1,6 +1,6 @@
 <%# One-click demo starter.
     Locals:
-      demo  - "demo1" | "demo2" | "demo3"
+      demo  - "demo1" | "demo2" | "demo3" | "demo6"
       color - CSS background for buttons/header (hex or gradient) %>
 
 <div class="row mb-4" id="quick-start">
@@ -23,7 +23,7 @@
           <i class="bi bi-info-circle me-1"></i>
           Either way, you then have to
           <a href="#aisuru-setup"><strong>configure AIsuru</strong></a>: the button only starts the
-          tunnel, it cannot register the MCP server in your agent for you.
+          tunnel, it cannot register the <%= demo == "demo6" ? "connector" : "MCP server" %> in your agent for you.
         </p>
 
         <div class="d-flex flex-wrap gap-2 mb-3">

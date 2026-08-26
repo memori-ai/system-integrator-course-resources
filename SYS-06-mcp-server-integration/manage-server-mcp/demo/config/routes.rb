@@ -34,9 +34,16 @@ Rails.application.routes.draw do
   get "demo5/prompt/:agent", to: "demo5#prompt", as: :demo5_prompt,
       constraints: { agent: /expert|assistant/ }
 
+  # Demo 6: an external REST API (fake ERP) connected through the OAuth/API
+  # connector. The page reads the same API to show live data.
+  get "demo6", to: "demo6#index", as: :demo6
+  post "demo6/configure", to: "demo6#configure", as: :demo6_configure
+  get "demo6/commesse", to: "demo6#commesse", as: :demo6_commesse
+  post "demo6/reset", to: "demo6#reset", as: :demo6_reset
+
   # One-click demo infrastructure (starts/stops the ngrok tunnel containers)
-  post "infra/:demo/start", to: "infra#start", as: :infra_start, constraints: { demo: /demo[123]/ }
-  get "infra/:demo/status", to: "infra#status", as: :infra_status, constraints: { demo: /demo[123]/ }
+  post "infra/:demo/start", to: "infra#start", as: :infra_start, constraints: { demo: /demo[1236]/ }
+  get "infra/:demo/status", to: "infra#status", as: :infra_status, constraints: { demo: /demo[1236]/ }
   post "infra/stop_all", to: "infra#stop_all", as: :infra_stop_all
   get "infra/token", to: "infra#token_status", as: :infra_token_status
   post "infra/token", to: "infra#save_token", as: :infra_save_token

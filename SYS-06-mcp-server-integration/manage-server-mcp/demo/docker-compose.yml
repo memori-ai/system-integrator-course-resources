@@ -27,10 +27,17 @@ services:
       # Docker access goes through the socket proxy: the app can only
       # start/stop containers, everything else is blocked by the proxy.
       - DOCKER_HOST=tcp://docker-socket-proxy:2375
+      # Demo 6: the page reads the fake ERP through the same public API the
+      # agent uses, just over the compose network instead of the tunnel.
+      - GESTIONALE_URL=http://gestionale:8100
+      - GESTIONALE_CLIENT_ID=aisuru-demo
+      - GESTIONALE_CLIENT_SECRET=demo-secret-sys06
+      - GESTIONALE_ADMIN_TOKEN=sys06-demo-admin
     depends_on:
       - mongodb
       - mysql
       - docker-socket-proxy
+      - gestionale
 
   # Filtered gateway to the Docker socket used by the one-click demo starter.
   # Only the container and image/network APIs needed by "docker compose up/stop"
@@ -85,6 +92,24 @@ services:
       - WORKSPACE_ROOT=/workspace
       - PORT=8000
 
+  # Demo 6: fake ERP exposed as a plain REST API with OAuth2 client
+  # credentials. The AIsuru OAuth/API connector imports its /openapi.json.
+  gestionale:
+    build:
+      context: ./docker/gestionale
+      dockerfile: Dockerfile
+    image: sys-06-gestionale-api
+    ports:
+      - "8100:8100"
+    volumes:
+      - gestionale_data:/data
+    environment:
+      - GESTIONALE_DB=/data/gestionale.db
+      - GESTIONALE_CLIENT_ID=aisuru-demo
+      - GESTIONALE_CLIENT_SECRET=demo-secret-sys06
+      - GESTIONALE_JWT_SECRET=sys06-demo-jwt-secret
+      - GESTIONALE_ADMIN_TOKEN=sys06-demo-admin
+
   # ngrok tunnels: free accounts allow only ONE active agent at a time, so
   # the tunnels live in the "tunnels" profile and are NOT started by default.
   # They are started on demand by the "Start demo" button in the web UI
@@ -126,8 +151,22 @@ services:
       - mongodb
     profiles: ["tunnels"]
 
+  # HTTP tunnel for Demo 6 (fake ERP): the OAuth/API connector only accepts
+  # https:// URLs, so the API has to be reachable through the tunnel.
+  ngrok-gestionale:
+    image: ngrok/ngrok:latest
+    command: http gestionale:8100 --log=stdout
+    ports:
+      - "4045:4040"
+    environment:
+      - NGROK_AUTHTOKEN=${NGROK_AUTHTOKEN}
+    depends_on:
+      - gestionale
+    profiles: ["tunnels"]
+
 volumes:
   mongodb_data:
   mysql_data:
   bundle_cache:
   node_modules:
+  gestionale_data:
