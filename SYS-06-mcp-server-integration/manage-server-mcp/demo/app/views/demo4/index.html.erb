@@ -11,351 +11,189 @@
     </div>
   </div>
 
-  <% unless @show_agent %>
-    <%# Hero Section %>
-    <div class="row mb-4">
-      <div class="col-lg-10 mx-auto text-center">
-        <span class="badge mb-3 fs-6 text-white" style="background: linear-gradient(135deg, #6f42c1 0%, #9c6ade 100%);">Demo 4</span>
-        <h1 class="display-5 fw-bold mb-3">
-          <i class="bi bi-clock-history me-2" style="color: #6f42c1;"></i>
-          MCP Scheduler + MCP Persistence
-        </h1>
-        <p class="lead text-muted">
-          Connect an AIsuru agent to the platform's built-in <strong>Scheduler</strong> and
-          <strong>Persistence</strong> MCP servers &mdash; no self-hosted backend required for this demo.
-        </p>
-      </div>
+  <%# Hero Section %>
+  <div class="row mb-4">
+    <div class="col-lg-10 mx-auto text-center">
+      <span class="badge mb-3 fs-6 text-white" style="background: linear-gradient(135deg, #6f42c1 0%, #9c6ade 100%);">Demo 4</span>
+      <h1 class="display-5 fw-bold mb-3">
+        <i class="bi bi-clock-history me-2" style="color: #6f42c1;"></i>
+        MCP Scheduler + MCP Persistence
+      </h1>
+      <p class="lead text-muted">
+        Connect an AIsuru agent to the platform's built-in <strong>Scheduler</strong> and
+        <strong>Persistence</strong> MCP servers &mdash; no self-hosted backend required for this demo.
+      </p>
     </div>
+  </div>
 
-    <%# What this demo covers (placeholder -- to be filled in with the real
-        walkthrough once the Scheduler/Persistence setup steps are defined) %>
-    <div class="row mb-4">
-      <div class="col-lg-10 mx-auto">
-        <div class="card border-0 shadow-sm" style="border-left: 4px solid #6f42c1 !important;">
-          <div class="card-body">
-            <h5 class="fw-bold mb-3">
-              <i class="bi bi-info-circle me-2" style="color: #6f42c1;"></i>
-              About this demo
-            </h5>
-            <p class="text-muted mb-2">
-              <strong>MCP Scheduler</strong> lets the agent schedule a tool call to run at a later time
-              (e.g. a reminder, a follow-up action, a recurring check).
-            </p>
-            <p class="text-muted mb-0">
-              <strong>MCP Persistence</strong> lets the agent store and retrieve structured data across
-              turns and sessions, instead of relying only on conversation history.
-            </p>
-          </div>
+  <div class="row mb-4">
+    <div class="col-lg-10 mx-auto">
+      <div class="card border-0 shadow-sm" style="border-left: 4px solid #6f42c1 !important;">
+        <div class="card-body">
+          <h5 class="fw-bold mb-3">
+            <i class="bi bi-info-circle me-2" style="color: #6f42c1;"></i>
+            About this demo
+          </h5>
+          <p class="text-muted mb-2">
+            <strong>MCP Scheduler</strong> lets the agent schedule a tool call to run at a later time
+            (e.g. a reminder, a follow-up action, a recurring check).
+          </p>
+          <p class="text-muted mb-0">
+            <strong>MCP Persistence</strong> lets the agent store and retrieve structured data across
+            turns and sessions, instead of relying only on conversation history.
+          </p>
         </div>
       </div>
     </div>
+  </div>
 
-    <%# Setup Instructions %>
-    <div class="row mb-4">
-      <div class="col-lg-10 mx-auto">
-        <div class="card" style="border-color: #6f42c1;">
-          <div class="card-header text-white" style="background: linear-gradient(135deg, #6f42c1 0%, #9c6ade 100%);">
-            <h5 class="mb-0">
-              <i class="bi bi-tools me-2"></i>
-              Setup Instructions: Scheduler + Persistence
-            </h5>
-          </div>
-          <div class="card-body">
-            <p class="text-muted mb-4">
-              Both MCP servers used in this demo are built into AIsuru &mdash; there is nothing to run
-              or expose locally, you just need to enable them on your agent.
-            </p>
-
-            <%# Step 1 %>
-            <div class="d-flex mb-4">
-              <div class="flex-shrink-0 me-3">
-                <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #6f42c1 0%, #9c6ade 100%);">1</span>
-              </div>
-              <div class="flex-grow-1">
-                <h6 class="fw-bold">Create an Agent on AIsuru</h6>
-                <p class="text-muted mb-0">
-                  Create a new agent on <a href="https://www.aisuru.com" target="_blank">AIsuru</a>
-                  (or reuse an existing one, including the one from a previous demo).
-                </p>
-              </div>
-            </div>
-
-            <%# Step 2 %>
-            <div class="d-flex mb-4">
-              <div class="flex-shrink-0 me-3">
-                <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #6f42c1 0%, #9c6ade 100%);">2</span>
-              </div>
-              <div class="flex-grow-1">
-                <h6 class="fw-bold">Add the Scheduler and Persistence MCP servers</h6>
-                <p class="text-muted mb-2">
-                  Open your agent in AIsuru and go to the <strong>MCP</strong> section.
-                  From the catalog of built-in servers, add:
-                </p>
-                <ul class="text-muted mb-2">
-                  <li><strong>MCP Scheduler</strong></li>
-                  <li><strong>MCP Persistence</strong></li>
-                </ul>
-                <small class="text-muted">
-                  Both are ready-made platform servers &mdash; no connection string or credentials to fill
-                  in, just add them from the list and save.
-                </small>
-              </div>
-            </div>
-
-            <%# Step 3 %>
-            <div class="d-flex mb-4">
-              <div class="flex-shrink-0 me-3">
-                <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #6f42c1 0%, #9c6ade 100%);">3</span>
-              </div>
-              <div class="flex-grow-1">
-                <h6 class="fw-bold">Get your Agent IDs</h6>
-                <p class="text-muted mb-0">
-                  See the <strong>"How to get your Agent IDs"</strong> box below for where to find
-                  <code>memoriID</code> and <code>ownerUserID</code>.
-                </p>
-              </div>
-            </div>
-
-            <%# Step 4 %>
-            <div class="d-flex mb-4">
-              <div class="flex-shrink-0 me-3">
-                <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #6f42c1 0%, #9c6ade 100%);">4</span>
-              </div>
-              <div class="flex-grow-1">
-                <h6 class="fw-bold">Load the Agent Below</h6>
-                <p class="text-muted mb-0">
-                  Enter your agent's credentials in the form below and click <strong>"Load Agent"</strong>.
-                </p>
-              </div>
-            </div>
-
-            <%# Step 5 %>
-            <div class="d-flex mb-3">
-              <div class="flex-shrink-0 me-3">
-                <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #6f42c1 0%, #9c6ade 100%);">5</span>
-              </div>
-              <div class="flex-grow-1">
-                <h6 class="fw-bold">Try it: schedule a recurring task and watch it persist</h6>
-                <p class="text-muted mb-2">
-                  Ask the agent to run a task on a recurring schedule with a minimum interval of
-                  <strong>1 minute</strong> using MCP Scheduler, and to save the result of each run
-                  using MCP Persistence:
-                </p>
-                <pre class="bg-dark text-light p-3 rounded mb-2"><code>Every minute, run a task and save its result using the persistence tool.</code></pre>
-                <p class="text-muted mb-2">
-                  You can check what's actually being saved in two ways:
-                </p>
-                <ul class="text-muted mb-2">
-                  <li>
-                    Ask the agent to read back what it last saved (e.g.
-                    <em>"what's the last value you saved?"</em>).
-                  </li>
-                  <li>
-                    Or see it directly, without going through the agent: go back to the
-                    <strong>MCP</strong> section, find the <strong>MCP Persistence</strong> server
-                    you added in Step 2, and click its <strong>Dashboard</strong> button &mdash; it
-                    opens a view of the stored data as the MCP server sees it.
-                  </li>
-                </ul>
-                <p class="text-muted mb-0">
-                  Reload that dashboard every minute or so: you should see the saved value change on
-                  its own &mdash; confirming the scheduled task is really running in the background and
-                  updating storage every minute, not just when you're chatting with the agent.
-                </p>
-              </div>
-            </div>
-          </div>
+  <%# The one thing that makes this demo different from Demo 1-3: there is no
+      embedded chat here, and the reason is a platform constraint rather than
+      an omission. Say it early and say it plainly, same as Demo 7. %>
+  <div class="row mb-4">
+    <div class="col-lg-10 mx-auto">
+      <div class="alert alert-warning border-warning d-flex mb-0">
+        <i class="bi bi-shield-lock-fill me-3 fs-4 text-warning"></i>
+        <div>
+          <strong>This demo runs inside AIsuru, not in an embedded chat.</strong>
+          <p class="text-muted mb-2 small">
+            A scheduled task has to reach a conversation that is still there when it fires &mdash;
+            seconds, minutes, or hours later &mdash; and its result has to persist in the agent's own
+            store across that gap. That requires the stable, signed-in identity of the agent's own
+            chat on AIsuru. An embedded web component on a public page is a different, disposable
+            session: it will not reliably be there when the task runs, so Scheduler and Persistence
+            are not exercised through it in this demo.
+          </p>
+          <p class="text-muted mb-0 small">
+            Everything else on this page stays exactly the same: the setup, the servers to add, the
+            prompt to try.
+          </p>
         </div>
       </div>
     </div>
+  </div>
 
-    <%# Info about how to get Agent IDs %>
-    <div class="row mb-4">
-      <div class="col-lg-10 mx-auto">
-        <div class="card border-info">
-          <div class="card-header bg-info text-white">
-            <h5 class="mb-0">
-              <i class="bi bi-info-circle me-2"></i>
-              How to get your Agent IDs
-            </h5>
-          </div>
-          <div class="card-body">
-            <ol class="mb-0">
-              <li class="mb-2">
-                <strong>Create an Agent</strong> on <a href="https://www.aisuru.com" target="_blank">AIsuru</a>
-                (or use your own tenant if you have a PaaS subscription)
-              </li>
-              <li class="mb-2">
-                <strong>Open your Agent</strong> and click on <strong>"Dev docs"</strong> in the left sidebar
-              </li>
-              <li class="mb-2">
-                Expand the <strong>"Other references"</strong> section (or "Altri riferimenti" in Italian)
-              </li>
-              <li class="mb-2">
-                Copy the following values:
-                <ul class="mt-2">
-                  <li><strong>Secondary Memori (Agent) ID</strong> &rarr; This is your <code>memoriID</code></li>
-                  <li><strong>Owner user ID</strong> &rarr; This is your <code>ownerUserID</code></li>
-                </ul>
-              </li>
-            </ol>
-          </div>
+  <%# Setup Instructions %>
+  <div class="row mb-4">
+    <div class="col-lg-10 mx-auto">
+      <div class="card" style="border-color: #6f42c1;">
+        <div class="card-header text-white" style="background: linear-gradient(135deg, #6f42c1 0%, #9c6ade 100%);">
+          <h5 class="mb-0">
+            <i class="bi bi-tools me-2"></i>
+            Setup Instructions: Scheduler + Persistence
+          </h5>
         </div>
-      </div>
-    </div>
+        <div class="card-body">
+          <p class="text-muted mb-4">
+            Both MCP servers used in this demo are built into AIsuru &mdash; there is nothing to run
+            or expose locally, you just need to enable them on your agent.
+          </p>
 
-    <%# Configuration Form %>
-    <div class="row mb-5">
-      <div class="col-lg-8 mx-auto">
-        <div class="card shadow">
-          <div class="card-header text-white" style="background: linear-gradient(135deg, #6f42c1 0%, #9c6ade 100%);">
-            <h5 class="mb-0">
-              <i class="bi bi-gear me-2"></i>
-              Configure Your Agent
-            </h5>
+          <%# Step 1 %>
+          <div class="d-flex mb-4">
+            <div class="flex-shrink-0 me-3">
+              <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #6f42c1 0%, #9c6ade 100%);">1</span>
+            </div>
+            <div class="flex-grow-1">
+              <h6 class="fw-bold">Create an Agent on AIsuru</h6>
+              <p class="text-muted mb-0">
+                Create a new agent on <a href="https://www.aisuru.com" target="_blank">AIsuru</a>
+                (or reuse an existing one, including the one from a previous demo).
+              </p>
+            </div>
           </div>
-          <div class="card-body p-4">
-            <%= form_with url: demo4_configure_path, method: :post, local: true do |f| %>
-              <div class="mb-4">
-                <label for="memori_id" class="form-label fw-bold">
-                  <i class="bi bi-fingerprint me-1"></i>
-                  Memori (Agent) Secondary ID *
-                </label>
-                <%= f.text_field :memori_id,
-                    class: "form-control form-control-lg",
-                    placeholder: "e.g., a1b2c3d4-e5f6-7890-abcd-ef1234567890",
-                    value: @memori_id,
-                    required: true,
-                    pattern: "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}" %>
-                <div class="form-text">
-                  Found in Dev docs &rarr; Other references &rarr; "Secondary Memori (Agent) ID"
-                </div>
-              </div>
 
-              <div class="mb-4">
-                <label for="owner_user_id" class="form-label fw-bold">
-                  <i class="bi bi-person-badge me-1"></i>
-                  Owner User ID *
-                </label>
-                <%= f.text_field :owner_user_id,
-                    class: "form-control form-control-lg",
-                    placeholder: "e.g., b2c3d4e5-f6a7-8901-bcde-f12345678901",
-                    value: @owner_user_id,
-                    required: true,
-                    pattern: "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}" %>
-                <div class="form-text">
-                  Found in Dev docs &rarr; Other references &rarr; "Owner user ID"
-                </div>
-              </div>
-
-              <hr class="my-4">
-              <h6 class="text-muted mb-3">
-                <i class="bi bi-sliders me-1"></i>
-                Advanced Configuration (pre-filled with defaults)
-              </h6>
-
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <label for="tenant_id" class="form-label">
-                    <i class="bi bi-building me-1"></i>
-                    Tenant ID
-                  </label>
-                  <%= f.text_field :tenant_id,
-                      class: "form-control",
-                      value: @tenant_id,
-                      required: true %>
-                </div>
-
-                <div class="col-md-6 mb-3">
-                  <label for="base_url" class="form-label">
-                    <i class="bi bi-link-45deg me-1"></i>
-                    Base URL
-                  </label>
-                  <%= f.text_field :base_url,
-                      class: "form-control",
-                      value: @base_url,
-                      required: true %>
-                </div>
-              </div>
-
-              <div class="mb-3">
-                <label for="engine_url" class="form-label">
-                  <i class="bi bi-cpu me-1"></i>
-                  Engine URL
-                </label>
-                <%= f.text_field :engine_url,
-                    class: "form-control",
-                    value: @engine_url,
-                    required: true %>
-              </div>
-
-              <div class="mb-4">
-                <label for="api_url" class="form-label">
-                  <i class="bi bi-server me-1"></i>
-                  API URL
-                </label>
-                <%= f.text_field :api_url,
-                    class: "form-control",
-                    value: @api_url,
-                    required: true %>
-              </div>
-
-              <div class="d-grid">
-                <%= f.submit "Load Agent", class: "btn btn-lg text-white", style: "background: linear-gradient(135deg, #6f42c1 0%, #9c6ade 100%);" %>
-              </div>
-            <% end %>
+          <%# Step 2 %>
+          <div class="d-flex mb-4">
+            <div class="flex-shrink-0 me-3">
+              <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #6f42c1 0%, #9c6ade 100%);">2</span>
+            </div>
+            <div class="flex-grow-1">
+              <h6 class="fw-bold">Add the Scheduler and Persistence MCP servers</h6>
+              <p class="text-muted mb-2">
+                Open your agent in AIsuru and go to the <strong>MCP</strong> section.
+                From the catalog of built-in servers, add:
+              </p>
+              <ul class="text-muted mb-2">
+                <li><strong>MCP Scheduler</strong></li>
+                <li><strong>MCP Persistence</strong></li>
+              </ul>
+              <small class="text-muted">
+                Both are ready-made platform servers &mdash; no connection string or credentials to fill
+                in, just add them from the list and save.
+              </small>
+            </div>
           </div>
-        </div>
-      </div>
-    </div>
 
-  <% else %>
-    <%# Agent Info Banner %>
-    <div class="row mb-4">
-      <div class="col-lg-10 mx-auto">
-        <div class="alert d-flex align-items-center mb-0 text-white" style="background: linear-gradient(135deg, #6f42c1 0%, #9c6ade 100%);">
-          <i class="bi bi-check-circle-fill me-2 fs-5"></i>
-          <div class="flex-grow-1">
-            <strong>Agent Connected!</strong>
-            Chat with the agent below to try the Scheduler and Persistence MCP tools.
+          <%# Step 3 %>
+          <div class="d-flex mb-4">
+            <div class="flex-shrink-0 me-3">
+              <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #6f42c1 0%, #9c6ade 100%);">3</span>
+            </div>
+            <div class="flex-grow-1">
+              <h6 class="fw-bold">Open the agent's chat on AIsuru</h6>
+              <p class="text-muted mb-0">
+                Stay signed in and open your agent's own chat on AIsuru. That is where the rest of
+                this demo happens. There is no <code>memoriID</code> to paste and no agent to load
+                on this page.
+              </p>
+            </div>
           </div>
-          <%= link_to demo4_path, class: "btn btn-outline-light btn-sm ms-3" do %>
-            <i class="bi bi-arrow-counterclockwise me-1"></i> Reconfigure
-          <% end %>
-        </div>
-      </div>
-    </div>
 
-    <%# Web Component %>
-    <div class="row mb-5">
-      <div class="col-lg-10 mx-auto">
-        <div class="card shadow">
-          <div class="card-header text-white d-flex align-items-center" style="background: linear-gradient(135deg, #6f42c1 0%, #9c6ade 100%);">
-            <i class="bi bi-robot me-2"></i>
-            <strong>AIsuru Agent</strong>
-            <span class="badge bg-light text-dark ms-auto">MCP-enabled</span>
-          </div>
-          <div class="card-body p-0">
-            <div class="memori-container" style="height: 650px;">
-              <memori-client
-                memoriName="YourAgent"
-                ownerUserName="owner"
-                memoriID="<%= @memori_id %>"
-                ownerUserID="<%= @owner_user_id %>"
-                tenantID="<%= @tenant_id %>"
-                engineURL="<%= @engine_url %>"
-                apiURL="<%= @api_url %>"
-                baseURL="<%= @base_url %>"
-                layout="CHAT"
-                uiLang="EN"
-                spokenLang="EN"
-                showLogin="true"
-              ></memori-client>
+          <%# Step 4 %>
+          <div class="d-flex mb-3">
+            <div class="flex-shrink-0 me-3">
+              <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #6f42c1 0%, #9c6ade 100%);">4</span>
+            </div>
+            <div class="flex-grow-1">
+              <h6 class="fw-bold">Try it: schedule a recurring task and watch it persist</h6>
+              <p class="text-muted mb-2">
+                In the agent's chat, ask it to run a task on a recurring schedule with a minimum
+                interval of <strong>1 minute</strong> using MCP Scheduler, and to save the result of
+                each run using MCP Persistence:
+              </p>
+              <pre class="bg-dark text-light p-3 rounded mb-2"><code>Every minute, run a task and save its result using the persistence tool.</code></pre>
+              <p class="text-muted mb-2">
+                You can check what's actually being saved in two ways:
+              </p>
+              <ul class="text-muted mb-2">
+                <li>
+                  Ask the agent to read back what it last saved (e.g.
+                  <em>"what's the last value you saved?"</em>).
+                </li>
+                <li>
+                  Or see it directly, without going through the agent: go back to the
+                  <strong>MCP</strong> section, find the <strong>MCP Persistence</strong> server
+                  you added in Step 2, and click its <strong>Dashboard</strong> button &mdash; it
+                  opens a view of the stored data as the MCP server sees it.
+                </li>
+              </ul>
+              <p class="text-muted mb-0">
+                Reload that dashboard every minute or so: you should see the saved value change on
+                its own &mdash; confirming the scheduled task is really running in the background and
+                updating storage every minute, not just when you're chatting with the agent.
+              </p>
             </div>
           </div>
         </div>
       </div>
     </div>
-  <% end %>
+  </div>
+
+  <%# Where the demo actually happens. %>
+  <div class="row mb-5">
+    <div class="col-lg-10 mx-auto">
+      <div class="d-grid">
+        <a href="https://www.aisuru.com" target="_blank" rel="noopener"
+           class="btn btn-lg text-white" style="background: linear-gradient(135deg, #6f42c1 0%, #9c6ade 100%);">
+          <i class="bi bi-box-arrow-up-right me-2"></i>
+          Open your agent on AIsuru
+        </a>
+      </div>
+      <p class="text-center text-muted small mt-2 mb-0">
+        Signed in as the agent's owner. Keep this page open beside it for the setup steps above.
+      </p>
+    </div>
+  </div>
 
 </div>

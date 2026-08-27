@@ -20,9 +20,10 @@ Rails.application.routes.draw do
   post "demo3/configure", to: "demo3#configure", as: :demo3_configure
   get "demo3/workspace_files", to: "demo3#workspace_files", as: :demo3_workspace_files
 
-  # Demo 4: MCP Scheduler + MCP Persistence
+  # Demo 4: MCP Scheduler + MCP Persistence. No configure action and no
+  # embedded web component: see Demo4Controller for why (same reasoning as
+  # Demo 7).
   get "demo4", to: "demo4#index", as: :demo4
-  post "demo4/configure", to: "demo4#configure", as: :demo4_configure
 
   # Demo 5: an AIsuru agent exposed as an MCP server, consumed by a second agent
   get "demo5", to: "demo5#index", as: :demo5
