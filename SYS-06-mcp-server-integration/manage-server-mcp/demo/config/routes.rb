@@ -55,6 +55,15 @@ Rails.application.routes.draw do
   get "demo7/asset/:kind", to: "demo7#asset", as: :demo7_asset,
       constraints: { kind: /prompt|email/ }
 
+  # Demo 8: MCP Skills
+  get "demo8", to: "demo8#index", as: :demo8
+  post "demo8/configure", to: "demo8#configure", as: :demo8_configure
+
+  # Downloads the ready-made skill markdown. Course attendees do not have
+  # this repository, so it has to be reachable from the page itself.
+  get "demo8/skill/:kind", to: "demo8#skill", as: :demo8_skill,
+      constraints: { kind: /refund-response/ }
+
   # One-click demo infrastructure (starts/stops the ngrok tunnel containers)
   post "infra/:demo/start", to: "infra#start", as: :infra_start, constraints: { demo: /demo[1236]/ }
   get "infra/:demo/status", to: "infra#status", as: :infra_status, constraints: { demo: /demo[1236]/ }

@@ -63,17 +63,30 @@
         height: 100% !important;
       }
       
-      /* Contain the fixed toast notifications */
-      .memori-container memori-client > div > div[style*="position: fixed"] {
+      /* Contain any fixed-position element the widget renders, at any
+         nesting depth (toasts, onboarding popups, connection banners...).
+         A truly viewport-fixed element inside memori-client would otherwise
+         sit on top of the whole page -- including buttons and links above
+         the chat -- and silently swallow clicks meant for them, even while
+         invisible. The previous rule only caught exactly two levels of
+         nesting, which stopped covering new overlays the widget added. */
+      .memori-container memori-client [style*="position: fixed"] {
         position: absolute !important;
       }
       
-      /* Ensure background stays contained */
+      /* Ensure background stays contained. The widget sets this element to
+         position: fixed / inset: 0 via its own external stylesheet (not an
+         inline style, so the [style*="position: fixed"] rule above never
+         catches it) -- full viewport size, pointer-events: auto. Left alone
+         it sits on top of everything on the page, including buttons and
+         links placed above the chat, and silently swallows their clicks. */
       .memori-container .memori--global-background,
       .memori-container .memori--global-background-image {
-        
+        position: absolute !important;
+        inset: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
         border-radius: 0 0 0.375rem 0.375rem;
-        
       }
     </style>
   </head>
