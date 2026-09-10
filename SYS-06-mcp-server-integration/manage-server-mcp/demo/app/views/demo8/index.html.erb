@@ -1,0 +1,477 @@
+<% content_for :title, "Demo 8: MCP Skills" %>
+
+<div class="container py-5">
+
+  <%# Back to Home %>
+  <div class="row mb-3">
+    <div class="col">
+      <%= link_to root_path, class: "btn btn-outline-secondary btn-sm" do %>
+        <i class="bi bi-arrow-left me-1"></i> Back to Demo Selection
+      <% end %>
+    </div>
+  </div>
+
+  <%# Hero Section %>
+  <div class="row mb-4">
+    <div class="col-lg-10 mx-auto text-center">
+      <span class="badge mb-3 fs-6 text-white" style="background: linear-gradient(135deg, #0d9488 0%, #2dd4bf 100%);">Demo 8</span>
+      <h1 class="display-5 fw-bold mb-3">
+        <i class="bi bi-magic me-2" style="color: #0d9488;"></i>
+        MCP Skills
+      </h1>
+      <p class="lead text-muted">
+        Give an AIsuru agent a <strong>skill</strong>: a markdown file that standardizes how it
+        handles one specific kind of interaction, loaded on demand instead of baked into the
+        system prompt.
+      </p>
+    </div>
+  </div>
+
+  <div class="row mb-4">
+    <div class="col-lg-10 mx-auto">
+      <div class="card border-0 shadow-sm" style="border-left: 4px solid #0d9488 !important;">
+        <div class="card-body">
+          <h5 class="fw-bold mb-3">
+            <i class="bi bi-info-circle me-2" style="color: #0d9488;"></i>
+            About this demo
+          </h5>
+          <p class="text-muted mb-2">
+            <strong>MCP Skills</strong> lets you attach reusable, self-contained instructions to
+            an agent: a markdown file describing exactly how to handle one specific type of
+            request. Instead of growing the system prompt with rules for every situation, each
+            skill sits on its own and is pulled in only when it applies.
+          </p>
+          <p class="text-muted mb-0">
+            This demo is a before/after: you ask the agent to handle the same customer message
+            once with no skill loaded, then again right after adding one &mdash; so the effect of
+            the skill is something you watch happen, not just read about.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%# Setup Instructions -- stays visible (and usable) even after the agent is
+      loaded below, since the download buttons and the copy-prompt button are
+      needed throughout the whole walkthrough, not just before Step 6. %>
+  <div class="row mb-4">
+    <div class="col-lg-10 mx-auto">
+      <div class="card" style="border-color: #0d9488;">
+        <div class="card-header text-white" style="background: linear-gradient(135deg, #0d9488 0%, #2dd4bf 100%);">
+          <h5 class="mb-0">
+            <i class="bi bi-tools me-2"></i>
+            Setup Instructions: MCP Skills
+          </h5>
+        </div>
+        <div class="card-body">
+          <p class="text-muted mb-4">
+            The MCP Skills server is built into AIsuru &mdash; there is nothing to run or expose
+            locally.
+          </p>
+
+          <%# Step 1 %>
+          <div class="d-flex mb-4">
+            <div class="flex-shrink-0 me-3">
+              <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #0d9488 0%, #2dd4bf 100%);">1</span>
+            </div>
+            <div class="flex-grow-1">
+              <h6 class="fw-bold">Create an Agent on AIsuru</h6>
+              <p class="text-muted mb-0">
+                Create a new agent on <a href="https://www.aisuru.com" target="_blank">AIsuru</a>
+                (or reuse an existing one).
+              </p>
+            </div>
+          </div>
+
+          <%# Step 2 %>
+          <div class="d-flex mb-4">
+            <div class="flex-shrink-0 me-3">
+              <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #0d9488 0%, #2dd4bf 100%);">2</span>
+            </div>
+            <div class="flex-grow-1">
+              <h6 class="fw-bold">Try it before adding any skill</h6>
+              <p class="text-muted mb-2">
+                Before touching the MCP section, load the agent below (Step 6) and paste this
+                message in the chat, exactly as it is:
+              </p>
+              <button type="button" class="btn btn-sm btn-outline-secondary js-copy-prompt"
+                      data-prompt="Un cliente scrive: &quot;Ho ricevuto il prodotto ma voglio restituirlo, l'ho gi&agrave; aperto per provarlo. Cosa devo fare?&quot; Rispondi al cliente.">
+                <i class="bi bi-clipboard me-1"></i> Copy the customer message
+              </button>
+              <span class="small text-success d-none ms-2 copy-feedback">
+                <i class="bi bi-check-lg"></i> Copied
+              </span>
+              <div class="form-text mb-0 mt-1">
+                Read the reply, then keep it in mind (or keep the chat open) &mdash; you will ask
+                the exact same thing again in Step 7, and the difference is the whole point.
+              </div>
+            </div>
+          </div>
+
+          <%# Step 3 %>
+          <div class="d-flex mb-4">
+            <div class="flex-shrink-0 me-3">
+              <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #0d9488 0%, #2dd4bf 100%);">3</span>
+            </div>
+            <div class="flex-grow-1">
+              <h6 class="fw-bold">Add the MCP Skills server</h6>
+              <p class="text-muted mb-0">
+                In your agent, open the <strong>MCP</strong> section and add
+                <strong>MCP Skills</strong> from the catalog of built-in servers &mdash; no
+                credentials to fill in.
+              </p>
+            </div>
+          </div>
+
+          <%# Step 4 %>
+          <div class="d-flex mb-4">
+            <div class="flex-shrink-0 me-3">
+              <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #0d9488 0%, #2dd4bf 100%);">4</span>
+            </div>
+            <div class="flex-grow-1">
+              <h6 class="fw-bold">Create the skill</h6>
+              <p class="text-muted mb-2">
+                Download the ready-made skill first:
+              </p>
+              <%= link_to demo8_skill_path(kind: "refund-response"), class: "btn btn-sm text-white", style: "background: linear-gradient(135deg, #0d9488 0%, #2dd4bf 100%);" do %>
+                <i class="bi bi-download me-1"></i> Download the skill
+              <% end %>
+              <p class="text-muted mb-0 mt-3">
+                Then, in the <strong>MCP Skills</strong> server (next to it in the MCP section):
+              </p>
+              <ol class="text-muted mb-2">
+                <li>Open its <strong>Dashboard</strong>.</li>
+                <li>Click <strong>"+ Nuova skill"</strong>.</li>
+                <li>In the panel that opens, click <strong>"Modifica come SKILL.md"</strong>.</li>
+                <li>Clear the field and paste in the contents of the file you just downloaded.</li>
+              </ol>
+              <small class="text-muted">
+                It teaches the agent a strict, specific format for refund requests &mdash;
+                figures and structure a generic assistant would not guess on its own.
+              </small>
+            </div>
+          </div>
+
+          <%# Step 5 %>
+          <div class="d-flex mb-4">
+            <div class="flex-shrink-0 me-3">
+              <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #0d9488 0%, #2dd4bf 100%);">5</span>
+            </div>
+            <div class="flex-grow-1">
+              <h6 class="fw-bold">Tell the agent to use the skill</h6>
+              <p class="text-muted mb-2">
+                Creating the skill is not enough on its own &mdash; the agent also needs to be told,
+                in its own system prompt, when to reach for it. Open <strong>Agent &rarr;
+                Personalization &rarr; Prompt</strong> and add a section like this:
+              </p>
+              <pre class="bg-dark text-light p-3 rounded mb-2"><code>## Gestione richieste di rimborso
+
+Quando un cliente chiede di restituire un prodotto o richiede un rimborso,
+applica sempre la skill "Refund Request Response Protocol": seguine
+esattamente la struttura e i valori definiti, senza aggiungere o omettere
+sezioni.</code></pre>
+              <small class="text-muted">
+                Save the prompt. Without this step the skill exists but is never picked up, and
+                the agent falls back to a generic answer &mdash; which looks like the "before"
+                reply even after Step 4.
+              </small>
+            </div>
+          </div>
+
+          <%# Step 6 %>
+          <div class="d-flex mb-4">
+            <div class="flex-shrink-0 me-3">
+              <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #0d9488 0%, #2dd4bf 100%);">6</span>
+            </div>
+            <div class="flex-grow-1">
+              <h6 class="fw-bold">Get your Agent IDs &amp; load the agent below</h6>
+              <p class="text-muted mb-0">
+                See the <strong>"How to get your Agent IDs"</strong> box below for where to find
+                <code>memoriID</code> and <code>ownerUserID</code>, then use them in the
+                configuration form further down the page to load the agent.
+              </p>
+            </div>
+          </div>
+
+          <%# Step 7 %>
+          <div class="d-flex mb-3">
+            <div class="flex-shrink-0 me-3">
+              <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #0d9488 0%, #2dd4bf 100%);">7</span>
+            </div>
+            <div class="flex-grow-1">
+              <h6 class="fw-bold">Try it again, after the skill</h6>
+              <p class="text-muted mb-0">
+                Click <strong>Reload agent</strong> in the banner above the chat &mdash; it reopens
+                the same agent with the same <code>memoriID</code>/<code>ownerUserID</code>, no
+                need to fill in the form again, and makes sure the widget picks up the skill and
+                prompt changes you just made. Then paste the exact same customer message again
+                (same copy button, here or next to the chat). Compare the two replies: the
+                structure, the return window, the refund percentages, the closing line &mdash;
+                none of that appeared before the skill was in place.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%# Info about how to get Agent IDs %>
+  <div class="row mb-4">
+    <div class="col-lg-10 mx-auto">
+      <div class="card border-info">
+        <div class="card-header bg-info text-white">
+          <h5 class="mb-0">
+            <i class="bi bi-info-circle me-2"></i>
+            How to get your Agent IDs
+          </h5>
+        </div>
+        <div class="card-body">
+          <ol class="mb-0">
+            <li class="mb-2">
+              <strong>Create an Agent</strong> on <a href="https://www.aisuru.com" target="_blank">AIsuru</a>
+              (or use your own tenant if you have a PaaS subscription)
+            </li>
+            <li class="mb-2">
+              <strong>Open your Agent</strong> and click on <strong>"Dev docs"</strong> in the left sidebar
+            </li>
+            <li class="mb-2">
+              Expand the <strong>"Other references"</strong> section (or "Altri riferimenti" in Italian)
+            </li>
+            <li class="mb-2">
+              Copy the following values:
+              <ul class="mt-2">
+                <li><strong>Secondary Memori (Agent) ID</strong> &rarr; This is your <code>memoriID</code></li>
+                <li><strong>Owner user ID</strong> &rarr; This is your <code>ownerUserID</code></li>
+              </ul>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <% if @show_agent %>
+    <%# Agent Info Banner %>
+    <div class="row mb-4">
+      <div class="col-lg-10 mx-auto">
+        <div class="alert d-flex align-items-center mb-0 text-white" style="background: linear-gradient(135deg, #0d9488 0%, #2dd4bf 100%);">
+          <i class="bi bi-check-circle-fill me-2 fs-5"></i>
+          <div class="flex-grow-1">
+            <strong>Agent Connected!</strong>
+            Chat with the agent below to try MCP Skills.
+          </div>
+          <%= link_to demo8_path(
+                memori_id: @memori_id,
+                owner_user_id: @owner_user_id,
+                tenant_id: @tenant_id,
+                engine_url: @engine_url,
+                api_url: @api_url,
+                base_url: @base_url
+              ), class: "btn btn-outline-light btn-sm ms-3" do %>
+            <i class="bi bi-arrow-clockwise me-1"></i> Reload agent
+          <% end %>
+          <%= link_to demo8_path, class: "btn btn-outline-light btn-sm ms-2" do %>
+            <i class="bi bi-arrow-counterclockwise me-1"></i> Reconfigure
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-lg-10 mx-auto">
+        <p class="text-muted small mb-0">
+          <i class="bi bi-info-circle me-1"></i>
+          Added the MCP Skills server or a new skill in AIsuru since you loaded the agent?
+          Click <strong>Reload agent</strong> above &mdash; it reopens the chat with the same
+          <code>memoriID</code> and <code>ownerUserID</code>, no need to type them again, so the
+          embedded widget picks up the change.
+        </p>
+      </div>
+    </div>
+
+    <%# Quick prompts: the same before/after message from Setup Step 2/7, kept
+        one click away while the chat is open so nobody has to scroll back up
+        mid-demo. %>
+    <div class="row mb-3">
+      <div class="col-lg-10 mx-auto">
+        <div class="card border-0 shadow-sm">
+          <div class="card-body py-3">
+            <p class="text-muted small mb-2">
+              <i class="bi bi-clipboard-check me-1"></i>
+              Paste this in the chat below &mdash; once with no skill loaded, once right after
+              adding the skill (Setup Step 4) &mdash; and compare the two replies:
+            </p>
+            <button type="button" class="btn btn-sm btn-outline-secondary js-copy-prompt"
+                    data-prompt="Un cliente scrive: &quot;Ho ricevuto il prodotto ma voglio restituirlo, l'ho gi&agrave; aperto per provarlo. Cosa devo fare?&quot; Rispondi al cliente.">
+              <i class="bi bi-clipboard me-1"></i> Copy the customer message
+            </button>
+            <span class="small text-success d-none ms-2 copy-feedback">
+              <i class="bi bi-check-lg"></i> Copied
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%# Web Component %>
+    <div class="row mb-5">
+      <div class="col-lg-10 mx-auto">
+        <div class="card shadow">
+          <div class="card-header text-white d-flex align-items-center" style="background: linear-gradient(135deg, #0d9488 0%, #2dd4bf 100%);">
+            <i class="bi bi-robot me-2"></i>
+            <strong>AIsuru Agent</strong>
+            <span class="badge bg-light text-dark ms-auto">MCP-enabled</span>
+          </div>
+          <div class="card-body p-0">
+            <div class="memori-container" style="height: 650px;">
+              <memori-client
+                memoriName="YourAgent"
+                ownerUserName="owner"
+                memoriID="<%= @memori_id %>"
+                ownerUserID="<%= @owner_user_id %>"
+                tenantID="<%= @tenant_id %>"
+                engineURL="<%= @engine_url %>"
+                apiURL="<%= @api_url %>"
+                baseURL="<%= @base_url %>"
+                layout="CHAT"
+                uiLang="EN"
+                spokenLang="EN"
+                showLogin="true"
+              ></memori-client>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% else %>
+    <%# Configuration Form %>
+    <div class="row mb-5">
+      <div class="col-lg-8 mx-auto">
+        <div class="card shadow">
+          <div class="card-header text-white" style="background: linear-gradient(135deg, #0d9488 0%, #2dd4bf 100%);">
+            <h5 class="mb-0">
+              <i class="bi bi-gear me-2"></i>
+              Configure Your Agent
+            </h5>
+          </div>
+          <div class="card-body p-4">
+            <%= form_with url: demo8_configure_path, method: :post, local: true do |f| %>
+              <div class="mb-4">
+                <label for="memori_id" class="form-label fw-bold">
+                  <i class="bi bi-fingerprint me-1"></i>
+                  Memori (Agent) Secondary ID *
+                </label>
+                <%= f.text_field :memori_id,
+                    class: "form-control form-control-lg",
+                    placeholder: "e.g., a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                    value: @memori_id,
+                    required: true,
+                    pattern: "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}" %>
+                <div class="form-text">
+                  Found in Dev docs &rarr; Other references &rarr; "Secondary Memori (Agent) ID"
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <label for="owner_user_id" class="form-label fw-bold">
+                  <i class="bi bi-person-badge me-1"></i>
+                  Owner User ID *
+                </label>
+                <%= f.text_field :owner_user_id,
+                    class: "form-control form-control-lg",
+                    placeholder: "e.g., b2c3d4e5-f6a7-8901-bcde-f12345678901",
+                    value: @owner_user_id,
+                    required: true,
+                    pattern: "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}" %>
+                <div class="form-text">
+                  Found in Dev docs &rarr; Other references &rarr; "Owner user ID"
+                </div>
+              </div>
+
+              <hr class="my-4">
+              <h6 class="text-muted mb-3">
+                <i class="bi bi-sliders me-1"></i>
+                Advanced Configuration (pre-filled with defaults)
+              </h6>
+
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="tenant_id" class="form-label">
+                    <i class="bi bi-building me-1"></i>
+                    Tenant ID
+                  </label>
+                  <%= f.text_field :tenant_id,
+                      class: "form-control",
+                      value: @tenant_id,
+                      required: true %>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label for="base_url" class="form-label">
+                    <i class="bi bi-link-45deg me-1"></i>
+                    Base URL
+                  </label>
+                  <%= f.text_field :base_url,
+                      class: "form-control",
+                      value: @base_url,
+                      required: true %>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="engine_url" class="form-label">
+                  <i class="bi bi-cpu me-1"></i>
+                  Engine URL
+                </label>
+                <%= f.text_field :engine_url,
+                    class: "form-control",
+                    value: @engine_url,
+                    required: true %>
+              </div>
+
+              <div class="mb-4">
+                <label for="api_url" class="form-label">
+                  <i class="bi bi-server me-1"></i>
+                  API URL
+                </label>
+                <%= f.text_field :api_url,
+                    class: "form-control",
+                    value: @api_url,
+                    required: true %>
+              </div>
+
+              <div class="d-grid">
+                <%= f.submit "Load Agent", class: "btn btn-lg text-white", style: "background: linear-gradient(135deg, #0d9488 0%, #2dd4bf 100%);" %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <script>
+    // Copy-ready customer message. The feedback span is each button's own
+    // next sibling (not a shared #id): the Setup Instructions card and the
+    // Quick prompts card can both be on the page at once once the agent is
+    // loaded, so a single shared id would only ever update one of them.
+    document.querySelectorAll('.js-copy-prompt').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var feedback = btn.nextElementSibling;
+        navigator.clipboard.writeText(btn.dataset.prompt).then(function () {
+          feedback.textContent = 'Copied!';
+          feedback.classList.remove('d-none', 'text-warning');
+          feedback.classList.add('text-success');
+          setTimeout(function () { feedback.classList.add('d-none'); }, 1500);
+        }).catch(function () {
+          feedback.textContent = 'Copy manually';
+          feedback.classList.remove('d-none', 'text-success');
+          feedback.classList.add('text-warning');
+          setTimeout(function () { feedback.classList.add('d-none'); }, 2000);
+        });
+      });
+    });
+  </script>
+
+</div>
