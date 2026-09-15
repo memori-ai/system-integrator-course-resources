@@ -112,6 +112,28 @@ Prima di iniziare il corso, assicurati di avere:
 
 ## 🚀 Come Iniziare
 
+### ⚡ Avvio rapido: un doppio clic
+
+Se non hai dimestichezza con il terminale, dopo aver scaricato il repository ti basta fare **doppio clic** sul file adatto al tuo computer, nella cartella principale:
+
+| Sistema | Avvia le demo | Ferma le demo |
+|---------|---------------|---------------|
+| Windows | `avvia.bat` | `ferma.bat` |
+| macOS | `avvia.command` | `ferma.command` |
+
+Il file controlla che Node.js e Docker Desktop siano installati, avvia Docker Desktop se è spento, prepara tutte le demo e apre da solo la pagina con l'elenco. La prima volta può richiedere una decina di minuti: è normale, basta non chiudere la finestra finché non compare **"Tutto pronto"**. Le demo restano attive anche dopo aver chiuso la finestra.
+
+**Al primo avvio il sistema operativo può chiedere una conferma:**
+
+- **Windows** — se compare un avviso di sicurezza, clicca *Ulteriori informazioni* → *Esegui comunque*.
+- **macOS** — se compare *"impossibile aprire perché proviene da uno sviluppatore non identificato"*, fai clic destro sul file → *Apri* → *Apri*. Serve solo la prima volta.
+
+Se qualcosa non funziona, nella stessa cartella trovi il file `avvio.log` con i dettagli tecnici da allegare a una segnalazione.
+
+Chi preferisce il terminale può continuare a usare i comandi descritti qui sotto.
+
+### 🧑‍💻 Avvio da terminale
+
 1. **Clona questo repository**
    ```bash
    git clone https://github.com/memori-ai/system-integrator-course-resources.git

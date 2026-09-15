@@ -114,6 +114,28 @@ Before starting the course, ensure you have:
 
 ## 🚀 Getting Started
 
+### ⚡ Quick start: one double-click
+
+If you would rather not use a terminal, download the repository and **double-click** the file that matches your computer, in the top-level folder:
+
+| System | Start the demos | Stop the demos |
+|--------|-----------------|----------------|
+| Windows | `avvia.bat` | `ferma.bat` |
+| macOS | `avvia.command` | `ferma.command` |
+
+The launcher checks that Node.js and Docker Desktop are installed, starts Docker Desktop if it is not running, prepares every demo and opens the demo hub for you. The first run can take about ten minutes — that is normal, just leave the window open until it says **"Tutto pronto"** (all set). The demos keep running after you close the window. These launchers speak Italian, matching the course delivery language.
+
+**The first time, your operating system may ask for confirmation:**
+
+- **Windows** — if a security warning appears, click *More info* → *Run anyway*.
+- **macOS** — if you see *"cannot be opened because it is from an unidentified developer"*, right-click the file → *Open* → *Open*. Once is enough.
+
+If something goes wrong, the same folder contains `avvio.log` with the technical details to attach to a bug report.
+
+Prefer the terminal? The commands below still work.
+
+### 🧑‍💻 Terminal setup
+
 1. **Clone this repository**
    ```bash
    git clone https://github.com/memori-ai/system-integrator-course-resources.git

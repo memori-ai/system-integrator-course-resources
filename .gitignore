@@ -5,3 +5,6 @@ SYS-03-integrating-enterprise-authentication/demo
 
 # Claude Code local settings
 .claude/
+
+# Log del launcher a doppio clic (avvia.bat / avvia.command)
+avvio.log
