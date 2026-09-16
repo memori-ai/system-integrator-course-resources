@@ -1,4 +1,4 @@
-<% content_for :title, "Demo 5: Agent as MCP" %>
+<% content_for :title, "Demo 5: agent as MCP" %>
 
 <div class="container py-5">
 
@@ -21,7 +21,7 @@
       </h1>
       <p class="lead text-muted">
         Expose an AIsuru agent as an <strong>MCP server</strong>, then let a second agent use it as a
-        tool. With a Builder token, the second agent can even rewrite the first one's prompt.
+        tool. With a Builder token, the second agent can also rewrite the first one's prompt.
       </p>
     </div>
   </div>
@@ -223,7 +223,7 @@
           </div>
           <div class="card-footer bg-white">
             <div class="form-text mb-0">
-              After step 5 the prompt has changed but this session has not. Hit
+              After step 8 the prompt has changed but this session has not. Hit
               <strong>Reload</strong> in the header, otherwise the change will look like it failed.
             </div>
           </div>
@@ -272,7 +272,7 @@
         btn.addEventListener('click', function () {
           navigator.clipboard.writeText(btn.dataset.prompt).then(function () {
             var feedback = document.getElementById('copy-feedback');
-            feedback.textContent = 'Copied!';
+            feedback.textContent = 'Copied';
             feedback.classList.remove('d-none', 'text-warning');
             feedback.classList.add('text-success');
             setTimeout(function () { feedback.classList.add('d-none'); }, 1500);

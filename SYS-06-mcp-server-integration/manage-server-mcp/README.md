@@ -285,7 +285,7 @@ Before starting, you need:
 
 ## How to Get Your Agent IDs
 
-1. Go to [AIsuru](https://www.aisuru.com) and create an agent (or use your PaaS tenant)
+1. Go to [AIsuru](https://www.aisuru.com) and create an agent
 2. Open your agent and click on **Dev docs** in the left sidebar
 3. Expand **"▼ Other references"** section
 4. Copy:

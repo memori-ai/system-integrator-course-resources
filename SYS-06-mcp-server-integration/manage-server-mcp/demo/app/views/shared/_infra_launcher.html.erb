@@ -8,7 +8,7 @@
     <div class="card shadow border-0">
       <div class="card-header text-white d-flex align-items-center" style="background: <%= color %>;">
         <i class="bi bi-lightning-charge-fill me-2"></i>
-        <h5 class="mb-0">Quick Start &mdash; One Click</h5>
+        <h5 class="mb-0">Quick start: one click</h5>
       </div>
       <div class="card-body p-4">
         <p class="text-muted mb-3">
@@ -65,14 +65,10 @@
           <div class="alert alert-success mb-0">
             <h6 class="fw-bold mb-3">
               <i class="bi bi-check-circle-fill me-1"></i>
-              Tunnel ready! Copy these values, then
+              Tunnel ready. Copy these values, then
               <a href="#aisuru-setup">configure AIsuru</a> with them:
             </h6>
             <div id="infra-result-rows"></div>
-            <small class="text-muted d-block mt-2">
-              Note: these values change every time the tunnel restarts &mdash; if you restart the demo,
-              update them in AIsuru too.
-            </small>
           </div>
         </div>
       </div>
@@ -80,7 +76,43 @@
   </div>
 </div>
 
+<style>
+  /* Collapsible manual setup guide rendered by each demo page below this starter. */
+  .manual-setup-toggle { cursor: pointer; }
+  .manual-setup-toggle.collapsed { border-radius: var(--bs-card-inner-border-radius); }
+  .manual-setup-toggle.collapsed .when-open,
+  .manual-setup-toggle:not(.collapsed) .when-closed { display: none; }
+  .manual-setup-chevron { display: inline-block; transition: transform .2s; }
+  .manual-setup-toggle:not(.collapsed) .manual-setup-chevron { transform: rotate(180deg); }
+</style>
+
 <script>
+  // The manual guide starts collapsed, so every "manual setup guide" link on the
+  // page (including the ones injected in error messages) has to open it before
+  // scrolling there, or the attendee lands on a closed header and sees nothing.
+  (function () {
+    function openManualSetup() {
+      const body = document.getElementById("manual-setup-body");
+      const section = document.getElementById("manual-setup");
+      if (!body || !section || !window.bootstrap) return false;
+      bootstrap.Collapse.getOrCreateInstance(body, { toggle: false }).show();
+      section.scrollIntoView({ behavior: "smooth", block: "start" });
+      return true;
+    }
+
+    document.addEventListener("click", function (e) {
+      const link = e.target.closest('a[href="#manual-setup"]');
+      if (link && openManualSetup()) {
+        e.preventDefault();
+        history.replaceState(null, "", "#manual-setup");
+      }
+    });
+
+    window.addEventListener("DOMContentLoaded", function () {
+      if (location.hash === "#manual-setup") openManualSetup();
+    });
+  })();
+
   (function () {
     const startPath = "<%= infra_start_path(demo: demo) %>";
     const statusPath = "<%= infra_status_path(demo: demo) %>";
@@ -198,7 +230,7 @@
           const input = document.getElementById(btn.dataset.copyTarget);
           input.select();
           const done = () => {
-            btn.innerHTML = '<i class="bi bi-clipboard-check me-1"></i>Copied!';
+            btn.innerHTML = '<i class="bi bi-clipboard-check me-1"></i>Copied';
             setTimeout(() => { btn.innerHTML = '<i class="bi bi-clipboard me-1"></i>Copy'; }, 2000);
           };
           if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -376,7 +408,7 @@
         .catch((err) => {
           setStatus("danger",
             "<strong>Could not stop the tunnels.</strong> Try " +
-            "<code>docker compose stop ngrok-mongo ngrok-mcp ngrok-demo2</code> " +
+            "<code>docker compose stop ngrok-mongo ngrok-mcp ngrok-demo2 ngrok-gestionale</code> " +
             "from the <code>demo/</code> directory." +
             '<pre class="bg-dark text-light p-2 rounded small mt-2 mb-0">' + escHtmlInfra(err.message) + "</pre>");
         })

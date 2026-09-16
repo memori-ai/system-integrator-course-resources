@@ -289,7 +289,7 @@ Prima di iniziare, hai bisogno di:
 
 ## Come Ottenere gli ID del Tuo Agente
 
-1. Vai su [AIsuru](https://www.aisuru.com) e crea un agente (o usa il tuo tenant PaaS)
+1. Vai su [AIsuru](https://www.aisuru.com) e crea un agente
 2. Apri il tuo agente e clicca su **Dev docs** nel menu laterale sinistro
 3. Espandi la sezione **"▼ Altri riferimenti"**
 4. Copia:

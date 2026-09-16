@@ -1,4 +1,4 @@
-<% content_for :title, "Demo 7: From Email to App" %>
+<% content_for :title, "Demo 7: from email to app" %>
 
 <div class="container py-5">
 
@@ -17,7 +17,7 @@
       <span class="badge mb-3 fs-6 text-white" style="background: linear-gradient(135deg, #4f46e5 0%, #db2777 100%);">Demo 7</span>
       <h1 class="display-5 fw-bold mb-3">
         <i class="bi bi-envelope-paper me-2" style="color: #4f46e5;"></i>
-        From Email to App
+        From email to app
       </h1>
       <p class="lead text-muted">
         Three MCP servers on one agent: <strong>Outlook</strong> brings a request in,
@@ -72,8 +72,8 @@
           <p class="text-muted mb-0 small">
             Turning the flag off would let the agent serve the mailbox to anyone who can reach the
             chat. We leave it on, and run the demo where the identity matches: signed into AIsuru,
-            in the agent's own chat. Everything else on this page stays exactly the same: the
-            setup, the prompt, the email, the messages to send.
+            in the agent's own chat. The setup, the prompt, the email and the messages to send are
+            all on this page.
           </p>
         </div>
       </div>
@@ -87,7 +87,7 @@
         <div class="card-header text-white" style="background: linear-gradient(135deg, #4f46e5 0%, #db2777 100%);">
           <h5 class="mb-0">
             <i class="bi bi-tools me-2"></i>
-            Setup Instructions: Outlook + Vibe Coder + Persistence
+            Setup instructions: Outlook + Vibe Coder + Persistence
           </h5>
         </div>
         <div class="card-body">
@@ -102,7 +102,7 @@
               <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #4f46e5 0%, #db2777 100%);">1</span>
             </div>
             <div class="flex-grow-1">
-              <h6 class="fw-bold">Create an Agent on AIsuru</h6>
+              <h6 class="fw-bold">Create an agent on AIsuru</h6>
               <p class="text-muted mb-0">
                 Create a new agent on <a href="https://www.aisuru.com" target="_blank">AIsuru</a>,
                 signed in with the account whose mailbox you will connect. Use a fresh agent: this
@@ -336,7 +336,7 @@ ms-client-id: &lt;ms-client-id&gt;</code></pre>
       btn.addEventListener('click', function () {
         navigator.clipboard.writeText(btn.dataset.prompt).then(function () {
           var feedback = document.getElementById('copy-feedback');
-          feedback.textContent = 'Copied!';
+          feedback.textContent = 'Copied';
           feedback.classList.remove('d-none', 'text-warning');
           feedback.classList.add('text-success');
           setTimeout(function () { feedback.classList.add('d-none'); }, 1500);

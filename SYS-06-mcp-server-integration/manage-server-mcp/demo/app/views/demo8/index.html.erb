@@ -42,9 +42,9 @@
             skill sits on its own and is pulled in only when it applies.
           </p>
           <p class="text-muted mb-0">
-            This demo is a before/after: you ask the agent to handle the same customer message
-            once with no skill loaded, then again right after adding one &mdash; so the effect of
-            the skill is something you watch happen, not just read about.
+            This demo is a before and after: you send the agent the same customer message once
+            with no skill loaded, then again right after adding one, and see the effect of the
+            skill in the reply.
           </p>
         </div>
       </div>
@@ -60,12 +60,12 @@
         <div class="card-header text-white" style="background: linear-gradient(135deg, #0d9488 0%, #2dd4bf 100%);">
           <h5 class="mb-0">
             <i class="bi bi-tools me-2"></i>
-            Setup Instructions: MCP Skills
+            Setup instructions: MCP Skills
           </h5>
         </div>
         <div class="card-body">
           <p class="text-muted mb-4">
-            The MCP Skills server is built into AIsuru &mdash; there is nothing to run or expose
+            The MCP Skills server is built into AIsuru: there is nothing to run or expose
             locally.
           </p>
 
@@ -75,7 +75,7 @@
               <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #0d9488 0%, #2dd4bf 100%);">1</span>
             </div>
             <div class="flex-grow-1">
-              <h6 class="fw-bold">Create an Agent on AIsuru</h6>
+              <h6 class="fw-bold">Create an agent on AIsuru</h6>
               <p class="text-muted mb-0">
                 Create a new agent on <a href="https://www.aisuru.com" target="_blank">AIsuru</a>
                 (or reuse an existing one).
@@ -102,8 +102,8 @@
                 <i class="bi bi-check-lg"></i> Copied
               </span>
               <div class="form-text mb-0 mt-1">
-                Read the reply, then keep it in mind (or keep the chat open) &mdash; you will ask
-                the exact same thing again in Step 7, and the difference is the whole point.
+                Read the reply and keep it in mind, or keep the chat open. In Step 7 you ask the
+                exact same thing again and compare the two replies.
               </div>
             </div>
           </div>
@@ -117,7 +117,7 @@
               <h6 class="fw-bold">Add the MCP Skills server</h6>
               <p class="text-muted mb-0">
                 In your agent, open the <strong>MCP</strong> section and add
-                <strong>MCP Skills</strong> from the catalog of built-in servers &mdash; no
+                <strong>MCP Skills</strong> from the catalog of built-in servers. There are no
                 credentials to fill in.
               </p>
             </div>
@@ -146,8 +146,8 @@
                 <li>Clear the field and paste in the contents of the file you just downloaded.</li>
               </ol>
               <small class="text-muted">
-                It teaches the agent a strict, specific format for refund requests &mdash;
-                figures and structure a generic assistant would not guess on its own.
+                It teaches the agent a strict format for refund requests, with figures and a
+                structure that a generic assistant would not guess.
               </small>
             </div>
           </div>
@@ -160,8 +160,8 @@
             <div class="flex-grow-1">
               <h6 class="fw-bold">Tell the agent to use the skill</h6>
               <p class="text-muted mb-2">
-                Creating the skill is not enough on its own &mdash; the agent also needs to be told,
-                in its own system prompt, when to reach for it. Open <strong>Agent &rarr;
+                Creating the skill is not enough on its own: the agent's system prompt also has to
+                say when to use it. Open <strong>Agent &rarr;
                 Personalization &rarr; Prompt</strong> and add a section like this:
               </p>
               <pre class="bg-dark text-light p-3 rounded mb-2"><code>## Gestione richieste di rimborso
@@ -172,8 +172,8 @@ esattamente la struttura e i valori definiti, senza aggiungere o omettere
 sezioni.</code></pre>
               <small class="text-muted">
                 Save the prompt. Without this step the skill exists but is never picked up, and
-                the agent falls back to a generic answer &mdash; which looks like the "before"
-                reply even after Step 4.
+                the agent falls back to a generic answer, which looks like the "before" reply
+                even after Step 4.
               </small>
             </div>
           </div>
@@ -184,9 +184,9 @@ sezioni.</code></pre>
               <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #0d9488 0%, #2dd4bf 100%);">6</span>
             </div>
             <div class="flex-grow-1">
-              <h6 class="fw-bold">Get your Agent IDs &amp; load the agent below</h6>
+              <h6 class="fw-bold">Get your agent IDs and load the agent below</h6>
               <p class="text-muted mb-0">
-                See the <strong>"How to get your Agent IDs"</strong> box below for where to find
+                See the <strong>"How to get your agent IDs"</strong> box below for where to find
                 <code>memoriID</code> and <code>ownerUserID</code>, then use them in the
                 configuration form further down the page to load the agent.
               </p>
@@ -201,13 +201,12 @@ sezioni.</code></pre>
             <div class="flex-grow-1">
               <h6 class="fw-bold">Try it again, after the skill</h6>
               <p class="text-muted mb-0">
-                Click <strong>Reload agent</strong> in the banner above the chat &mdash; it reopens
-                the same agent with the same <code>memoriID</code>/<code>ownerUserID</code>, no
-                need to fill in the form again, and makes sure the widget picks up the skill and
-                prompt changes you just made. Then paste the exact same customer message again
-                (same copy button, here or next to the chat). Compare the two replies: the
-                structure, the return window, the refund percentages, the closing line &mdash;
-                none of that appeared before the skill was in place.
+                Click <strong>Reload agent</strong> in the banner above the chat. It reopens the
+                same agent with the same <code>memoriID</code>/<code>ownerUserID</code>, so you do
+                not fill in the form again, and the widget picks up the skill and prompt changes
+                you just made. Then paste the same customer message again (same copy button, here
+                or next to the chat) and compare the two replies: the structure, the return window,
+                the refund percentages and the closing line only appear once the skill is in place.
               </p>
             </div>
           </div>
@@ -223,14 +222,13 @@ sezioni.</code></pre>
         <div class="card-header bg-info text-white">
           <h5 class="mb-0">
             <i class="bi bi-info-circle me-2"></i>
-            How to get your Agent IDs
+            How to get your agent IDs
           </h5>
         </div>
         <div class="card-body">
           <ol class="mb-0">
             <li class="mb-2">
               <strong>Create an Agent</strong> on <a href="https://www.aisuru.com" target="_blank">AIsuru</a>
-              (or use your own tenant if you have a PaaS subscription)
             </li>
             <li class="mb-2">
               <strong>Open your Agent</strong> and click on <strong>"Dev docs"</strong> in the left sidebar
@@ -258,7 +256,7 @@ sezioni.</code></pre>
         <div class="alert d-flex align-items-center mb-0 text-white" style="background: linear-gradient(135deg, #0d9488 0%, #2dd4bf 100%);">
           <i class="bi bi-check-circle-fill me-2 fs-5"></i>
           <div class="flex-grow-1">
-            <strong>Agent Connected!</strong>
+            <strong>Agent connected.</strong>
             Chat with the agent below to try MCP Skills.
           </div>
           <%= link_to demo8_path(
@@ -283,8 +281,8 @@ sezioni.</code></pre>
         <p class="text-muted small mb-0">
           <i class="bi bi-info-circle me-1"></i>
           Added the MCP Skills server or a new skill in AIsuru since you loaded the agent?
-          Click <strong>Reload agent</strong> above &mdash; it reopens the chat with the same
-          <code>memoriID</code> and <code>ownerUserID</code>, no need to type them again, so the
+          Click <strong>Reload agent</strong> above. It reopens the chat with the same
+          <code>memoriID</code> and <code>ownerUserID</code>, without typing them again, and the
           embedded widget picks up the change.
         </p>
       </div>
@@ -299,8 +297,8 @@ sezioni.</code></pre>
           <div class="card-body py-3">
             <p class="text-muted small mb-2">
               <i class="bi bi-clipboard-check me-1"></i>
-              Paste this in the chat below &mdash; once with no skill loaded, once right after
-              adding the skill (Setup Step 4) &mdash; and compare the two replies:
+              Paste this in the chat below, once with no skill loaded and once right after adding
+              the skill (Setup Steps 4 and 5), then compare the two replies:
             </p>
             <button type="button" class="btn btn-sm btn-outline-secondary js-copy-prompt"
                     data-prompt="Un cliente scrive: &quot;Ho ricevuto il prodotto ma voglio restituirlo, l'ho gi&agrave; aperto per provarlo. Cosa devo fare?&quot; Rispondi al cliente.">
@@ -320,7 +318,7 @@ sezioni.</code></pre>
         <div class="card shadow">
           <div class="card-header text-white d-flex align-items-center" style="background: linear-gradient(135deg, #0d9488 0%, #2dd4bf 100%);">
             <i class="bi bi-robot me-2"></i>
-            <strong>AIsuru Agent</strong>
+            <strong>AIsuru agent</strong>
             <span class="badge bg-light text-dark ms-auto">MCP-enabled</span>
           </div>
           <div class="card-body p-0">
@@ -352,7 +350,7 @@ sezioni.</code></pre>
           <div class="card-header text-white" style="background: linear-gradient(135deg, #0d9488 0%, #2dd4bf 100%);">
             <h5 class="mb-0">
               <i class="bi bi-gear me-2"></i>
-              Configure Your Agent
+              Configure your agent
             </h5>
           </div>
           <div class="card-body p-4">
@@ -392,7 +390,7 @@ sezioni.</code></pre>
               <hr class="my-4">
               <h6 class="text-muted mb-3">
                 <i class="bi bi-sliders me-1"></i>
-                Advanced Configuration (pre-filled with defaults)
+                Advanced configuration (pre-filled with defaults)
               </h6>
 
               <div class="row">
@@ -460,7 +458,7 @@ sezioni.</code></pre>
       btn.addEventListener('click', function () {
         var feedback = btn.nextElementSibling;
         navigator.clipboard.writeText(btn.dataset.prompt).then(function () {
-          feedback.textContent = 'Copied!';
+          feedback.textContent = 'Copied';
           feedback.classList.remove('d-none', 'text-warning');
           feedback.classList.add('text-success');
           setTimeout(function () { feedback.classList.add('d-none'); }, 1500);

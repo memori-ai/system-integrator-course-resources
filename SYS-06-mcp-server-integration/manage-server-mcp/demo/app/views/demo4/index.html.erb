@@ -21,7 +21,7 @@
       </h1>
       <p class="lead text-muted">
         Connect an AIsuru agent to the platform's built-in <strong>Scheduler</strong> and
-        <strong>Persistence</strong> MCP servers &mdash; no self-hosted backend required for this demo.
+        <strong>Persistence</strong> MCP servers. There is nothing to host yourself for this demo.
       </p>
     </div>
   </div>
@@ -57,16 +57,14 @@
         <div>
           <strong>This demo runs inside AIsuru, not in an embedded chat.</strong>
           <p class="text-muted mb-2 small">
-            A scheduled task has to reach a conversation that is still there when it fires &mdash;
-            seconds, minutes, or hours later &mdash; and its result has to persist in the agent's own
-            store across that gap. That requires the stable, signed-in identity of the agent's own
-            chat on AIsuru. An embedded web component on a public page is a different, disposable
-            session: it will not reliably be there when the task runs, so Scheduler and Persistence
-            are not exercised through it in this demo.
+            A scheduled task fires seconds, minutes or hours later. By then it still needs a
+            conversation to reach, and its result has to persist in the agent's own store. That
+            requires the stable, signed-in identity of the agent's own chat on AIsuru. An embedded
+            web component on a public page is a disposable session that may be gone when the task
+            runs, so this demo does not use it for Scheduler and Persistence.
           </p>
           <p class="text-muted mb-0 small">
-            Everything else on this page stays exactly the same: the setup, the servers to add, the
-            prompt to try.
+            The setup, the servers to add and the prompt to try are all on this page.
           </p>
         </div>
       </div>
@@ -80,13 +78,13 @@
         <div class="card-header text-white" style="background: linear-gradient(135deg, #6f42c1 0%, #9c6ade 100%);">
           <h5 class="mb-0">
             <i class="bi bi-tools me-2"></i>
-            Setup Instructions: Scheduler + Persistence
+            Setup instructions: Scheduler + Persistence
           </h5>
         </div>
         <div class="card-body">
           <p class="text-muted mb-4">
-            Both MCP servers used in this demo are built into AIsuru &mdash; there is nothing to run
-            or expose locally, you just need to enable them on your agent.
+            Both MCP servers in this demo are built into AIsuru: there is nothing to run or expose
+            locally. You only need to enable them on your agent.
           </p>
 
           <%# Step 1 %>
@@ -95,7 +93,7 @@
               <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #6f42c1 0%, #9c6ade 100%);">1</span>
             </div>
             <div class="flex-grow-1">
-              <h6 class="fw-bold">Create an Agent on AIsuru</h6>
+              <h6 class="fw-bold">Create an agent on AIsuru</h6>
               <p class="text-muted mb-0">
                 Create a new agent on <a href="https://www.aisuru.com" target="_blank">AIsuru</a>
                 (or reuse an existing one, including the one from a previous demo).
@@ -119,8 +117,8 @@
                 <li><strong>MCP Persistence</strong></li>
               </ul>
               <small class="text-muted">
-                Both are ready-made platform servers &mdash; no connection string or credentials to fill
-                in, just add them from the list and save.
+                Both are ready-made platform servers, with no connection string or credentials to
+                fill in. Add them from the list and save.
               </small>
             </div>
           </div>
@@ -164,14 +162,14 @@
                 <li>
                   Or see it directly, without going through the agent: go back to the
                   <strong>MCP</strong> section, find the <strong>MCP Persistence</strong> server
-                  you added in Step 2, and click its <strong>Dashboard</strong> button &mdash; it
-                  opens a view of the stored data as the MCP server sees it.
+                  you added in Step 2 and click its <strong>Dashboard</strong> button. It shows the
+                  stored data as the MCP server sees it.
                 </li>
               </ul>
               <p class="text-muted mb-0">
-                Reload that dashboard every minute or so: you should see the saved value change on
-                its own &mdash; confirming the scheduled task is really running in the background and
-                updating storage every minute, not just when you're chatting with the agent.
+                Reload that dashboard every minute or so: the saved value changes on its own. That
+                confirms the scheduled task runs in the background and updates storage every minute,
+                even when you are not chatting with the agent.
               </p>
             </div>
           </div>

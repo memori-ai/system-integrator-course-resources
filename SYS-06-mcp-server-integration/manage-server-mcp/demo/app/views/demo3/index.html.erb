@@ -1,4 +1,4 @@
-<% content_for :title, "Demo 3: Filesystem MCP Server" %>
+<% content_for :title, "Demo 3: filesystem MCP server" %>
 
 <div class="container py-5">
 
@@ -17,11 +17,11 @@
       <span class="badge mb-3 text-white" style="background: linear-gradient(135deg, #00a4ef 0%, #0078d4 100%);">Demo 3</span>
       <h1 class="display-5 fw-bold mb-3">
         <i class="bi bi-folder2-open me-2" style="color: #00a4ef;"></i>
-        Filesystem MCP Server
+        Filesystem MCP server
       </h1>
       <p class="lead text-muted">
-        Connect an AIsuru agent to a custom MCP filesystem server. The agent can read, write,
-        and create files in a shared workspace directory.
+        Connect an AIsuru agent to a custom filesystem MCP server. The agent creates, reads, writes
+        and lists files in a shared workspace folder.
       </p>
     </div>
   </div>
@@ -33,7 +33,7 @@
         <div class="card-header text-white" style="background: linear-gradient(135deg, #00a4ef 0%, #0078d4 100%);">
           <h5 class="mb-0">
             <i class="bi bi-question-circle me-2"></i>
-            What is the Filesystem MCP Server?
+            What is the filesystem MCP server?
           </h5>
         </div>
         <div class="card-body">
@@ -43,8 +43,8 @@
           </p>
           <ul class="mb-0">
             <li><strong>Four tools:</strong> <code>list_files</code>, <code>read_file</code>, <code>write_file</code>, <code>create_file</code></li>
-            <li><strong>Secure:</strong> Only <code>./test</code> directory is accessible</li>
-            <li><strong>Real-time:</strong> Changes are immediately visible in the workspace panel</li>
+            <li><strong>One folder only:</strong> the server cannot reach anything outside <code>./test</code></li>
+            <li><strong>Visible:</strong> every change shows up in the workspace panel within a few seconds</li>
           </ul>
         </div>
       </div>
@@ -80,17 +80,25 @@
     <div class="row mb-4" id="manual-setup">
       <div class="col-lg-10 mx-auto">
         <div class="card border-primary">
-          <div class="card-header text-white" style="background: linear-gradient(135deg, #00a4ef 0%, #0078d4 100%);">
-            <h5 class="mb-0">
+          <button type="button" class="card-header manual-setup-toggle collapsed text-white d-flex align-items-center w-100 border-0 text-start"
+                  style="background: linear-gradient(135deg, #00a4ef 0%, #0078d4 100%);"
+                  data-bs-toggle="collapse" data-bs-target="#manual-setup-body"
+                  aria-expanded="false" aria-controls="manual-setup-body">
+            <span class="h5 mb-0 me-auto">
               <i class="bi bi-tools me-2"></i>
-              Manual Setup Guide: Filesystem MCP Server
-            </h5>
-          </div>
+              Manual setup guide: filesystem MCP server
+            </span>
+            <span class="small ms-3 text-nowrap">
+              <span class="when-closed">Show steps</span><span class="when-open">Hide steps</span>
+              <i class="bi bi-chevron-down ms-1 manual-setup-chevron"></i>
+            </span>
+          </button>
+          <%# Collapsed by default: the one-click starter is the route everyone should take. %>
+          <div class="collapse" id="manual-setup-body">
           <div class="card-body">
             <p class="text-muted mb-4">
-              This is the step-by-step alternative to the one-click starter above &mdash; use it if the button
-              doesn't work or if you want to understand what happens under the hood.
-              The agent will be able to read, write, create, and list files in the shared workspace directory.
+              This is the step-by-step alternative to the one-click starter above. Use it if the button
+              doesn't work or if you want to see what happens under the hood.
             </p>
 
             <%# Step 1 %>
@@ -99,7 +107,7 @@
                 <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #00a4ef 0%, #0078d4 100%);">1</span>
               </div>
               <div class="flex-grow-1">
-                <h6 class="fw-bold">Configure ngrok Authentication</h6>
+                <h6 class="fw-bold">Configure ngrok authentication</h6>
                 <p class="text-muted mb-2">
                   Get your ngrok auth token from <a href="https://dashboard.ngrok.com/get-started/your-authtoken" target="_blank">ngrok dashboard</a>.
                   Create a <code>.env</code> file in the demo directory:
@@ -114,11 +122,11 @@
                 <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #00a4ef 0%, #0078d4 100%);">2</span>
               </div>
               <div class="flex-grow-1">
-                <h6 class="fw-bold">Free ngrok Tunnel (if needed)</h6>
+                <h6 class="fw-bold">Free the ngrok tunnel (if needed)</h6>
                 <p class="text-muted mb-2">
-                  <strong>⚠️ ngrok free accounts support only 1 active tunnel.</strong> If you were using another demo, stop all ngrok tunnels first:
+                  <strong>Free ngrok accounts allow only one active tunnel.</strong> If you were using another demo, stop all ngrok tunnels first:
                 </p>
-                <pre class="bg-dark text-light p-3 rounded mb-1"><code>docker compose stop ngrok-mongo ngrok-mcp ngrok-demo2</code></pre>
+                <pre class="bg-dark text-light p-3 rounded mb-1"><code>docker compose stop ngrok-mongo ngrok-mcp ngrok-demo2 ngrok-gestionale</code></pre>
                 <small class="text-muted">
                   This stops all ngrok tunnels, freeing the connection for this demo.
                 </small>
@@ -131,7 +139,7 @@
                 <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #00a4ef 0%, #0078d4 100%);">3</span>
               </div>
               <div class="flex-grow-1">
-                <h6 class="fw-bold">Start the MCP Server for Filesystem</h6>
+                <h6 class="fw-bold">Start the tunnel for the filesystem MCP server</h6>
                 <p class="text-muted mb-2">
                   Start the ngrok tunnel for the Filesystem MCP server (Demo 3):
                 </p>
@@ -148,7 +156,7 @@
                 <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #00a4ef 0%, #0078d4 100%);">4</span>
               </div>
               <div class="flex-grow-1">
-                <h6 class="fw-bold">Get the ngrok Public URL</h6>
+                <h6 class="fw-bold">Get the ngrok public URL</h6>
                 <p class="text-muted mb-2">
                   Go to the <a href="https://dashboard.ngrok.com/tunnels" target="_blank">ngrok dashboard &rarr; Tunnels</a> (the same page where you found the authtoken) and copy the active tunnel's <strong>HTTPS URL</strong> (e.g., <code>https://abc123.ngrok-free.app</code>).
                 </p>
@@ -159,6 +167,7 @@
               </div>
             </div>
 
+          </div>
           </div>
         </div>
       </div>
@@ -174,14 +183,13 @@
           <div class="card-header bg-info text-white">
             <h5 class="mb-0">
               <i class="bi bi-info-circle me-2"></i>
-              How to get your Agent IDs
+              How to get your agent IDs
             </h5>
           </div>
           <div class="card-body">
             <ol class="mb-0">
               <li class="mb-2">
                 <strong>Create an Agent</strong> on <a href="https://www.aisuru.com" target="_blank">AIsuru</a>
-                (or use your own tenant if you have a PaaS subscription)
               </li>
               <li class="mb-2">
                 <strong>Open your Agent</strong> and click on <strong>"Dev docs"</strong> in the left sidebar
@@ -209,7 +217,7 @@
           <div class="card-header text-white" style="background: linear-gradient(135deg, #00a4ef 0%, #0078d4 100%);">
             <h5 class="mb-0">
               <i class="bi bi-gear me-2"></i>
-              Configure Your Agent
+              Configure your agent
             </h5>
           </div>
           <div class="card-body p-4">
@@ -247,7 +255,7 @@
               <hr class="my-4">
               <h6 class="text-muted mb-3">
                 <i class="bi bi-sliders me-1"></i>
-                Advanced Configuration (pre-filled with defaults)
+                Advanced configuration (pre-filled with defaults)
               </h6>
 
               <div class="row">
@@ -314,8 +322,8 @@
         <div class="alert d-flex align-items-center mb-0 text-white" style="background: linear-gradient(135deg, #00a4ef 0%, #0078d4 100%);">
           <i class="bi bi-check-circle-fill me-2 fs-5"></i>
           <div class="flex-grow-1">
-            <strong>Agent Connected!</strong>
-            Chat with the agent on the left &mdash; it can manage files in the workspace via MCP.
+            <strong>Agent connected.</strong>
+            Chat with the agent on the left: it can manage files in the workspace via MCP.
             Click <strong>"Refresh"</strong> on the right to see live changes.
           </div>
           <%= link_to demo3_path, class: "btn btn-outline-light btn-sm ms-3" do %>
@@ -333,7 +341,7 @@
         <div class="card shadow h-100">
           <div class="card-header text-white d-flex align-items-center" style="background: linear-gradient(135deg, #00a4ef 0%, #0078d4 100%);">
             <i class="bi bi-robot me-2"></i>
-            <strong>AIsuru Agent</strong>
+            <strong>AIsuru agent</strong>
             <span class="badge bg-light text-dark ms-auto">MCP-enabled</span>
           </div>
           <div class="card-body p-0">
@@ -362,7 +370,7 @@
         <div class="card shadow h-100">
           <div class="card-header bg-warning text-dark d-flex align-items-center">
             <i class="bi bi-folder2 me-2"></i>
-            <strong>Workspace Explorer</strong>
+            <strong>Workspace explorer</strong>
             <span class="badge bg-dark ms-2">./test</span>
             <button class="btn btn-sm btn-outline-dark ms-auto" onclick="refreshWorkspace()">
               <i class="bi bi-arrow-clockwise me-1"></i> Refresh
