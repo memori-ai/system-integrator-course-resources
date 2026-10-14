@@ -1,300 +1,307 @@
 # AIsuru AI System Integrator Course Resources
 
-> **Impara a integrare l'intelligenza artificiale conversazionale nelle applicazioni enterprise** — Materiali ufficiali di formazione per il Programma di Certificazione AIsuru System Integrator di [Memori.ai](https://memori.ai)
+Materiale di formazione per il programma di certificazione AIsuru System Integrator di [Memori.ai](https://memori.ai).
 
 [![AIsuru](https://img.shields.io/badge/Piattaforma-AIsuru-blue)](https://www.aisuru.com)
 [![Docs](https://img.shields.io/badge/Docs-docs.aisuru.com-green)](https://docs.aisuru.com)
 [![AI Act Compliant](https://img.shields.io/badge/EU%20AI%20Act-Conforme-success)](https://www.aisuru.com)
 
-## 📋 Iscriviti al Corso
+[English version](./README.md)
 
-<!-- 🔗 Link al catalogo corsi in arrivo (Gennaio 2025) -->
-**Iscrizioni al corso in apertura!** Resta aggiornato per il catalogo ufficiale dei corsi.
+## Iscrizioni
 
----
+Le iscrizioni non sono ancora aperte. Il link al catalogo corsi sarà pubblicato qui.
 
-## 🎯 Informazioni sul Corso
+## Il corso
 
-Questo **corso di certificazione professionale** è progettato per sviluppatori, software engineer e professionisti tecnici che vogliono diventare **AI System Integrator** certificati per [AIsuru](https://www.aisuru.com), la piattaforma europea di intelligenza artificiale conversazionale sviluppata da [Memori.ai](https://memori.ai).
+Il corso è rivolto a sviluppatori, software engineer e tecnici che vogliono certificarsi come System Integrator per [AIsuru](https://www.aisuru.com), la piattaforma di AI conversazionale sviluppata da [Memori.ai](https://memori.ai).
 
-### Cosa Imparerai
+### Cosa imparerai
 
-Come **AIsuru AI System Integrator**, imparerai a:
+- Integrare agenti AI in applicazioni e workflow aziendali
+- Collegare AIsuru ai sistemi aziendali esistenti (CRM, ERP, database, API)
+- Implementare flussi di autenticazione (SSO, Microsoft Auth, OAuth, JWT)
+- Costruire integrazioni con MCP server e funzioni avanzate
+- Installare e configurare soluzioni AIsuru PaaS
+- Applicare pratiche di sicurezza ai deployment in produzione
 
-- 🤖 **Integrare agenti AI** in applicazioni e workflow aziendali
-- 🔗 **Connettere AIsuru** con sistemi aziendali esistenti (CRM, ERP, database, API)
-- 🔐 **Implementare autenticazione sicura** (SSO, Microsoft Auth, OAuth, JWT)
-- ⚡ **Costruire integrazioni personalizzate** usando MCP Server e funzioni avanzate
-- 🚀 **Distribuire e configurare** soluzioni AIsuru PaaS per clienti enterprise
-- 🛡️ **Applicare best practice di sicurezza** per deployment AI in produzione
+### A chi è rivolto
 
-### A Chi è Rivolto
+- Sviluppatori backend e frontend
+- Software architect
+- DevOps engineer
+- Consulenti tecnici
+- Personale IT che lavora su integrazioni AI
 
-- Sviluppatori Backend e Frontend
-- Software Architect
-- DevOps Engineer
-- Consulenti Tecnici
-- Professionisti IT che lavorano con integrazioni AI
-
-## 📚 Moduli del Corso
+## Moduli del corso
 
 | Codice | Modulo | Durata | Argomenti |
 |--------|--------|--------|-----------|
-| **SYS-01** | Principi di System Integration | 2h | Strategie di integrazione AI, fonti dati, limiti RAG, database vettoriali |
+| **SYS-01** | Principi di System Integration | 2h | Strategie di integrazione AI, fonti dati, limiti della RAG, database vettoriali |
 | **SYS-02** | Integrazione Frontend e Backend | 2h | Web component, API REST, embedding, casi d'uso |
 | **SYS-03** | Autenticazione Aziendale | 2h | SSO, Microsoft Auth, OAuth, JWT, autenticazione embedded |
 | **SYS-04** | Funzioni Avanzate | 2h | Servizi REST/GRPC/JSONRPC, Swagger, Gateway MCP |
 | **SYS-05** | Programmazione Web Component | 2h | Dialog API, UI personalizzata, integrazione frontend |
-| **SYS-06** | Integrazione MCP Server | 3h | Tool, Risorse, Prompt, MCP Server personalizzati |
+| **SYS-06** | Integrazione MCP Server | 3h | Tool, resource, prompt, MCP server personalizzati |
 | **SYS-07** | Integrazione Automazioni | 2h | Automazione workflow, orchestrazione API, casi studio |
 | **SYS-08** | Best Practice Pre-Release | 2h | Sicurezza, Red Teaming, audit logging, conformità GDPR |
 | **SYS-09** | Workshop Pratico | 1h | Esercitazioni pratiche e scenari reali |
 
-### Formato del Corso
+**Formato:** 3 giornate da 6 ore (webinar online), più 1 giornata di workshop live.
 
-📅 **Durata:** 3 giorni × 6 ore (webinar online) + 1 giorno di workshop live
-
-## 📂 Struttura del Repository
+## Struttura del repository
 
 ```
 system-integrator-course-resources/
 ├── SYS-03-integrating-enterprise-authentication/
-│   ├── README.md          # Panoramica modulo (EN)
-│   ├── README-IT.md       # Panoramica modulo (IT)
-│   └── manage_login/      # Demo app autenticazione
-│       ├── README.md      # Guida completa: auth web component (EN)
-│       ├── README-IT.md   # Guida completa: auth web component (IT)
-│       └── demo/          # App Rails 8 con tutte le demo auth
+│   └── manage_login/            # Demo app autenticazione
+│       ├── README.md            # Guida completa (EN)
+│       ├── README-IT.md         # Guida completa (IT)
+│       ├── img/                 # Screenshot usati nella guida
+│       └── demo/                # App Rails, demo 1-4
 ├── SYS-04-advanced-functions/
-│   └── manage_functions/  # Demo app funzioni avanzate
-│       ├── README.md      # Guida completa: funzioni avanzate (EN)
-│       ├── README-IT.md   # Guida completa: funzioni avanzate (IT)
-│       └── demo/          # App Rails con demo funzioni
+│   └── manage_functions/        # Demo app funzioni avanzate
+│       ├── README.md            # Guida completa (EN)
+│       ├── README-IT.md         # Guida completa (IT)
+│       └── demo/                # App Rails, demo 1-2
 ├── SYS-05-web-component-programming/
-│   ├── README.md          # Panoramica modulo
-│   └── web_component/     # Demo app web component / Dialog API
-│       ├── README.md      # Guida completa: programmazione web component (EN)
-│       ├── README-IT.md   # Guida completa: programmazione web component (IT)
-│       └── demo/          # App Rails con la demo Dialog API
+│   ├── README.md                # Panoramica del modulo (EN)
+│   ├── README-IT.md             # Panoramica del modulo (IT)
+│   └── web_component/           # Demo app web component / Dialog API
+│       ├── README.md            # Guida completa (EN)
+│       ├── README-IT.md         # Guida completa (IT)
+│       └── demo/                # App Rails, demo 1
 ├── SYS-06-mcp-server-integration/
-│   └── manage-server-mcp/ # Demo app integrazione MCP server
-│       ├── README.md      # Guida completa: integrazione MCP server (EN)
-│       ├── README-IT.md   # Guida completa: integrazione MCP server (IT)
-│       └── demo/          # App Rails con demo MCP
-├── README.md              # Versione inglese
-└── README-IT.md           # Questo file
+│   └── manage-server-mcp/       # Demo app integrazione MCP server
+│       ├── README.md            # Guida completa (EN)
+│       ├── README-IT.md         # Guida completa (IT)
+│       ├── agents/              # Prompt di sistema e asset per le demo 5, 7, 8
+│       ├── img/                 # Screenshot usati nella guida
+│       └── demo/                # App Rails, demo 1-8
+├── index.html                   # Hub delle demo aperto dai launcher
+├── start-all.js, stop-all.js    # Script dietro npm run start:all e stop:all
+├── avvia.bat, ferma.bat         # Launcher a doppio clic per Windows
+├── avvia.command, ferma.command # Launcher a doppio clic per macOS
+├── README.md                    # Versione inglese
+└── README-IT.md                 # Questo file
 ```
 
-## 🔗 Documentazione Ufficiale e Risorse
+## Prerequisiti
 
-| Risorsa | Link | Descrizione |
-|---------|------|-------------|
-| **Piattaforma AIsuru** | [aisuru.com](https://www.aisuru.com) | Sito web della piattaforma |
-| **Documentazione** | [docs.aisuru.com](https://docs.aisuru.com/) | Documentazione completa |
-| **Riferimento API** | [docs.aisuru.com/api](https://docs.aisuru.com/api) | Documentazione API Engine e Backend |
-| **Memori.ai** | [memori.ai](https://memori.ai) | Sito web aziendale |
+- Conoscenza base di sviluppo web (HTML, CSS, JavaScript)
+- Familiarità con le API REST e con HTTP
+- Comprensione dei concetti di autenticazione (OAuth 2.0, JWT, SSO)
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) installato: include Docker Engine e Docker Compose, richiesti da tutte le demo
+- [Node.js](https://nodejs.org/) installato: serve per `npm run start` in ogni demo e per il launcher `npm run start:all` nella root del repository
+- Un editor di codice (VS Code consigliato)
 
-### Panoramica API
+## Come iniziare
 
-- **Engine API**: Gestione sessioni, Dialog, Memories, Intents, Functions, WebHooks, NLP
-- **Backend API**: Gestione utenti, CRUD Memori, Integrazioni, Import/Export, gestione Tenant
+### Avvio rapido con un doppio clic
 
-## 🛠️ Prerequisiti
-
-Prima di iniziare il corso, assicurati di avere:
-
-- ✅ Conoscenza base di **sviluppo web** (HTML, CSS, JavaScript)
-- ✅ Familiarità con **API REST** e protocolli HTTP
-- ✅ Comprensione dei **concetti di autenticazione** (OAuth 2.0, JWT, SSO)
-- ✅ **[Docker Desktop](https://www.docker.com/products/docker-desktop/)** installato (include Docker Engine e Docker Compose — necessario per eseguire tutte le demo)
-- ✅ **[Node.js](https://nodejs.org/)** installato (serve per `npm run start` in ogni demo, e per il launcher `npm run start:all` in root)
-- ✅ Un editor di codice (VS Code consigliato)
-
-## 🚀 Come Iniziare
-
-### ⚡ Avvio rapido: un doppio clic
-
-Se non hai dimestichezza con il terminale, dopo aver scaricato il repository ti basta fare **doppio clic** sul file adatto al tuo computer, nella cartella principale:
+Se non hai dimestichezza con il terminale, dopo aver scaricato il repository fai doppio clic sul file adatto al tuo computer, nella cartella principale:
 
 | Sistema | Avvia le demo | Ferma le demo |
 |---------|---------------|---------------|
 | Windows | `avvia.bat` | `ferma.bat` |
 | macOS | `avvia.command` | `ferma.command` |
 
-Il file controlla che Node.js e Docker Desktop siano installati, avvia Docker Desktop se è spento, prepara tutte le demo e apre da solo la pagina con l'elenco. La prima volta può richiedere una decina di minuti: è normale, basta non chiudere la finestra finché non compare **"Tutto pronto"**. Le demo restano attive anche dopo aver chiuso la finestra.
+Il launcher controlla che Node.js e Docker Desktop siano installati, avvia Docker Desktop se è spento, prepara tutte le demo e apre l'hub con l'elenco. La prima volta può richiedere una decina di minuti: basta non chiudere la finestra finché non compare "Tutto pronto". Le demo restano attive anche dopo aver chiuso la finestra.
 
-**Al primo avvio il sistema operativo può chiedere una conferma:**
+Al primo avvio il sistema operativo può chiedere una conferma:
 
-- **Windows** — se compare un avviso di sicurezza, clicca *Ulteriori informazioni* → *Esegui comunque*.
-- **macOS** — se compare *"impossibile aprire perché proviene da uno sviluppatore non identificato"*, fai clic destro sul file → *Apri* → *Apri*. Serve solo la prima volta.
+- Su Windows, se compare un avviso di sicurezza, clicca *Ulteriori informazioni*, poi *Esegui comunque*.
+- Su macOS, se compare *"impossibile aprire perché proviene da uno sviluppatore non identificato"*, fai clic destro sul file, poi *Apri*, poi di nuovo *Apri*. Serve solo la prima volta.
 
 Se qualcosa non funziona, nella stessa cartella trovi il file `avvio.log` con i dettagli tecnici da allegare a una segnalazione.
 
-Chi preferisce il terminale può continuare a usare i comandi descritti qui sotto.
+### Avvio da terminale
 
-### 🧑‍💻 Avvio da terminale
-
-1. **Clona questo repository**
+1. Clona il repository:
    ```bash
    git clone https://github.com/memori-ai/system-integrator-course-resources.git
    cd system-integrator-course-resources
    ```
 
-2. **Naviga nel modulo** che vuoi esplorare
-
-3. **Segui le istruzioni del README** in ogni cartella del modulo
-
-4. **Esegui le demo** usando Docker Compose dove applicabile
+2. Avvia una singola demo dalla sua cartella `demo/`:
    ```bash
-   docker compose up
+   cd SYS-06-mcp-server-integration/manage-server-mcp/demo
+   npm run start
    ```
 
-   Oppure, per avviare **tutte** le demo insieme (ognuna sulla propria porta) e navigarle da un'unica pagina:
+3. Oppure avviale tutte insieme, ognuna sulla propria porta:
    ```bash
    npm run start:all
    ```
-   Questo comando compila e avvia SYS-03, SYS-04, SYS-05 e SYS-06 in background, poi apre in automatico l'hub delle demo (`index.html`) nel tuo browser predefinito — scegli un modulo, apri subito la sua demo. Funziona allo stesso modo su macOS, Linux e Windows (richiede [Node.js](https://nodejs.org/) oltre a Docker).
+   Il comando compila e avvia SYS-03, SYS-04, SYS-05 e SYS-06 in background, poi apre l'hub delle demo (`index.html`) nel browser predefinito. Funziona allo stesso modo su macOS, Linux e Windows, e richiede [Node.js](https://nodejs.org/) oltre a Docker.
 
-   Ferma tutto con:
+4. Ferma tutto con:
    ```bash
    npm run stop:all
    ```
 
-## 📖 Dettagli dei Moduli
+Ogni modulo ha la propria guida con la configurazione lato piattaforma (credenziali agente, MCP server, tunnel). Leggila prima di avviare la demo.
+
+### Porte delle demo
+
+| Modulo | URL |
+|--------|-----|
+| SYS-03 Autenticazione Aziendale | http://localhost:13000 |
+| SYS-04 Funzioni Avanzate | http://localhost:13004 |
+| SYS-05 Programmazione Web Component | http://localhost:13005 |
+| SYS-06 Integrazione MCP Server | http://localhost:13006 |
+
+Le porte sono diverse da quella di default di Rails (3000) così che tutte le demo possano girare insieme.
+
+## Dettaglio dei moduli
 
 ### SYS-01: Principi di System Integration
-- Servizi da integrare e censimento fonti dati
-- Come fornire contesto all'AI (comprendere gli internals per affinare le strategie)
+
+- Servizi da integrare e censimento delle fonti dati
+- Come fornire contesto all'AI e cosa implicano gli internals per la strategia di integrazione
 - Accessibilità dei dati e frequenza di aggiornamento
 - Limiti della RAG (Retrieval Augmented Generation) e dei database vettoriali
 
 ### SYS-02: Integrazione Frontend e Backend
-- Panoramica Web Component e tecniche di embedding
-- Capacità API e pattern di integrazione
-- Casi d'uso enterprise reali
+
+- Panoramica del web component e tecniche di embedding
+- Capacità delle API e pattern di integrazione
+- Casi d'uso enterprise
 
 ### SYS-03: Autenticazione Aziendale
 
-Impara a integrare sistemi di autenticazione enterprise con gli agenti AI conversazionali di AIsuru. Il modulo include una demo completa in Rails che copre quattro approcci di autenticazione:
+Come collegare i sistemi di autenticazione aziendali agli agenti AIsuru. Il modulo include una demo Rails con quattro approcci:
 
-| Demo | Metodo di Autenticazione | Descrizione |
+| Demo | Metodo di autenticazione | Descrizione |
 |------|--------------------------|-------------|
-| **Demo 1** | Login Autonomo | Il web component gestisce il login via `showLogin="true"` — nessun backend richiesto |
-| **Demo 2** | Auth Programmatica (LoginWithJWT) | Il backend autentica gli utenti via Trusted App API per un SSO seamless |
-| **Demo 3** | Microsoft SSO (Azure AD / Entra ID) | Integrazione completa con Microsoft identity platform tramite MSAL.js |
-| **Demo 4** | Login con Redirect | Autentica gli utenti localmente, poi li reindirizza ad AIsuru via magic link |
+| **Demo 1** | Login autonomo | Il web component gestisce da solo il login con `showLogin="true"`, senza backend |
+| **Demo 2** | Auth programmatica (LoginWithJWT) | Il backend autentica l'utente tramite la Trusted App API |
+| **Demo 3** | Microsoft SSO (Azure AD / Entra ID) | Integrazione con Microsoft identity platform tramite MSAL.js |
+| **Demo 4** | Login con redirect | L'utente si autentica localmente, poi arriva su AIsuru con un magic link |
 
-**Obiettivi di apprendimento:**
-- Implementare l'autenticazione in web component AIsuru embedded
+Obiettivi di apprendimento:
+
+- Aggiungere l'autenticazione a un web component AIsuru embedded
 - Usare l'API `LoginWithJWT` per l'autenticazione programmatica
-- Configurare Trusted Application per la comunicazione sicura backend-to-backend
+- Configurare una Trusted Application per le chiamate backend-to-backend
 - Configurare Microsoft Azure AD / Entra ID SSO
 - Costruire flussi di autenticazione con redirect
 
-**Prerequisiti:** Conoscenza base di OAuth 2.0, JWT, SSO; Docker installato.
+Prerequisiti: basi di OAuth 2.0, JWT e SSO; Docker installato.
 
-📁 **Risorse del modulo:** [SYS-03 →](./SYS-03-integrating-enterprise-authentication/manage_login/README-IT.md)
+Risorse del modulo: [SYS-03](./SYS-03-integrating-enterprise-authentication/manage_login/README-IT.md)
 
 ### SYS-04: Funzioni Avanzate
 
-Impara come creare funzioni avanzate che collegano gli agenti AIsuru a REST API e servizi esterni. Il modulo include una demo completa in Rails che copre due approcci:
+Come scrivere funzioni avanzate che collegano gli agenti AIsuru a REST API esterne. Il modulo include una demo Rails con due approcci:
 
-| Demo | Tipo di Funzione | Descrizione |
-|------|-----------------|-------------|
-| **Demo 1** | Integrazione Weather API | Collega agenti a servizi REST usando webhook e variabili template |
-| **Demo 2** | Import OpenAPI/Swagger | Auto-genera multiple funzioni da specifiche Swagger/OpenAPI |
+| Demo | Tipo di funzione | Descrizione |
+|------|------------------|-------------|
+| **Demo 1** | Integrazione Weather API | Collega un agente a un servizio REST con una funzione webhook e variabili template |
+| **Demo 2** | Import OpenAPI/Swagger | Genera più funzioni insieme da una specifica Swagger/OpenAPI |
 
-**Obiettivi di apprendimento:**
-- Creare funzioni avanzate in AIsuru e configurare URL webhook
+Obiettivi di apprendimento:
+
+- Creare funzioni avanzate in AIsuru e configurarne l'URL webhook
 - Configurare integrazioni webhook con REST API esterne
-- Usare file OpenAPI/Swagger per auto-generare funzioni
-- Collegare funzioni agli agenti e configurare il loro utilizzo
-- Debuggare e verificare le chiamate alle funzioni nelle conversazioni
+- Importare file OpenAPI/Swagger per generare funzioni
+- Collegare le funzioni a un agente e configurarne l'uso
+- Fare debug e verificare le chiamate alle funzioni in conversazione
 - Gestire parametri e risposte delle funzioni
-- Applicare best practice per il design delle funzioni e la gestione errori
+- Applicare pratiche di design delle funzioni e gestione degli errori
 
-**Prerequisiti:** Comprensione base di REST API e metodi HTTP; familiarità con i web component AIsuru (SYS-03); accesso alla piattaforma AIsuru e credenziali agente; conoscenza base di JSON e parametri API; Docker installato.
+Prerequisiti: basi di REST API e metodi HTTP; familiarità con il web component AIsuru (SYS-03); accesso alla piattaforma AIsuru e credenziali agente; basi di JSON; Docker installato.
 
-📁 **Risorse del modulo:** [SYS-04 →](./SYS-04-advanced-functions/manage_functions/README-IT.md)
+Risorse del modulo: [SYS-04](./SYS-04-advanced-functions/manage_functions/README-IT.md)
 
 ### SYS-05: Programmazione Web Component
 
-Impara a programmare il web component AIsuru oltre l'integrazione di base: passa il contesto della pagina all'agente e lascia che le sue risposte attivino azioni reali sulla pagina. Il modulo include una demo Rails funzionante.
+Come programmare il web component AIsuru oltre l'embedding di base: far sì che le risposte dell'agente attivino azioni reali sulla pagina e passargli il contesto della pagina. Il modulo include una demo Rails.
 
 | Demo | Funzionalità | Descrizione |
 |------|--------------|-------------|
-| **Demo 1** | Dialog API context-aware | L'agente riceve il contesto della pagina e può attivare azioni sul DOM (evidenziare elementi, mostrare alert, far lampeggiare lo sfondo) tramite un tag di output strutturato nelle sue risposte |
+| **Demo 1** | L'agente controlla la pagina | L'agente chiude la risposta con un tag di output nascosto che la pagina legge sull'evento `MemoriNewDialogState`, poi evidenzia un elemento, mostra un alert o fa lampeggiare lo sfondo |
 
-**Obiettivi di apprendimento:**
-- Gestione completa del dialogo tramite Dialog API
-- Sviluppo UI personalizzata per agenti AI
-- Attivare azioni sul DOM dalle risposte dell'agente tramite tag di output strutturati
-- Caso studio: implementazione AI4furn
+Obiettivi di apprendimento:
 
-**Prerequisiti:** Comprensione base di HTML/JavaScript e dei web component AIsuru (SYS-03); Docker installato.
+- Integrare e configurare il web component con le credenziali di un agente
+- Attivare azioni sul DOM dalle risposte dell'agente con tag di output strutturati
+- Passare il contesto della pagina all'avvio della sessione con `initialQuestion`
+- Gestire il dialogo tramite Dialog API e costruire una UI personalizzata
+- Caso studio: AI4furn
 
-📁 **Risorse del modulo:** [SYS-05 →](./SYS-05-web-component-programming/web_component/README-IT.md)
+Prerequisiti: basi di HTML e JavaScript, familiarità con il web component AIsuru (SYS-03); Docker installato.
+
+Risorse del modulo: [SYS-05](./SYS-05-web-component-programming/web_component/README-IT.md)
 
 ### SYS-06: Integrazione MCP Server
 
-Impara a connettere gli agenti AIsuru a sorgenti dati e servizi esterni usando il Model Context Protocol (MCP). Il modulo include una demo completa in Rails che copre due approcci di integrazione:
+Come collegare gli agenti AIsuru a fonti dati e servizi esterni tramite il Model Context Protocol (MCP). Il modulo include una demo Rails con otto demo, dagli MCP server integrati nella piattaforma a quelli scritti da zero:
 
-| Demo | Tipo di Integrazione | Descrizione |
-|------|---------------------|-------------|
-| **Demo 1** | MongoDB via MCP | Connette agenti a MongoDB usando il server MCP integrato nella piattaforma AIsuru e tunnel ngrok TCP |
-| **Demo 3** | Filesystem MCP Server | Costruisce e distribuisce un server MCP personalizzato in Node.js per operazioni sui file in tempo reale |
+| Demo | Tipo di integrazione | Descrizione |
+|------|----------------------|-------------|
+| **Demo 1** | MongoDB via MCP | MCP server integrato in AIsuru che raggiunge un MongoDB locale attraverso un tunnel TCP ngrok |
+| **Demo 2** | MySQL via MCP | Lo stesso server integrato su MySQL, con gli switch di scrittura attivi |
+| **Demo 3** | Filesystem MCP server | Un MCP server personalizzato in Node.js che espone operazioni sui file |
+| **Demo 4** | MCP Scheduler + Persistence | MCP server di piattaforma che pianificano chiamate a tool e conservano dati strutturati tra le sessioni |
+| **Demo 5** | Agent come MCP | Un agente esposto come MCP server tramite Agent Link e consumato da un secondo agente |
+| **Demo 6** | Connettore OAuth / API | Una specifica OpenAPI trasformata in tool dell'agente, con il token OAuth2 richiesto e rinnovato dal connettore |
+| **Demo 7** | Dall'email all'app | Outlook MCP Server, AIsuru Vibe Coder e MCP Persistence su un solo agente: entra una email, esce un'applicazione funzionante |
+| **Demo 8** | MCP Skills | Una skill in markdown registrata su un agente, con la stessa richiesta confrontata prima e dopo |
 
-**Obiettivi di apprendimento:**
-- Comprendere l'architettura MCP (Model Context Protocol)
-- Connettere agenti AIsuru a MongoDB via server MCP integrato nella piattaforma
-- Costruire server MCP personalizzati in Node.js
-- Esporre servizi locali pubblicamente usando tunnel ngrok
-- Configurare le integrazioni MCP server nella piattaforma AIsuru
-- Distribuire server MCP con Docker Compose
+Le demo 4, 5, 7 e 8 girano interamente dentro AIsuru e non richiedono servizi locali. Le demo 1, 2, 3 e 6 richiedono Docker e un authtoken ngrok, da incollare nella pagina della demo: il pulsante **Avvia demo** presente in ogni pagina fa partire il tunnel giusto, ferma gli altri (un account ngrok gratuito consente un tunnel attivo alla volta) e mostra il valore da incollare in AIsuru. La procedura manuale resta disponibile nella pagina come fallback.
 
-**Prerequisiti:** Comprensione base di Docker e Docker Compose; familiarità con i web component AIsuru (SYS-03); account ngrok; conoscenza base di Node.js.
+I prompt di sistema pronti e gli asset scaricabili per le demo 5, 7 e 8 si trovano in [`agents/`](./SYS-06-mcp-server-integration/manage-server-mcp/agents/) e sono serviti anche dalle pagine delle demo, dato che i partecipanti al corso non hanno questo repository.
 
-📁 **Risorse del modulo:** [SYS-06 →](./SYS-06-mcp-server-integration/manage-server-mcp/README-IT.md)
+Obiettivi di apprendimento:
+
+- Capire l'architettura MCP e il ruolo di tool, resource e prompt
+- Usare gli MCP server integrati in AIsuru (MongoDB, MySQL, Scheduler, Persistence, Skills)
+- Costruire e distribuire un MCP server personalizzato in Node.js
+- Esporre pubblicamente servizi locali con i tunnel ngrok
+- Esporre un agente come MCP server e distinguere il token Consumer da quello Builder
+- Trasformare una REST API esistente in tool dell'agente con il connettore OAuth/API
+- Combinare più MCP server sullo stesso agente
+
+Prerequisiti: basi di Docker e Docker Compose; familiarità con il web component AIsuru (SYS-03); un account ngrok per le demo 1, 2, 3 e 6; basi di Node.js.
+
+Risorse del modulo: [SYS-06](./SYS-06-mcp-server-integration/manage-server-mcp/README-IT.md)
 
 ### SYS-07: Integrazione Automazioni
-- Implementazione sintetizzatore riunioni
+
+- Implementazione del sintetizzatore di riunioni
 - Integrazione SharePoint e Microsoft 365
-- Scenari di automazione workflow aziendali
+- Scenari di automazione dei workflow aziendali
 
 ### SYS-08: Best Practice Pre-Release
+
 - Strategie di Red Teaming per sistemi AI
-- Whitelisting domini e configurazione CORS
-- Configurazioni sicure tramite dashboard AIsuru
+- Whitelisting dei domini e configurazione CORS
+- Configurazioni sicure dalla dashboard AIsuru
 - Funzioni autenticate (Bearer token, validazione JWT)
-- Policy di isolamento dati per cliente/contesto
-- Audit logging e tracciabilità uso tool
+- Policy di isolamento dei dati per cliente e contesto
+- Audit logging e tracciabilità dell'uso dei tool
 - Conformità GDPR e policy di data retention
 
-## 🏢 Chi è Memori.ai
+## Documentazione e risorse
 
-[**Memori**](https://memori.ai) è un'azienda italiana di intelligenza artificiale fondata nel 2017, con sede a Bologna. Siamo specializzati in **tecnologia AI conversazionale** con forte focus su:
+| Risorsa | Link | Descrizione |
+|---------|------|-------------|
+| Piattaforma AIsuru | [aisuru.com](https://www.aisuru.com) | Sito della piattaforma |
+| Documentazione | [docs.aisuru.com](https://docs.aisuru.com/) | Documentazione della piattaforma |
+| Riferimento API | [docs.aisuru.com/api](https://docs.aisuru.com/api) | API Engine e Backend |
+| Memori.ai | [memori.ai](https://memori.ai) | Sito aziendale |
 
-- 🇪🇺 **Conformità EU AI Act** — pienamente conforme alle normative europee sull'AI
-- 🔒 **Sicurezza enterprise-grade** — privacy e protezione dati by design
-- 🎯 **AI human-centric** — esperienze AI accessibili e intuitive
+L'Engine API copre gestione sessioni, dialog, memories, intent, function, webhook e NLP. La Backend API copre gestione utenti, CRUD dei memori, integrazioni, import/export e gestione tenant.
 
-**AIsuru** è la nostra piattaforma principale per creare, addestrare e distribuire agenti conversazionali AI che si integrano perfettamente con i sistemi aziendali.
+## Chi è Memori.ai
 
-## 🌐 Keywords
+[Memori](https://memori.ai) è un'azienda italiana di intelligenza artificiale fondata nel 2017, con sede a Bologna. Lavora sull'AI conversazionale con attenzione alla conformità all'EU AI Act, alla sicurezza enterprise e alla protezione dei dati by design. AIsuru è la sua piattaforma per creare, addestrare e distribuire agenti conversazionali integrati con i sistemi aziendali.
 
-`integrazione AI` `intelligenza artificiale conversazionale` `AI enterprise` `sviluppo chatbot` `MCP Server` `system integration` `AIsuru` `Memori.ai` `certificazione AI` `integrazione API REST` `integrazione SSO` `OAuth` `JWT` `web component` `agenti AI` `RAG` `database vettoriali` `GRPC` `JSONRPC` `automazione` `EU AI Act`
+## Licenza
 
-## 📄 Licenza
+Questo materiale è fornito per la formazione alla certificazione AIsuru System Integrator.
 
-Questo materiale didattico è fornito per scopi di formazione alla certificazione **AIsuru AI System Integrator**.
+© 2025 Memori S.R.L. Tutti i diritti riservati.
 
-© 2025 Memori S.R.L. — Tutti i diritti riservati.
-
----
-
-<p align="center">
-  <strong>Hai bisogno di aiuto?</strong><br>
-  📚 <a href="https://docs.aisuru.com/">Documentazione Ufficiale</a> · 
-  🌐 <a href="https://www.aisuru.com">Piattaforma AIsuru</a> · 
-  🏢 <a href="https://memori.ai">Memori.ai</a>
-</p>
+Serve aiuto? Consulta la [documentazione](https://docs.aisuru.com/), la [piattaforma AIsuru](https://www.aisuru.com) o [memori.ai](https://memori.ai).

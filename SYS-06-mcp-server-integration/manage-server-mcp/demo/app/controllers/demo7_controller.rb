@@ -28,7 +28,7 @@ class Demo7Controller < ApplicationController
   # pastes straight into AIsuru or into an email client.
   ASSET_FILES = {
     "prompt" => { file: "vibe-project-builder.md", download: "vibe-project-builder-prompt.txt" },
-    "email" => { file: "email-sales-dashboard.md", download: "demo-project-email.txt" }
+    "email" => { file: "email-flowsales-crm.md", download: "demo-project-email.txt" }
   }.freeze
 
   def index

@@ -1,15 +1,17 @@
 # Embedded Web Component Authentication
 
-> Complete guide to configuring the AIsuru web component with authentication for embedded scenarios
+Guide to configuring the AIsuru web component with authentication for embedded scenarios.
+
+[Versione italiana](./README-IT.md)
 
 ## Overview
 
-This guide covers how to embed the AIsuru web component in your applications and configure authentication to provide personalized AI experiences. You'll learn how to:
+This guide covers:
 
-- Configure the web component with your agent credentials
-- Pass authentication tokens for logged-in users
-- Use context variables and initial questions
-- Implement secure authentication flows
+- Configuring the web component with the credentials of your agent
+- Passing authentication tokens for users who are already logged in
+- Using context variables and initial questions
+- Building the four authentication flows covered by the demos
 
 ---
 
@@ -17,18 +19,18 @@ This guide covers how to embed the AIsuru web component in your applications and
 
 Before starting, you need:
 
-1. An **AIsuru account** at [aisuru.com](https://www.aisuru.com)
-2. A configured **AI Agent (Memori)** in your account
-3. Access to the **Dev Docs** section of your agent
-4. Basic knowledge of HTML and JavaScript
+1. An AIsuru account at [aisuru.com](https://www.aisuru.com)
+2. An agent (memori) configured in that account
+3. Access to the **Dev docs** section of the agent
+4. Basic HTML and JavaScript knowledge
 
-> ⚠️ **Docker Desktop required** — The demo application runs entirely inside Docker containers. Make sure you have [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed and running on your machine before executing `npm run start`.
+**Docker Desktop is required.** The demo application runs inside Docker containers, so install [Docker Desktop](https://www.docker.com/products/docker-desktop/) and make sure it is running before you launch `npm run start`.
 
 ---
 
 ## Demo Application
 
-This module includes **four live demo applications** built with Ruby on Rails 8 + MongoDB that showcase different authentication approaches.
+The module ships one Rails 8 application, backed by MongoDB, with four demos: one per authentication approach.
 
 ![Demo Selection Page](./img/home.png)
 
@@ -39,26 +41,29 @@ This module includes **four live demo applications** built with Ruby on Rails 8 
 cd demo
 ```
 
-Create a file named `.env_dev` in the `demo/` folder (first time only) with the following content:
+The first time, create a file named `.env_dev` in the `demo/` folder with this content:
 
 ```
 MONGO_URI=mongodb://mongodb:27017/embedded_webcomponent_auth_development
 ```
 
+(The `npm run start:all` launcher in the repository root writes this file by itself.)
+
 ```bash
-# Build and start the application (single command)
+# Build and start the application
 npm run start
 
 # Open in your browser
 open http://localhost:13000
 ```
 
-> ℹ️ This demo's `web` service is mapped to host port **13000** (instead of 3000) to avoid colliding with other local projects that commonly use the 3000 range. Inside the container it still listens on 3000.
+The `web` service is mapped to host port 13000 instead of 3000, so this demo can run at the same time as the others and stays clear of other local projects. Inside the container it still listens on 3000.
 
-> 💡 **Windows users — if `npm run start` fails:** Git on Windows may convert line endings to CRLF, which breaks shell scripts inside Docker. Run this command once in your terminal and then retry:
-> ```bash
-> git config --global core.autocrlf false
-> ```
+**Windows, if `npm run start` fails:** Git on Windows may convert line endings to CRLF, which breaks the shell scripts inside the container. Run this once, then retry:
+
+```bash
+git config --global core.autocrlf false
+```
 
 ### Available Demos
 
@@ -74,7 +79,7 @@ The simplest approach where the web component handles authentication autonomousl
 
 #### Demo 2: Programmatic Auth with Trusted App
 
-Backend authentication using the `LoginWithJWT` API for seamless SSO.
+Backend authentication through the `LoginWithJWT` API: the user signs in once, on your side.
 
 - Create and configure a Trusted App in your tenant
 - Your backend authenticates users via `LoginWithJWT`
@@ -85,11 +90,11 @@ Backend authentication using the `LoginWithJWT` API for seamless SSO.
 
 #### Demo 3: Microsoft SSO (Azure AD / Entra ID)
 
-Complete Single Sign-On integration with Microsoft identity platform.
+Single Sign-On with the Microsoft identity platform.
 
 - Configure Azure App Registration with your `clientId`
 - Use MSAL.js for Microsoft authentication in the browser
-- Chain Microsoft auth → AIsuru `LoginWithJWT` for seamless SSO
+- Chain the Microsoft sign-in to the AIsuru `LoginWithJWT` call
 - Users are pre-authenticated in the web component
 
 **Best for:** Corporate environments using Microsoft 365, Azure AD-integrated applications.
@@ -238,7 +243,7 @@ When you have authenticated users in your application, you can pass their authen
 ></memori-client>
 ```
 
-> ⚠️ **Important**: When passing a login token, set `showLogin="false"` since the user is already authenticated.
+**Important:** when passing a login token, set `showLogin="false"`, since the user is already authenticated.
 
 ### Dynamic Token Injection (JavaScript)
 
@@ -367,7 +372,7 @@ X-Memori-Trusted-App: YOUR_TRUSTED_APP_API_KEY
 
 Use the returned `token` value in the `additionalInfo.loginToken` attribute.
 
-📖 **Full API Reference**: [PwlUser API Documentation](https://docs.aisuru.com/api/backend/pwluser)
+Full API reference: [PwlUser API documentation](https://docs.aisuru.com/api/backend/pwluser)
 
 ---
 
@@ -377,9 +382,9 @@ To use `LoginWithJWT` for programmatic authentication, you need a **Trusted Appl
 
 ### What is a Trusted App?
 
-A Trusted Application is a secure way for your backend to communicate with AIsuru APIs. It allows you to:
-- Authenticate users programmatically without them entering AIsuru credentials
-- Create seamless SSO experiences
+A Trusted Application is how your backend authenticates against the AIsuru APIs. It lets you:
+- Authenticate users programmatically, without them entering AIsuru credentials
+- Build SSO flows where the user never sees a second login
 - Manage user sessions from your backend
 
 ### Creating a Trusted App
@@ -392,7 +397,7 @@ A Trusted Application is a secure way for your backend to communicate with AIsur
    - **Base URL**: Your application's URL (e.g., `http://localhost:13000`)
 5. Save and copy the **API Key**
 
-> ⚠️ **Security Warning:** Never expose your Trusted App API Key in frontend code! Always call AIsuru APIs from your backend.
+**Security warning:** never expose your Trusted App API Key in frontend code. Always call the AIsuru APIs from your backend.
 
 ### Using the Trusted App API Key
 
@@ -495,12 +500,12 @@ To use Demo 3, you need an Azure App Registration.
      - "Accounts in this organizational directory only" for single-tenant
    - **Redirect URI**: Select **"Single-page application (SPA)"** and enter `http://localhost:13000`
 
-> ⚠️ If you already created this Trusted App or Azure App Registration with the old `http://localhost:3000` value, you must update it by hand in AIsuru / the Azure Portal — changing the port here does not update it there automatically.
+If you already created this Trusted App or Azure App Registration with the old `http://localhost:3000` value, update it by hand in AIsuru or in the Azure Portal. Changing the port here does not change it there.
 
 ### Step 2: Get Credentials
 
 1. After registration, go to **Overview**
-2. Copy the **Application (client) ID** — this is your `clientId`
+2. Copy the **Application (client) ID**, which is your `clientId`
 3. Note the **Directory (tenant) ID** if using single-tenant mode
 
 ### Step 3: Configure API Permissions (optional)
@@ -561,9 +566,9 @@ https://your-tenant.aisuru.com/en/magiclink/YOUR_TOKEN
 ```
 
 **Parameters:**
-- `{TENANT_BASE_URL}` — Your AIsuru tenant URL (e.g., `www.aisuru.com`)
-- `{LANGUAGE}` — UI language code (`en`, `it`, etc.)
-- `{TOKEN}` — The `token` value from `LoginWithJWT` response
+- `{TENANT_BASE_URL}`: your AIsuru tenant URL, for example `www.aisuru.com`
+- `{LANGUAGE}`: UI language code (`en`, `it`, and so on)
+- `{TOKEN}`: the `token` value returned by `LoginWithJWT`
 
 ---
 
@@ -665,4 +670,4 @@ The `layout` attribute supports different display modes:
 
 ---
 
-📚 [Back to SYS-03 Module](../README.md) | 🏠 [Course Home](../../README.md)
+[Course home](../../README.md)

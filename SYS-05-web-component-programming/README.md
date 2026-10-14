@@ -1,43 +1,45 @@
 # SYS-05: Web Component Programming
 
-> Learn how to integrate and customize the AIsuru web component in your applications
+How to embed and program the AIsuru web component in your own pages.
+
+[Versione italiana](./README-IT.md)
 
 ## Overview
 
-This module covers web component programming techniques to create context-aware AI experiences embedded in web pages.
+The module covers the techniques that make an embedded agent aware of the page it lives in, and that let its answers act on that page.
 
-📁 **Full Guide**: [web_component/README.md](./web_component/README.md)
+Full guide: [web_component/README.md](./web_component/README.md) ([Italian version](./web_component/README-IT.md))
 
----
-
-## Quick Start
+## Quick start
 
 ```bash
-# Navigate to the demo folder
 cd web_component/demo
 ```
 
-Create a file named `.env_dev` in the `demo/` folder (first time only) with the following content:
+The first time, create a file named `.env_dev` in the `demo/` folder with this content:
 
 ```
 MONGO_URI=mongodb://mongodb:27017/sys_05_web_component_development
 ```
 
+(The `npm run start:all` launcher in the repository root writes this file by itself.)
+
 ```bash
-# Build and start the application (single command)
+# Build and start the application
 npm run start
 
-# Open in your browser
+# Open it in the browser
 open http://localhost:13005
 ```
 
-> ℹ️ This demo's `web` service is mapped to host port **13005** (instead of 3000) so it can run at the same time as the other demos.
+The `web` service is mapped to host port 13005 instead of 3000, so this demo can run at the same time as the others. Inside the container it still listens on 3000.
 
-> 💡 **Windows users — if `npm run start` fails:** Git on Windows may convert line endings to CRLF, which breaks shell scripts inside Docker. Run this command once in your terminal and then retry:
-> ```bash
-> git config --global core.autocrlf false
-> ```
+**Windows, if `npm run start` fails:** Git on Windows may convert line endings to CRLF, which breaks the shell scripts inside the container. Run this once, then retry:
+
+```bash
+git config --global core.autocrlf false
+```
 
 ---
 
-🏠 [Course Home](../README.md)
+[Course home](../README.md)

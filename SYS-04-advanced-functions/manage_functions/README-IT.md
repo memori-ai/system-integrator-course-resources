@@ -1,10 +1,12 @@
 # Funzioni Avanzate con AIsuru
 
-> Guida completa alla creazione e integrazione di funzioni avanzate per estendere le capacità del tuo agente AIsuru
+Guida alla creazione di funzioni avanzate che estendono ciò che un agente AIsuru sa fare.
 
-## 🎯 Panoramica
+[English version](./README.md)
 
-Questa guida spiega come creare funzioni avanzate che permettono ai tuoi agenti AIsuru di interagire con REST API e servizi esterni. Imparerai a:
+## Panoramica
+
+Questa guida copre la creazione di funzioni avanzate, cioè il modo in cui un agente AIsuru chiama REST API e servizi esterni:
 
 - Creare funzioni personalizzate che recuperano dati in tempo reale da API esterne
 - Configurare webhook e parametri HTTP
@@ -12,9 +14,9 @@ Questa guida spiega come creare funzioni avanzate che permettono ai tuoi agenti 
 - Collegare funzioni ai tuoi agenti e configurare il loro utilizzo
 - Debuggare e verificare le chiamate alle funzioni nelle conversazioni
 
-## 🚀 Prova le Demo
+## Prova le Demo
 
-Questo modulo include **demo applicative funzionanti** che mostrano diversi approcci alla creazione e utilizzo di funzioni avanzate.
+Il modulo include un'applicazione Rails con due demo, una per ogni approccio alla creazione di funzioni.
 
 ### Avviare le Demo
 
@@ -23,25 +25,27 @@ Questo modulo include **demo applicative funzionanti** che mostrano diversi appr
 cd demo
 ```
 
-Crea un file chiamato `.env_dev` nella cartella `demo/` (solo la prima volta) con il seguente contenuto:
+La prima volta crea un file `.env_dev` nella cartella `demo/` con questo contenuto:
 
 ```
 MONGO_URI=mongodb://mongodb:27017/sys_04_advanced_functions_development
 ```
 
+(Il launcher `npm run start:all` nella root del repository scrive il file da solo.)
+
 ```bash
-# Costruisci e avvia l'applicazione (comando unico)
+# Compila e avvia l'applicazione
 npm run start
 
 # Apri nel browser
 open http://localhost:13004
 ```
 
-> ℹ️ Il servizio `web` di questa demo è mappato sulla porta host **13004** (invece di 3000) per poter girare insieme alle altre demo. All'interno del container resta comunque sulla 3000.
+Il servizio `web` è mappato sulla porta 13004 invece che sulla 3000, così questa demo può girare insieme alle altre. Dentro il container ascolta comunque sulla 3000.
 
 ### Demo 1: Collegare Agenti a Servizi REST
 
-Impara come collegare il tuo agente a REST API esterne usando un esempio di dati meteo.
+Collega un agente a una REST API esterna, con i dati meteo come esempio.
 
 - Creare una funzione avanzata nella piattaforma AIsuru
 - Configurare URL webhook e parametri HTTP
@@ -53,7 +57,7 @@ Impara come collegare il tuo agente a REST API esterne usando un esempio di dati
 
 ### Demo 2: Usare File Swagger
 
-Impara come auto-generare multiple funzioni da specifiche OpenAPI/Swagger.
+Genera più funzioni in un colpo solo da una specifica OpenAPI/Swagger. La pagina della demo serve una specifica pronta (`swaggerfile_aisuru.json`, le Memori Web API V2) dal pulsante di download, quindi non devi cercarne una.
 
 - Scaricare e preparare file Swagger/OpenAPI
 - Importare specifiche in AIsuru
@@ -63,11 +67,11 @@ Impara come auto-generare multiple funzioni da specifiche OpenAPI/Swagger.
 
 **Caso d'uso:** Integrare rapidamente API complesse con documentazione esistente
 
-📁 **Codice Sorgente Demo**: [demo/](./demo/)
+Codice sorgente della demo: [demo/](./demo/)
 
 ---
 
-## 📋 Prerequisiti
+## Prerequisiti
 
 Prima di iniziare, hai bisogno di:
 
@@ -78,7 +82,7 @@ Prima di iniziare, hai bisogno di:
 
 ---
 
-## 🔧 Creare la Tua Prima Funzione Avanzata
+## Creare la Tua Prima Funzione Avanzata
 
 ### Step 1: Navigare nelle Funzioni Avanzate
 
@@ -132,16 +136,16 @@ Sei un assistente meteo. Quando gli utenti chiedono del meteo:
 
 ---
 
-## 📊 Usare File OpenAPI/Swagger
+## Usare File OpenAPI/Swagger
 
 ### Perché Usare File Swagger?
 
-Le specifiche OpenAPI (Swagger) offrono diversi vantaggi:
+Partire da una specifica OpenAPI (Swagger) significa:
 
-- ✅ **Generazione automatica**: Crea multiple funzioni in una volta sola
-- ✅ **Consistenza**: Tutti gli endpoint e i parametri sono standardizzati
-- ✅ **Risparmio di tempo**: Perfetto per API complesse con molti endpoint
-- ✅ **Accuratezza**: Usa specifiche API ufficiali
+- Più funzioni generate in un solo import, invece di un form alla volta
+- Endpoint e parametri descritti in modo coerente
+- Meno lavoro sulle API con molti endpoint
+- Definizioni prese dalla specifica ufficiale invece che riscritte a mano
 
 ### Importare un File Swagger
 
@@ -167,7 +171,7 @@ Le specifiche OpenAPI (Swagger) offrono diversi vantaggi:
 
 ---
 
-## 🔐 Testare il Tuo Agente
+## Testare il Tuo Agente
 
 ### Ottenere le Credenziali dell'Agente
 
@@ -205,7 +209,7 @@ Usa queste credenziali per configurare il web component nelle applicazioni demo:
 
 ---
 
-## 🎛️ Configurazione Avanzata delle Funzioni
+## Configurazione Avanzata delle Funzioni
 
 ### Struttura JSON delle Funzioni
 
@@ -286,7 +290,7 @@ Le variabili template seguono il formato `{nome_variabile}`:
 
 ---
 
-## 📡 Schema delle Funzioni REST
+## Schema delle Funzioni REST
 
 ### Anatomia di una Chiamata Funzione
 
@@ -361,7 +365,7 @@ L'agente riceve **l'intera risposta** e può:
 
 ---
 
-## ⚙️ Gestione Errori e Timeout
+## Gestione Errori e Timeout
 
 ### Timeout Configuration
 
@@ -419,7 +423,7 @@ Se la chiamata alla funzione fallisce con 500 o timeout:
 
 ---
 
-## 🐛 Debuggare le Chiamate alle Funzioni
+## Debuggare le Chiamate alle Funzioni
 
 ### Usare la Vista Debug
 
@@ -427,7 +431,7 @@ Dopo aver testato il tuo agente, verifica le chiamate alle funzioni:
 
 1. Naviga su **"Conversazioni"** nel tuo dashboard AIsuru
 2. Trova la conversazione dove la funzione è stata chiamata
-3. Cerca l'**icona bug rossa** 🐛 accanto alla risposta dell'agente
+3. Cerca l'icona bug rossa accanto alla risposta dell'agente
 4. Cliccaci sopra per vedere:
    - Parametri della richiesta inviati all'API
    - Codice di stato HTTP
@@ -445,7 +449,7 @@ Dopo aver testato il tuo agente, verifica le chiamate alle funzioni:
 
 ---
 
-## 💡 Best Practices
+## Best Practices
 
 ### Design delle Funzioni
 
@@ -470,7 +474,7 @@ Dopo aver testato il tuo agente, verifica le chiamate alle funzioni:
 
 ---
 
-## 📝 Esempio Completo: Funzione Meteo
+## Esempio Completo: Funzione Meteo
 
 Ecco un esempio completo dalla creazione al test:
 
@@ -511,14 +515,14 @@ Atteso: L'agente chiama la funzione con lat≈51.5, lon≈-0.1 e restituisce le 
 
 Controlla che:
 
-- ✅ La funzione è stata chiamata
-- ✅ I parametri erano corretti (lat e lon)
-- ✅ L'API ha restituito 200 OK
-- ✅ La risposta contiene dati meteo
+- La funzione è stata chiamata
+- I parametri erano corretti (lat e lon)
+- L'API ha restituito 200 OK
+- La risposta contiene dati meteo
 
 ---
 
-## 🎨 Tecniche Avanzate
+## Tecniche Avanzate
 
 ### Concatenamento Funzioni
 
@@ -555,19 +559,18 @@ Configurali nelle impostazioni della funzione, non nel prompt dell'agente.
 
 ---
 
-## 📂 Struttura del Modulo
+## Struttura del Modulo
 
 ```
 SYS-04-advanced-functions/
-├── README.md          # Panoramica modulo (EN)
-├── README-IT.md       # Panoramica modulo (IT)
-└── manage_functions/  # Demo app funzioni avanzate
-    ├── README.md      # Guida completa (EN)
-    ├── README-IT.md   # Questo file — guida completa (IT)
-    └── demo/          # Applicazione Rails con demo funzioni
+└── manage_functions/                # Demo app funzioni avanzate
+    ├── README.md                    # Guida completa (EN)
+    ├── README-IT.md                 # Questo file, guida completa (IT)
+    └── demo/                        # Applicazione Rails, demo 1 e 2
+        └── swaggerfile_aisuru.json  # Specifica OpenAPI servita dalla Demo 2
 ```
 
-## 🔗 Risorse
+## Risorse
 
 - [Documentazione AIsuru](https://docs.aisuru.com/)
 - [Guida Funzioni Avanzate](https://docs.aisuru.com/advanced-functions)
@@ -577,4 +580,4 @@ SYS-04-advanced-functions/
 
 ---
 
-🏠 [Home del Corso](../../README.md)
+[Home del corso](../../README-IT.md)
