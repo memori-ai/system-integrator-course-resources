@@ -1,4 +1,4 @@
-<% content_for :title, "MCP Server Integration - Demo Selection" %>
+<% content_for :title, "MCP server integration: demo selection" %>
 
 <div class="container py-5">
 
@@ -7,20 +7,21 @@
     <div class="col-lg-10 mx-auto text-center">
       <h1 class="display-4 fw-bold mb-3">
         <i class="bi bi-hdd-network text-primary me-2"></i>
-        MCP Server Integration
+        MCP server integration
       </h1>
       <p class="lead text-muted mb-4">
-        Learn how to connect AIsuru AI agents to external data sources via MCP (Model Context Protocol) servers.
-        Explore demos to see how agents can query databases and manage files in real time.
+        Connect AIsuru agents to databases, files, REST APIs, email and other agents through MCP
+        (Model Context Protocol) servers. Eight demos, from a local MongoDB to an agent that builds
+        an app from an email.
       </p>
       <div class="badge bg-info text-white fs-6 px-3 py-2">
         <i class="bi bi-book me-1"></i>
-        SYS-06 Module - System Integrator Course
+        System Integrator Course, module SYS-06
       </div>
     </div>
   </div>
 
-  <%# Demo Card - Single centered %>
+  <%# Demo Cards %>
   <div class="row g-4 mb-5 justify-content-center">
 
     <%# Demo 1 Card: MongoDB via MCP %>
@@ -39,10 +40,10 @@
             <span class="badge bg-warning-subtle text-warning">ngrok</span>
           </div>
 
-          <h5 class="card-title">AI Agent queries MongoDB through MCP</h5>
+          <h5 class="card-title">The agent queries MongoDB through MCP</h5>
           <p class="card-text text-muted">
-            Connect an AIsuru AI agent to a MongoDB database using a MCP server integrated in the platform.
-            The agent can read, search and analyze data from your collections in real time.
+            Connect an AIsuru agent to a MongoDB database through the MCP server built into the
+            platform. The agent reads and modifies the data in your collections.
           </p>
 
           <hr>
@@ -55,7 +56,7 @@
             </li>
             <li class="mb-2">
               <i class="bi bi-check-circle text-success me-2"></i>
-              Expose MongoDB over HTTPS using ngrok
+              Expose MongoDB through an ngrok TCP tunnel
             </li>
             <li class="mb-2">
               <i class="bi bi-check-circle text-success me-2"></i>
@@ -63,7 +64,7 @@
             </li>
             <li class="mb-2">
               <i class="bi bi-check-circle text-success me-2"></i>
-              Chat with your agent to query live data
+              Query live data by chatting with the agent
             </li>
           </ul>
 
@@ -72,7 +73,7 @@
           <h6 class="text-muted mb-3">Architecture:</h6>
           <p class="small text-muted mb-0">
             <i class="bi bi-diagram-3 text-primary me-1"></i>
-            <strong>AIsuru Agent</strong> &rarr; <strong>MCP Server (AIsuru)</strong> &rarr; <strong>ngrok HTTPS</strong> &rarr; <strong>MongoDB (Docker)</strong>
+            <strong>AIsuru Agent</strong> &rarr; <strong>MCP Server (AIsuru)</strong> &rarr; <strong>ngrok TCP</strong> &rarr; <strong>MongoDB (Docker)</strong>
           </p>
         </div>
         <div class="card-footer bg-white border-0 p-4">
@@ -84,13 +85,13 @@
       </div>
     </div>
 
-    <%# Demo 2 Card: MySQL via MCP Server %>
+    <%# Demo 2 Card: MySQL via the built-in MCP Server %>
     <div class="col-lg-6">
       <div class="card h-100 shadow-lg border-0 card-hover">
         <div class="card-header text-white py-3" style="background: linear-gradient(135deg, #e85d04 0%, #f48c06 100%);">
           <h4 class="mb-0">
             <i class="bi bi-2-circle me-2"></i>
-            Demo 2: MySQL via MCP Server
+            Demo 2: MySQL via MCP server
           </h4>
         </div>
         <div class="card-body p-4">
@@ -100,10 +101,11 @@
             <span class="badge bg-warning-subtle text-warning">ngrok</span>
           </div>
 
-          <h5 class="card-title">AI Agent manages MySQL through self-hosted MCP</h5>
+          <h5 class="card-title">The agent works on MySQL through the built-in MCP server</h5>
           <p class="card-text text-muted">
-            Deploy a self-hosted MCP server (from npm package) that allows an AIsuru AI agent to
-            perform CRUD operations on a MySQL database. The agent can query, insert, update and delete data in real time.
+            Connect an AIsuru agent to a MySQL database with the MySQL MCP server built into AIsuru:
+            there is no MCP server of your own to write or deploy. Once you turn on the write
+            switches, the agent can also insert, update and delete rows.
           </p>
 
           <hr>
@@ -112,19 +114,19 @@
           <ul class="list-unstyled small">
             <li class="mb-2">
               <i class="bi bi-check-circle text-success me-2"></i>
-              Deploy MCP server from npm package
+              Run MySQL with Docker
             </li>
             <li class="mb-2">
               <i class="bi bi-check-circle text-success me-2"></i>
-              Run MySQL database with Docker
+              Expose MySQL through an ngrok TCP tunnel
             </li>
             <li class="mb-2">
               <i class="bi bi-check-circle text-success me-2"></i>
-              Configure MCP server to connect to MySQL
+              Fill in the parameters of the built-in MySQL MCP server in AIsuru
             </li>
             <li class="mb-2">
               <i class="bi bi-check-circle text-success me-2"></i>
-              See real-time database changes via agent
+              Turn on write access and watch the agent change the data
             </li>
           </ul>
 
@@ -133,7 +135,7 @@
           <h6 class="text-muted mb-3">Architecture:</h6>
           <p class="small text-muted mb-0">
             <i class="bi bi-diagram-3 text-primary me-1"></i>
-            <strong>AIsuru Agent</strong> &rarr; <strong>ngrok HTTPS</strong> &rarr; <strong>MCP Server (npm)</strong> &rarr; <strong>MySQL (Docker)</strong>
+            <strong>AIsuru Agent</strong> &rarr; <strong>Built-in MySQL MCP (AIsuru)</strong> &rarr; <strong>ngrok TCP</strong> &rarr; <strong>MySQL (Docker)</strong>
           </p>
         </div>
         <div class="card-footer bg-white border-0 p-4">
@@ -151,7 +153,7 @@
         <div class="card-header text-white py-3" style="background: linear-gradient(135deg, #00a4ef 0%, #0078d4 100%);">
           <h4 class="mb-0">
             <i class="bi bi-3-circle me-2"></i>
-            Demo 3: Filesystem MCP Server
+            Demo 3: filesystem MCP server
           </h4>
         </div>
         <div class="card-body p-4">
@@ -161,10 +163,10 @@
             <span class="badge bg-warning-subtle text-warning">ngrok</span>
           </div>
 
-          <h5 class="card-title">AI Agent manages files through MCP</h5>
+          <h5 class="card-title">The agent manages files through MCP</h5>
           <p class="card-text text-muted">
-            Connect an AIsuru AI agent to a custom filesystem MCP server. The agent can create,
-            read, write and list files in a shared workspace directory.
+            Connect an AIsuru agent to a custom filesystem MCP server. The agent creates, reads,
+            writes and lists files in a shared workspace folder.
           </p>
 
           <hr>
@@ -177,15 +179,15 @@
             </li>
             <li class="mb-2">
               <i class="bi bi-check-circle text-success me-2"></i>
-              Expose filesystem operations via MCP protocol
+              Expose filesystem operations over MCP
             </li>
             <li class="mb-2">
               <i class="bi bi-check-circle text-success me-2"></i>
-              Deploy MCP server with Docker Compose
+              Run the MCP server with Docker Compose
             </li>
             <li class="mb-2">
               <i class="bi bi-check-circle text-success me-2"></i>
-              See real-time file changes in the workspace
+              Watch the files change in the workspace
             </li>
           </ul>
 
@@ -217,16 +219,17 @@
         </div>
         <div class="card-body p-4">
           <div class="mb-4">
-            <span class="badge bg-purple-subtle text-dark me-2" style="background-color: #f0e9fa;">MCP Server</span>
-            <span class="badge bg-light text-dark">Scheduler</span>
-            <span class="badge bg-light text-dark">Persistence</span>
+            <span class="badge text-dark me-2" style="background-color: #f0e9fa;">MCP Server</span>
+            <span class="badge bg-light text-dark me-2">Scheduler</span>
+            <span class="badge bg-light text-dark me-2">Persistence</span>
+            <span class="badge bg-warning-subtle text-warning">No local infra</span>
           </div>
 
-          <h5 class="card-title">AI Agent schedules tasks and persists data</h5>
+          <h5 class="card-title">The agent schedules tasks and stores data</h5>
           <p class="card-text text-muted">
-            Connect an AIsuru AI agent to the platform's built-in Scheduler and Persistence MCP
-            servers &mdash; no self-hosted backend required. The agent can schedule follow-up actions
-            and store structured data across sessions.
+            Connect an AIsuru agent to the Scheduler and Persistence MCP servers built into the
+            platform, with no backend of your own. The agent schedules follow-up actions and keeps
+            structured data across sessions.
           </p>
 
           <hr>
@@ -235,11 +238,11 @@
           <ul class="list-unstyled small">
             <li class="mb-2">
               <i class="bi bi-check-circle text-success me-2"></i>
-              Schedule a tool call to run at a later time
+              Schedule a tool call to run later
             </li>
             <li class="mb-2">
               <i class="bi bi-check-circle text-success me-2"></i>
-              Persist structured data across turns and sessions
+              Keep structured data across turns and sessions
             </li>
             <li class="mb-2">
               <i class="bi bi-check-circle text-success me-2"></i>
@@ -270,7 +273,7 @@
         <div class="card-header text-white py-3" style="background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);">
           <h4 class="mb-0">
             <i class="bi bi-5-circle me-2"></i>
-            Demo 5: Agent as MCP
+            Demo 5: agent as MCP
           </h4>
         </div>
         <div class="card-body p-4">
@@ -284,7 +287,7 @@
           <p class="card-text text-muted">
             Expose an AIsuru agent as an <strong>MCP server</strong> through AIsuru Agent Link, then
             register it as a custom MCP on a second agent. With a Builder token, the second agent can
-            even rewrite the first one&rsquo;s prompt.
+            also rewrite the first one&rsquo;s prompt.
           </p>
 
           <hr>
@@ -297,7 +300,7 @@
             </li>
             <li class="mb-2">
               <i class="bi bi-check-circle text-success me-2"></i>
-              Tell apart the Consumer token and the Builder token
+              Tell the Consumer token from the Builder token
             </li>
             <li class="mb-2">
               <i class="bi bi-check-circle text-success me-2"></i>
@@ -305,7 +308,7 @@
             </li>
             <li class="mb-2">
               <i class="bi bi-check-circle text-success me-2"></i>
-              Watch one agent modify another agent's prompt
+              Watch one agent change another agent's prompt
             </li>
           </ul>
 
@@ -332,7 +335,7 @@
         <div class="card-header text-white py-3" style="background: linear-gradient(135deg, #be123c 0%, #fb7185 100%);">
           <h4 class="mb-0">
             <i class="bi bi-6-circle me-2"></i>
-            Demo 6: OAuth / API Connector
+            Demo 6: OAuth / API connector
           </h4>
         </div>
         <div class="card-body p-4">
@@ -343,11 +346,11 @@
             <span class="badge bg-warning-subtle text-warning">ngrok</span>
           </div>
 
-          <h5 class="card-title">AI Agent calls your REST API</h5>
+          <h5 class="card-title">The agent calls your REST API</h5>
           <p class="card-text text-muted">
-            Connect an existing HTTP/REST API to an AIsuru agent without writing a line of code.
-            Point the connector at an OpenAPI spec and every endpoint becomes a tool, with the
-            OAuth2 token requested, cached and renewed for you.
+            Connect an existing REST API to an AIsuru agent without writing code. Point the
+            connector at an OpenAPI spec and every endpoint becomes a tool; the connector requests,
+            caches and renews the OAuth2 token for you.
           </p>
 
           <hr>
@@ -360,15 +363,15 @@
             </li>
             <li class="mb-2">
               <i class="bi bi-check-circle text-success me-2"></i>
-              Expose it over HTTPS using ngrok
+              Expose it through an ngrok HTTPS tunnel
             </li>
             <li class="mb-2">
               <i class="bi bi-check-circle text-success me-2"></i>
-              Import every endpoint from the OpenAPI spec, no JSON by hand
+              Import every endpoint from the OpenAPI spec, with no JSON written by hand
             </li>
             <li class="mb-2">
               <i class="bi bi-check-circle text-success me-2"></i>
-              Watch the agent read data and write it back
+              Watch the agent answer from live ERP data
             </li>
           </ul>
 
@@ -395,7 +398,7 @@
         <div class="card-header text-white py-3" style="background: linear-gradient(135deg, #4f46e5 0%, #db2777 100%);">
           <h4 class="mb-0">
             <i class="bi bi-7-circle me-2"></i>
-            Demo 7: From Email to App
+            Demo 7: from email to app
           </h4>
         </div>
         <div class="card-body p-4">
@@ -404,15 +407,13 @@
             <span class="badge bg-light text-dark me-2">Vibe Coder</span>
             <span class="badge bg-light text-dark me-2">Persistence</span>
             <span class="badge bg-warning-subtle text-warning">No local infra</span>
-            <span class="badge bg-secondary-subtle text-secondary">Runs on AIsuru</span>
           </div>
 
           <h5 class="card-title">Send an email, get an application</h5>
           <p class="card-text text-muted">
-            The closing demo of the module: three MCP servers on one agent. The agent reads a
-            project request from an <strong>Outlook</strong> mailbox, builds it with
-            <strong>Vibe Coder</strong>, and files it in a project library kept by
-            <strong>Persistence</strong>.
+            Three MCP servers on one agent. The agent reads a project request from an
+            <strong>Outlook</strong> mailbox, builds it with <strong>Vibe Coder</strong> and files it
+            in a project library kept by <strong>Persistence</strong>.
           </p>
 
           <hr>
@@ -472,11 +473,11 @@
             <span class="badge bg-warning-subtle text-warning">No local infra</span>
           </div>
 
-          <h5 class="card-title">AI Agent follows a standardized skill</h5>
+          <h5 class="card-title">The agent follows a skill</h5>
           <p class="card-text text-muted">
-            Attach a <strong>skill</strong> &mdash; a markdown file describing exactly how to
-            handle one type of request &mdash; to an agent, and watch the same customer message
-            get a different, standardized reply once the skill is in place.
+            Attach a <strong>skill</strong> to an agent: a markdown file that describes exactly how
+            to handle one type of request. Send the same customer message before and after adding
+            it, and compare the two replies.
           </p>
 
           <hr>
@@ -489,11 +490,11 @@
             </li>
             <li class="mb-2">
               <i class="bi bi-check-circle text-success me-2"></i>
-              Reference a skill from the agent's system prompt so it gets picked up
+              Reference the skill in the agent's system prompt, so the agent knows when to use it
             </li>
             <li class="mb-2">
               <i class="bi bi-check-circle text-success me-2"></i>
-              Compare the agent's reply before and after the skill is applied
+              Compare the agent's reply before and after the skill
             </li>
           </ul>
 

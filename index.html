@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AIsuru System Integrator Course — Demo Hub</title>
+<title>AIsuru System Integrator Course: Demo Hub</title>
 <style>
   :root {
     --blue: #2563eb;
@@ -117,6 +117,21 @@
     color: var(--text-muted);
   }
   .card ul li { margin-bottom: 4px; }
+  /* SYS-06 has eight demos: its card spans the whole row and splits them in
+     two groups, which stack into one column on narrow screens. */
+  .card.wide { grid-column: 1 / -1; }
+  .card.wide p.desc { flex-grow: 0; }
+  .demo-groups {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 0 28px;
+  }
+  .demo-groups h4 {
+    margin: 0 0 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+  }
   .port {
     font-size: 12px;
     color: var(--text-muted);
@@ -269,14 +284,14 @@
     <p>Waiting for the Docker containers to come up. This can take a few minutes on the first run.</p>
     <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
     <ul class="loading-list" id="loading-list"></ul>
-    <p id="loading-note">Still waiting on some demos &mdash; make sure <code>npm run start:all</code> is running.</p>
-    <button id="continue-anyway">Continue without waiting →</button>
+    <p id="loading-note">Some demos are still starting. Make sure <code>npm run start:all</code> is running.</p>
+    <button id="continue-anyway">Continue without waiting</button>
   </div>
 </div>
 
 <header>
   <h1>AIsuru System Integrator Course</h1>
-  <p>Demo Hub — pick a module below to open its running demo</p>
+  <p>Demo Hub. Pick a module to open its demo.</p>
 </header>
 
 <main>
@@ -285,72 +300,88 @@
     <div class="card">
       <span class="badge">SYS-03</span>
       <h3>Enterprise Authentication</h3>
-      <p class="desc">Embed the AIsuru web component with enterprise auth: self-managed login, JWT/Trusted App SSO, Microsoft Entra ID, and redirect-based magic links.</p>
+      <p class="desc">Four ways to sign users in to an AIsuru agent, from the login built into the web component to Microsoft single sign-on.</p>
       <ul>
-        <li>Demo 1 — Self-managed login</li>
-        <li>Demo 2 — Trusted App / JWT SSO</li>
-        <li>Demo 3 — Microsoft SSO (Entra ID)</li>
-        <li>Demo 4 — Login with redirect</li>
+        <li>Demo 1: login built into the web component</li>
+        <li>Demo 2: Trusted App and LoginWithJWT</li>
+        <li>Demo 3: Microsoft SSO with Entra ID</li>
+        <li>Demo 4: redirect to the AIsuru tenant with a magic link</li>
       </ul>
       <div class="port">Runs on <code>localhost:13000</code></div>
-      <a class="btn" href="http://localhost:13000" target="_blank" rel="noopener">Open SYS-03 demo →</a>
+      <a class="btn" href="http://localhost:13000" target="_blank" rel="noopener">Open SYS-03 demo</a>
     </div>
 
     <div class="card">
       <span class="badge">SYS-04</span>
       <h3>Advanced Functions</h3>
-      <p class="desc">Connect AIsuru agents to external REST APIs using webhook functions, and auto-generate functions from OpenAPI/Swagger specs.</p>
+      <p class="desc">Connect AIsuru agents to external REST APIs with webhook functions, or generate the functions from a Swagger/OpenAPI file.</p>
       <ul>
-        <li>Demo 1 — Weather API webhook function</li>
-        <li>Demo 2 — Import from Swagger/OpenAPI</li>
+        <li>Demo 1: weather API webhook function</li>
+        <li>Demo 2: functions imported from a Swagger/OpenAPI file</li>
       </ul>
       <div class="port">Runs on <code>localhost:13004</code></div>
-      <a class="btn" href="http://localhost:13004" target="_blank" rel="noopener">Open SYS-04 demo →</a>
+      <a class="btn" href="http://localhost:13004" target="_blank" rel="noopener">Open SYS-04 demo</a>
     </div>
 
     <div class="card">
       <span class="badge">SYS-05</span>
       <h3>Web Component Programming</h3>
-      <p class="desc">Program the AIsuru web component with the Dialog API: pass page content to the agent, and let its responses trigger real actions on the page (highlights, alerts, DOM changes).</p>
+      <p class="desc">Program the AIsuru web component from the page: pass the page content to the agent, and turn its replies into page actions such as highlights and alerts.</p>
       <ul>
-        <li>Demo 1 — Context-aware agent driving page actions</li>
+        <li>Demo 1: an agent that reads the page and acts on it</li>
       </ul>
       <div class="port">Runs on <code>localhost:13005</code></div>
-      <a class="btn" href="http://localhost:13005" target="_blank" rel="noopener">Open SYS-05 demo →</a>
+      <a class="btn" href="http://localhost:13005" target="_blank" rel="noopener">Open SYS-05 demo</a>
     </div>
 
-    <div class="card">
+    <div class="card wide">
       <span class="badge">SYS-06</span>
       <h3>MCP Server Integration</h3>
-      <p class="desc">Connect AIsuru agents to external data sources via the Model Context Protocol: MongoDB through the built-in MCP server, and a custom filesystem MCP server.</p>
-      <ul>
-        <li>Demo 1 — MongoDB via MCP + ngrok</li>
-        <li>Demo 3 — Custom filesystem MCP server</li>
-      </ul>
-      <div class="port">Runs on <code>localhost:13006</code> (requires <code>NGROK_AUTHTOKEN</code>)</div>
-      <a class="btn" href="http://localhost:13006" target="_blank" rel="noopener">Open SYS-06 demo →</a>
+      <p class="desc">Eight demos that connect AIsuru agents to data and services through MCP servers. Four reach a service running in Docker on your machine through an ngrok tunnel; the other four run on AIsuru alone.</p>
+      <div class="demo-groups">
+        <div>
+          <h4>Local service with an ngrok tunnel</h4>
+          <ul>
+            <li>Demo 1: MongoDB through the built-in MCP server</li>
+            <li>Demo 2: MySQL through the built-in MySQL MCP server</li>
+            <li>Demo 3: custom filesystem MCP server in Node.js</li>
+            <li>Demo 6: REST API with OAuth2, imported from its OpenAPI spec</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Nothing to run locally</h4>
+          <ul>
+            <li>Demo 4: Scheduler and Persistence MCP servers</li>
+            <li>Demo 5: one agent exposed as an MCP server to another, with Agent Link</li>
+            <li>Demo 7: from an Outlook email to a working app, with Vibe Coder</li>
+            <li>Demo 8: MCP Skills, the same request before and after a skill</li>
+          </ul>
+        </div>
+      </div>
+      <div class="port">Runs on <code>localhost:13006</code>. Demos 1, 2, 3 and 6 need an ngrok authtoken, which you paste on the demo page.</div>
+      <a class="btn" href="http://localhost:13006" target="_blank" rel="noopener">Open SYS-06 demo</a>
     </div>
 
   </div>
 </main>
 
 <footer>
-  Part of the <a href="./README.md">System Integrator Course Resources</a> · © 2025 Memori S.R.L.
+  Part of the <a href="./README.md">System Integrator Course Resources</a> · © 2026 Memori S.R.L.
 </footer>
 
 <script>
 (function () {
   var DEMOS = [
-    { name: "SYS-03 — Enterprise Authentication", port: 13000 },
-    { name: "SYS-04 — Advanced Functions", port: 13004 },
-    { name: "SYS-05 — Web Component Programming", port: 13005 },
-    { name: "SYS-06 — MCP Server Integration", port: 13006 }
+    { name: "SYS-03 Enterprise Authentication", port: 13000 },
+    { name: "SYS-04 Advanced Functions", port: 13004 },
+    { name: "SYS-05 Web Component Programming", port: 13005 },
+    { name: "SYS-06 MCP Server Integration", port: 13006 }
   ];
   // How long a single readiness check waits before giving up on that attempt.
   var CHECK_TIMEOUT_MS = 3000;
   // How often we re-check the demos that are not ready yet.
   var POLL_INTERVAL_MS = 1500;
-  // After this long, stop hiding the page behind the overlay — offer to
+  // After this long, stop hiding the page behind the overlay and offer to
   // continue anyway (e.g. the user only started some of the demos on purpose).
   var GIVE_UP_MS = 45000;
 

@@ -1,4 +1,4 @@
-<% content_for :title, "Demo 7: From Email to App" %>
+<% content_for :title, "Demo 7: from email to app" %>
 
 <div class="container py-5">
 
@@ -17,7 +17,7 @@
       <span class="badge mb-3 fs-6 text-white" style="background: linear-gradient(135deg, #4f46e5 0%, #db2777 100%);">Demo 7</span>
       <h1 class="display-5 fw-bold mb-3">
         <i class="bi bi-envelope-paper me-2" style="color: #4f46e5;"></i>
-        From Email to App
+        From email to app
       </h1>
       <p class="lead text-muted">
         Three MCP servers on one agent: <strong>Outlook</strong> brings a request in,
@@ -39,8 +39,9 @@
             The previous demos each connect an agent to one capability. This one puts three
             on the same agent and lets them hand work to each other:
             <strong>Outlook MCP Server</strong> reads the mailbox,
-            <strong>AIsuru Vibe Coder</strong> generates a self-contained HTML/JavaScript app,
-            and <strong>MCP Persistence</strong> keeps a library of every project produced.
+            <strong>AIsuru Vibe Coder</strong> turns it into a running application, and
+            <strong>MCP Persistence</strong> stores both that application's data and the agent's
+            library of every project produced.
           </p>
           <p class="text-muted mb-0">
             The attendee writes no code, and no prompt either. They send an email,
@@ -72,8 +73,8 @@
           <p class="text-muted mb-0 small">
             Turning the flag off would let the agent serve the mailbox to anyone who can reach the
             chat. We leave it on, and run the demo where the identity matches: signed into AIsuru,
-            in the agent's own chat. Everything else on this page stays exactly the same: the
-            setup, the prompt, the email, the messages to send.
+            in the agent's own chat. The setup, the prompt, the email and the messages to send are
+            all on this page.
           </p>
         </div>
       </div>
@@ -87,7 +88,7 @@
         <div class="card-header text-white" style="background: linear-gradient(135deg, #4f46e5 0%, #db2777 100%);">
           <h5 class="mb-0">
             <i class="bi bi-tools me-2"></i>
-            Setup Instructions: Outlook + Vibe Coder + Persistence
+            Setup instructions: Outlook + Vibe Coder + Persistence
           </h5>
         </div>
         <div class="card-body">
@@ -102,7 +103,7 @@
               <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #4f46e5 0%, #db2777 100%);">1</span>
             </div>
             <div class="flex-grow-1">
-              <h6 class="fw-bold">Create an Agent on AIsuru</h6>
+              <h6 class="fw-bold">Create an agent on AIsuru</h6>
               <p class="text-muted mb-0">
                 Create a new agent on <a href="https://www.aisuru.com" target="_blank">AIsuru</a>,
                 signed in with the account whose mailbox you will connect. Use a fresh agent: this
@@ -158,8 +159,9 @@ ms-client-id: &lt;ms-client-id&gt;</code></pre>
               <h6 class="fw-bold">Add MCP Persistence</h6>
               <p class="text-muted mb-0">
                 Add <strong>MCP Persistence</strong>, again with no credentials. This is where the
-                agent's project library lives. You can inspect it at any time with the
-                <strong>Dashboard</strong> button next to the server, same as in Demo 4.
+                agent's project library lives, and where the data of whatever it builds is kept. You
+                can inspect it at any time with the <strong>Dashboard</strong> button next to the
+                server, same as in Demo 4.
               </p>
             </div>
           </div>
@@ -291,16 +293,40 @@ ms-client-id: &lt;ms-client-id&gt;</code></pre>
             </div>
           </div>
 
+          <%# The closing step is a tour of the dashboards rather than a message
+              to send. It is where the class sees that the agent provisioned
+              itself an application, not just a screen. Everything listed here
+              carries a timestamp from a minute earlier, which is the part a
+              slide cannot fake. %>
           <div class="d-flex align-items-start">
             <span class="badge bg-secondary rounded-pill me-2 mt-1">5</span>
             <div>
-              <button type="button" class="btn btn-sm btn-outline-secondary js-copy-prompt"
-                      data-prompt="Che progetti hai in libreria?">
-                <i class="bi bi-clipboard me-1"></i> Che progetti hai in libreria?
-              </button>
-              <div class="form-text mb-0">
-                Answered from the persistence store, not from that conversation.
+              <span class="fw-semibold">Go and look at what it built for itself</span>
+              <div class="form-text mb-1">
+                Leave the app on screen and open the <strong>Dashboard</strong> button next to
+                <strong>AIsuru Vibe Coder</strong> in the agent's MCP list. Point at, in order:
               </div>
+              <ul class="small text-muted mb-0 ps-3">
+                <li>
+                  <strong>Live views</strong>: one row per screen the email asked for, each
+                  created minutes ago and openable on its own.
+                </li>
+                <li>
+                  <strong>The content behind them</strong>: every view names the persistence
+                  collection it reads from. Open the <strong>Dashboard</strong> next to
+                  <strong>MCP Persistence</strong> and the records are there as real data you can
+                  edit. The agent's project library is one more collection in the same store.
+                </li>
+                <li>
+                  <strong>Endpoints</strong>: the webhooks the agent registered for itself. They
+                  are what let it write to the app from the chat, so a request typed in conversation
+                  changes what the views show.
+                </li>
+                <li>
+                  <strong>Activity and audit</strong>: every view and endpoint creation with its
+                  timestamp and outcome, rejected attempts included.
+                </li>
+              </ul>
             </div>
           </div>
 
@@ -336,7 +362,7 @@ ms-client-id: &lt;ms-client-id&gt;</code></pre>
       btn.addEventListener('click', function () {
         navigator.clipboard.writeText(btn.dataset.prompt).then(function () {
           var feedback = document.getElementById('copy-feedback');
-          feedback.textContent = 'Copied!';
+          feedback.textContent = 'Copied';
           feedback.classList.remove('d-none', 'text-warning');
           feedback.classList.add('text-success');
           setTimeout(function () { feedback.classList.add('d-none'); }, 1500);
