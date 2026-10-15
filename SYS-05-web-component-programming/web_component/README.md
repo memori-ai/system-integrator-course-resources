@@ -1,93 +1,103 @@
 # Web Component Programming with AIsuru
 
-> Complete guide to integrating and customizing the AIsuru web component in your applications
+Guide to embedding and programming the AIsuru web component in your own applications.
+
+[Versione italiana](./README-IT.md)
 
 ## Overview
 
-This guide covers how to embed and program the AIsuru web component to create context-aware AI experiences. You'll learn how to:
+This guide covers:
 
-- Embed the AIsuru web component in a web page
-- Pass page content to the agent at session start
-- Enable context-aware conversations tied to what the user is currently seeing
-- Trigger DOM actions from agent responses
+- Embedding the AIsuru web component in a web page
+- Configuring the component with the credentials of your agent
+- Triggering DOM actions from the agent answers through a structured output tag
+- Passing information about the current page to the agent at session start
 
 ---
 
 ## Prerequisites
 
-Before starting, you need:
+1. An AIsuru account at [aisuru.com](https://www.aisuru.com)
+2. An agent (memori) configured in that account
+3. Access to the **Dev docs** section of the agent
+4. Basic HTML and JavaScript knowledge
 
-1. An **AIsuru account** at [aisuru.com](https://www.aisuru.com)
-2. A configured **AI Agent (Memori)** in your account
-3. Access to the **Dev Docs** section of your agent
-4. Basic knowledge of HTML and JavaScript
-
-> ⚠️ **Docker Desktop required** — The demo application runs entirely inside Docker containers. Make sure you have [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed and running on your machine before executing `npm run start`.
+**Docker Desktop is required.** The demo application runs inside Docker containers, so install [Docker Desktop](https://www.docker.com/products/docker-desktop/) and make sure it is running before you launch `npm run start`.
 
 ---
 
-## Demo Application
+## Demo application
 
-This module includes **one live demo application** built with Ruby on Rails that showcases web component programming techniques.
+The module ships one Rails demo application.
 
-### Quick Start
+### Quick start
 
 ```bash
-# Navigate to the demo folder
 cd demo
 ```
 
-Create a file named `.env_dev` in the `demo/` folder (first time only) with the following content:
+The first time, create a file named `.env_dev` in the `demo/` folder with this content:
 
 ```
 MONGO_URI=mongodb://mongodb:27017/sys_05_web_component_development
 ```
 
+(The `npm run start:all` launcher in the repository root writes this file by itself.)
+
 ```bash
-# Build and start the application (single command)
+# Build and start the application
 npm run start
 
-# Open in your browser
+# Open it in the browser
 open http://localhost:13005
 ```
 
-> ℹ️ This demo's `web` service is mapped to host port **13005** (instead of 3000) so it can run at the same time as the other demos. Inside the container it still listens on 3000.
+The `web` service is mapped to host port 13005 instead of 3000, so this demo can run at the same time as the others. Inside the container it still listens on 3000.
 
-> 💡 **Windows users — if `npm run start` fails:** Git on Windows may convert line endings to CRLF, which breaks shell scripts inside Docker. Run this command once in your terminal and then retry:
-> ```bash
-> git config --global core.autocrlf false
-> ```
+**Windows, if `npm run start` fails:** Git on Windows may convert line endings to CRLF, which breaks the shell scripts inside the container. Run this once, then retry:
 
-### Available Demos
+```bash
+git config --global core.autocrlf false
+```
 
-#### Demo 1: Agent to Control Page Content
+### Available demos
 
-Learn how to make your AIsuru agent aware of the web page it is embedded in, enabling it to answer questions about what the user is currently seeing and to trigger actions on the page.
+#### Demo 1: agent controlling the page
 
-- Embed an AIsuru agent in a web page
-- Pass page content to the agent at session start
-- Enable context-aware conversations tied to the current page
-- Trigger DOM actions from agent responses
+The agent answers in the chat and, at the same time, acts on the page it is embedded in: it highlights a button, shows an alert or flashes the background. Nothing special happens on the platform side: the behaviour comes from the agent prompt plus a listener in the page.
 
-**Best for:** Interactive pages where the agent needs awareness of on-screen content.
+Three actions are wired in the demo:
 
-### Project Structure
+| Action | Effect on the page |
+|--------|--------------------|
+| `highlight_home_button` | Yellow outline around the "Back to Demo Selection" button |
+| `show_alert` | Dismissible alert at the top of the page, gone after 4 seconds |
+| `flash_background_temp` | Page background turns warm yellow for 1.5 seconds |
+
+The demo page walks through the whole setup:
+
+1. Download `agent_prompt.txt` from the page and paste it into the prompt of your agent (Agent settings, AI section). The prompt declares the three actions and the output tag format.
+2. Copy the agent IDs from **Dev docs** and paste them in the form on the page, which loads the web component.
+3. Ask the agent for an action ("highlight the back button", "show me an alert", "flash the background") and watch the page react.
+
+### Project structure
 
 ```
 demo/
+├── agent_prompt.txt                # Prompt to paste into the agent, served by the download button
 ├── app/
 │   ├── controllers/
 │   │   ├── home_controller.rb      # Demo selection page
-│   │   └── demo1_controller.rb     # Demo 1: Agent to Control Page Content
+│   │   └── demo1_controller.rb     # Demo 1, including the prompt download
 │   └── views/
 │       ├── home/index.html.erb     # Demo selection
-│       └── demo1/index.html.erb    # Demo 1 page
+│       └── demo1/index.html.erb    # Demo 1 page, component and listener
 ├── docker-compose.yml
 ├── Dockerfile.dev
 └── Gemfile
 ```
 
-### Docker Commands
+### Docker commands
 
 ```bash
 # Start the application
@@ -111,24 +121,22 @@ docker compose run --rm web rails console
 
 ---
 
-## How to Get Your Agent IDs
+## How to get your agent IDs
 
-Navigate to your agent in AIsuru, then click on **Dev docs** in the left sidebar.
+Open your agent in AIsuru, then click **Dev docs** in the left sidebar and expand **Other references** ("Altri riferimenti" in the Italian interface):
 
-Expand the **▼ Other references** section to find:
-
-| Field | Description | Example |
-|-------|-------------|---------|
-| **Secondary Memori (Agent) ID** | Agent ID for the web component | `b2c3d4e5-f6a7-8901-bcde-f12345678901` |
-| **Owner user ID** | Owner user ID | `c3d4e5f6-a7b8-9012-cdef-123456789012` |
+| Field | Used as | Example |
+|-------|---------|---------|
+| Secondary Memori (Agent) ID | `memoriID` | `b2c3d4e5-f6a7-8901-bcde-f12345678901` |
+| Owner user ID | `ownerUserID` | `c3d4e5f6-a7b8-9012-cdef-123456789012` |
 
 ---
 
-## Basic Web Component Setup
+## Basic web component setup
 
-### Step 1: Include the Web Component
+### Step 1: include the web component
 
-Add these two lines to your HTML `<head>` or before your closing `</body>` tag:
+Add these two lines to the `<head>` of your page, or right before the closing `</body>`:
 
 ```html
 <!-- AIsuru Web Component -->
@@ -136,7 +144,7 @@ Add these two lines to your HTML `<head>` or before your closing `</body>` tag:
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@memori.ai/memori-react/dist/styles.min.css" />
 ```
 
-### Step 2: Configure the Web Component
+### Step 2: configure the web component
 
 ```html
 <memori-client
@@ -157,61 +165,75 @@ Add these two lines to your HTML `<head>` or before your closing `</body>` tag:
 
 ---
 
-## Passing Page Context to the Agent
+## Triggering DOM actions from agent answers
 
-Use the `initialQuestion` attribute to pass information about the current page to the agent at session start:
+This is what Demo 1 implements, and it takes two pieces.
 
-```html
-<memori-client
-  ...
-  initialQuestion="The user is currently viewing the following page content: [page content here]"
-></memori-client>
+**On the agent side**, the prompt declares the available actions and tells the agent to close its answer with a hidden tag containing a JSON array of action names:
+
+```
+<output class="memori-test">["highlight_home_button"]</output>
 ```
 
-This allows the agent to answer questions about what the user is seeing without the user having to repeat it.
+Several actions can travel in the same tag. The tag is never explained to the user: the page strips it and reacts to it.
 
----
-
-## Triggering DOM Actions from Agent Responses
-
-The web component emits a `MemoriNewDialogState` event every time the agent responds. You can listen for this event and parse special output tags to trigger actions on the page:
+**On the page side**, the web component fires a `MemoriNewDialogState` event on every answer. The listener parses the tag and dispatches the actions:
 
 ```javascript
-document.addEventListener('MemoriNewDialogState', (event) => {
-  const emission = event.detail?.emission || '';
+document.addEventListener('MemoriNewDialogState', (e) => {
+  const emission = e.detail.emission;
+  if (!emission) return;
+
   const match = emission.match(/<output class="memori-test">([\s\S]*?)<\/output>/);
   if (!match) return;
 
-  const actions = JSON.parse(match[1]);
-  actions.forEach(action => {
+  const actions = JSON.parse(match[1].trim());
+
+  actions.forEach((action) => {
     if (action === 'highlight_home_button') highlightHomeButton();
-    if (action === 'show_alert') showAlert();
-    if (action === 'flash_background_temp') flashBackground();
+    else if (action === 'show_alert') showAlert();
+    else if (action === 'flash_background_temp') flashBackground();
   });
 });
 ```
 
-The agent emits structured output tags containing JSON arrays of action names, which your JavaScript then executes.
+The class name of the tag and the action names are a convention between your prompt and your page: pick your own, as long as the two sides agree.
 
 ---
 
-## 📂 Module Structure
+## Passing page context to the agent
+
+A related technique, not used by Demo 1: the `initialQuestion` attribute sends a message to the agent when the session opens, which is a place to describe what the user is looking at.
+
+```html
+<memori-client
+  ...
+  initialQuestion="The user is viewing the following page content: [page content here]"
+></memori-client>
+```
+
+The agent can then answer questions about the current page without the user having to describe it.
+
+---
+
+## Module structure
 
 ```
 SYS-05-web-component-programming/
-├── README.md          # Module overview
+├── README.md          # Module overview (EN)
+├── README-IT.md       # Module overview (IT)
 └── web_component/     # Web component programming demo app
-    ├── README.md      # This file — full guide (EN)
+    ├── README.md      # This file, full guide (EN)
     ├── README-IT.md   # Full guide (IT)
-    └── demo/          # Rails application with web component demos
+    └── demo/          # Rails application, demo 1
 ```
 
 ## Resources
 
-- [AIsuru Documentation](https://docs.aisuru.com/)
-- [Advanced Functions Guide](https://docs.aisuru.com/advanced-functions)
-- [Web Component NPM Package](https://www.npmjs.com/package/@memori.ai/memori-webcomponent)
+- [AIsuru documentation](https://docs.aisuru.com/)
+- [Advanced functions guide](https://docs.aisuru.com/advanced-functions)
+- [Web component NPM package](https://www.npmjs.com/package/@memori.ai/memori-webcomponent)
 
 ---
 
-🏠 [Course Home](../../README.md)
+[Course home](../../README.md)

@@ -1,4 +1,4 @@
-<% content_for :title, "Demo 2: MySQL via MCP Server" %>
+<% content_for :title, "Demo 2: MySQL via MCP server" %>
 
 <div class="container py-5">
 
@@ -22,13 +22,13 @@
         <span class="badge mb-3 fs-6 text-white" style="background: linear-gradient(135deg, #e85d04 0%, #f48c06 100%);">Demo 2</span>
         <h1 class="display-5 fw-bold mb-3">
           <i class="bi bi-database-fill-gear me-2" style="color: #e85d04;"></i>
-          MySQL via MCP Server
+          MySQL via MCP server
         </h1>
         <p class="lead text-muted">
           Connect an AIsuru agent to your local MySQL database with AIsuru's
           <strong>built-in MySQL MCP server</strong>, which talks to the database directly:
-          no MCP server of your own to write or deploy. The agent will be able to query and
-          modify data in real-time.
+          no MCP server of your own to write or deploy. The agent can query the data and,
+          once you allow it, modify it.
         </p>
       </div>
     </div>
@@ -60,16 +60,25 @@
     <div class="row mb-4" id="manual-setup">
       <div class="col-lg-10 mx-auto">
         <div class="card border-danger">
-          <div class="card-header text-white" style="background: linear-gradient(135deg, #e85d04 0%, #f48c06 100%);">
-            <h5 class="mb-0">
+          <button type="button" class="card-header manual-setup-toggle collapsed text-white d-flex align-items-center w-100 border-0 text-start"
+                  style="background: linear-gradient(135deg, #e85d04 0%, #f48c06 100%);"
+                  data-bs-toggle="collapse" data-bs-target="#manual-setup-body"
+                  aria-expanded="false" aria-controls="manual-setup-body">
+            <span class="h5 mb-0 me-auto">
               <i class="bi bi-tools me-2"></i>
-              Manual Setup Guide: MySQL MCP Server
-            </h5>
-          </div>
+              Manual setup guide: MySQL MCP server
+            </span>
+            <span class="small ms-3 text-nowrap">
+              <span class="when-closed">Show steps</span><span class="when-open">Hide steps</span>
+              <i class="bi bi-chevron-down ms-1 manual-setup-chevron"></i>
+            </span>
+          </button>
+          <%# Collapsed by default: the one-click starter is the route everyone should take. %>
+          <div class="collapse" id="manual-setup-body">
           <div class="card-body">
             <p class="text-muted mb-4">
-              This is the step-by-step alternative to the one-click starter above &mdash; use it if the button
-              doesn't work or if you want to understand what happens under the hood.
+              This is the step-by-step alternative to the one-click starter above. Use it if the button
+              doesn't work or if you want to see what happens under the hood.
               AIsuru's MySQL MCP server connects straight to the database, so all you have to do here is
               make MySQL reachable through an ngrok <strong>TCP</strong> tunnel.
             </p>
@@ -80,7 +89,7 @@
                 <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #e85d04 0%, #f48c06 100%);">1</span>
               </div>
               <div class="flex-grow-1">
-                <h6 class="fw-bold">Configure ngrok Authentication</h6>
+                <h6 class="fw-bold">Configure ngrok authentication</h6>
                 <p class="text-muted mb-2">
                   Get your ngrok auth token from <a href="https://dashboard.ngrok.com/get-started/your-authtoken" target="_blank">ngrok dashboard</a>.
                   Create a <code>.env</code> file in the demo directory:
@@ -95,11 +104,11 @@
                 <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #e85d04 0%, #f48c06 100%);">2</span>
               </div>
               <div class="flex-grow-1">
-                <h6 class="fw-bold">Free ngrok Tunnel (if needed)</h6>
+                <h6 class="fw-bold">Free the ngrok tunnel (if needed)</h6>
                 <p class="text-muted mb-2">
-                  <strong>⚠️ ngrok free accounts support only 1 active tunnel.</strong> If you were using another demo, stop all ngrok tunnels first:
+                  <strong>Free ngrok accounts allow only one active tunnel.</strong> If you were using another demo, stop all ngrok tunnels first:
                 </p>
-                <pre class="bg-dark text-light p-3 rounded mb-1"><code>docker compose stop ngrok-mongo ngrok-mcp ngrok-demo2</code></pre>
+                <pre class="bg-dark text-light p-3 rounded mb-1"><code>docker compose stop ngrok-mongo ngrok-mcp ngrok-demo2 ngrok-gestionale</code></pre>
                 <small class="text-muted">
                   This stops all ngrok tunnels, freeing the connection for this demo.
                 </small>
@@ -112,7 +121,7 @@
                 <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #e85d04 0%, #f48c06 100%);">3</span>
               </div>
               <div class="flex-grow-1">
-                <h6 class="fw-bold">Expose MySQL with an ngrok TCP Tunnel</h6>
+                <h6 class="fw-bold">Expose MySQL with an ngrok TCP tunnel</h6>
                 <p class="text-muted mb-2">
                   Start the TCP tunnel that publishes the MySQL container (Demo 2):
                 </p>
@@ -129,7 +138,7 @@
                 <span class="badge rounded-circle fs-5 d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px; background: linear-gradient(135deg, #e85d04 0%, #f48c06 100%);">4</span>
               </div>
               <div class="flex-grow-1">
-                <h6 class="fw-bold">Read the Tunnel Address</h6>
+                <h6 class="fw-bold">Read the tunnel address</h6>
                 <p class="text-muted mb-2">
                   Open <a href="http://localhost:4044" target="_blank" class="text-decoration-none">http://localhost:4044</a>
                   (or the <a href="https://dashboard.ngrok.com/tunnels" target="_blank">ngrok dashboard &rarr; Tunnels</a>)
@@ -141,6 +150,7 @@
                 </small>
               </div>
             </div>
+          </div>
           </div>
         </div>
       </div>
@@ -156,14 +166,13 @@
           <div class="card-header bg-info text-white">
             <h5 class="mb-0">
               <i class="bi bi-info-circle me-2"></i>
-              How to get your Agent IDs
+              How to get your agent IDs
             </h5>
           </div>
           <div class="card-body">
             <ol class="mb-0">
               <li class="mb-2">
                 <strong>Create an Agent</strong> on <a href="https://www.aisuru.com" target="_blank">AIsuru</a>
-                (or use your own tenant if you have a PaaS subscription)
               </li>
               <li class="mb-2">
                 <strong>Open your Agent</strong> and click on <strong>"Dev docs"</strong> in the left sidebar
@@ -191,7 +200,7 @@
           <div class="card-header text-white" style="background: linear-gradient(135deg, #e85d04 0%, #f48c06 100%);">
             <h5 class="mb-0">
               <i class="bi bi-gear me-2"></i>
-              Configure Your Agent
+              Configure your agent
             </h5>
           </div>
           <div class="card-body p-4">
@@ -229,7 +238,7 @@
               <hr class="my-4">
               <h6 class="text-muted mb-3">
                 <i class="bi bi-sliders me-1"></i>
-                Advanced Configuration (pre-filled with defaults)
+                Advanced configuration (pre-filled with defaults)
               </h6>
 
               <div class="row">
@@ -295,9 +304,9 @@
             <div class="card h-100 border-0 shadow-sm">
               <div class="card-body text-center p-4">
                 <i class="bi bi-robot display-4 text-primary mb-3"></i>
-                <h5 class="card-title">Chat with the Agent</h5>
+                <h5 class="card-title">Chat with the agent</h5>
                 <p class="card-text text-muted">
-                  Ask the agent to query users, look up products, check orders, or even modify data.
+                  Ask the agent to query users, look up products, check orders or modify data.
                 </p>
               </div>
             </div>
@@ -306,9 +315,9 @@
             <div class="card h-100 border-0 shadow-sm">
               <div class="card-body text-center p-4">
                 <i class="bi bi-database-gear display-4 mb-3" style="color: #e85d04;"></i>
-                <h5 class="card-title">Live DB Explorer</h5>
+                <h5 class="card-title">Live DB explorer</h5>
                 <p class="card-text text-muted">
-                  See the MySQL data update in real-time as the agent performs operations through MCP.
+                  See the MySQL data change as the agent works on it through MCP.
                 </p>
               </div>
             </div>
@@ -317,9 +326,9 @@
             <div class="card h-100 border-0 shadow-sm">
               <div class="card-body text-center p-4">
                 <i class="bi bi-box-seam display-4" style="color: #f48c06;"></i>
-                <h5 class="card-title">Self-Hosted MCP</h5>
+                <h5 class="card-title">Built-in MySQL MCP</h5>
                 <p class="card-text text-muted">
-                  The MCP server runs from an npm package, giving you full control over database operations.
+                  AIsuru's MySQL MCP server connects straight to the database. The write switches decide whether the agent can change data.
                 </p>
               </div>
             </div>
@@ -339,8 +348,8 @@
         <div class="alert d-flex align-items-center mb-0 text-white" style="background: linear-gradient(135deg, #e85d04 0%, #f48c06 100%);">
           <i class="bi bi-check-circle-fill me-2 fs-5"></i>
           <div class="flex-grow-1">
-            <strong>Agent Connected!</strong>
-            Chat with the agent on the left &mdash; it can read and modify the MySQL database via MCP.
+            <strong>Agent connected.</strong>
+            Chat with the agent on the left: it can read the MySQL database via MCP, and modify it if the write switches are on.
             Click <strong>"Refresh Data"</strong> on the right to see live changes.
           </div>
           <%= link_to demo2_path, class: "btn btn-outline-light btn-sm ms-3" do %>
@@ -358,7 +367,7 @@
         <div class="card shadow h-100">
           <div class="card-header text-white d-flex align-items-center" style="background: linear-gradient(135deg, #e85d04 0%, #f48c06 100%);">
             <i class="bi bi-robot me-2"></i>
-            <strong>AIsuru Agent</strong>
+            <strong>AIsuru agent</strong>
             <span class="badge bg-light text-dark ms-auto">MCP-enabled</span>
           </div>
           <div class="card-body p-0">
@@ -387,7 +396,7 @@
         <div class="card shadow h-100">
           <div class="card-header text-white d-flex align-items-center" style="background-color: #00618a;">
             <i class="bi bi-database me-2"></i>
-            <strong>MySQL Explorer</strong>
+            <strong>MySQL explorer</strong>
             <span class="badge bg-light text-dark ms-2">mcp_demo_mysql</span>
             <button class="btn btn-sm btn-outline-light ms-auto" id="btn-refresh-db" onclick="refreshDbData()">
               <i class="bi bi-arrow-clockwise me-1"></i> Refresh Data
@@ -398,7 +407,7 @@
             <%# Initial state %>
             <div class="d-flex flex-column align-items-center justify-content-center h-100 text-muted" id="db-placeholder">
               <i class="bi bi-database-gear display-1 mb-3" style="color: #e85d04; opacity: 0.5;"></i>
-              <h5>MySQL Data Explorer</h5>
+              <h5>MySQL data explorer</h5>
               <p class="text-center px-4">
                 Click <strong>"Refresh Data"</strong> to load the current state of the <code>mcp_demo_mysql</code> database.<br>
                 After chatting with the agent, refresh again to see the changes.
@@ -456,7 +465,7 @@
             <%# Error state %>
             <div class="d-none d-flex flex-column align-items-center justify-content-center h-100" id="db-error-container">
               <i class="bi bi-exclamation-triangle display-1 text-danger mb-3"></i>
-              <h5 class="text-danger">Connection Error</h5>
+              <h5 class="text-danger">Connection error</h5>
               <p class="text-muted text-center px-4" id="db-error-message"></p>
               <button class="btn btn-outline-danger" onclick="refreshDbData()">
                 <i class="bi bi-arrow-clockwise me-1"></i> Retry
@@ -476,7 +485,7 @@
             <h2 class="accordion-header">
               <button class="accordion-button collapsed py-2" type="button" data-bs-toggle="collapse" data-bs-target="#configDetails">
                 <i class="bi bi-code me-2"></i>
-                <small>Current Configuration</small>
+                <small>Current configuration</small>
               </button>
             </h2>
             <div id="configDetails" class="accordion-collapse collapse" data-bs-parent="#configAccordion">
