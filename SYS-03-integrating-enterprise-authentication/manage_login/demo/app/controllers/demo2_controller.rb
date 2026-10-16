@@ -9,10 +9,10 @@
 
 class Demo2Controller < ApplicationController
   DEFAULTS = {
-    "tenant_id" => "www.aisuru.com",
+    "tenant_id" => "memori.aclambda.online",
     "engine_url" => "https://engine.memori.ai/memori/v2",
     "api_url" => "https://backend.memori.ai/api/v2",
-    "base_url" => "https://www.aisuru.com"
+    "base_url" => "https://memori.aclambda.online"
   }.freeze
 
   DEMO_USER_EMAIL = "demo@demo.com".freeze

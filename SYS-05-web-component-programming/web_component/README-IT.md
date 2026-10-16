@@ -17,7 +17,7 @@ Questa guida copre:
 
 ## Prerequisiti
 
-1. Un account AIsuru su [aisuru.com](https://www.aisuru.com)
+1. Un account AIsuru su [memori.aclambda.online](https://memori.aclambda.online)
 2. Un agente (memori) configurato in quell'account
 3. Accesso alla sezione **Dev docs** dell'agente
 4. Conoscenza base di HTML e JavaScript
@@ -152,10 +152,10 @@ Aggiungi queste due righe nell'`<head>` della pagina, oppure appena prima della 
   ownerUserName="tuo.username"
   memoriID="YOUR_MEMORI_ID"
   ownerUserID="YOUR_OWNER_USER_ID"
-  tenantID="www.aisuru.com"
+  tenantID="memori.aclambda.online"
   engineURL="https://engine.memori.ai/memori/v2"
   apiURL="https://backend.memori.ai/api/v2"
-  baseURL="https://www.aisuru.com"
+  baseURL="https://memori.aclambda.online"
   layout="CHAT"
   uiLang="IT"
   spokenLang="IT"

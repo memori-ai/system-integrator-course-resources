@@ -290,7 +290,7 @@ docker compose run --rm web rails console
 
 ## Prerequisites
 
-1. An AIsuru account at [aisuru.com](https://www.aisuru.com)
+1. An AIsuru account at [memori.aclambda.online](https://memori.aclambda.online)
 2. An agent (memori) configured in that account, two of them for Demo 5
 3. An [ngrok](https://ngrok.com) account, for demos 1, 2, 3 and 6
 4. Docker and Docker Compose installed
@@ -299,7 +299,7 @@ docker compose run --rm web rails console
 
 ## How to get your agent IDs
 
-1. Go to [AIsuru](https://www.aisuru.com) and create an agent
+1. Go to [AIsuru](https://memori.aclambda.online) and create an agent
 2. Open the agent and click **Dev docs** in the left sidebar
 3. Expand the **Other references** section ("Altri riferimenti" in the Italian interface)
 4. Copy:
