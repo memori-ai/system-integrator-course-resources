@@ -19,7 +19,7 @@ This guide covers:
 
 Before starting, you need:
 
-1. An AIsuru account at [aisuru.com](https://www.aisuru.com)
+1. An AIsuru account at [memori.aclambda.online](https://memori.aclambda.online)
 2. An agent (memori) configured in that account
 3. Access to the **Dev docs** section of the agent
 4. Basic HTML and JavaScript knowledge
@@ -206,10 +206,10 @@ Add the web component to your HTML:
   ownerUserName="your.username"
   memoriID="YOUR_MEMORI_ID"
   ownerUserID="YOUR_OWNER_USER_ID"
-  tenantID="www.aisuru.com"
+  tenantID="memori.aclambda.online"
   engineURL="https://engine.memori.ai/memori/v2"
   apiURL="https://backend.memori.ai/api/v2"
-  baseURL="https://www.aisuru.com"
+  baseURL="https://memori.aclambda.online"
   layout="CHAT"
   uiLang="EN"
   spokenLang="EN"
@@ -231,10 +231,10 @@ When you have authenticated users in your application, you can pass their authen
   ownerUserName="your.username"
   memoriID="YOUR_MEMORI_ID"
   ownerUserID="YOUR_OWNER_USER_ID"
-  tenantID="www.aisuru.com"
+  tenantID="memori.aclambda.online"
   engineURL="https://engine.memori.ai/memori/v2"
   apiURL="https://backend.memori.ai/api/v2"
-  baseURL="https://www.aisuru.com"
+  baseURL="https://memori.aclambda.online"
   layout="CHAT"
   uiLang="EN"
   spokenLang="EN"
@@ -263,10 +263,10 @@ For dynamic applications, inject the token via JavaScript:
   memoriWidget.setAttribute('ownerUserName', 'your.username');
   memoriWidget.setAttribute('memoriID', 'YOUR_MEMORI_ID');
   memoriWidget.setAttribute('ownerUserID', 'YOUR_OWNER_USER_ID');
-  memoriWidget.setAttribute('tenantID', 'www.aisuru.com');
+  memoriWidget.setAttribute('tenantID', 'memori.aclambda.online');
   memoriWidget.setAttribute('engineURL', 'https://engine.memori.ai/memori/v2');
   memoriWidget.setAttribute('apiURL', 'https://backend.memori.ai/api/v2');
-  memoriWidget.setAttribute('baseURL', 'https://www.aisuru.com');
+  memoriWidget.setAttribute('baseURL', 'https://memori.aclambda.online');
   memoriWidget.setAttribute('layout', 'CHAT');
   memoriWidget.setAttribute('showLogin', 'false');
   memoriWidget.setAttribute('additionalInfo', JSON.stringify({
@@ -334,7 +334,7 @@ POST https://backend.memori.ai/api/v2/PwlLogin
 Content-Type: application/json
 
 {
-  "tenant": "www.aisuru.com",
+  "tenant": "memori.aclambda.online",
   "userName": "user@example.com",
   "eMail": "user@example.com"
 }
@@ -350,7 +350,7 @@ Content-Type: application/json
 X-Memori-Trusted-App: YOUR_TRUSTED_APP_API_KEY
 
 {
-  "tenant": "www.aisuru.com",
+  "tenant": "memori.aclambda.online",
   "jwtToken": "eyJhbGciOiJIUzI1NiJ9..."
 }
 ```
@@ -418,7 +418,7 @@ const jwtToken = jwt.sign(
     sub: user.email,
     email: user.email,
     name: user.name,
-    tenant: 'www.aisuru.com',
+    tenant: 'memori.aclambda.online',
     iat: Math.floor(Date.now() / 1000),
     exp: Math.floor(Date.now() / 1000) + 300  // 5 minutes
   },
@@ -455,7 +455,7 @@ Content-Type: application/json
 X-Memori-Trusted-App: YOUR_TRUSTED_APP_API_KEY
 
 {
-  "tenant": "www.aisuru.com",
+  "tenant": "memori.aclambda.online",
   "jwtToken": "eyJhbGciOiJIUzI1NiJ9..."
 }
 ```
@@ -560,13 +560,13 @@ https://{TENANT_BASE_URL}/{LANGUAGE}/magiclink/{TOKEN}
 
 **Examples:**
 ```
-https://www.aisuru.com/en/magiclink/183c7061-a5f5-4bea-ab2b-e4e6a7bbc3a4
-https://www.aisuru.com/it/magiclink/183c7061-a5f5-4bea-ab2b-e4e6a7bbc3a4
+https://memori.aclambda.online/en/magiclink/183c7061-a5f5-4bea-ab2b-e4e6a7bbc3a4
+https://memori.aclambda.online/it/magiclink/183c7061-a5f5-4bea-ab2b-e4e6a7bbc3a4
 https://your-tenant.aisuru.com/en/magiclink/YOUR_TOKEN
 ```
 
 **Parameters:**
-- `{TENANT_BASE_URL}`: your AIsuru tenant URL, for example `www.aisuru.com`
+- `{TENANT_BASE_URL}`: your AIsuru tenant URL, for example `memori.aclambda.online`
 - `{LANGUAGE}`: UI language code (`en`, `it`, and so on)
 - `{TOKEN}`: the `token` value returned by `LoginWithJWT`
 
@@ -598,10 +598,10 @@ Here's a complete HTML example with authentication and context:
     ownerUserName="your.username"
     memoriID="YOUR_MEMORI_ID"
     ownerUserID="YOUR_OWNER_USER_ID"
-    tenantID="www.aisuru.com"
+    tenantID="memori.aclambda.online"
     engineURL="https://engine.memori.ai/memori/v2"
     apiURL="https://backend.memori.ai/api/v2"
-    baseURL="https://www.aisuru.com"
+    baseURL="https://memori.aclambda.online"
     layout="CHAT"
     uiLang="EN"
     spokenLang="EN"
@@ -640,7 +640,7 @@ The `layout` attribute supports different display modes:
 | `ownerUserName` | Your AIsuru username |
 | `memoriID` | Agent ID from Dev Docs |
 | `ownerUserID` | Owner ID from Dev Docs |
-| `tenantID` | Your tenant (e.g., `www.aisuru.com`) |
+| `tenantID` | Your tenant (e.g., `memori.aclambda.online`) |
 | `engineURL` | Engine API URL |
 | `apiURL` | Backend API URL |
 | `baseURL` | Tenant base URL |

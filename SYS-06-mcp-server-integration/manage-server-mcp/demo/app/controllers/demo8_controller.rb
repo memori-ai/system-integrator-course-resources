@@ -13,10 +13,10 @@
 
 class Demo8Controller < ApplicationController
   # Default values for AIsuru configuration
-  DEFAULT_TENANT_ID = "www.aisuru.com".freeze
+  DEFAULT_TENANT_ID = "memori.aclambda.online".freeze
   DEFAULT_ENGINE_URL = "https://engine.memori.ai/memori/v2".freeze
   DEFAULT_API_URL = "https://backend.memori.ai/api/v2".freeze
-  DEFAULT_BASE_URL = "https://www.aisuru.com".freeze
+  DEFAULT_BASE_URL = "https://memori.aclambda.online".freeze
 
   # The skill lives in ../agents/*.md, one directory above the Rails app,
   # mounted read-only into the container (see docker-compose.yml), same as

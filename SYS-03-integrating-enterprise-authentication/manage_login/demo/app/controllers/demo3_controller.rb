@@ -7,10 +7,10 @@ class Demo3Controller < ApplicationController
     "ms_tenant_id" => "organizations",
     "memori_id" => "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
     "owner_user_id" => "c3d4e5f6-a7b8-9012-cdef-123456789012",
-    "tenant_id" => "www.aisuru.com",
+    "tenant_id" => "memori.aclambda.online",
     "engine_url" => "https://engine.memori.ai/memori/v2",
     "api_url" => "https://backend.memori.ai/api/v2",
-    "base_url" => "https://www.aisuru.com",
+    "base_url" => "https://memori.aclambda.online",
     "trusted_app_api_key" => "your-trusted-app-api-key-here"
   }.freeze
 

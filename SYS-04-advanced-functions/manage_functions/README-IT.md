@@ -75,7 +75,7 @@ Codice sorgente della demo: [demo/](./demo/)
 
 Prima di iniziare, hai bisogno di:
 
-1. Un **account AIsuru** su [aisuru.com](https://www.aisuru.com)
+1. Un **account AIsuru** su [memori.aclambda.online](https://memori.aclambda.online)
 2. Un **Agente AI (Memori)** configurato nel tuo account
 3. Accesso alla sezione **Funzioni Avanzate** nelle impostazioni del tuo agente
 4. Conoscenza base di REST API e metodi HTTP
@@ -196,10 +196,10 @@ Usa queste credenziali per configurare il web component nelle applicazioni demo:
   ownerUserName="tuo.username"
   memoriID="IL_TUO_MEMORI_ID"
   ownerUserID="IL_TUO_OWNER_USER_ID"
-  tenantID="www.aisuru.com"
+  tenantID="memori.aclambda.online"
   engineURL="https://engine.memori.ai/memori/v2"
   apiURL="https://backend.memori.ai/api/v2"
-  baseURL="https://www.aisuru.com"
+  baseURL="https://memori.aclambda.online"
   layout="CHAT"
   uiLang="IT"
   spokenLang="IT"
